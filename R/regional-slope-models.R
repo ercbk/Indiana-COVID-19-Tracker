@@ -69,7 +69,7 @@ mw_pos_models <- midwest_dat %>%
 
 mw_dea_models <- midwest_dat %>% 
    filter(deaths != 0) %>% 
-   model(log_mod = TSLM(log10(deaths) ~ trend())) %>% 
+   model(log_mod = TSLM(log(deaths) ~ trend())) %>% 
    mutate(coef_info = purrr::map(log_mod, broom::tidy)) %>% 
    tidyr::unnest(coef_info) %>% 
    filter(term == "trend()") %>% 
