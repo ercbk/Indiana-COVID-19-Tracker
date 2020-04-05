@@ -33,7 +33,7 @@ latest_date <- nyt_dat %>%
    pull(max_date)
 
 
-# get Indiana Health Department's last 60 tweets
+# get Indiana Health Department's last 150 tweets
 in_health_tweets <- rtweet::get_timeline("StateHealthIN", n = 150) %>% 
    tidyr::separate(col = "created_at", into = c("date", "time"), sep = " ") %>% 
    mutate(date = as_date(date),
@@ -80,10 +80,10 @@ ind_dat <- nyt_dat %>%
           dea_pct_change = round((deaths/lag(deaths) - 1) * 100, 1),
           pos_pct_txt = case_when(pos_pct_change > 0 ~ as.character(pos_pct_change) %>% paste0("+", ., "%"), pos_pct_change < 0 ~ as.character(pos_pct_change) %>% paste0("-", ., "%"), TRUE ~ as.character(pos_pct_change)),
           dea_pct_txt = case_when(dea_pct_change > 0 ~ as.character(dea_pct_change) %>% paste0("+", ., "%"), dea_pct_change < 0 ~ as.character(dea_pct_change) %>% paste0("-", ., "%"), TRUE ~ as.character(dea_pct_change)),
-          doub_pos = round(70/pos_pct_change, 1) %>%
+          doub_pos = round(log(2)/(pos_pct_change/100), 1) %>%
              as.character() %>%
              paste0(., " days"),
-          doub_dea = round(70/dea_pct_change, 1) %>%
+          doub_dea = round(log(2)/(dea_pct_change/100), 1) %>%
              as.character() %>%
              paste0(., " days"),
           pos_pct_txt = ifelse(pos_pct_txt == "NA%", NA, pos_pct_txt),
@@ -120,12 +120,14 @@ label_dat <- ind_dat %>%
 pos_lbl <- glue("Date: {label_dat$date[[1]]}
 Count: {label_dat$positives[[1]]}
 Change from yesterday: {label_dat$pos_pct_txt[[1]]}
-Doubling time: {label_dat$doub_pos[[1]]}
+Doubling time at the current pace:
+{label_dat$doub_pos[[1]]}
 ")
 dea_lbl <- glue("Date: {label_dat$date[[1]]}
 Count: {label_dat$deaths[[1]]}
 Change from yesterday: {label_dat$dea_pct_txt[[1]]}
-Doubling time: {label_dat$doub_dea[[1]]}
+Doubling time at the current pace:
+{label_dat$doub_dea[[1]]}
 ")
 
 
