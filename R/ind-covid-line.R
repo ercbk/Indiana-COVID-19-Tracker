@@ -1,15 +1,20 @@
 # Indiana COVID-19 
 # statewide positive cases and deaths
 
-# Takes NY Times data and tweets from the Indiana Health Department and charts positive test results and deaths
+# Takes NY Times data and tweets from the Indiana Health Department and charts cumulative counts for positive test results and deaths
+
+# Sections
+# 1. Set-up
+# 2. Process data
+# 3. Charts
+# 4. Grobs
+# 5. Assemble visual
 
 
 
-
-
-##################################
+#######################
 # Set-up
-##################################
+#######################
 
 
 pacman::p_load(grid, extrafont, prismatic, ggtext, dplyr, glue, lubridate, stringr, ggplot2)
@@ -37,9 +42,9 @@ in_health_tweets <- rtweet::get_timeline("StateHealthIN", n = 150) %>%
 
 
 
-########################################
-# Clean
-########################################
+#######################
+# Process data
+#######################
 
 
 # filter tweets that have the updated info, create columns for covid data
@@ -102,9 +107,9 @@ tab_dat <- ind_dat %>%
 
 
 
-#######################################
-# ggplot line charts
-#######################################
+#######################
+# Charts
+#######################
 
 
 # current data
@@ -185,9 +190,9 @@ ind_statewide_dea <- ggplot(ind_dat, aes(x = date, y = deaths)) +
 
 
 
-#################################
+#######################
 # Grobs
-#################################
+#######################
 
 
 # line chart grobs
@@ -238,9 +243,9 @@ black_rect_grob <- rectGrob(gp = gpar(fill = "black"))
 
 
 
-######################################
-# Visual
-######################################
+#######################
+# Assemble visual
+#######################
 
 
 # construct layout

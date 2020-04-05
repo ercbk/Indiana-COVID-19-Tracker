@@ -1,6 +1,20 @@
 # regional slope estimation
 
+# Fits and visualizes log-linear models for positive cases and deaths for states in Indiana's local region.
 
+# Sections
+# 1. Set-up
+# 2. Process data
+# 3. Models
+# 4. Chart data
+# 5. Line charts
+
+
+
+
+########################
+# Set-up
+########################
 
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
@@ -30,7 +44,12 @@ data_date <- midwest_dat %>%
    pull(date)
 
 
-# line chart data
+
+
+########################
+# Process data
+########################
+
 
 pos_days_lengths <- midwest_dat %>% 
    filter(positives >= 100) %>%
@@ -58,7 +77,12 @@ dea_chart_dat <- midwest_dat %>%
    bind_cols(dea_days)
 
 
-# models
+
+
+########################
+# Models
+########################
+
 
 mw_pos_models <- midwest_dat %>% 
    model(log_mod = TSLM(log(positives) ~ trend())) %>% 
@@ -77,7 +101,11 @@ mw_dea_models <- midwest_dat %>%
 
 
 
-# annotations
+
+########################
+# Chart data
+########################
+
 
 # positives
 pos_lbl_dat <- mw_pos_models %>% 
@@ -87,19 +115,19 @@ pos_lbl_dat <- mw_pos_models %>%
 
 
 pos_mi_lbl <- glue("Michigan
-                   Est. slope:
+                   Estimated slope:
                    {pos_lbl_dat$est_text[[4]]}")
 pos_in_lbl <- glue("Indiana
-                   Est. slope:
+                   Estimated slope:
                    {pos_lbl_dat$est_text[[2]]}")
 pos_il_lbl <- glue("Illinois
-                   Est. slope:
+                   Estimated slope:
                    {pos_lbl_dat$est_text[[1]]}")
 pos_oh_lbl <- glue("Ohio
-                   Est. slope:
+                   Estimated slope:
                    {pos_lbl_dat$est_text[[5]]}")
 pos_ky_lbl <- glue("Kentucky
-                   Est. slope:
+                   Estimated slope:
                    {pos_lbl_dat$est_text[[3]]}")
 
 pos_mark_circle_dat <- tibble(
@@ -129,19 +157,19 @@ dea_lbl_dat <- mw_dea_models %>%
 
 
 dea_mi_lbl <- glue("Michigan
-                   Est. slope:
+                   Estimated slope:
                    {dea_lbl_dat$est_text[[4]]}")
 dea_in_lbl <- glue("Indiana
-                   Est. slope:
+                   Estimated slope:
                    {dea_lbl_dat$est_text[[2]]}")
 dea_il_lbl <- glue("Illinois
-                   Est. slope:
+                   Estimated slope:
                    {dea_lbl_dat$est_text[[1]]}")
 dea_oh_lbl <- glue("Ohio
-                   Est. slope:
+                   Estimated slope:
                    {dea_lbl_dat$est_text[[5]]}")
 dea_ky_lbl <- glue("Kentucky
-                   Est. slope:
+                   Estimated slope:
                    {dea_lbl_dat$est_text[[3]]}")
 
 dea_mark_circle_dat <- tibble(
@@ -162,8 +190,14 @@ dea_mark_circle_dat <- tibble(
 )
 
 
-# positive cases line chart
 
+
+########################
+# Line charts
+########################
+
+
+# positive test cases
 mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)) + 
    geom_line() + 
    geom_point() +

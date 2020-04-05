@@ -1,8 +1,15 @@
 # Counties
 
+# Fits and visualizes log-linear models to positive cases for  Indiana counties.
+
 # Notes
 # 1. Going to ranking counties by rate of positive cases. Limiting to counties with > 5 positive cases for longer than a week. Want to try and smooth out any large rate jumps due to a spike in increased testing. Will probably need to adjust this in future.
 
+
+
+
+
+# Set-up
 
 pacman::p_load(extrafont, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
@@ -14,6 +21,9 @@ options(scipen=999)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
+
+
+# Process data
 
 counties_dat <- nyt_dat %>%
       filter(state == "Indiana") %>%
@@ -37,6 +47,8 @@ chosen_counties <- counties_dat %>%
       filter(n > 7) %>% 
       pull(county)
 
+
+# Models
 county_pos_models <- counties_dat %>%
       filter(county %in% chosen_counties) %>% 
       model(log_mod = TSLM(log(positives) ~ trend())) %>% 
@@ -46,7 +58,7 @@ county_pos_models <- counties_dat %>%
       mutate(estimate = exp(estimate))
 
 
-# labels
+# Labels
 pos_lbl_dat <- county_pos_models %>% 
       select(county, estimate) %>% 
       mutate(pos_estimate = round((estimate - 1)*100, 1),
@@ -54,6 +66,7 @@ pos_lbl_dat <- county_pos_models %>%
                    paste0(., "%")) %>% 
       select(-estimate)
 
+# Chart data
 pos_bar_dat <- counties_dat %>% 
       filter(county %in% chosen_counties,
              date == max(date)) %>% 
@@ -61,6 +74,9 @@ pos_bar_dat <- counties_dat %>%
       ungroup() %>% 
       mutate(county = as.factor(county)) %>% 
       top_n(20, wt = pos_estimate)
+
+
+
 
 county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x = pos_estimate)) +
       geom_col(aes(fill = pos_estimate)) +
@@ -81,8 +97,9 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
                                         size = rel(1)),
             text = element_text(family = "Roboto"),
             axis.ticks = element_blank(),
-            axis.text.x = element_text(color = "white"),
-            axis.text.y = element_text(color = "white"),
+            axis.text.x = element_blank(),
+            axis.text.y = element_text(color = "white",
+                                       size = 11),
             panel.background = element_rect(fill = "black",
                                             color = NA),
             plot.background = element_rect(fill = "black",
@@ -92,7 +109,5 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
             panel.grid.minor = element_blank())
 
 
-# county_pos_bar
-
-plot_path <- glue("R/Projects/local-corona/plots/county-pos-bar-{data_date}.png")
+plot_path <- glue("plots/county-pos-bar-{data_date}.png")
 ggsave(plot_path, plot = county_pos_bar, dpi = "print", width = 33, height = 20, units = "cm")
