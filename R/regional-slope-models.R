@@ -20,11 +20,11 @@
 pacman::p_load(extrafont, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
 deep_rooted <- swatches::read_palette("palettes/Deep Rooted.ase")
-eth_mat <- swatches::read_palette("palettes/Ethereal Material.ase")
 for_floor <- swatches::read_palette("palettes/Forest Floor.ase")
 trippy <- swatches::read_palette("palettes/trippy.ase")
-
-loadfonts()
+kind <- swatches::read_palette("palettes/Kindred Spirits.ase")
+haze <- swatches::read_palette("palettes/Purple Haze.ase")
+queen <- swatches::read_palette("palettes/Drama Queen.ase")
 
 # remove scientific notations
 options(scipen=999)
@@ -208,7 +208,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
         title = "Regional COVID-19 <b style='color:#B28330'>Positive Test Results</b>",
         subtitle = glue("Last updated: {data_date}"),
         caption = "Source: The New York Times, based on reports from state and local health agencies") +
-   scale_color_manual(guide = FALSE, values = c(trippy[[6]], eth_mat[[1]], for_floor[[3]], trippy[[1]], trippy[[3]])) +
+   scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
    ggforce::geom_mark_circle(aes(
       x = days, y = positives, group = state,
       description = desc),
@@ -274,7 +274,7 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
         title = "Regional COVID-19 <b style='color:#BE454F'>Deaths</b>",
         subtitle = glue("Last updated: {data_date}"),
         caption = "Source: The New York Times, based on reports from state and local health agencies") +
-   scale_color_manual(guide = FALSE, values = c(trippy[[6]], eth_mat[[1]], for_floor[[3]], trippy[[1]], trippy[[3]])) +
+   scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
    ggforce::geom_mark_circle(aes(
       x = days, y = deaths, group = state,
       description = desc),
