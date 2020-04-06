@@ -221,14 +221,14 @@ theme_table <- gridExtra::ttheme_minimal(
 pos_tab_grob <- gridExtra::tableGrob(tab_dat %>%
                                         select(Date, pos_hist_pct_chg) %>%
                                         mutate(pos_hist_pct_chg = as.character(pos_hist_pct_chg) %>% paste0(., "%")) %>% 
-                                        rename(`% change from\npast to today` = pos_hist_pct_chg),
+                                        rename(`% change from\npast to today` = pos_hist_pct_chg, ` ` = Date),
                                      rows = NULL, theme = theme_table)
 
 
 dea_tab_grob <- gridExtra::tableGrob(tab_dat %>%
                                         select(Date, dea_hist_pct_chg) %>%
                                         mutate(dea_hist_pct_chg = as.character(dea_hist_pct_chg) %>% paste0(., "%")) %>% 
-                                        rename(`% change from\npast to today` = dea_hist_pct_chg),
+                                        rename(`% change from\npast to today` = dea_hist_pct_chg, ` ` = Date),
                                      rows = NULL, theme = theme_table)
 
 
