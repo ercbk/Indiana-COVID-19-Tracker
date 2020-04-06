@@ -111,7 +111,7 @@ mw_dea_models <- midwest_dat %>%
 pos_lbl_dat <- mw_pos_models %>% 
    select(state, estimate) %>% 
    mutate(estimate = round((estimate - 1)*100, 1),
-          est_text = case_when(estimate > 0 ~ as.character(estimate) %>% paste0("+", ., "% per day"), estimate < 0 ~ as.character(estimate) %>% paste0("-", ., "% per day"), TRUE ~ as.character(estimate)))
+          est_text = ifelse(estimate > 0, as.character(estimate) %>% paste0("+", ., "% per day"),  as.character(estimate)))
 
 
 pos_mi_lbl <- glue("Michigan

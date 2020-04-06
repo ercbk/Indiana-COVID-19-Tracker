@@ -78,12 +78,12 @@ ind_dat <- nyt_dat %>%
    bind_rows(ind_tweet_dat) %>% 
    mutate(pos_pct_change = round((positives/lag(positives) - 1) * 100, 1),
           dea_pct_change = round((deaths/lag(deaths) - 1) * 100, 1),
-          pos_pct_txt = case_when(pos_pct_change > 0 ~ as.character(pos_pct_change) %>% paste0("+", ., "%"), pos_pct_change < 0 ~ as.character(pos_pct_change) %>% paste0("-", ., "%"), TRUE ~ as.character(pos_pct_change)),
-          dea_pct_txt = case_when(dea_pct_change > 0 ~ as.character(dea_pct_change) %>% paste0("+", ., "%"), dea_pct_change < 0 ~ as.character(dea_pct_change) %>% paste0("-", ., "%"), TRUE ~ as.character(dea_pct_change)),
-          doub_pos = round(log(2)/(pos_pct_change/100), 1) %>%
+          pos_pct_txt = ifelse(pos_pct_change > 0, as.character(pos_pct_change) %>% paste0("+", ., "%"), as.character(pos_pct_change)),
+          dea_pct_txt = ifelse(dea_pct_change > 0, as.character(dea_pct_change) %>% paste0("+", ., "%"), as.character(dea_pct_change)),
+          doub_pos = round(log(2)/log((pos_pct_change/100)+1), 1) %>%
              as.character() %>%
              paste0(., " days"),
-          doub_dea = round(log(2)/(dea_pct_change/100), 1) %>%
+          doub_dea = round(log(2)/log((dea_pct_change/100)+1), 1) %>%
              as.character() %>%
              paste0(., " days"),
           pos_pct_txt = ifelse(pos_pct_txt == "NA%", NA, pos_pct_txt),

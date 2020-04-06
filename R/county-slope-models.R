@@ -88,7 +88,7 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
       labs(x = NULL, y = NULL,
            title = "Estimated change in number of <b style='color:#B28330'>positive tests</b> per day",
            subtitle = glue("Last updated: {data_date}\nNumber of positive tests in black"),
-           caption = "Source: The New York Times, based on reports from state and local health agencies") +
+           caption = "*Limited to counties with more than 5 positive cases for longer than a week in order\n to smooth out any large rate jumps due to spikes in testing.\nSource: The New York Times, based on reports from state and local health agencies") +
       theme(plot.title = element_textbox_simple(size = rel(1.5),
                                                 color = "white"),
             plot.subtitle = element_text(size = rel(1),
@@ -98,6 +98,7 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
             text = element_text(family = "Roboto"),
             axis.ticks = element_blank(),
             axis.text.x = element_blank(),
+            # axis.title.x = element_textbox_simple(color = "white"),
             axis.text.y = element_text(color = "white",
                                        size = 11),
             panel.background = element_rect(fill = "black",
