@@ -273,6 +273,13 @@
       "RemoteSha": "bca610524b6ccc47e76aa7471b67d7335e18d9f4",
       "Hash": "61e42c776c318d52f37edd9bc4d9139f"
     },
+    "ggrepel": {
+      "Package": "ggrepel",
+      "Version": "0.8.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c013a50b19695daf04853679e1bc105a"
+    },
     "ggtext": {
       "Package": "ggtext",
       "Version": "0.1.0",

@@ -9,6 +9,8 @@ and the Indiana State Department of Heath Twitter
 
 ![](plots/ind-line-2020-04-06.png)
 
+![](plots/density-pos-line-2020-04-05.png)
+
 ![](plots/region-dea-line-2020-04-05.png)
 
 ![](plots/region-pos-line-2020-04-05.png)
