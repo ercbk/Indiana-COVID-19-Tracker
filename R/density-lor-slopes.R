@@ -62,7 +62,7 @@ pos_lbl_dat <- pos_lor_dat %>%
    select(state, preds, date)
    
 
-pos_lor_line <- ggplot(data = as.data.frame(pos_lor_dat),
+pos_lor_line <- ggplot(data = pos_lor_dat,
                        aes(x = date, y = pos_logratio,
                            col = state)) +
    geom_hline(yintercept = log(2)/c(2:7,14,21),
@@ -70,16 +70,18 @@ pos_lor_line <- ggplot(data = as.data.frame(pos_lor_dat),
               lty = "1f",
               alpha = 10
    ) +
-   geom_smooth(formula = y ~ x, aes(group = state), method = "loess", se = FALSE) +
+   geom_smooth(formula = y ~ x, aes(group = state),
+               method = "loess", se = FALSE,
+               span = 0.38) +
    ggrepel::geom_text_repel(data = pos_lbl_dat, 
                              aes(x = date, y = preds, 
                                  label = state,
                                  group = state),
                             direction = "y",
-                            point.padding = unit(2, "mm"),
+                            point.padding = unit(3, "mm"),
                             segment.colour = NA) +
-   scale_y_continuous(breaks = log(1+seq(0,50,by=10)/100),
-                      labels = paste0(seq(0,50,by=10),"%"),
+   scale_y_continuous(breaks = log(1+seq(0,60,by=10)/100),
+                      labels = paste0(seq(0,60,by=10),"%"),
                       minor_breaks = NULL,
                       sec.axis = sec_axis(~ log(2)/(.),
                                           breaks = c(2:7,14,21),
