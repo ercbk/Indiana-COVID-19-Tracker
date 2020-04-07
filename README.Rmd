@@ -19,9 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Repository to track COVID-19 data statewide and by county. State and County data for positive tests and deaths are gathered from The New York Times COVID-19 [repository](https://github.com/nytimes/covid-19-data) and the Indiana State Department of Heath Twitter [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor).
 
-testing latex rendering 
-$x_t = x_0(r + 1)^t$
-$$x_t = x_0(r + 1)^t$$
+
 
 ```{r}
 ind_line_path <- glue::glue("plots/ind-line-{params$ind_line_date}.png")
