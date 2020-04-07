@@ -3,9 +3,16 @@ latex test
 ![x\_t = x\_0(r
 + 1)^t](https://latex.codecogs.com/png.latex?x_t%20%3D%20x_0%28r%20%2B%201%29%5Et
 "x_t = x_0(r + 1)^t")  
+  
+![x\_t = x\_0(r
++ 1)^t](https://latex.codecogs.com/png.latex?x_t%20%3D%20x_0%28r%20%2B%201%29%5Et
+"x_t = x_0(r + 1)^t")  
+
 blah blah ![x\_t = x\_0(r
 + 1)^t](https://latex.codecogs.com/png.latex?x_t%20%3D%20x_0%28r%20%2B%201%29%5Et
-"x_t = x_0(r + 1)^t") blah
+"x_t = x_0(r + 1)^t") blah blah blah ![$x\_t = x\_0(r
++ 1)^t](https://latex.codecogs.com/png.latex?%24x_t%20%3D%20x_0%28r%20%2B%201%29%5Et
+"$x_t = x_0(r + 1)^t") blah
 
 # Indiana COVID-19 Tracker
 
