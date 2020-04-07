@@ -1,11 +1,11 @@
 ---
 output: github_document
 params:
-      ind_line_date: !r Sys.Date()
-      density_pos_date: !r Sys.Date()-1
-      region_dea_date: !r Sys.Date()-1
-      region_pos_date: !r Sys.Date()-1
-      county_pos_date: !r Sys.Date()-1
+      ind_line_date: "2020-04-07"
+      density_pos_date: "2020-04-05"
+      region_dea_date: "2020-04-05"
+      region_pos_date: "2020-04-05"
+      county_pos_date: "2020-04-05"
       
 ---
 
@@ -18,6 +18,10 @@ knitr::opts_chunk$set(echo = FALSE)
 # Indiana COVID-19 Tracker
 
 Repository to track COVID-19 data statewide and by county. State and County data for positive tests and deaths are gathered from The New York Times COVID-19 [repository](https://github.com/nytimes/covid-19-data) and the Indiana State Department of Heath Twitter [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor).
+
+testing latex rendering 
+$x_t = x_0(r + 1)^t$
+$$x_t = x_0(r + 1)^t$$
 
 ```{r}
 ind_line_path <- glue::glue("plots/ind-line-{params$ind_line_date}.png")

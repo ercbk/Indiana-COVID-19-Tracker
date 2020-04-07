@@ -7,7 +7,9 @@ Times COVID-19 [repository](https://github.com/nytimes/covid-19-data)
 and the Indiana State Department of Heath Twitter
 [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor).
 
-<img src="plots/ind-line-2020-04-06.png" width="3897" />
+testing latex rendering \(x_t = x_0(r + 1)^t\) \[x_t = x_0(r + 1)^t\]
+
+<img src="plots/ind-line-2020-04-07.png" width="3897" />
 
 <img src="plots/density-pos-line-2020-04-05.png" width="3897" />
 
