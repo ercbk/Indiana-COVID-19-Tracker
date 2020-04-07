@@ -1,7 +1,7 @@
 ---
 output: github_document
 params:
-      ind_line_date: "2020-04-07"
+      ind_line_date: "2020-04-06"
       density_pos_date: "2020-04-05"
       region_dea_date: "2020-04-05"
       region_pos_date: "2020-04-05"
