@@ -204,8 +204,8 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    scale_y_log10() +
    # needed to provide space to ggforce labels
    expand_limits(y = max(pos_chart_dat$positives)*2.5) +
-   labs(x = "Number of days since 100 <b style='color:#B28330'>positive cases</b> first recorded", y = NULL,
-        title = "Regional COVID-19 <b style='color:#B28330'>Positive Test Results</b>",
+   labs(x = "Number of days since a total of 100 <b style='color:#B28330'>positive cases</b> first recorded", y = NULL,
+        title = "Regional COVID-19 <b style='color:#B28330'> Cumulative Positive Test Results</b>",
         subtitle = glue("Last updated: {data_date}"),
         caption = "Source: The New York Times, based on reports from state and local health agencies") +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
@@ -270,8 +270,8 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
    scale_y_log10() +
    # needed to provide space to ggforce labels
    expand_limits(y = max(dea_chart_dat$deaths)*2.5) +
-   labs(x = "Number of days since 5 <b style='color:#BE454F'>deaths</b> first recorded", y = NULL,
-        title = "Regional COVID-19 <b style='color:#BE454F'>Deaths</b>",
+   labs(x = "Number of days since a total of 5 <b style='color:#BE454F'>deaths</b> first recorded", y = NULL,
+        title = "Regional COVID-19 <b style='color:#BE454F'>Cumulative Deaths</b>",
         subtitle = glue("Last updated: {data_date}"),
         caption = "Source: The New York Times, based on reports from state and local health agencies") +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +

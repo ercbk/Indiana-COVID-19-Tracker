@@ -86,7 +86,7 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
       scale_fill_gradientn(colors = palette,
                            guide = 'none') +
       labs(x = NULL, y = NULL,
-           title = "Estimated change in number of <b style='color:#B28330'>positive tests</b> per day",
+           title = "Estimated change in <b style='color:#B28330'>cumulative positive tests</b> per day",
            subtitle = glue("Last updated: {data_date}\nNumber of positive tests in black"),
            caption = "*Limited to counties with more than 5 positive cases for longer than a week in order\n to smooth out any large rate jumps due to spikes in testing.\nSource: The New York Times, based on reports from state and local health agencies") +
       theme(plot.title = element_textbox_simple(size = rel(1.5),
