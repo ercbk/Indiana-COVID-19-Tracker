@@ -9,10 +9,10 @@ and the Indiana State Department of Heath Twitter
 
 <img src="plots/ind-line-2020-04-07.png" width="3897" />
 
-<img src="plots/density-pos-line-2020-04-05.png" width="3897" />
+<img src="plots/density-pos-line-2020-04-06.png" width="3897" />
 
-<img src="plots/region-dea-line-2020-04-05.png" width="3897" />
+<img src="plots/region-dea-line-2020-04-06.png" width="3897" />
 
-<img src="plots/region-pos-line-2020-04-05.png" width="3897" />
+<img src="plots/region-pos-line-2020-04-06.png" width="3897" />
 
-<img src="plots/county-pos-bar-2020-04-05.png" width="3897" />
+<img src="plots/county-pos-bar-2020-04-06.png" width="3897" />
