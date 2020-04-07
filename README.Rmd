@@ -1,5 +1,7 @@
 ---
-output: github_document
+output: 
+   github_document:
+      pandoc_args: --webtex
 params:
       ind_line_date: !r Sys.Date()
       density_pos_date: !r Sys.Date()-1
@@ -8,6 +10,10 @@ params:
       county_pos_date: !r Sys.Date()-1
       
 ---
+
+latex test
+$$x_t = x_0(r + 1)^t$$
+blah blah $x_t = x_0(r + 1)^t$ blah
 
 
 ```{r, setup, include=FALSE}

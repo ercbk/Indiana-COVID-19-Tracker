@@ -96,8 +96,10 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
         caption = "Curves fitted using LOESS regression\nSource: The New York Times, based on reports from state and local health agencies") +
    theme(
       legend.position = 'none',
-      plot.title = element_textbox_simple(color = "white"),
-      plot.subtitle = element_textbox_simple(color = "white"),
+      plot.title = element_textbox_simple(color = "white",
+                                          family = "Roboto"),
+      plot.subtitle = element_textbox_simple(color = "white",
+                                             family = "Roboto"),
       plot.caption = element_text(color = "white",
                                   size = rel(1)),
       text = element_text(family = "Roboto"),

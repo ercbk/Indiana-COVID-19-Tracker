@@ -143,6 +143,7 @@ ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
                     con.colour = deep_rooted[[7]],
                     label.colour = "white",
                     label.fill = deep_rooted[[7]],
+                    label.family = "Roboto",
                     color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#B28330'>Cumulative Positive Test Results</b>") +
    theme(plot.title = element_textbox_simple(size = rel(0.9)),
@@ -171,11 +172,12 @@ ind_statewide_dea <- ggplot(ind_dat, aes(x = date, y = deaths)) +
       expand = -0.02, radius = 0.02,
       con.colour = deep_rooted[[7]],
       label.colour = "white",
-      # label.buffer = unit(20, 'mm'),
       label.fill = deep_rooted[[7]],
+      label.family = "Roboto",
       color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#BE454F'>Cumulative Deaths</b>") +
-   theme(plot.title = element_textbox_simple(size = rel(0.9)),
+   theme(plot.title = element_textbox_simple(size = rel(0.9),
+                                             family = "Roboto"),
          text = element_text(family = "Roboto"),
          legend.position = "none",
          axis.text.x = element_text(color = "white"),

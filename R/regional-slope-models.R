@@ -237,7 +237,8 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
              inherit.aes = FALSE,
              show.legend = FALSE) +
    theme(plot.title = element_textbox_simple(size = rel(1.5),
-                                             color = "white"),
+                                             color = "white",
+                                             family = "Roboto"),
          plot.subtitle = element_text(size = rel(0.95),
                                       color = "white"),
          plot.caption = element_text(color = "white",
