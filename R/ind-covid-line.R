@@ -75,7 +75,8 @@ ind_dat <- nyt_dat %>%
    group_by(date) %>% 
    summarize(positives = sum(cases),
              deaths = sum(deaths)) %>% 
-   bind_rows(ind_tweet_dat) %>% 
+   bind_rows(ind_tweet_dat) %>%
+   arrange(date) %>% 
    mutate(pos_pct_change = round((positives/lag(positives) - 1) * 100, 1),
           dea_pct_change = round((deaths/lag(deaths) - 1) * 100, 1),
           pos_pct_txt = ifelse(pos_pct_change > 0, as.character(pos_pct_change) %>% paste0("+", ., "%"), as.character(pos_pct_change)),
