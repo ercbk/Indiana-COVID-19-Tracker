@@ -11,15 +11,6 @@ params:
       
 ---
 
-latex test
-$$x_t = x_0(r + 1)^t$$
-\[x_t = x_0(r + 1)^t\]
-
-blah blah $x_t = x_0(r + 1)^t$ blah
-blah blah \($x_t = x_0(r + 1)^t\) blah
-
-
-
 
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)

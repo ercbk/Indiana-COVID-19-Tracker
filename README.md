@@ -14,6 +14,15 @@ blah blah ![x\_t = x\_0(r
 + 1)^t](https://latex.codecogs.com/png.latex?%24x_t%20%3D%20x_0%28r%20%2B%201%29%5Et
 "$x_t = x_0(r + 1)^t") blah
 
+  
+![
+x\_t = x\_0(r + 1)^t
+](https://latex.codecogs.com/png.latex?%0Ax_t%20%3D%20x_0%28r%20%2B%201%29%5Et%0A
+"
+x_t = x_0(r + 1)^t
+")  
+$ x\_t = x\_0(r + 1)^t $
+
 # Indiana COVID-19 Tracker
 
 Repository to track COVID-19 data statewide and by county. State and
