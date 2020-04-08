@@ -7,7 +7,7 @@ Times COVID-19 [repository](https://github.com/nytimes/covid-19-data)
 and the Indiana State Department of Heath Twitter
 [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor).
 
-<img src="plots/ind-line-2020-04-07.png" width="3897" />
+<img src="plots/ind-line-2020-04-08.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus.  
