@@ -11,6 +11,7 @@ and the Indiana State Department of Heath Twitter
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus.  
+
   - *Doubling time* is the amount of time it would take for the current
     total to double. It assumes that the rate of change is constant. The
     doubling time shown here assumes that the total change from
@@ -18,26 +19,29 @@ and the Indiana State Department of Heath Twitter
     constant in the future. As we’ll see in the next chart, it’s not a
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
+
   - The equation for doubling time, T<sub>d</sub>, where r is the growth
-    rate.
-
-<center>
-
-<img src="images/doubling-time.png" width="146" />
-
-</center>
-
-<img src="plots/density-pos-line-2020-04-06.png" width="3897" />
+    rate.  
+    
+    <center>
+    
+    <img src="images/doubling-time.png" width="146" />
+    
+    </center>
+    
+    <img src="plots/density-pos-line-2020-04-06.png" width="3897" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
     connected line graph of the actual data because the fluctuations of
     the data would obscure the trends.  
+
   - These curves can be used to compare the effectiveness of state
     responses. Population density is an important factor for how quickly
     a virus spreads. Therefore, it’s a fairer comparison to use states
     with similar population densities if we want to get an idea of how
     well Indiana’s governmental response has been.  
+
   - Doubling times, as shown in the previous equation, are calculated
     from growth rates, so I’ve included a second y-axis to show how
     these have changed over time as well.
