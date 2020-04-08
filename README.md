@@ -10,7 +10,7 @@ and the Indiana State Department of Heath Twitter
 <img src="plots/ind-line-2020-04-07.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
-    The lines show the exponential nature of the spread of virus.  
+    The lines show the exponential nature of the spread of the virus.  
   - *Doubling time* is the amount of time it would take for the current
     total to double. It assumes that the rate of change is constant. The
     doubling time shown here assumes that the total change from
