@@ -1,7 +1,6 @@
 ---
 output: 
-   github_document:
-      pandoc_args: --webtex
+   github_document
 params:
       ind_line_date: !r Sys.Date()
       density_pos_date: !r Sys.Date()-1
@@ -29,10 +28,13 @@ knitr::include_graphics(ind_line_path)
    * Each point is the total cases that have accumulated until that date. The lines show the exponential nature of the spread of the virus.  
    * *Doubling time* is the amount of time it would take for the current total to double. It assumes that the rate of change is constant. The doubling time shown here assumes that the total change from yesterday to today (i.e. single day *growth rate*) will remain constant in the future. As we'll see in the next chart, it's not a valid assumption in this situation, but it's interesting as a hypothetical. 
    * The equation for doubling time, T~d~, where r is the growth rate.  
-   $$
-   T_d = \frac{\log(2)}{\log(1+\frac{r}{100})}
-   $$
-   
+
+<center>
+```{r, align="center"}
+knitr::include_graphics("images/doubling-time.png")
+```
+</center>
+
 ```{r}
 density_pos_path <- glue::glue("plots/density-pos-line-{params$density_pos_date}.png")
 knitr::include_graphics(density_pos_path)

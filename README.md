@@ -19,14 +19,13 @@ and the Indiana State Department of Heath Twitter
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
   - The equation for doubling time, T<sub>d</sub>, where r is the growth
-    rate.  
-      
-    ![
-                T\_d = \\frac{\\log(2)}{\\log(1+\\frac{r}{100})}
-                ](https://latex.codecogs.com/png.latex?%0A%20%20%20T_d%20%3D%20%5Cfrac%7B%5Clog%282%29%7D%7B%5Clog%281%2B%5Cfrac%7Br%7D%7B100%7D%29%7D%0A%20%20%20
-    "
-       T_d = \\frac{\\log(2)}{\\log(1+\\frac{r}{100})}
-       ")  
+    rate.
+
+<center>
+
+<img src="images/doubling-time.png" width="146" />
+
+</center>
 
 <img src="plots/density-pos-line-2020-04-06.png" width="3897" />
 
