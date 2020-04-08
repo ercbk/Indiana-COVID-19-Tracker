@@ -16,7 +16,8 @@ and the Indiana State Department of Heath Twitter
     doubling time shown here assumes that the total change from
     yesterday to today (i.e. single day *growth rate*) will remain
     constant in the future. As we’ll see in the next chart, it’s not a
-    valid assumption in this situation.  
+    valid assumption in this situation, but it’s interesting as a
+    hypothetical.
   - The equation for doubling time, T<sub>d</sub>, where r is the growth
     rate.  
       
