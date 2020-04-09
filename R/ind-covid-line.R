@@ -144,6 +144,7 @@ ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
                     label.colour = "white",
                     label.fill = deep_rooted[[7]],
                     label.family = "Roboto",
+                    label.buffer = unit(15, "mm"),
                     color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#B28330'>Cumulative Positive Test Results</b>") +
    theme(plot.title = element_textbox_simple(size = rel(0.9)),
