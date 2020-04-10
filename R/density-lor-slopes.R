@@ -9,10 +9,11 @@
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
-deep_rooted <- swatches::read_palette("palettes/Deep Rooted.ase")
-for_floor <- swatches::read_palette("palettes/Forest Floor.ase")
-trippy <- swatches::read_palette("palettes/trippy.ase")
-kind <- swatches::read_palette("palettes/Kindred Spirits.ase")
+
+deep_rooted <- swatches::read_palette(glue("{here::here()}/palettes/Deep Rooted.ase"))
+for_floor <- swatches::read_palette(glue("{here::here()}/palettes/Forest Floor.ase"))
+trippy <- swatches::read_palette(glue("{here::here()}/palettes/trippy.ase"))
+kind <- swatches::read_palette(glue("{here::here()}/palettes/Kindred Spirits.ase"))
 
 # remove scientific notations
 options(scipen=999)
@@ -117,7 +118,7 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
       
    )
 
-plot_path <- glue("plots/density-pos-line-{data_date}.png")
+plot_path <- glue("{here::here()}/plots/density-pos-line-{data_date}.png")
 ggsave(plot_path, plot = pos_lor_line, dpi = "print", width = 33, height = 20, units = "cm")
 
 
