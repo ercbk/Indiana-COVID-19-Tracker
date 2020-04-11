@@ -2,6 +2,8 @@
 
 library(rtweet)
 
+fs::file_create(".Renviron")
+
 token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
 
 create_token(
