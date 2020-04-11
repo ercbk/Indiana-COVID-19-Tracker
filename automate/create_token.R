@@ -12,3 +12,6 @@ create_token(
       consumer_secret = token_stuff[[3]],
       access_token = token_stuff[[4]],
       access_secret = token_stuff[[5]])
+
+token_env_var <- glue::glue("TWITTER_PAT={here::here()}/.rtweet_token.rds")
+write(token_env_var, ".Renviron", append = TRUE)
