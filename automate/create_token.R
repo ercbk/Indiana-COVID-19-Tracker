@@ -1,6 +1,6 @@
 # Create rtweet token to use in github actions
 
-
+library(rtweet)
 
 token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
 
