@@ -9,6 +9,12 @@ jobs:
   update:
     name: Update IN COVID Tracker
     runs-on: windows-latest
+    env:
+      APPNAME: ${{ secrets.APPNAME }}
+      APIKEY: ${{ secrets.APIKEY }}
+      APISECRET: ${{ secrets.APISECRET }}
+      ACCESSTOKEN: ${{ secrets.ACCESSTOKEN }}
+      ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
     steps:
       # must checkout out of own repo to use "action" in someone elses  
       - uses: actions/checkout@v2
@@ -22,6 +28,8 @@ jobs:
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3.tar.gz', repos = NULL, type = 'source')"
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore()'
+      - name: create rtweet token
+        run: Rscript "automate/create_token.R"
       - name: run ind-covid-line
         run: Rscript "R/ind-covid-line.R"
       - name: run county-slope-models
