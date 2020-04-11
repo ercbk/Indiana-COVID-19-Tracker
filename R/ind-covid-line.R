@@ -33,8 +33,20 @@ latest_date <- nyt_dat %>%
    summarize(max_date = max(date)) %>% 
    pull(max_date)
 
+token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
+
+rt_tok <- rtweet::create_token(
+   app = token_stuff[[1]],
+   consumer_key = token_stuff[[2]],
+   consumer_secret = token_stuff[[3]],
+   access_token = token_stuff[[4]],
+   access_secret = token_stuff[[5]],
+   set_renv = FALSE)
+
 # get Indiana Health Department's last 150 tweets
-in_health_tweets <- rtweet::get_timeline("StateHealthIN", n = 150) %>% 
+in_health_tweets <- rtweet::get_timeline("StateHealthIN",
+                                         n = 150,
+                                         token = rt_tok) %>% 
    tidyr::separate(col = "created_at", into = c("date", "time"), sep = " ") %>% 
    mutate(date = as_date(date),
           time = hms::as_hms(time))
