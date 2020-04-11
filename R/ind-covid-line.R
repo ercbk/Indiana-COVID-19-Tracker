@@ -33,9 +33,10 @@ latest_date <- nyt_dat %>%
    summarize(max_date = max(date)) %>% 
    pull(max_date)
 
+rt_tok <- rtweet::get_token()
 
 # get Indiana Health Department's last 150 tweets
-in_health_tweets <- rtweet::get_timeline("StateHealthIN", n = 150) %>% 
+in_health_tweets <- rtweet::get_timeline("StateHealthIN", n = 150, token = rt_tok) %>% 
    tidyr::separate(col = "created_at", into = c("date", "time"), sep = " ") %>% 
    mutate(date = as_date(date),
           time = hms::as_hms(time))
