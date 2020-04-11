@@ -1,0 +1,39 @@
+on:
+  schedule:
+    # says run at the 0th min, 12th hr UTC (4pm ET) of every day
+    - cron: '0 2 * * *'
+
+name: Evening Update
+
+jobs:
+  update:
+    name: Update IN COVID Tracker
+    runs-on: windows-latest
+    steps:
+      # must checkout out of own repo to use "action" in someone elses  
+      - uses: actions/checkout@v2
+      # installs r
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: '3.6.2'
+      # installs pandoc for rmarkdown
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Install renv
+        run: Rscript -e 'install.packages("renv")'
+      - name: copy dev environment to runner
+        run: Rscript -e 'renv::restore()'
+      - name: run ind-covid-line
+        run: Rscript "R/ind-covid-line.R"
+      - name: run county-slope-models
+        run: Rscript "R/county-slope-models.R"
+      - name: run density-lor-slopes
+        run: Rscript "R/density-lor-slopes.R"
+      - name: run regional-slope-models
+        run: Rscript "R/regional-slope-models.R"
+      - name: render readme
+        run: Rscript "automate/render-readme.R"
+      - name: Commit results
+      # vertical line means multiline commands
+        run: |
+          git commit README.md -m 'Evening README update' || echo "No changes to commit"
+          git push https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"

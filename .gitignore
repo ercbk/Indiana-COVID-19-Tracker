@@ -2,4 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-readme-alt-render.R
+gateway.R
+ind-covid-tracker.bat
+Rplots.pdf
