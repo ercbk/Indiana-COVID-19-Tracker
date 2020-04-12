@@ -1,7 +1,7 @@
 on:
   schedule:
     # says run at the 0th min, 12th hr UTC (4pm ET) of every day
-    - cron: '0 15 * * *'
+    - cron: '5 19 * * *'
 
 name: Evening Update
 
