@@ -1,9 +1,9 @@
+name: Evening Update
+
 on:
   schedule:
-    # says run at the 0th min, 12th hr UTC (4pm ET) of every day
+    # says run at the 0th min, 20th hr UTC (4pm ET) of every day
     - cron: '0 20 * * *'
-
-name: Evening Update
 
 jobs:
   update:
