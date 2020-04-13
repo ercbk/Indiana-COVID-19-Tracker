@@ -26,7 +26,7 @@ nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-d
 
 
 density_dat <- nyt_dat %>%
-   filter(state %in% c("Indiana", "Georgia", "Michigan")) %>%
+   filter(state %in% c("Indiana", "Michigan", "South Carolina")) %>%
    group_by(state, date) %>% 
    summarize(positives = sum(cases),
              deaths = sum(deaths)) %>% 
@@ -42,6 +42,7 @@ data_date <- density_dat %>%
 
 # slope of a log curve is the same as the log of the ratios of successive values
 pos_lor_dat <- density_dat %>%
+   group_by(state) %>% 
    mutate(pos_logratio = difference(log(positives)),
           pos_doub = log(2)/pos_logratio) %>%
    filter(date >= "2020-03-21")
@@ -83,10 +84,14 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
                             segment.colour = NA) +
    scale_y_continuous(breaks = log(1+seq(0,60,by=10)/100),
                       labels = paste0(seq(0,60,by=10),"%"),
-                      minor_breaks = NULL) +
+                      minor_breaks = NULL,
+                      sec.axis = sec_axis(~ log(2)/(.),
+                                          breaks = c(2:7,14,21),
+                                          name = "Doubling time (days)")
+                      ) +
    scale_x_date(date_breaks = "2 days",
                 date_labels = "%b %d") +
-   scale_color_manual(guide = FALSE, values = c(trippy[[4]], kind[[2]], for_floor[[3]])) +
+   scale_color_manual(guide = FALSE, values = c(trippy[[4]], kind[[2]], for_floor[[3]], trippy[[1]])) +
    labs(x = NULL, y = NULL,
         title = "Daily changes in cumulative <b style='color:#B28330'>positive tests</b> of states with similar population densities",
         subtitle = glue("Last updated: {data_date}"),
@@ -117,9 +122,3 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/density-pos-line-{data_date}.png")
 ggsave(plot_path, plot = pos_lor_line, dpi = "print", width = 33, height = 20, units = "cm")
 
-# Negative numbers are throwing a monkey wrench into this
-# ,
-# sec.axis = sec_axis(~ log(2)/(.),
-#                     breaks = c(2:7,14,21),
-#                     name = "Doubling time (days)")
-# ) 

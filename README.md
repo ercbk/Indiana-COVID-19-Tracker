@@ -44,7 +44,13 @@ and the Indiana State Department of Heath Twitter
 
   - Doubling times, as shown in the previous equation, are calculated
     from growth rates, so I’ve included a second y-axis to show how
-    these have changed over time as well.
+    these have changed over time as well.  
+
+  - Previous versions of this chart included Georgia. As of 2020-04-12,
+    Georgia started separating non-state residents from their patient
+    counts. Neither The New York Times nor Georgia adjusted the counts
+    prior to the change. Without an adjustment, it destroyed the
+    coherence of the data, so I’ve replaced them with South Carolina.
 
 <img src="plots/region-dea-line-2020-04-12.png" width="3897" />
 
