@@ -19,12 +19,12 @@
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
-deep_rooted <- swatches::read_palette(glue("{here::here()}/palettes/Deep Rooted.ase"))
-for_floor <- swatches::read_palette(glue("{here::here()}/palettes/Forest Floor.ase"))
-trippy <- swatches::read_palette(glue("{here::here()}/palettes/trippy.ase"))
-kind <- swatches::read_palette(glue("{here::here()}/palettes/Kindred Spirits.ase"))
-haze <- swatches::read_palette(glue("{here::here()}/palettes/Purple Haze.ase"))
-queen <- swatches::read_palette(glue("{here::here()}/palettes/Drama Queen.ase"))
+deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
+for_floor <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Forest Floor.ase"))
+trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/trippy.ase"))
+kind <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Kindred Spirits.ase"))
+haze <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Purple Haze.ase"))
+queen <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Drama Queen.ase"))
 
 # remove scientific notations
 options(scipen=999)
@@ -323,6 +323,6 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
 
-plot_path <- glue("{here::here()}/plots/region-dea-line-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/region-dea-line-{data_date}.png")
 ggsave(plot_path, plot = mw_dea_line, dpi = "print", width = 33, height = 20, units = "cm")
 

@@ -20,7 +20,7 @@
 pacman::p_load(grid, extrafont, prismatic, ggtext, dplyr, glue, lubridate, stringr, ggplot2)
 
 
-deep_rooted <- swatches::read_palette(glue("{here::here()}/palettes/Deep Rooted.ase"))
+deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 
 # loadfonts()
 
@@ -288,7 +288,7 @@ gtab <- gtable::gtable_add_grob(gtab, dea_tab_grob, t = 3, l = 5)
 # grid.draw(gtab)
 # grid.newpage()
 
-plot_path <- glue("{here::here()}/plots/ind-combo-line-{label_dat$date[[1]]}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/ind-combo-line-{label_dat$date[[1]]}.png")
 ggsave(plot_path, plot = gtab, dpi = "print", width = 33, height = 20, units = "cm")
 
 

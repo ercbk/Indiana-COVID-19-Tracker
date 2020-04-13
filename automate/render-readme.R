@@ -34,5 +34,5 @@ paths <- png_files %>%
       filter(date == min(date)) %>% 
       pull(paths)
 
-fs::file_delete(paths)
+# fs::file_delete(paths)
 fs::file_delete(glue::glue("{here::here()}/README.html"))

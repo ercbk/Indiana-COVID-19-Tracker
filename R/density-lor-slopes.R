@@ -10,10 +10,10 @@
 pacman::p_load(extrafont, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
 
-deep_rooted <- swatches::read_palette(glue("{here::here()}/palettes/Deep Rooted.ase"))
-for_floor <- swatches::read_palette(glue("{here::here()}/palettes/Forest Floor.ase"))
-trippy <- swatches::read_palette(glue("{here::here()}/palettes/trippy.ase"))
-kind <- swatches::read_palette(glue("{here::here()}/palettes/Kindred Spirits.ase"))
+deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
+for_floor <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Forest Floor.ase"))
+trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/trippy.ase"))
+kind <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Kindred Spirits.ase"))
 
 # remove scientific notations
 options(scipen=999)
@@ -83,11 +83,7 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
                             segment.colour = NA) +
    scale_y_continuous(breaks = log(1+seq(0,60,by=10)/100),
                       labels = paste0(seq(0,60,by=10),"%"),
-                      minor_breaks = NULL,
-                      sec.axis = sec_axis(~ log(2)/(.),
-                                          breaks = c(2:7,14,21),
-                                          name = "Doubling time (days)")
-   ) +
+                      minor_breaks = NULL) +
    scale_x_date(date_breaks = "2 days",
                 date_labels = "%b %d") +
    scale_color_manual(guide = FALSE, values = c(trippy[[4]], kind[[2]], for_floor[[3]])) +
@@ -118,7 +114,12 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
       
    )
 
-plot_path <- glue("{here::here()}/plots/density-pos-line-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/density-pos-line-{data_date}.png")
 ggsave(plot_path, plot = pos_lor_line, dpi = "print", width = 33, height = 20, units = "cm")
 
-
+# Negative numbers are throwing a monkey wrench into this
+# ,
+# sec.axis = sec_axis(~ log(2)/(.),
+#                     breaks = c(2:7,14,21),
+#                     name = "Doubling time (days)")
+# ) 
