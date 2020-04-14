@@ -1,7 +1,7 @@
 
 
 
-library(dplyr, quietly = TRUE)
+library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 
 # get plot paths, names, and dates
 png_files <- tibble::tibble(paths = fs::dir_ls(here::here("plots"))) %>% 
@@ -34,5 +34,5 @@ paths <- png_files %>%
       filter(date == min(date)) %>% 
       pull(paths)
 
-# fs::file_delete(paths)
-fs::file_delete(glue::glue("{here::here()}/README.html"))
+fs::file_delete(paths)
+fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/README.html"))
