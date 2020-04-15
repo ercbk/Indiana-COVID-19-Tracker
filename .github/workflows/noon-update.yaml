@@ -1,0 +1,56 @@
+name: Noon Update
+
+on:
+  schedule:
+    # says run at the 0th min, 20th hr UTC (4pm ET) of every day
+    - cron: '0 16 * * *'
+
+jobs:
+  update:
+    name: Update IN COVID Tracker
+    runs-on: windows-latest
+    env:
+      APPNAME: ${{ secrets.APPNAME }}
+      APIKEY: ${{ secrets.APIKEY }}
+      APISECRET: ${{ secrets.APISECRET }}
+      ACCESSTOKEN: ${{ secrets.ACCESSTOKEN }}
+      ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
+    steps:
+      # must checkout out of own repo to use "action" in someone elses  
+      - uses: actions/checkout@v2
+      # installs r
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: '3.6.2'
+      # installs pandoc for rmarkdown
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Install renv
+        run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3.tar.gz', repos = NULL, type = 'source')"
+      - name: copy dev environment to runner
+        run: Rscript -e 'renv::restore()'
+      - name: run gateway
+        run: Rscript -e "automate/gateway.R"
+      - name: run ind-covid-line
+        if: success()
+        run: Rscript "R/ind-covid-line.R"
+      - name: run county-slope-models
+        if: success()
+        run: Rscript "R/county-slope-models.R"
+      - name: run density-lor-slopes
+        if: success()
+        run: Rscript "R/density-lor-slopes.R"
+      - name: run regional-slope-models
+        if: success()
+        run: Rscript "R/regional-slope-models.R"
+      - name: render readme
+        if: success()
+        run: Rscript "automate/render-readme.R"
+      - name: Commit results
+        if: success()
+      # vertical line means multiline commands
+        run: |
+          git config --global user.email "ericbookax0@gmail.com"
+          git config --global user.name "ercbk"
+          git add .
+          git commit -m 'Late Afternoon automatic data update' || echo "No changes to commit"
+          git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} || echo "No changes to commit"

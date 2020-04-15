@@ -2,8 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
-gateway.R
 ind-covid-tracker.bat
 Rplots.pdf
 ind-covid-line-local.R
 ind-covid-line-rscript.R
+tweet-covid-update.R
+create_token.R

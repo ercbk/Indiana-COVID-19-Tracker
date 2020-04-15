@@ -34,5 +34,8 @@ paths <- png_files %>%
       filter(date == min(date)) %>% 
       pull(paths)
 
-fs::file_delete(paths)
+if (nrow(png_files) > 12) {
+   fs::file_delete(paths)
+}
+
 fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/README.html"))
