@@ -9,12 +9,24 @@
 
 suppressPackageStartupMessages(suppressWarnings(library(dplyr)))
 
+token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
+
+rt_tok <- rtweet::create_token(
+   app = token_stuff[[1]],
+   consumer_key = token_stuff[[2]],
+   consumer_secret = token_stuff[[3]],
+   access_token = token_stuff[[4]],
+   access_secret = token_stuff[[5]],
+   set_renv = FALSE)
+
 # need to set the initial value
 tweet_rows <- 0
 
 while (lubridate::minute(Sys.time()) < 55 & tweet_rows == 0) {
    
-   in_health_tweets <- rtweet::get_timeline("StateHealthIN", n = 150) %>% 
+   in_health_tweets <- rtweet::get_timeline("StateHealthIN",
+                                            n = 150,
+                                            token = rt_tok) %>% 
       tidyr::separate(col = "created_at", into = c("date", "time"), sep = " ") %>% 
       mutate(date = lubridate::as_date(date),
              time = hms::as_hms(time)) %>%
