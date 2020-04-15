@@ -3,10 +3,10 @@ output:
    github_document
 params:
       ind_combo_date: !r Sys.Date()
-      density_pos_date: !r Sys.Date()-1
-      region_dea_date: !r Sys.Date()-1
-      region_pos_date: !r Sys.Date()-1
-      county_pos_date: !r Sys.Date()-1
+      density_pos_date: !r Sys.Date()-2
+      region_dea_date: !r Sys.Date()-2
+      region_pos_date: !r Sys.Date()-2
+      county_pos_date: !r Sys.Date()-2
       
 ---
 
