@@ -29,7 +29,7 @@ jobs:
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore()'
       - name: run gateway
-        run: Rscript -e "automate/gateway.R"
+        run: Rscript "automate/gateway.R"
       - name: run ind-covid-line
         if: success()
         run: Rscript "R/ind-covid-line.R"
