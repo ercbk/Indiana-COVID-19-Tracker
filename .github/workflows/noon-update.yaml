@@ -3,7 +3,7 @@ name: Noon Update
 on:
   schedule:
     # says run at the 47th min, 15th hr UTC (11:47am ET) of every day
-    - cron: '47 15 * * *'
+    - cron: '49 15 * * *'
 
 jobs:
   update:
