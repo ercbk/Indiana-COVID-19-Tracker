@@ -2,8 +2,8 @@ name: Noon Update
 
 on:
   schedule:
-    # says run at the 0th min, 20th hr UTC (4pm ET) of every day
-    - cron: '0 16 * * *'
+    # says run at the 47th min, 15th hr UTC (11:47am ET) of every day
+    - cron: '47 15 * * *'
 
 jobs:
   update:
@@ -25,7 +25,7 @@ jobs:
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install renv
-        run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3.tar.gz', repos = NULL, type = 'source')"
+        run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3-30.tar.gz', repos = NULL, type = 'source')"
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore()'
       - name: run gateway
@@ -49,8 +49,8 @@ jobs:
         if: success()
       # vertical line means multiline commands
         run: |
-          git config --global user.email "ericbookax0@gmail.com"
-          git config --global user.name "ercbk"
+          git config user.email "ericbookax0@gmail.com"
+          git config user.name "ercbk"
           git add .
           git commit -m 'Late Afternoon automatic data update' || echo "No changes to commit"
           git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} || echo "No changes to commit"
