@@ -29,7 +29,7 @@ and the Indiana State Department of Heath Twitter
     
     </center>
     
-    <img src="plots/density-pos-line-2020-04-13.png" width="3897" />
+    <img src="plots/density-pos-line-2020-04-14.png" width="3897" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -52,9 +52,9 @@ and the Indiana State Department of Heath Twitter
     prior to the change. Without an adjustment, it destroyed the
     coherence of the data, so I’ve replaced them with South Carolina.
 
-<img src="plots/region-dea-line-2020-04-13.png" width="3897" />
+<img src="plots/region-dea-line-2020-04-14.png" width="3897" />
 
-<img src="plots/region-pos-line-2020-04-13.png" width="3897" />
+<img src="plots/region-pos-line-2020-04-14.png" width="3897" />
 
   - The y-axis has been transformed to the log base-10 scale and taking
     the logarithm of an exponential curve creates a straight line. It’s
@@ -66,7 +66,7 @@ and the Indiana State Department of Heath Twitter
     indicates the data is becoming less exponential. The estimation
     errors become larger and the model less appropriate.
 
-<img src="plots/county-pos-bar-2020-04-13.png" width="3897" />
+<img src="plots/county-pos-bar-2020-04-14.png" width="3897" />
 
   - The percent changes are estimated using the same regression equation
     as the regional percent changes in the previous chart except I’m
