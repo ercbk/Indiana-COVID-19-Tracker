@@ -3,7 +3,7 @@ name: Evening Update
 on:
   schedule:
     # says run at the 0th min, 20th hr UTC (4pm ET) of every day
-    - cron: '0 20 * * *'
+    - cron: '0 22 * * *'
 
 jobs:
   update:
@@ -27,6 +27,17 @@ jobs:
         run: sudo apt-get install libcurl4-openssl-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
+      # next 2 steps cache dependencies for faster runs
+      - name: Query dependencies
+        run: Rscript -e "install.packages('remotes')" -e "saveRDS(remotes::dev_package_deps(dependencies = TRUE), 'depends.Rds')"
+      # caching action only for Linux right now 
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-3.6.1-${{ hashFiles('depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-3.6.1-
       - name: Install renv
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3-30.tar.gz', repos = NULL, type = 'source')"
       - name: copy dev environment to runner
@@ -45,7 +56,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "4 pm data update" -a || echo "No changes to commit"
+          git commit -m "6 pm charts update" -a || echo "No changes to commit"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:

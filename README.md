@@ -1,5 +1,12 @@
 
+![Noon
+Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Noon%20Update/badge.svg)
+![Evening
+Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Update/badge.svg)
+
 # Indiana COVID-19 Tracker
+
+(Charts updated between noon and 1pm ET and at 6 pm ET)
 
 Repository to track COVID-19 data statewide and by county. State and
 County data for positive tests and deaths are gathered from The New York
