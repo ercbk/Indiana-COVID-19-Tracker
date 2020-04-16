@@ -8,7 +8,7 @@ on:
 jobs:
   update:
     name: Update IN COVID Tracker
-    runs-on: windows-latest
+    runs-on: [ubuntu-latest]
     env:
       APPNAME: ${{ secrets.APPNAME }}
       APIKEY: ${{ secrets.APIKEY }}
