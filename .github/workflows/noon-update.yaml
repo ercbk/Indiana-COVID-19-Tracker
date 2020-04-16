@@ -8,7 +8,7 @@ on:
 jobs:
   update:
     name: Update IN COVID Tracker
-    runs-on: windows-latest
+    runs-on: [ubuntu-latest]
     env:
       APPNAME: ${{ secrets.APPNAME }}
       APIKEY: ${{ secrets.APIKEY }}
@@ -22,6 +22,9 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: '3.6.2'
+      # need libcurl to install RCurl pkg on Linux
+      - name: Install libcurl
+        run: sudo apt-get install libcurl4-openssl-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install renv
