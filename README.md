@@ -38,13 +38,12 @@ and the Indiana State Department of Heath Twitter
     
     <img src="plots/pos-policy-line-2020-04-15.png" width="3897" />
 
-  - This plot shows the number of daily cases on the y-axis, on a
-    logarithmic scale, versus the cumulative total of cases on the
-    x-axis, also on a logarithmic scale. The axis transformations
-    straightens an exponential curve. As measures are taken and the
-    transmission rate lessens, the trend falls and becomes increasingly
-    vertical. A completely vertical line would indicate complete
-    eradication.
+  - This chart shows the number of daily positive cases on the y-axis
+    versus the cumulative total of positive cases on the x-axis, where
+    both axes are on a logarithmic scale. As policy measures are taken
+    and the transmission rate lessens, the trend will decline and become
+    increasingly vertical. A completely vertical line would indicate
+    complete eradication.
 
 <img src="plots/density-pos-line-2020-04-15.png" width="3897" />
 

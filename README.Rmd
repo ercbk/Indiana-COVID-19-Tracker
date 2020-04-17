@@ -42,7 +42,7 @@ pos_policy_path <- glue::glue("plots/pos-policy-line-{params$pos_policy_date}.pn
 knitr::include_graphics(pos_policy_path)
 ```
   
-   * This plot shows the number of daily cases on the y-axis, on a logarithmic scale, versus the cumulative total of cases on the x-axis, also on a logarithmic scale. The axis transformations straightens an exponential curve. As measures are taken and the transmission rate lessens, the trend falls and becomes increasingly vertical. A completely vertical line would indicate complete eradication.  
+   * This chart shows the number of daily positive cases on the y-axis versus the cumulative total of positive cases on the x-axis, where both axes are on a logarithmic scale. As policy measures are taken and the transmission rate lessens, the trend will decline and become increasingly vertical. A completely vertical line would indicate complete eradication.  
 
 ```{r, align="center"}
 density_pos_path <- glue::glue("plots/density-pos-line-{params$density_pos_date}.png")
