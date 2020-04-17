@@ -1,14 +1,14 @@
-# Tests whether Indy health department has tweeted updated COVID data between 10:01am and 10:59am
+# Tests whether Indy health department has tweeted updated COVID data between before the 57th minute of whichever hour I have set in the github action yaml
 
 # returns true if it finds an updated-data-tweet with todays date.
-# returns error if after ~1hr if no such tweet is detected
+# returns error if after ~1hr no such tweet is detected
 
-# An error keeps the rest of the scripts from running
-# True value == script runs successfully --> task scheduler detects succussful run --> other scripts triggered to run.
+# An error keeps the rest of the scripts from running in the noon workflow, then later in the day, the evening workflow will process the updates
 
 
 suppressPackageStartupMessages(suppressWarnings(library(dplyr)))
 
+# environment vars set in the yaml and in github secrets
 token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
 
 rt_tok <- rtweet::create_token(
@@ -22,8 +22,9 @@ rt_tok <- rtweet::create_token(
 # need to set the initial value
 tweet_rows <- 0
 
-while (lubridate::minute(Sys.time()) < 55 & tweet_rows == 0) {
+while (lubridate::minute(Sys.time()) < 57 & tweet_rows == 0) {
    
+   # detect pattern in tweet that has updated data
    in_health_tweets <- rtweet::get_timeline("StateHealthIN",
                                             n = 150,
                                             token = rt_tok) %>% 
@@ -34,14 +35,17 @@ while (lubridate::minute(Sys.time()) < 55 & tweet_rows == 0) {
       filter(stringr::str_detect(text, pattern = "latest #COVID19 case information") | stringr::str_detect(text, pattern = "positive cases")) %>% 
       filter(date == lubridate::today())
    
+   # If detection successful, tweet_rows != 0
    tweet_rows <- nrow(in_health_tweets)
    
+   # if detection unsuccessful, wait two min before trying again
    if (tweet_rows == 0) {
          Sys.sleep(120)
    }
    
 }
 
+# give up after about an hour. Let the evening workflow get the update
 attempt::stop_if(tweet_rows, ~.x == 0, "Time ran out. No data update detected")
 
 

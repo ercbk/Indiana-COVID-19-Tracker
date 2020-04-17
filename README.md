@@ -23,7 +23,7 @@ and the Indiana State Department of Heath Twitter
     total to double. It assumes that the rate of change is constant. The
     doubling time shown here assumes that the total change from
     yesterday to today (i.e. single day *growth rate*) will remain
-    constant in the future. As we’ll see in the next chart, it’s not a
+    constant in the future. As we’ll see in another chart, it’s not a
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
 
@@ -36,23 +36,30 @@ and the Indiana State Department of Heath Twitter
     
     </center>
     
-    <img src="plots/density-pos-line-2020-04-15.png" width="3897" />
+    <img src="plots/pos-policy-line-2020-04-15.png" width="3897" />
+
+  - This plot shows the number of daily cases on the y-axis, on a
+    logarithmic scale, versus the cumulative total of cases on the
+    x-axis, also on a logarithmic scale. The axis transformations
+    straightens an exponential curve. As measures are taken and the
+    transmission rate lessens, the trend falls and becomes increasingly
+    vertical. A completely vertical line would indicate complete
+    eradication.
+
+<img src="plots/density-pos-line-2020-04-15.png" width="3897" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
     connected line graph of the actual data because the fluctuations of
     the data would obscure the trends.  
-
   - These curves can be used to compare the effectiveness of state
     responses. Population density is an important factor for how quickly
     a virus spreads. Therefore, it’s a fairer comparison to use states
     with similar population densities if we want to get an idea of how
     well Indiana’s governmental response has been.  
-
   - Doubling times, as shown in the previous equation, are calculated
     from growth rates, so I’ve included a second y-axis to show how
     these have changed over time as well.  
-
   - Previous versions of this chart included Georgia. As of 2020-04-12,
     Georgia started separating non-state residents from their patient
     counts. Neither The New York Times nor Georgia adjusted the counts
@@ -63,10 +70,9 @@ and the Indiana State Department of Heath Twitter
 
 <img src="plots/region-pos-line-2020-04-15.png" width="3897" />
 
-  - The y-axis has been transformed to the log base-10 scale and taking
-    the logarithm of an exponential curve creates a straight line. It’s
-    easier for us to compare to slopes and trends of straight(-ish)
-    lines than exponential curves.  
+  - The y-axis has been transformed to the log base-10 scale. Slopes and
+    trends of straight(-ish) lines are easier to compare than
+    exponential curves.  
   - The slope is an estimation of the average percentage increase per
     day and are estimated using the log-linear regression equation in
     the top left corner. As these lines start to curve downward, it
@@ -75,11 +81,13 @@ and the Indiana State Department of Heath Twitter
 
 <img src="plots/county-pos-bar-2020-04-15.png" width="3897" />
 
+  - The top 20 counties according to estimated average percent change
+    are shown. Counties at the top are experiencing the highest growth
+    rates in positive test results.
   - The percent changes are estimated using the same regression equation
     as the regional percent changes in the previous chart except I’m
     using county data here.  
-  - Only the top 20 counties according to average percent change are
-    shown. Only counties that have had at least 5 positive cases for a
-    week or more are considered. I’m trying to weed out the high rate
-    estimates that are due to a spike in testing. As tests become more
-    widely available, I’ll remove this constraint.
+  - Only counties that have had at least 5 positive cases for a week or
+    more are considered. I’m trying to weed out the high rate estimates
+    that are due to a spike in testing. As tests become more widely
+    available, I’ll remove this constraint.

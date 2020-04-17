@@ -33,6 +33,8 @@ jobs:
         run: Rscript -e 'renv::restore()'
       - name: run ind-covid-line
         run: Rscript "R/ind-covid-line.R"
+      - name: run daily-cum-policy
+        run: Rscript "R/daily-cum-policy.R"
       - name: run county-slope-models
         run: Rscript "R/county-slope-models.R"
       - name: run density-lor-slopes

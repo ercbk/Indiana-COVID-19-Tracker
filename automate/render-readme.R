@@ -21,9 +21,10 @@ png_dates <- png_files %>%
 rmarkdown::render(
       "README.Rmd", params = list(
             ind_combo_date = png_dates$newest_date[[3]],
+            pos_policy_date = png_dates$newest_date[[4]],
             density_pos_date = png_dates$newest_date[[2]],
-            region_dea_date = png_dates$newest_date[[4]],
-            region_pos_date = png_dates$newest_date[[5]],
+            region_dea_date = png_dates$newest_date[[5]],
+            region_pos_date = png_dates$newest_date[[6]],
             county_pos_date = png_dates$newest_date[[1]]
       )
 )
@@ -34,7 +35,7 @@ paths <- png_files %>%
       filter(date == min(date)) %>% 
       pull(paths)
 
-if (nrow(png_files) > 12) {
+if (nrow(png_files) > 18) {
    fs::file_delete(paths)
 }
 

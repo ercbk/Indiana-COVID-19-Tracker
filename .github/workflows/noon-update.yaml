@@ -31,11 +31,14 @@ jobs:
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3-30.tar.gz', repos = NULL, type = 'source')"
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore()'
-      - name: run gateway
-        run: Rscript "automate/gateway.R"
+      - name: run detect data update
+        run: Rscript "automate/detect-data-update.R"
       - name: run ind-covid-line
         if: success()
         run: Rscript "R/ind-covid-line.R"
+      - name: run daily-cum-policy
+        if: success()
+        run: Rscript "R/daily-cum-policy.R"
       - name: run county-slope-models
         if: success()
         run: Rscript "R/county-slope-models.R"
