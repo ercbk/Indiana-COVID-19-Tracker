@@ -26,10 +26,13 @@ and the Indiana State Department of Heath Twitter
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
   - The equation for doubling time, T<sub>d</sub>, where r is the growth
-    rate.  
-    <center>
-    <img src="images/doubling-time.png" width="146" />
-    </center>
+    rate.
+
+<center>
+
+<img src="images/doubling-time.png" width="146" />
+
+</center>
 
 <img src="plots/pos-policy-line-2020-04-16.png" width="3897" />
 
