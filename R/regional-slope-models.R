@@ -31,6 +31,8 @@ options(scipen=999)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
+state_policy <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/covid-state-policy-database-boston-univ.csv"))
+
 midwest_dat <- nyt_dat %>%
       filter(state %in% c("Indiana", "Kentucky", "Ohio", "Michigan", "Illinois")) %>%
    group_by(state, date) %>% 
@@ -189,6 +191,16 @@ dea_mark_circle_dat <- tibble(
    desc = c(dea_il_lbl, dea_in_lbl, dea_ky_lbl, dea_mi_lbl, dea_oh_lbl)
 )
 
+policy_dat <- state_policy %>% 
+   filter(State %in% c("Indiana", "Kentucky", "Ohio", "Michigan", "Illinois")) %>% 
+   select(1, 6, 7) %>% 
+   tidyr::pivot_longer(cols = c(2,3), names_to = "policy", values_to = "date") %>%
+   mutate(date = lubridate::mdy(date)) %>%
+   rename(state = State) %>% 
+   left_join(pos_chart_dat,
+             by = c("state", "date")) %>% 
+   tidyr::drop_na()
+
 
 
 
@@ -201,6 +213,8 @@ dea_mark_circle_dat <- tibble(
 mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)) + 
    geom_line() + 
    geom_point() +
+   geom_point(data = policy_dat %>% 
+                 filter(policy == "Stay at home/ shelter in place"), shape = 8, size = 3) +
    scale_y_log10() +
    # needed to provide space to ggforce labels
    expand_limits(y = max(pos_chart_dat$positives)*2.5) +
@@ -239,7 +253,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    theme(plot.title = element_textbox_simple(size = rel(1.5),
                                              color = "white",
                                              family = "Roboto"),
-         plot.subtitle = element_text(size = rel(0.95),
+         plot.subtitle = element_markdown(size = rel(0.95),
                                       color = "white"),
          plot.caption = element_text(color = "white",
                                      size = rel(1)),
@@ -256,9 +270,9 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
+mw_pos_line
 
-
-plot_path <- glue("{here::here()}/plots/region-pos-line-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/region-pos-line-{data_date}.png")
 ggsave(plot_path, plot = mw_pos_line, dpi = "print", width = 33, height = 20, units = "cm")
 
 
