@@ -37,6 +37,7 @@ knitr::include_graphics(ind_line_path)
 knitr::include_graphics("images/doubling-time.png")
 ```
 </center>  
+  
 ```{r ,align="center"}
 pos_policy_path <- glue::glue("plots/pos-policy-line-{params$pos_policy_date}.png")
 knitr::include_graphics(pos_policy_path)

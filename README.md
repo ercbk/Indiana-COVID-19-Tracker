@@ -18,7 +18,6 @@ and the Indiana State Department of Heath Twitter
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus.  
-
   - *Doubling time* is the amount of time it would take for the current
     total to double. It assumes that the rate of change is constant. The
     doubling time shown here assumes that the total change from
@@ -26,24 +25,19 @@ and the Indiana State Department of Heath Twitter
     constant in the future. As we’ll see in another chart, it’s not a
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
-
   - The equation for doubling time, T<sub>d</sub>, where r is the growth
     rate.  
-    
     <center>
-    
     <img src="images/doubling-time.png" width="146" />
-    
     </center>
-    
-    <img src="plots/pos-policy-line-2020-04-16.png" width="3897" />
+
+<img src="plots/pos-policy-line-2020-04-16.png" width="3897" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
     both axes are on a logarithmic scale. As policy measures are taken
     and the transmission rate lessens, the trend will decline and become
-    increasingly vertical. A completely vertical line would indicate
-    complete eradication.
+    increasingly vertical.
 
 <img src="plots/density-pos-line-2020-04-16.png" width="3897" />
 
