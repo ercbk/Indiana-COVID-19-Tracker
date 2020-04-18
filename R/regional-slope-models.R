@@ -26,6 +26,8 @@ kind <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palet
 haze <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Purple Haze.ase"))
 queen <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Drama Queen.ase"))
 
+loadfonts()
+
 # remove scientific notations
 options(scipen=999)
 
