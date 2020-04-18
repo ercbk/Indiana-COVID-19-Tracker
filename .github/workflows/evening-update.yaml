@@ -32,7 +32,7 @@ jobs:
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore()'
       - name: install fonts
-        run: Rscript -e "library(extrafont); font_import(); loadfonts()"
+        run: Rscript -e "library(extrafont); font_import(prompt = FALSE); loadfonts()"
       - name: run ind-covid-line
         run: Rscript "R/ind-covid-line.R"
       - name: run daily-cum-policy
