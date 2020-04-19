@@ -6,7 +6,7 @@ Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Up
 
 # Indiana COVID-19 Tracker
 
-(Charts updated between noon and 1pm ET and at 6 pm ET)
+(Charts updated between noon and 1pm ET and at 6:30 pm ET)
 
 Repository to track COVID-19 data statewide and by county. State and
 County data for positive tests and deaths are gathered from The New York
@@ -14,7 +14,7 @@ Times COVID-19 [repository](https://github.com/nytimes/covid-19-data)
 and the Indiana State Department of Heath Twitter
 [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor).
 
-<img src="plots/ind-combo-line-2020-04-17.png" width="3897" />
+<img src="plots/ind-combo-line-2020-04-18.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus.  
@@ -34,7 +34,7 @@ and the Indiana State Department of Heath Twitter
 
 </center>
 
-<img src="plots/pos-policy-line-2020-04-16.png" width="3897" />
+<img src="plots/pos-policy-line-2020-04-17.png" width="3897" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
@@ -42,7 +42,7 @@ and the Indiana State Department of Heath Twitter
     and the transmission rate lessens, the trend will decline and become
     increasingly vertical.
 
-<img src="plots/density-pos-line-2020-04-16.png" width="3897" />
+<img src="plots/density-pos-line-2020-04-17.png" width="3897" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -62,9 +62,9 @@ and the Indiana State Department of Heath Twitter
     prior to the change. Without an adjustment, it destroyed the
     coherence of the data, so I’ve replaced them with South Carolina.
 
-<img src="plots/region-dea-line-2020-04-16.png" width="3897" />
+<img src="plots/region-dea-line-2020-04-17.png" width="3897" />
 
-<img src="plots/region-pos-line-2020-04-16.png" width="3897" />
+<img src="plots/region-pos-line-2020-04-17.png" width="3897" />
 
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
@@ -75,7 +75,7 @@ and the Indiana State Department of Heath Twitter
     indicates the data is becoming less exponential. The estimation
     errors become larger and the model less appropriate.
 
-<img src="plots/county-pos-bar-2020-04-16.png" width="3897" />
+<img src="plots/county-pos-bar-2020-04-17.png" width="3897" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest growth
