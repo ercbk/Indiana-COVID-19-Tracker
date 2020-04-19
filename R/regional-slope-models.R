@@ -103,7 +103,16 @@ mw_dea_models <- midwest_dat %>%
    filter(term == "trend()") %>% 
    mutate(estimate = exp(estimate))
 
+mov_avg <- midwest_dat %>% 
+   group_by(state) %>% 
+   mutate(daily_cases = difference(positives),
+          daily_sevDy_ma = slide_dbl(daily_cases, 
+                              mean, na.rm = TRUE, .size = 7, .align = "right"),
+          daily_twoWk_ma = slide_dbl(daily_cases, 
+                              mean, na.rm = TRUE, .size = 14, .align = "right"))
 
+
+# 21935.29, 23318.57
 
 
 ########################
@@ -201,9 +210,12 @@ policy_dat <- state_policy %>%
    rename(state = State) %>% 
    left_join(pos_chart_dat,
              by = c("state", "date")) %>% 
-   tidyr::drop_na()
+   tidyr::drop_na() %>% 
+   mutate(policy = factor(policy))
 
-
+pos_chart_dat2 <- pos_chart_dat %>% 
+   as_tibble() %>% 
+   left_join(policy_dat, by = c("state", "date"))
 
 
 ########################
@@ -211,12 +223,16 @@ policy_dat <- state_policy %>%
 ########################
 
 
+
 # positive test cases
 mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)) + 
    geom_line() + 
    geom_point() +
-   geom_point(data = policy_dat %>% 
-                 filter(policy == "Stay at home/ shelter in place"), shape = 8, size = 3) +
+   scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
+   geom_point(data = policy_dat, aes(shape = policy), size = 3) +
+   # scale_shape_identity(labels = c("Stay at home/shelter in place", "Closed non-essential businesses"),
+   #                      breaks = policy_dat$policy) +
+   guides(shape = "legend") +
    scale_y_log10() +
    # needed to provide space to ggforce labels
    expand_limits(y = max(pos_chart_dat$positives)*2.5) +
@@ -224,7 +240,6 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
         title = "Regional COVID-19 <b style='color:#B28330'> Cumulative Positive Test Results</b>",
         subtitle = glue("Last updated: {data_date}"),
         caption = "Source: The New York Times, based on reports from state and local health agencies") +
-   scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
    ggforce::geom_mark_circle(aes(
       x = days, y = positives, group = state,
       description = desc),
@@ -255,12 +270,12 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    theme(plot.title = element_textbox_simple(size = rel(1.5),
                                              color = "white",
                                              family = "Roboto"),
-         plot.subtitle = element_markdown(size = rel(0.95),
+         plot.subtitle = element_text(size = rel(0.95),
                                       color = "white"),
          plot.caption = element_text(color = "white",
                                      size = rel(1)),
          text = element_text(family = "Roboto"),
-         legend.position = "none",
+         # legend.position = "top",
          axis.text.x = element_text(color = "white"),
          axis.text.y = element_text(color = "white"),
          axis.title.x = element_textbox_simple(color = "white"),
@@ -272,7 +287,6 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
-mw_pos_line
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/region-pos-line-{data_date}.png")
 ggsave(plot_path, plot = mw_pos_line, dpi = "print", width = 33, height = 20, units = "cm")
