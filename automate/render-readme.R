@@ -12,11 +12,14 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
                                          pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}") %>%
                   as.Date())
 
+print(png_files)
+
 # render the charts with latest data
 png_dates <- png_files %>% 
       group_by(chart) %>% 
       summarize(newest_date = max(date))
 
+png_dates
 
 rmarkdown::render(
       "README.Rmd", params = list(

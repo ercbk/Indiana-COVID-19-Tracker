@@ -222,7 +222,7 @@ pos_chart_dat2 <- pos_chart_dat %>%
 # Line charts
 ########################
 
-
+mw_pos_line
 
 # positive test cases
 mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)) + 
@@ -230,9 +230,10 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    geom_point() +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
    geom_point(data = policy_dat, aes(shape = policy), size = 3) +
-   # scale_shape_identity(labels = c("Stay at home/shelter in place", "Closed non-essential businesses"),
-   #                      breaks = policy_dat$policy) +
-   guides(shape = "legend") +
+   scale_shape_manual(aes(shape = c(6,8)), values = policy_dat$policy) +
+   guides(shape = guide_legend(
+      title = NULL
+   )) +
    scale_y_log10() +
    # needed to provide space to ggforce labels
    expand_limits(y = max(pos_chart_dat$positives)*2.5) +
@@ -250,7 +251,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       label.colour = "white",
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
-   geom_text(data = tibble(x = 2.76224962490622,
+   geom_text(data = tibble(x = 5.76224962490622,
                                y = 33322.4114933286,
                                label = latex2exp::TeX("$\\log(positives) = \\beta_0 + slope*date + \\epsilon_{date}$")),
              mapping = aes(x = x,
@@ -275,7 +276,10 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          plot.caption = element_text(color = "white",
                                      size = rel(1)),
          text = element_text(family = "Roboto"),
-         # legend.position = "top",
+         legend.position = c(0.28, 0.9),
+         legend.direction = "horizontal",
+         legend.background = element_rect(fill = NA),
+         legend.text = element_text(color = "white"),
          axis.text.x = element_text(color = "white"),
          axis.text.y = element_text(color = "white"),
          axis.title.x = element_textbox_simple(color = "white"),
@@ -286,6 +290,8 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          panel.border = element_blank(),
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
+
+mw_pos_line
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/region-pos-line-{data_date}.png")
