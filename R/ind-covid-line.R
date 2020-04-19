@@ -17,14 +17,10 @@
 #######################
 
 
-pacman::p_load(grid, showtext, prismatic, ggtext, dplyr, glue, lubridate, stringr, ggplot2)
+pacman::p_load(grid, extrafont, prismatic, ggtext, dplyr, glue, lubridate, stringr, ggplot2)
 
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
-
-
-font_add_google("Roboto", "Roboto")
-showtext_auto()
 
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")

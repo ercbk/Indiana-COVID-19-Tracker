@@ -1,7 +1,6 @@
 ---
 output: 
-   github_document:
-      fig_retina: 1
+   github_document
 params:
       ind_combo_date: !r Sys.Date()
       pos_policy_date: !r Sys.Date()-1
@@ -14,7 +13,7 @@ params:
 
 
 ```{r, setup, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, fig.showtext=TRUE)
+knitr::opts_chunk$set(echo=FALSE)
 ```
 
 ![Noon Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Noon%20Update/badge.svg)

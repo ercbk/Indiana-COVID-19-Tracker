@@ -7,17 +7,13 @@
 
 
 
-pacman::p_load(showtext, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
+pacman::p_load(extrafont, swatches, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 for_floor <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Forest Floor.ase"))
 trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Trippy.ase"))
 kind <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Kindred Spirits.ase"))
-
-
-font_add_google("Roboto", "Roboto")
-showtext_auto()
 
 
 # remove scientific notations

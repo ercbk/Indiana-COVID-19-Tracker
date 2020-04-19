@@ -2,7 +2,7 @@
 
 # When line startes going vertical, it indicates the disease spread is coming under control.
 
-pacman::p_load(showtext, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
+pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
 
@@ -12,9 +12,6 @@ deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()
 
 deep_light <- prismatic::clr_lighten(deep_rooted, shift = 0.25)
 
-
-font_add_google("Roboto", "Roboto")
-showtext_auto()
 
 
 cases_dat <- nyt_dat %>% 
