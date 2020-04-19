@@ -11,10 +11,12 @@
 
 # Set-up
 
-pacman::p_load(extrafont, dplyr, tsibble, fable, ggplot2, ggtext, glue)
+pacman::p_load(showtext, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
 palette <- pals::brewer.oranges(100)
-loadfonts()
+
+font_add_google("Roboto", "Roboto")
+showtext_auto()
 
 # remove scientific notations
 options(scipen=999)

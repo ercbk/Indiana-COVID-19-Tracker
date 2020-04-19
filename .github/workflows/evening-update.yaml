@@ -3,7 +3,7 @@ name: Evening Update
 on:
   schedule:
     # says run at the 0th min, 20th hr UTC (6pm ET) of every day
-    - cron: '55 3 * * *'
+    - cron: '55 20 * * *'
 
 jobs:
   update:
@@ -31,8 +31,6 @@ jobs:
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3-30.tar.gz', repos = NULL, type = 'source')"
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore()'
-      - name: install fonts
-        run: Rscript -e "library(extrafont); font_import(prompt = FALSE); loadfonts()"
       - name: run ind-covid-line
         run: Rscript "R/ind-covid-line.R"
       - name: run daily-cum-policy
