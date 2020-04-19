@@ -211,11 +211,10 @@ policy_dat <- state_policy %>%
    left_join(pos_chart_dat,
              by = c("state", "date")) %>% 
    tidyr::drop_na() %>% 
-   mutate(policy = factor(policy))
+   aggregate(data = ., policy ~ date + days + state + positives + deaths, FUN = paste0, collapse = "\n") %>% 
+   mutate(policy = ifelse(policy == "Stay at home/ shelter in place\nClosed non-essential businesses", "Shelter in place & Closed non-essential businesses", policy))
 
-pos_chart_dat2 <- pos_chart_dat %>% 
-   as_tibble() %>% 
-   left_join(policy_dat, by = c("state", "date"))
+
 
 
 ########################
@@ -229,7 +228,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    geom_point() +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
    geom_point(data = policy_dat, aes(shape = policy), size = 3, stroke = 1.5) +
-   scale_shape_manual(name = NULL, values = c("Stay at home/ shelter in place" = 0, "Closed non-essential businesses" = 6)) +
+   scale_shape_manual(name = NULL, values = c("Shelter in place & Closed non-essential businesses" = 15, "Closed non-essential businesses" = 17)) +
    guides(shape = guide_legend(
       title = NULL,
       override.aes = list(color = "white",
@@ -237,7 +236,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    )) +
    scale_y_log10() +
    # needed to provide space to ggforce labels
-   expand_limits(y = max(pos_chart_dat$positives)*2.5) +
+   expand_limits(y = max(pos_chart_dat$positives)*4) +
    labs(x = "Number of days since a total of 100 <b style='color:#B28330'>positive cases</b> first recorded", y = NULL,
         title = "Regional COVID-19 <b style='color:#B28330'> Cumulative Positive Test Results</b>",
         subtitle = glue("Last updated: {data_date}"),
@@ -252,7 +251,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       label.colour = "white",
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
-   geom_text(data = tibble(x = 5.76224962490622,
+   geom_text(data = tibble(x = 4.76224962490622,
                                y = 33322.4114933286,
                                label = latex2exp::TeX("$\\log(positives) = \\beta_0 + slope*date + \\epsilon_{date}$")),
              mapping = aes(x = x,
@@ -277,12 +276,13 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          plot.caption = element_text(color = "white",
                                      size = rel(1)),
          text = element_text(family = "Roboto"),
-         legend.position = c(0.24, 0.9),
+         legend.position = c(0.3, 0.9),
          legend.direction = "horizontal",
          legend.background = element_rect(fill = NA),
          legend.key = element_rect(fill = "black",
                                    color = NA),
-         legend.text = element_text(color = "white"),
+         legend.text = element_text(color = "white",
+                                    size = 11),
          axis.text.x = element_text(color = "white"),
          axis.text.y = element_text(color = "white"),
          axis.title.x = element_textbox_simple(color = "white"),
