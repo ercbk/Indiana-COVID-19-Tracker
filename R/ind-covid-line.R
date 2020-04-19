@@ -17,7 +17,7 @@
 #######################
 
 
-pacman::p_load(grid, extrafont, prismatic, ggtext, dplyr, glue, lubridate, stringr, ggplot2)
+pacman::p_load(grid, prismatic, ggtext, dplyr, glue, lubridate, stringr, ggplot2)
 
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
@@ -154,7 +154,6 @@ ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
                     con.colour = deep_rooted[[7]],
                     label.colour = "white",
                     label.fill = deep_rooted[[7]],
-                    label.family = "Roboto",
                     label.buffer = unit(15, "mm"),
                     color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#B28330'>Cumulative Positive Test Results</b>") +
@@ -186,7 +185,6 @@ ind_statewide_dea <- ggplot(ind_dat, aes(x = date, y = deaths)) +
       con.colour = deep_rooted[[7]],
       label.colour = "white",
       label.fill = deep_rooted[[7]],
-      label.family = "Roboto",
       color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#BE454F'>Cumulative Deaths</b>") +
    theme(plot.title = element_textbox_simple(size = rel(0.9),
