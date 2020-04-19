@@ -13,6 +13,9 @@ County data for positive tests and deaths are gathered from The New York
 Times COVID-19 [repository](https://github.com/nytimes/covid-19-data)
 and the Indiana State Department of Heath Twitter
 [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor).
+State policy
+[data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
+comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
 <img src="plots/ind-combo-line-2020-04-18.png" width="3897" />
 
