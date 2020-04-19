@@ -52,10 +52,11 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     connected line graph of the actual data because the fluctuations of
     the data would obscure the trends.  
   - These curves can be used to compare the effectiveness of state
-    responses. Population density is an important factor for how quickly
-    a virus spreads. Therefore, it’s a fairer comparison to use states
-    with similar population densities if we want to get an idea of how
-    well Indiana’s governmental response has been.  
+    responses. Population density is a potential factor for how quickly
+    a virus spreads through a state. Therefore, a fairer comparison
+    might be to use states with similar population densities if we want
+    to get an idea of how well Indiana’s governmental response has
+    been.  
   - Doubling times, as shown in the previous equation, are calculated
     from growth rates, so I’ve included a second y-axis to show how
     these have changed over time as well.  
