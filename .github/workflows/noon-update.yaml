@@ -56,7 +56,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Noon charts update" -a || echo "No changes to commit"
+          git add .
+          git commit -m "Noon charts update" || echo "No changes to commit"
       - name: Push changes
         if: success()
         uses: ad-m/github-push-action@master
