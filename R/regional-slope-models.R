@@ -222,17 +222,18 @@ pos_chart_dat2 <- pos_chart_dat %>%
 # Line charts
 ########################
 
-mw_pos_line
 
 # positive test cases
 mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)) + 
    geom_line() + 
    geom_point() +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
-   geom_point(data = policy_dat, aes(shape = policy), size = 3) +
-   scale_shape_manual(aes(shape = c(6,8)), values = policy_dat$policy) +
+   geom_point(data = policy_dat, aes(shape = policy), size = 3, stroke = 1.5) +
+   scale_shape_manual(name = NULL, values = c("Stay at home/ shelter in place" = 0, "Closed non-essential businesses" = 6)) +
    guides(shape = guide_legend(
-      title = NULL
+      title = NULL,
+      override.aes = list(color = "white",
+                          stroke = 1.5)
    )) +
    scale_y_log10() +
    # needed to provide space to ggforce labels
@@ -276,9 +277,11 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          plot.caption = element_text(color = "white",
                                      size = rel(1)),
          text = element_text(family = "Roboto"),
-         legend.position = c(0.28, 0.9),
+         legend.position = c(0.24, 0.9),
          legend.direction = "horizontal",
          legend.background = element_rect(fill = NA),
+         legend.key = element_rect(fill = "black",
+                                   color = NA),
          legend.text = element_text(color = "white"),
          axis.text.x = element_text(color = "white"),
          axis.text.y = element_text(color = "white"),
@@ -290,8 +293,6 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
          panel.border = element_blank(),
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
-
-mw_pos_line
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/region-pos-line-{data_date}.png")
