@@ -34,7 +34,7 @@ knitr::include_graphics(ind_line_path)
    * The equation for doubling time, T~d~, where r is the growth rate.  
    
 <center>
-```{r, align="center"}
+```{r}
 knitr::include_graphics("images/doubling-time.png")
 ```
 </center>  
