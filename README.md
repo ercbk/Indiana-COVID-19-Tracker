@@ -17,7 +17,7 @@ State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
-<img src="plots/ind-combo-line-2020-04-18.png" width="3897" />
+<img src="plots/ind-combo-line-2020-04-19.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus.  
