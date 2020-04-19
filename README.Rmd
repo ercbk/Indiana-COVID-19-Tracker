@@ -1,6 +1,7 @@
 ---
 output: 
-   github_document
+   github_document:
+      fig_retina: 1
 params:
       ind_combo_date: !r Sys.Date()
       pos_policy_date: !r Sys.Date()-1
@@ -13,7 +14,7 @@ params:
 
 
 ```{r, setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo=FALSE, fig.showtext=TRUE)
 ```
 
 ![Noon Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Noon%20Update/badge.svg)
@@ -52,7 +53,7 @@ knitr::include_graphics(density_pos_path)
 ```
 
    * This chart shows the single day growth rates over a period of time for each state. LOESS regression curves are used here instead of a connected line graph of the actual data because the fluctuations of the data would obscure the trends.  
-   * These curves can be used to compare the effectiveness of state responses. Population density is an important factor for how quickly a virus spreads. Therefore, it's a fairer comparison to use states with similar population densities if we want to get an idea of how well Indiana's governmental response has been.  
+   * These curves can be used to compare the effectiveness of state responses. Population density is a potential factor for how quickly a virus spreads through a state. Therefore, a fairer comparison might be to use states with similar population densities if we want to get an idea of how well Indiana's governmental response has been.  
    * Doubling times, as shown in the previous equation, are calculated from growth rates, so I've included a second y-axis to show how these have changed over time as well.  
    * Previous versions of this chart included Georgia. As of 2020-04-12, Georgia started separating non-state residents from their patient counts. Neither The New York Times nor Georgia adjusted the counts prior to the change. Without an adjustment, it destroyed the coherence of the data, so I've replaced them with South Carolina.  
 
