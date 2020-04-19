@@ -252,7 +252,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
    geom_text(data = tibble(x = 4.76224962490622,
-                               y = 33322.4114933286,
+                               y = 47322.4114933286,
                                label = latex2exp::TeX("$\\log(positives) = \\beta_0 + slope*date + \\epsilon_{date}$")),
              mapping = aes(x = x,
                            y = y,
