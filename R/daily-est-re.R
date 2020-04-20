@@ -1,7 +1,4 @@
-# weekly R number estimation
-
-
-
+# Instantaneous Effective Reproduction Number Estimation
 
 
 
@@ -41,28 +38,35 @@ r_chart_dat <- ind_incidence %>%
   slice(-1:-7) %>% 
   bind_cols(ind_res_parametric_si$R) %>% 
   select(date = dates, estimate = `Mean(R)`,
-         upper = `Quantile.0.975(R)`, lower = `Quantile.0.025(R)`)
+         upper = `Quantile.0.975(R)`, lower = `Quantile.0.025(R)`) %>% 
+  mutate(estimate = round(estimate, 2)) %>% 
+  as_tibble()
+
+zoom_yupper <- r_chart_dat %>% 
+  filter(date == (max(date)-7)) %>% 
+  summarize(upper_y = max(estimate)*1.5) %>% 
+  pull(upper_y)
+
 
 
 r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
   geom_point(color = trippy[[7]]) +
   geom_line(color = trippy[[7]]) +
-  geom_text(data = tibble(x = min(r_chart_dat$date),
-                          y = 10.2,
-                          label = latex2exp::TeX("$R_e$")),
-            mapping = aes(x = x, y = y, label = label),
-            size = 5L,
-            angle = 0L,
-            lineheight = 1L,
-            hjust = 2,
-            vjust = -1.5,
-            colour = trippy[[7]],
-            parse = TRUE,
-            inherit.aes = FALSE,
-            show.legend = FALSE) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2, fill = trippy[[7]]) +
-  scale_y_continuous(n.breaks = 8,
-                     sec.axis = dup_axis(name = NULL, breaks = seq(0, 2, by = 0.5))) +
+  ggforce::facet_zoom(x = date > (max(date)-7),
+                      ylim = c(0.5, zoom_yupper),
+                      zoom.data = zoom,
+                      zoom.size = 1.5,
+                      show.area = FALSE,
+                      horizontal = FALSE) +
+  geom_label(data = r_chart_dat %>% 
+               filter(date == max(date)) %>% 
+               mutate(zoom = TRUE),
+             aes(label = estimate %>%
+                   as.character() %>% 
+                   paste("R = ", .)),
+             family="Roboto", fill = "black",
+             size = 4, nudge_y = 0.20,
+             label.size = 0, color="white") +
   labs(x = NULL, y = NULL,
        title = "Estimated daily effective reproduction number",
        subtitle = glue("Last updated: {data_date}"),
@@ -78,8 +82,10 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
                                 size = rel(1),
                                 family = "Roboto"),
     text = element_text(family = "Roboto"),
-    axis.text.x = element_text(color = "white"),
-    axis.text.y = element_text(color = "white"),
+    axis.text.x = element_text(color = "white",
+                               size = 12),
+    axis.text.y = element_text(color = "white",
+                               size = 12),
     axis.title.y = element_text(color = "white"),
     panel.background = element_rect(fill = "black",
                                     color = NA),
@@ -93,5 +99,6 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
   )
 
 
-plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/daily-Re-line-{data_date}.png")
+
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/daily-re-line-{data_date}.png")
 ggsave(plot_path, plot = r_chart, dpi = "print", width = 33, height = 20, units = "cm")

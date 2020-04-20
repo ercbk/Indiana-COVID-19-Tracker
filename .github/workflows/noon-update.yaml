@@ -48,6 +48,9 @@ jobs:
       - name: run regional-slope-models
         if: success()
         run: Rscript "R/regional-slope-models.R"
+      - name: run daily-re-estimate
+        if: success()
+        run: Rscript "R/daily-est-re.R"
       - name: render readme
         if: success()
         run: Rscript "automate/render-readme.R"

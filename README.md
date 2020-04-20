@@ -91,3 +91,15 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     more are considered. I’m trying to weed out the high rate estimates
     that are due to a spike in testing. As tests become more widely
     available, I’ll remove this constraint.
+
+<img src="plots/daily-re-line-2020-04-18.png" width="3897" />
+
+  - The instantaneous effective reproduction number, R<sub>e</sub> is an
+    estimate of the average number of people that an infected person is
+    spreading the virus to for that period. Estimates slightly larger
+    than 1 indicate a slow spread of the virus. Estimates of 2 or
+    greater mean the virus is spreading rapidly.
+  - For further details on this metric can be found at a tracking
+    [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
+    by South Western Sydney Clinical School and the Centre for Big Data
+    Research in Health.

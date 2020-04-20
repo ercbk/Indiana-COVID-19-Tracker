@@ -12,23 +12,24 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
                                          pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}") %>%
                   as.Date())
 
-print(png_files)
+# print(png_files)
 
 # render the charts with latest data
 png_dates <- png_files %>% 
       group_by(chart) %>% 
       summarize(newest_date = max(date))
 
-png_dates
+# png_dates
 
 rmarkdown::render(
       "README.Rmd", params = list(
-            ind_combo_date = png_dates$newest_date[[3]],
-            pos_policy_date = png_dates$newest_date[[4]],
-            density_pos_date = png_dates$newest_date[[2]],
-            region_dea_date = png_dates$newest_date[[5]],
-            region_pos_date = png_dates$newest_date[[6]],
-            county_pos_date = png_dates$newest_date[[1]]
+            ind_combo_date = png_dates$newest_date[[4]],
+            pos_policy_date = png_dates$newest_date[[5]],
+            density_pos_date = png_dates$newest_date[[3]],
+            region_dea_date = png_dates$newest_date[[6]],
+            region_pos_date = png_dates$newest_date[[7]],
+            county_pos_date = png_dates$newest_date[[1]],
+            daily_re_date = png_dates$newest_date[[2]]
       )
 )
 
