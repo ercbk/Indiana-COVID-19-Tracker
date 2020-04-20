@@ -2,6 +2,9 @@
 
 # When line startes going vertical, it indicates the disease spread is coming under control.
 
+
+
+
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
