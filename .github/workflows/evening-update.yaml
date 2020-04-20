@@ -3,7 +3,7 @@ name: Evening Update
 on:
   schedule:
     # says run at the 0th min, 20th hr UTC (6pm ET) of every day
-    - cron: '10 0 * * *'
+    - cron: '28 0 * * *'
 
 jobs:
   update:
