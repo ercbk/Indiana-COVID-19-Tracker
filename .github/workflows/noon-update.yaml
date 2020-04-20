@@ -30,7 +30,7 @@ jobs:
       - name: Install renv
         run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.9.3-30.tar.gz', repos = NULL, type = 'source')"
       - name: copy dev environment to runner
-        run: Rscript -e 'renv::restore()'
+        run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: run detect data update
         run: Rscript "automate/detect-data-update.R"
       - name: run ind-covid-line
