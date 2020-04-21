@@ -31,6 +31,8 @@ latest_date <- nyt_dat %>%
    summarize(max_date = max(date)) %>% 
    pull(max_date)
 
+
+# necessary for github actions
 token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
 
 rt_tok <- rtweet::create_token(
@@ -41,7 +43,7 @@ rt_tok <- rtweet::create_token(
    access_secret = token_stuff[[5]],
    set_renv = FALSE)
 
-# get Indiana Health Department's last 150 tweets
+# get Indiana Health Department's last 150 tweets + some cleaning
 in_health_tweets <- rtweet::get_timeline("StateHealthIN",
                                          n = 150,
                                          token = rt_tok) %>% 
@@ -74,7 +76,7 @@ ind_tweet_dat <- in_health_tweets %>%
          str_remove("ISDH:") %>%
          str_remove("tested: ") %>% 
          as.numeric()
-      ) %>% 
+   ) %>% 
    filter(date > latest_date) %>% 
    select(date, positives, deaths)
 
@@ -146,16 +148,19 @@ Doubling time at the current pace:
 ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
    geom_line(color = deep_rooted[[4]]) +
    geom_point(color = deep_rooted[[4]]) +
+   # labels need some cushion at the top of the graph to render in decent positions
    expand_limits(y = max(ind_dat$positives)*1.15) +
    ggforce::geom_mark_circle(aes(
-                        filter = date == label_dat$date[[1]],
-                        description = pos_lbl),
-                    expand = -0.02, radius = 0.02,
-                    con.colour = deep_rooted[[7]],
-                    label.colour = "white",
-                    label.fill = deep_rooted[[7]],
-                    label.buffer = unit(15, "mm"),
-                    color = deep_rooted[[7]]) +
+      filter = date == label_dat$date[[1]],
+      description = pos_lbl),
+      # minimizes circle around data point
+      expand = -0.02, radius = 0.02,
+      con.colour = deep_rooted[[7]],
+      label.colour = "white",
+      label.fill = deep_rooted[[7]],
+      # buffer around data point; gives label position calculator some slack
+      label.buffer = unit(15, "mm"),
+      color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#B28330'>Cumulative Positive Test Results</b>") +
    theme(plot.title = element_textbox_simple(size = rel(0.9)),
          text = element_text(family = "Roboto"),

@@ -1,7 +1,10 @@
 # Daily cases vs Cumulative Cases
 
-# When line startes going vertical, it indicates the disease spread is coming under control.
 
+# Notes:
+# 1. When line starts steadily going vertical, it indicates the disease spread is coming under control.
+# 2. Snagged from a Aussie blog post mention in readme description of R_e
+# 3. Policy data has other types of columns which maybe useful for other types of visuals/analysis
 
 
 
@@ -13,24 +16,25 @@ state_policy <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 
+# wanted something a little lighter for segments and curves
 deep_light <- prismatic::clr_lighten(deep_rooted, shift = 0.25)
 
 
-
+# calculated daily positive cases
 cases_dat <- nyt_dat %>% 
-      filter(state == "Indiana") %>% 
-      as_tsibble(index = "date") %>% 
-      mutate(daily_cases = difference(cases),
-             daily_cases = tidyr::replace_na(daily_cases, 1)) %>% 
-      rename(cumulative_cases = cases)
+   filter(state == "Indiana") %>% 
+   as_tsibble(index = "date") %>% 
+   mutate(daily_cases = difference(cases),
+          daily_cases = tidyr::replace_na(daily_cases, 1)) %>% 
+   rename(cumulative_cases = cases)
 
-
+# current date of data
 data_date <- cases_dat %>% 
    as_tibble() %>%
    summarize(date = max(date)) %>% 
    pull(date)
 
-
+# grabbing only a few of the policy columns + some cleaning
 policy_dat <- state_policy %>% 
    filter(State == "Indiana") %>% 
    select(2, 3, 6, 7, 11, 12, 13, 14) %>% 
@@ -40,59 +44,73 @@ policy_dat <- state_policy %>%
           policy = stringr::str_replace(policy,
                                         pattern = "Date c",
                                         replacement = "C"))
-   
+
 
 
 # policy label data
-# inner_join only keeps dates with a policy
-# aggregate merges rows in policy that have same values in the other columns.
+
 label_dat <- cases_dat %>% 
-      as_tibble() %>% 
-      inner_join(policy_dat, by = "date") %>% 
-      select(-deaths, -fips, -state) %>% 
-      filter(!policy %in% c("Closed movie theaters", "Closed gyms", "Froze evictions")) %>% 
-      aggregate(data = .,
-                policy ~ date + cumulative_cases + daily_cases,
-                FUN = paste0, collapse = "\n") %>% 
+   as_tibble() %>% 
+   # inner_join only keeps dates with a policy associated with it
+   inner_join(policy_dat, by = "date") %>% 
+   select(-deaths, -fips, -state) %>% 
+   filter(!policy %in% c("Closed movie theaters", "Closed gyms", "Froze evictions")) %>% 
+   # merges rows in policy that have same values in the other columns.
+   aggregate(data = .,
+             policy ~ date + cumulative_cases + daily_cases,
+             FUN = paste0, collapse = "\n") %>% 
+   # painstakingly searched-for values for nudging the labels
    mutate(hjust = c(-0.2, -0.25, 1.3, 1),
           vjust = c(-7, 2, -1.32, -2.3))
 
 
-
+# arrow specification used below; trying to keep the ggplot mess to a minimum
 arw <- arrow(length = unit(6, "pt"), type = "closed")
 
 
+# daily cases has some zeros and we're taking logs, so adding 1
 pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1)) +
-      geom_point(color = "#B28330") +
-      geom_line(color = "#B28330") +
+   geom_point(color = "#B28330") +
+   geom_line(color = "#B28330") +
    expand_limits(y = 1000) +
    scale_x_log10(breaks = c(0, 10, 100, 1000, 10000),
                  labels = c("0", "10", "100", "1,000", "10,000")) +
+   # adding 1 to match the adjustment above
    scale_y_log10(breaks = c(1,11,101,1001),
                  labels = c("0", "10", "100", "1,000")) +
+   # creates a y-axis label but inside the plotting area
    geom_label(aes(x=0, y=1000, label="Daily Cases"),
               family="Roboto", fill = "black",
               size=4, hjust=0, label.size=0, color="white") +
-   geom_label(data=label_dat, aes(x = cumulative_cases, y = daily_cases, label= policy, hjust = hjust, vjust = vjust),
+   # policy labels
+   geom_label(data=label_dat, aes(x = cumulative_cases,
+                                  y = daily_cases,
+                                  label= policy,
+                                  hjust = hjust, vjust = vjust),
               family="Roboto", lineheight=0.95,
               size=4.5, label.size=0,
               color = "white", fill = "black") +
+   # segments and curves connecting policy labels to points
    geom_curve(
-      data = data.frame(), aes(x = 1.2, xend = 0.96, yend = 2.7, y = 5.7), 
+      data = data.frame(), aes(x = 1.2, xend = 0.96,
+                               yend = 2.7, y = 5.7), 
       color = deep_light[[7]], arrow = arw
    ) +
    geom_curve(
-      data = data.frame(), aes(x = 110, xend = 25, yend = 4.5, y = 2.6), 
+      data = data.frame(), aes(x = 110, xend = 25,
+                               yend = 4.5, y = 2.6), 
       color = deep_light[[7]], arrow = arw,
       curvature = -0.70
    ) +
    geom_curve(
-      data = data.frame(), aes(x = 20, xend = 53, yend = 26, y = 36), 
+      data = data.frame(), aes(x = 20, xend = 53,
+                               yend = 26, y = 36), 
       color = deep_light[[7]], arrow = arw,
       curvature = -0.70
    ) +
    geom_segment(
-      data = data.frame(), aes(x = 110, xend = 300, yend = 126, y = 260),
+      data = data.frame(), aes(x = 110, xend = 300,
+                               yend = 126, y = 260),
       color = deep_light[[7]], arrow = arw
    ) +
    labs(x = "Cumulative Cases", y = NULL,
@@ -123,5 +141,5 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line-{data_date}.png")
 
 ggsave(plot_path, plot = pos_policy_line, dpi = "print", width = 33, height = 20, units = "cm")
-# 11, 14, 19th value
+
 

@@ -25,7 +25,7 @@ set.seed(2020)
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
 
-
+# getting cumulative cases, deaths for states with similar population densities
 density_dat <- nyt_dat %>%
    filter(state %in% c("Indiana", "Michigan", "South Carolina")) %>%
    group_by(state, date) %>% 
@@ -49,7 +49,7 @@ pos_lor_dat <- density_dat %>%
    filter(date >= "2020-03-21")
 
 
-# coordinates for labeling loess curves
+# Fitting the loess curves manually to get coordinates for labeling loess curves
 pos_lbl_dat <- pos_lor_dat %>% 
    mutate(date = as.numeric(date)) %>% 
    group_by(state) %>% 
@@ -68,14 +68,17 @@ pos_lbl_dat <- pos_lor_dat %>%
 pos_lor_line <- ggplot(data = pos_lor_dat,
                        aes(x = date, y = pos_logratio,
                            col = state)) +
+   # adds grid lines for the secondary axis
    geom_hline(yintercept = log(2)/c(2:7,14,21),
               col = deep_rooted[[7]],
               lty = "1f",
               alpha = 10
    ) +
+   # span value from trial and error; want lines curvy but not too much
    geom_smooth(formula = y ~ x, aes(group = state),
                method = "loess", se = FALSE,
                span = 0.38) +
+   # state labels using calc'd label coordinates
    ggrepel::geom_text_repel(data = pos_lbl_dat, 
                              aes(x = date, y = preds, 
                                  label = state,
@@ -83,16 +86,22 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
                             direction = "y",
                             point.padding = unit(3, "mm"),
                             segment.colour = NA) +
+   # log base e scaled y axis of "pct increases"
+   # breaks formula = pct increase formula derived from r
    scale_y_continuous(breaks = log(1+seq(0,60,by=10)/100),
                       labels = paste0(seq(0,60,by=10),"%"),
                       minor_breaks = NULL,
+                      # tranform formula = doubling time formula
                       sec.axis = sec_axis(~ log(2)/(.),
                                           breaks = c(2:7,14,21),
                                           name = "Doubling time (days)")
                       ) +
+   # scale_x_date understands what "2 days" means
    scale_x_date(date_breaks = "2 days",
                 date_labels = "%b %d") +
-   scale_color_manual(guide = FALSE, values = c(trippy[[4]], kind[[2]], for_floor[[3]], trippy[[1]])) +
+   scale_color_manual(guide = FALSE,
+                      values = c(trippy[[4]], kind[[2]],
+                                 for_floor[[3]], trippy[[1]])) +
    labs(x = NULL, y = NULL,
         title = "Daily changes in cumulative <b style='color:#B28330'>positive tests</b> of states with similar population densities",
         subtitle = glue("Last updated: {data_date}"),

@@ -111,7 +111,6 @@ mov_avg <- midwest_dat %>%
                               mean, na.rm = TRUE, .size = 14, .align = "right"))
 
 
-# 21935.29, 23318.57
 
 
 ########################
