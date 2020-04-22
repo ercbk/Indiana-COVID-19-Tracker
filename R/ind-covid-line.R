@@ -78,6 +78,7 @@ ind_tweet_dat <- in_health_tweets %>%
          as.numeric()
    ) %>% 
    filter(date > latest_date) %>% 
+   tidyr::drop_na() %>% 
    select(date, positives, deaths)
 
 
