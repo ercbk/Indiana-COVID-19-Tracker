@@ -73,20 +73,18 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
     exponential curves.  
-  - The slope is an estimation of the average percentage increase per
-    day and are estimated using the log-linear regression equation in
-    the top left corner. As these lines start to curve downward, it
-    indicates the data is becoming less exponential. The estimation
-    errors become larger and the model less appropriate.
+  - 7-day moving averages *greater* than 14 day moving averages indicate
+    an *increasing* trend of positive cases.  
+  - 7-day moving averages *less* than 14 day moving averages indicate a
+    *decreasing* trend in positive cases.
 
 <img src="plots/county-pos-bar-2020-04-20.png" width="3897" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest growth
     rates in positive test results.
-  - The percent changes are estimated using the same regression equation
-    as the regional percent changes in the previous chart except I’m
-    using county data here.  
+  - The percent changes are estimated using county data in a log-linear
+    model.  
   - Only counties that have had at least 5 positive cases for a week or
     more are considered. I’m trying to weed out the high rate estimates
     that are due to a spike in testing. As tests become more widely

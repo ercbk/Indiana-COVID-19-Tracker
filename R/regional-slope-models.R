@@ -92,29 +92,47 @@ dea_chart_dat <- midwest_dat %>%
 ########################
 
 # log-linear model by state
-mw_pos_models <- midwest_dat %>% 
-   model(log_mod = TSLM(log(positives) ~ trend())) %>% 
-   mutate(coef_info = purrr::map(log_mod, broom::tidy)) %>% 
-   tidyr::unnest(coef_info) %>% 
-   filter(term == "trend()") %>% 
-   mutate(estimate = exp(estimate))
+# used early in pandemic when curves were exponential
+# mw_pos_models <- midwest_dat %>% 
+#    model(log_mod = TSLM(log(positives) ~ trend())) %>% 
+#    mutate(coef_info = purrr::map(log_mod, broom::tidy)) %>% 
+#    tidyr::unnest(coef_info) %>% 
+#    filter(term == "trend()") %>% 
+#    mutate(estimate = exp(estimate))
+# 
+# mw_dea_models <- midwest_dat %>% 
+#    filter(deaths != 0) %>% 
+#    model(log_mod = TSLM(log(deaths) ~ trend())) %>% 
+#    mutate(coef_info = purrr::map(log_mod, broom::tidy)) %>% 
+#    tidyr::unnest(coef_info) %>% 
+#    filter(term == "trend()") %>% 
+#    mutate(estimate = exp(estimate))
 
-mw_dea_models <- midwest_dat %>% 
-   filter(deaths != 0) %>% 
-   model(log_mod = TSLM(log(deaths) ~ trend())) %>% 
-   mutate(coef_info = purrr::map(log_mod, broom::tidy)) %>% 
-   tidyr::unnest(coef_info) %>% 
-   filter(term == "trend()") %>% 
-   mutate(estimate = exp(estimate))
 
-# 7, 14 day moving averages (might use this later)
-# mov_avg <- midwest_dat %>% 
-#    group_by(state) %>% 
-#    mutate(daily_cases = difference(positives),
-#           daily_sevDy_ma = slide_dbl(daily_cases, 
-#                               mean, na.rm = TRUE, .size = 7, .align = "right"),
-#           daily_twoWk_ma = slide_dbl(daily_cases, 
-#                               mean, na.rm = TRUE, .size = 14, .align = "right"))
+
+# 7, 14 day moving averages
+pos_mov_avg <- midwest_dat %>%
+   group_by(state) %>%
+   mutate(daily_cases = difference(positives),
+          daily_sevDy_ma = slide_dbl(daily_cases,
+                              mean, na.rm = TRUE, .size = 7, .align = "right") %>% 
+             round(., 2),
+          daily_twoWk_ma = slide_dbl(daily_cases,
+                              mean, na.rm = TRUE, .size = 14, .align = "right") %>% 
+             round(., 2)) %>% 
+   select(-deaths)
+
+
+dea_mov_avg <- midwest_dat %>%
+   group_by(state) %>%
+   mutate(daily_cases = difference(deaths),
+          daily_sevDy_ma = slide_dbl(daily_cases,
+                              mean, na.rm = TRUE, .size = 7, .align = "right") %>% 
+             round(., 2),
+          daily_twoWk_ma = slide_dbl(daily_cases,
+                              mean, na.rm = TRUE, .size = 14, .align = "right") %>% 
+             round(., 2)) %>% 
+   select(-positives)
 
 
 
@@ -125,28 +143,28 @@ mw_dea_models <- midwest_dat %>%
 
 
 # positives
-# converts slopes to pct
-pos_lbl_dat <- mw_pos_models %>% 
-   select(state, estimate) %>% 
-   mutate(estimate = round((estimate - 1)*100, 1),
-          est_text = ifelse(estimate > 0, as.character(estimate) %>% paste0("+", ., "% per day"),  as.character(estimate)))
+# filter current date of data
+pos_lbl_dat <- pos_mov_avg %>% 
+   group_by(state) %>% 
+   filter(date == max(date))
+
 
 # assemble label text
 pos_mi_lbl <- glue("Michigan
-                   Estimated slope:
-                   {pos_lbl_dat$est_text[[4]]}")
+                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[4]]}
+                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[4]]}")
 pos_in_lbl <- glue("Indiana
-                   Estimated slope:
-                   {pos_lbl_dat$est_text[[2]]}")
+                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[2]]}
+                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[2]]}")
 pos_il_lbl <- glue("Illinois
-                   Estimated slope:
-                   {pos_lbl_dat$est_text[[1]]}")
+                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[1]]}
+                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[1]]}")
 pos_oh_lbl <- glue("Ohio
-                   Estimated slope:
-                   {pos_lbl_dat$est_text[[5]]}")
+                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[5]]}
+                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[5]]}")
 pos_ky_lbl <- glue("Kentucky
-                   Estimated slope:
-                   {pos_lbl_dat$est_text[[3]]}")
+                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[3]]}
+                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[3]]}")
 
 # coordinates for the data pt that ggforce will use for label
 pos_mark_circle_dat <- tibble(
@@ -167,30 +185,29 @@ pos_mark_circle_dat <- tibble(
 )
 
 
+
 # deaths
 # same thing
-dea_lbl_dat <- mw_dea_models %>% 
-   select(state, estimate) %>% 
-   mutate(estimate = round((estimate - 1)*100, 1),
-          est_text = case_when(estimate > 0 ~ as.character(estimate) %>% paste0("+", ., "% per day"), estimate < 0 ~ as.character(estimate) %>% paste0("-", ., "% per day"), TRUE ~ as.character(estimate)),
-   )
+dea_lbl_dat <- dea_mov_avg %>% 
+   group_by(state) %>%
+   filter(date == max(date))
 
 
 dea_mi_lbl <- glue("Michigan
-                   Estimated slope:
-                   {dea_lbl_dat$est_text[[4]]}")
+                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[4]]}
+                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[4]]}")
 dea_in_lbl <- glue("Indiana
-                   Estimated slope:
-                   {dea_lbl_dat$est_text[[2]]}")
+                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[2]]}
+                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[2]]}")
 dea_il_lbl <- glue("Illinois
-                   Estimated slope:
-                   {dea_lbl_dat$est_text[[1]]}")
+                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[1]]}
+                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[1]]}")
 dea_oh_lbl <- glue("Ohio
-                   Estimated slope:
-                   {dea_lbl_dat$est_text[[5]]}")
+                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[5]]}
+                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[5]]}")
 dea_ky_lbl <- glue("Kentucky
-                   Estimated slope:
-                   {dea_lbl_dat$est_text[[3]]}")
+                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[3]]}
+                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[3]]}")
 
 dea_mark_circle_dat <- tibble(
    days = dea_chart_dat %>% 
@@ -247,7 +264,8 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    )) +
    scale_y_log10() +
    # needed to provide space to ggforce labels
-   expand_limits(y = max(pos_chart_dat$positives)*4) +
+   expand_limits(y = max(pos_chart_dat$positives)*4.5,
+                 x = max(pos_chart_dat$days)+5) +
    labs(x = "Number of days since a total of 100 <b style='color:#B28330'>positive cases</b> first recorded", y = NULL,
         title = "Regional COVID-19 <b style='color:#B28330'> Cumulative Positive Test Results</b>",
         subtitle = glue("Last updated: {data_date}"),
@@ -264,27 +282,6 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       label.colour = "white",
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
-   # used ggannotate pkg shiny app to calc coordinates for me
-   # adds latex eq text
-   geom_text(data = tibble(x = 4.76224962490622,
-                           # as.numeric(date)
-                           y = 47322.4114933286,
-                           label = latex2exp::TeX("$\\log(positives) = \\beta_0 + slope*date + \\epsilon_{date}$")),
-             mapping = aes(x = x,
-                           y = y,
-                           label = label),
-             size = 3.86605783866058,
-             angle = 0L,
-             lineheight = 1L,
-             hjust = 0.5,
-             vjust = 0.5,
-             colour = "white",
-             parse = TRUE,
-             family = "sans",
-             fontface = "plain",
-             # think this bit might be necessary to use as.numeric(date) coords
-             inherit.aes = FALSE,
-             show.legend = FALSE) +
    theme(plot.title = element_textbox_simple(size = rel(1.5),
                                              color = "white",
                                              family = "Roboto"),
@@ -326,7 +323,8 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
    geom_point() +
    scale_y_log10() +
    # needed to provide space to ggforce labels
-   expand_limits(y = max(dea_chart_dat$deaths)*2.5) +
+   expand_limits(y = max(dea_chart_dat$deaths)*3,
+                 x = max(dea_chart_dat$days+5)) +
    labs(x = "Number of days since a total of 5 <b style='color:#BE454F'>deaths</b> first recorded", y = NULL,
         title = "Regional COVID-19 <b style='color:#BE454F'>Cumulative Deaths</b>",
         subtitle = glue("Last updated: {data_date}"),
@@ -342,23 +340,6 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
       label.colour = "white",
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
-   geom_text(data = tibble(x = 2.76224962490622,
-                           y = (max(dea_chart_dat$deaths)*2.5)*0.95,
-                           label = latex2exp::TeX("$\\log(deaths) = \\beta_0 + slope*date + \\epsilon_{date}$")),
-             mapping = aes(x = x,
-                           y = y,
-                           label = label),
-             size = 3.86605783866058,
-             angle = 0L,
-             lineheight = 1L,
-             hjust = 0.5,
-             vjust = 0.5,
-             colour = "white",
-             parse = TRUE,
-             family = "sans",
-             fontface = "plain",
-             inherit.aes = FALSE,
-             show.legend = FALSE) +
    theme(plot.title = element_textbox_simple(size = rel(1.5),
                                              color = "white"),
          plot.subtitle = element_text(size = rel(1),
