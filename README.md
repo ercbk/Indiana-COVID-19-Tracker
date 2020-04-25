@@ -17,7 +17,7 @@ State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
-<img src="plots/ind-combo-line-2020-04-24.png" width="3897" />
+<img src="plots/ind-combo-line-2020-04-25.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -76,15 +76,15 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     trends of straight(-ish) lines are easier to compare than
     exponential curves.  
   - 7-day moving averages *greater* than 14 day moving averages indicate
-    an *increasing* trend of positive cases.  
+    an *increasing* trend of positive cases or deaths.  
   - 7-day moving averages *less* than 14 day moving averages indicate a
-    *decreasing* trend in positive cases.
+    *decreasing* trend in positive cases or deaths.
 
 <img src="plots/county-pos-bar-2020-04-23.png" width="3897" />
 
   - The top 20 counties according to estimated average percent change
-    are shown. Counties at the top are experiencing the highest growth
-    rates in positive test results.
+    are shown. Counties at the top are experiencing the highest average
+    growth rates in positive test results.
   - The percent changes are estimated using county data in a log-linear
     model.  
   - Only counties that have had at least 5 positive cases for a week or
