@@ -46,7 +46,8 @@ pos_lor_dat <- density_dat %>%
    group_by(state) %>% 
    mutate(pos_logratio = difference(log(positives)),
           pos_doub = log(2)/pos_logratio) %>%
-   filter(date >= "2020-03-21")
+   filter(date >= "2020-03-21") %>% 
+   as_tibble()
 
 
 # Fitting the loess curves manually to get coordinates for labeling loess curves
@@ -64,6 +65,19 @@ pos_lbl_dat <- pos_lor_dat %>%
           preds = as.numeric(preds)) %>% 
    select(state, preds, date)
    
+
+zoom_yupper <- pos_lor_dat %>% 
+   filter(date == (max(date)-7)) %>% 
+   summarize(upper_y = max(pos_logratio)*1.5) %>% 
+   pull(upper_y)
+zoom_yupper <- pos_lor_dat %>% 
+   filter(date >= (max(date)-7)) %>% 
+   summarize(upper_y = max(pos_logratio)*1.5) %>% 
+   pull(upper_y)
+zoom_xrange <- pos_lor_dat %>% 
+   filter(date >= (max(date)-7)) %>% 
+   summarize(xmin = min(date),
+             xmax = max(date))
 
 pos_lor_line <- ggplot(data = pos_lor_dat,
                        aes(x = date, y = pos_logratio,
@@ -97,8 +111,14 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
                                           name = "Doubling time (days)")
                       ) +
    # scale_x_date understands what "2 days" means
-   scale_x_date(date_breaks = "2 days",
+   scale_x_date(date_breaks = "4 days",
                 date_labels = "%b %d") +
+   # hates tsibbles, data needs to be a tibble or df
+   ggforce::facet_zoom(xlim = c(zoom_xrange$xmin[[1]], zoom_xrange$xmax[[1]]),
+                       ylim = c(0, zoom_yupper),
+                       zoom.size = 0.6,
+                       show.area = FALSE,
+                       horizontal = FALSE) +
    scale_color_manual(guide = FALSE,
                       values = c(trippy[[4]], kind[[2]],
                                  for_floor[[3]], trippy[[1]])) +

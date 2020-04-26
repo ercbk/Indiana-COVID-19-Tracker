@@ -1,13 +1,11 @@
 # Instantaneous Effective Reproduction Number Estimation
 
 # Notes:
-# 1. Values for the serial interval mean and standard deviation taken an example used in Tim Church's blog post. He got it from a Chinese paper.
+# 1. Values for the serial interval, mean and standard deviation, taken from an example used in Tim Church's blog post. He got it from a Chinese paper.
 # 2. facet_zoom doesn't like tsibbles and gives a funky error, so make sure you convert to df or tibble.
 # 3. see comment in plot for details on labels drawing only in zoomed area
-# 4. nature apr 15 paper, https://www.nature.com/articles/s41591-020-0869-5, gives si mean = 5.8 w/ 95% CI (4.8, 6.8), n = 77
+# 4. Updated si parameters: nature apr 15 paper, https://www.nature.com/articles/s41591-020-0869-5, gives si mean = 5.8 w/ 95% CI (4.8, 6.8), n = 77. Don't know how to get the sd for Gamma distr using mean and CIs though.
 
-# 4.48 (Nature paper) using normal approx
-# std_dev <- (6.8-5.8)*sqrt(77)/1.96
 
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, EpiEstim)

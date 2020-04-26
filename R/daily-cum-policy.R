@@ -43,7 +43,10 @@ policy_dat <- state_policy %>%
           date = lubridate::mdy(date),
           policy = stringr::str_replace(policy,
                                         pattern = "Date c",
-                                        replacement = "C"))
+                                        replacement = "C")) %>% 
+   add_row(policy = "Resumes elective medical procedures",
+           date = as.Date("2020-04-24"),
+           date_text = "04/24/2020")
 
 
 
@@ -54,14 +57,14 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>% 
-   filter(!policy %in% c("Closed movie theaters", "Closed gyms", "Froze evictions")) %>% 
+   filter(!policy %in% c("Closed movie theaters", "Closed gyms", "Froze evictions", "Resumes elective medical porcedures")) %>% 
    # merges rows in policy that have same values in the other columns.
    aggregate(data = .,
              policy ~ date + cumulative_cases + daily_cases,
              FUN = paste0, collapse = "\n") %>% 
    # painstakingly searched-for values for nudging the labels
-   mutate(hjust = c(-0.2, -0.25, 1.3, 1),
-          vjust = c(-7, 2, -1.32, -2.3))
+   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 1.3),
+          vjust = c(-7, 2, -1.32, -2.3, -2))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -72,7 +75,7 @@ arw <- arrow(length = unit(6, "pt"), type = "closed")
 pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1)) +
    geom_point(color = "#B28330") +
    geom_line(color = "#B28330") +
-   expand_limits(y = 1000) +
+   expand_limits(y = 1500) +
    scale_x_log10(breaks = c(0, 10, 100, 1000, 10000),
                  labels = c("0", "10", "100", "1,000", "10,000")) +
    # adding 1 to match the adjustment above
@@ -111,6 +114,11 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
    geom_segment(
       data = data.frame(), aes(x = 110, xend = 300,
                                yend = 126, y = 260),
+      color = deep_light[[7]], arrow = arw
+   ) +
+   geom_segment(
+      data = data.frame(), aes(x = 7000, xend = 12000,
+                               yend = 750, y = 1000),
       color = deep_light[[7]], arrow = arw
    ) +
    labs(x = "Cumulative Cases", y = NULL,
