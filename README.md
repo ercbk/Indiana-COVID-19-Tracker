@@ -17,7 +17,7 @@ State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
-<img src="plots/ind-combo-line-2020-04-25.png" width="3897" />
+<img src="plots/ind-combo-line-2020-04-26.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -96,9 +96,12 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
-    spreading the virus to for that period. Estimates slightly larger
-    than 1 indicate a slow spread of the virus. Estimates of 2 or
-    greater mean the virus is spreading rapidly.
+    spreading the virus to for that period.  
+  - Estimates slighly *lower* than 1 indicate that the spread of the
+    virus is decreasing. Estimates *slightly larger* than 1 indicate a
+    slow spread of the virus. Estimates of *2 or greater* mean the virus
+    is spreading rapidly.  
+  - R<sub>e</sub> is estimated over a 7-day window.
   - Further details on this metric can be found at a research
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data
