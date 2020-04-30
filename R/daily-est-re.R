@@ -63,6 +63,8 @@ zoom_yupper <- r_chart_dat %>%
 r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
   geom_point(color = trippy[[7]]) +
   geom_line(color = trippy[[7]]) +
+  geom_ribbon(aes(ymin = lower, ymax = upper),
+              fill = trippy[[7]], alpha = 0.20) +
   # hates tsibbles, data needs to be a tibble or df
   # zoom.data = zoom needed to only add label to zoomed area
   ggforce::facet_zoom(x = date > (max(date)-7),

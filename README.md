@@ -97,11 +97,12 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
     spreading the virus to for that period.  
-  - Estimates slighly *lower* than 1 indicate that the spread of the
+  - Estimates *slighly lower* than 1 indicate that the spread of the
     virus is decreasing. Estimates *slightly larger* than 1 indicate a
     slow spread of the virus. Estimates of *2 or greater* mean the virus
     is spreading rapidly.  
-  - R<sub>e</sub> is estimated over a 7-day window.
+  - R<sub>e</sub> is estimated over a 7-day window, and the shaded area
+    shows the 95% credible interval.
   - Further details on this metric can be found at a research
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data
