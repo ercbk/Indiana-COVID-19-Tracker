@@ -4,6 +4,8 @@
 # necessary for github actions
 token_stuff_e <- Sys.getenv(c("APPNAMEE", "APIKEYE", "APISECRETE", "ACCESSTOKENE", "ACCESSSECRETE"))
 
+print(token_stuff_e)
+
 rt_tok_e <- rtweet::create_token(
       app = token_stuff_e[[1]],
       consumer_key = token_stuff_e[[2]],
@@ -13,6 +15,8 @@ rt_tok_e <- rtweet::create_token(
       set_renv = FALSE)
 
 token_stuff_f <- Sys.getenv(c("APPNAMEF", "APIKEYF", "APISECRETF", "ACCESSTOKENF", "ACCESSSECRETF"))
+
+print(token_stuff_f)
 
 rt_tok_f <- rtweet::create_token(
       app = token_stuff_f[[1]],
