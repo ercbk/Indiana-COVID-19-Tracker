@@ -15,6 +15,16 @@ jobs:
       APISECRET: ${{ secrets.APISECRET }}
       ACCESSTOKEN: ${{ secrets.ACCESSTOKEN }}
       ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
+      APPNAMEE: ${{ secrets.APPNAMEE }}
+      APIKEYE: ${{ secrets.APIKEYE }}
+      APISECRETE: ${{ secrets.APISECRETE }}
+      ACCESSTOKENE: ${{ secrets.ACCESSTOKENE }}
+      ACCESSSECRETE: ${{ secrets.ACCESSSECRETE }}
+      APPNAMEF: ${{ secrets.APPNAMEF }}
+      APIKEYF: ${{ secrets.APIKEYF }}
+      APISECRETF: ${{ secrets.APISECRETF }}
+      ACCESSTOKENF: ${{ secrets.ACCESSTOKENF }}
+      ACCESSSECRETF: ${{ secrets.ACCESSSECRETF }}
     steps:
       # must checkout out of own repo to use "action" in someone elses  
       - uses: actions/checkout@v2
@@ -66,3 +76,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tweet noon update
+        run: Rscript "automate/tweet-noon-update.R"
