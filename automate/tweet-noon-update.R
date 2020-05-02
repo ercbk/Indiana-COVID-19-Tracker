@@ -37,7 +37,7 @@ tweet_id <- rtweet::get_timeline("StateHealthIN",
       pull(status_id)
 
 # get plot paths, names, and dates
-png_files <- tibble::tibble(paths = fs::dir_ls(here::here("plots"))) %>% 
+png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstudio_root_file()}/plots"))) %>% 
       mutate(
             chart = stringr::str_extract(paths,
                                          pattern = "[a-z]*-[a-z]*-[a-z]*"),
