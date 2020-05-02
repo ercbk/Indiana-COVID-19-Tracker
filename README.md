@@ -17,7 +17,7 @@ State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
-<img src="plots/ind-combo-line-2020-05-01.png" width="3897" />
+<img src="plots/ind-combo-line-2020-05-02.png" width="3897" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -39,14 +39,14 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
 </center>
 
-<img src="plots/pos-policy-line-2020-04-30.png" width="3897" />
+<img src="plots/pos-policy-line-2020-05-01.png" width="3897" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
     both axes are on a logarithmic scale. When the transmission rate
     lessens, the trend will decline and become increasingly vertical.
 
-<img src="plots/density-pos-line-2020-04-30.png" width="3897" />
+<img src="plots/density-pos-line-2020-05-01.png" width="3897" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -69,9 +69,9 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     prior to the change. Without an adjustment, it destroyed the
     coherence of the data, so I’ve replaced them with South Carolina.
 
-<img src="plots/region-dea-line-2020-04-30.png" width="3897" />
+<img src="plots/region-dea-line-2020-05-01.png" width="3897" />
 
-<img src="plots/region-pos-line-2020-04-30.png" width="3897" />
+<img src="plots/region-pos-line-2020-05-01.png" width="3897" />
 
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
@@ -81,7 +81,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - 7-day moving averages *less* than 14 day moving averages indicate a
     *decreasing* trend in positive cases or deaths.
 
-<img src="plots/county-pos-bar-2020-04-30.png" width="3897" />
+<img src="plots/county-pos-bar-2020-05-01.png" width="3897" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -93,7 +93,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     that are due to a spike in testing. As tests become more widely
     available, I’ll remove this constraint.
 
-<img src="plots/daily-re-line-2020-04-30.png" width="3897" />
+<img src="plots/daily-re-line-2020-05-01.png" width="3897" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
