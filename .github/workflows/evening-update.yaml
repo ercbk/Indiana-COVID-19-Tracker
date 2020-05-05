@@ -3,7 +3,7 @@ name: Evening Update
 on:
   schedule:
     # says run at the 0th min, 20th hr UTC (6pm ET) of every day
-    - cron: '0 22 * * *'
+    - cron: '10 13 * * *'
 
 jobs:
   update:
@@ -43,6 +43,10 @@ jobs:
         run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font/Roboto"), prompt=FALSE); loadfonts()'
+      - name: run soc-dist-line
+        run: Rscript "R/mobility-line.R"
+      - name: run daily-pos-rate
+        run: Rscript "R/daily-pos-rate.R"
       - name: run ind-covid-line
         run: Rscript "R/ind-covid-line.R"
       - name: run daily-cum-policy
@@ -67,5 +71,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tweet evening update
-        run: Rscript "automate/tweet-evening-update.R"
+      #- name: Tweet evening update
+      #  run: Rscript "automate/tweet-evening-update.R"

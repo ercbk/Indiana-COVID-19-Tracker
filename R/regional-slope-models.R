@@ -25,7 +25,7 @@ trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/pal
 kind <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Kindred Spirits.ase"))
 haze <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Purple Haze.ase"))
 queen <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Drama Queen.ase"))
-
+light_deep <- prismatic::clr_lighten(deep_rooted, shift = 0.15)
 
 # remove scientific notations
 options(scipen=999)
@@ -277,7 +277,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       data = pos_mark_circle_dat,
       # shrinks circle around the data point
       expand = -0.1, radius = 0.01,
-      con.colour = deep_rooted[[7]],
+      con.colour = light_deep[[7]],
       # says how far from the data point I want the label
       label.buffer = unit(6, "mm"),
       label.colour = "white",
@@ -336,8 +336,8 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
       description = desc),
       data = dea_mark_circle_dat,
       expand = -0.1, radius = 0.01,
-      con.colour = deep_rooted[[7]],
-      label.buffer = unit(6, "mm"),
+      con.colour = light_deep[[7]],
+      label.buffer = unit(5, "mm"),
       label.colour = "white",
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +

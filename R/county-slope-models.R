@@ -8,7 +8,6 @@
 
 
 
-
 # Set-up
 
 pacman::p_load(extrafont, dplyr, tsibble, fable, ggplot2, ggtext, glue)
@@ -40,19 +39,8 @@ data_date <- counties_dat %>%
       pull(date)
 
 
-# counties that have had at least 5 positive cases for a week
-chosen_counties <- counties_dat %>% 
-      filter(positives >= 5) %>%
-      as_tibble() %>% 
-      group_by(county) %>% 
-      count(county) %>% 
-      filter(n > 7) %>% 
-      pull(county)
-
-
 # log-linear models for each county
-county_pos_models <- counties_dat %>%
-      filter(county %in% chosen_counties) %>% 
+county_pos_models <- counties_dat %>% 
       model(log_mod = TSLM(log(positives) ~ trend())) %>% 
       mutate(coef_info = purrr::map(log_mod, broom::tidy)) %>% 
       tidyr::unnest(coef_info) %>% 
@@ -69,11 +57,9 @@ pos_lbl_dat <- county_pos_models %>%
                    paste0(., "%")) %>% 
       select(-estimate)
 
-# Chart data
-# top 20 counties according to slope estimates that have had at least 5 cases for a week
+# filter latest data, add labels, filter top 20
 pos_bar_dat <- counties_dat %>% 
-      filter(county %in% chosen_counties,
-             date == max(date)) %>% 
+      filter(date == max(date)) %>% 
       left_join(pos_lbl_dat, by = "county") %>% 
       ungroup() %>% 
       mutate(county = as.factor(county)) %>% 
@@ -94,7 +80,7 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
       labs(x = NULL, y = NULL,
            title = "Estimated change in <b style='color:#B28330'>cumulative positive tests</b> per day",
            subtitle = glue("Last updated: {data_date}\nNumber of positive tests in black"),
-           caption = "*Limited to counties with more than 5 positive cases for longer than a week in order\n to smooth out any large rate jumps due to spikes in testing.\nSource: The New York Times, based on reports from state and local health agencies") +
+           caption = "Source: The New York Times, based on reports from state and local health agencies") +
       theme(plot.title = element_textbox_simple(size = rel(1.5),
                                                 color = "white",
                                                 family = "Roboto"),
@@ -117,4 +103,5 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/county-pos-bar-{data_date}.png")
+
 ggsave(plot_path, plot = county_pos_bar, dpi = "print", width = 33, height = 20, units = "cm")

@@ -46,7 +46,10 @@ policy_dat <- state_policy %>%
                                         replacement = "C")) %>% 
    add_row(policy = "Resumes elective medical procedures",
            date = as.Date("2020-04-24"),
-           date_text = "04/24/2020")
+           date_text = "4/24/2020") %>% 
+   add_row(policy = "Stage 2 Re-opening begins",
+           date = as.Date("2020-05-04"),
+           date_text = "5/04/2020")
 
 
 
@@ -63,8 +66,8 @@ label_dat <- cases_dat %>%
              policy ~ date + cumulative_cases + daily_cases,
              FUN = paste0, collapse = "\n") %>% 
    # painstakingly searched-for values for nudging the labels
-   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 1.3),
-          vjust = c(-7, 2, -1.32, -2.3, -2))
+   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 1.3, 0),
+          vjust = c(-7, 2, -1.32, -2.3, -2, 0))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum

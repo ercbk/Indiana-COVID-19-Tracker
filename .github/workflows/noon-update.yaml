@@ -43,6 +43,12 @@ jobs:
         run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: run detect data update
         run: Rscript "automate/detect-data-update.R"
+      - name: run soc-dist-line
+        if: success()
+        run: Rscript "R/mobility-line.R"
+      - name: run daily-pos-rate
+        if: success()
+        run: Rscript "R/daily-pos-rate.R"
       - name: run ind-covid-line
         if: success()
         run: Rscript "R/ind-covid-line.R"

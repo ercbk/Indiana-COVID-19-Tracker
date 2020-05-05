@@ -43,7 +43,7 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
 
 
 pngs <- png_files %>%
-      slice(c(1,4,7)) %>% 
+      slice(c(9,1,4)) %>% 
       pull(paths)
 
 png_dates <- png_files %>% 

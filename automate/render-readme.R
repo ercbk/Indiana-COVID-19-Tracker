@@ -12,7 +12,6 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
                                          pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}") %>%
                   as.Date())
 
-# print(png_files)
 
 # render the charts with latest data
 png_dates <- png_files %>% 
@@ -26,10 +25,12 @@ rmarkdown::render(
             ind_combo_date = png_dates$newest_date[[4]],
             pos_policy_date = png_dates$newest_date[[5]],
             density_pos_date = png_dates$newest_date[[3]],
-            region_dea_date = png_dates$newest_date[[6]],
-            region_pos_date = png_dates$newest_date[[7]],
+            region_dea_date = png_dates$newest_date[[7]],
+            region_pos_date = png_dates$newest_date[[8]],
             county_pos_date = png_dates$newest_date[[1]],
-            daily_re_date = png_dates$newest_date[[2]]
+            daily_re_date = png_dates$newest_date[[2]],
+            pos_rate_date = png_dates$newest_date[[6]],
+            soc_dist_date = png_dates$newest_date[[9]]
       )
 )
 
@@ -39,7 +40,7 @@ paths <- png_files %>%
       filter(date == min(date)) %>% 
       pull(paths)
 
-if (nrow(png_files) > 18) {
+if (nrow(png_files) > 22) {
    fs::file_delete(paths)
 }
 
