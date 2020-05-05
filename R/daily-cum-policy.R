@@ -46,12 +46,12 @@ policy_dat <- state_policy %>%
                                         replacement = "C")) %>% 
    add_row(policy = "Resumes elective medical procedures",
            date = as.Date("2020-04-24"),
-           date_text = "4/24/2020")
+           date_text = "4/24/2020") %>%
+   add_row(policy = "Stage 2 Re-opening begins",
+           date = as.Date("2020-05-04"),
+           date_text = "5/04/2020")
 
-# %>% 
-#    add_row(policy = "Stage 2 Re-opening begins",
-#            date = as.Date("2020-05-04"),
-#            date_text = "5/04/2020")
+
 
 # policy label data
 
@@ -66,8 +66,8 @@ label_dat <- cases_dat %>%
              policy ~ date + cumulative_cases + daily_cases,
              FUN = paste0, collapse = "\n") %>% 
    # painstakingly searched-for values for nudging the labels
-   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 1.3),
-          vjust = c(-7, 2, -1.32, -2.3, -2))
+   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 1, 1.3),
+          vjust = c(-7, 2, -1.32, -2.3, 6, -2))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -122,6 +122,11 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
    geom_segment(
       data = data.frame(), aes(x = 7000, xend = 12000,
                                yend = 750, y = 1000),
+      color = deep_light[[7]], arrow = arw
+   ) +
+   geom_segment(
+      data = data.frame(), aes(x = 13500, xend = 19000,
+                               yend = 450, y = 175),
       color = deep_light[[7]], arrow = arw
    ) +
    labs(x = "Cumulative Cases", y = NULL,
