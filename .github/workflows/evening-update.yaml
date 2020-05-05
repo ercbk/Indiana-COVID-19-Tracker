@@ -2,13 +2,14 @@ name: Evening Update
 
 on:
   schedule:
-    # says run at the 0th min, 20th hr UTC (6pm ET) of every day
-    - cron: '0 20 * * *'
+    # says run at the 0th min, 22th hr UTC (6pm ET) of every day
+    - cron: '0 22 * * *'
 
 jobs:
   update:
     name: Update IN COVID Tracker
     runs-on: [ubuntu-latest]
+    # env vars for rtweet; 1 old one just to pull tweets; 2 others to tweet from accts
     env:
       APPNAME: ${{ secrets.APPNAME }}
       APIKEY: ${{ secrets.APIKEY }}
@@ -77,5 +78,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      #- name: Tweet evening update
-      #  run: Rscript "automate/tweet-evening-update.R"
+      - name: Tweet evening update
+        run: Rscript "automate/tweet-evening-update.R"
