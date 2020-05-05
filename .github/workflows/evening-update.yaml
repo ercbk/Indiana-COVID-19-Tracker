@@ -3,7 +3,7 @@ name: Evening Update
 on:
   schedule:
     # says run at the 0th min, 20th hr UTC (6pm ET) of every day
-    - cron: '16 14 * * *'
+    - cron: '0 20 * * *'
 
 jobs:
   update:
@@ -35,9 +35,12 @@ jobs:
       # need libcurl to install RCurl pkg on Linux
       - name: Install libcurl
         run: sudo apt-get install libcurl4-openssl-dev
-      # need these for a rgdal package
+      # need these for rgdal package
       - name: Install gdal, proj, and geos
         run: sudo apt-get install libgdal-dev gdal-bin libproj-dev proj-data proj-bin libgeos-dev
+      # needed for units package
+      - name: Install udunits2
+        run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install renv
