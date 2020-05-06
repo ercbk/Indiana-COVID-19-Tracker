@@ -59,7 +59,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     spreading of the virus.  
   - April 20th, so far, is the date of largest single day of testing.
 
-<img src="plots/soc-dist-line-2020-05-02.png" width="3897" />
+<img src="plots/soc-dist-line-2020-05-04.png" width="3897" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
