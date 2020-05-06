@@ -52,8 +52,8 @@ png_dates <- png_files %>%
       pull(date)
 
 
-msg <- glue::glue("Evening update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
-                  https://github.com/ercbk/Indiana-COVID-19-Tracker")
+msg <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+                  https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
 
 
 

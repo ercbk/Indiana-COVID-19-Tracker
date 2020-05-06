@@ -61,8 +61,8 @@ png_dates <- png_files %>%
 
 msg1 <- glue::glue("@StateHealthIN Charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
-msg2 <- glue::glue("Noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
-                  https://github.com/ercbk/Indiana-COVID-19-Tracker")
+msg2 <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+                  https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
 
 rtweet::post_tweet(msg1,
            in_reply_to_status_id = tweet_id,
