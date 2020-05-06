@@ -17,12 +17,14 @@ eth_mat <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/pa
 light_eth <- prismatic::clr_lighten(eth_mat, shift = 0.1)
 
 # Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds.
+
+
 c <- 0
 while (TRUE) {
    mob_dat <- try({
       try_date <- lubridate::today() - c
       
-      try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/2007HotfixDev46/v2/en-us/applemobilitytrends-{try_date}.csv")
+      try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/2007HotfixDev48/v2/en-us/applemobilitytrends-{try_date}.csv")
       
       readr::read_csv(try_address)
    }, silent = TRUE)
