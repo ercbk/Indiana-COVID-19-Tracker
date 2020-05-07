@@ -49,7 +49,10 @@ jobs:
       - name: copy dev environment to runner
         run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: install fonts
-        run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font/Roboto"), prompt=FALSE); loadfonts()'
+        run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
+      - name: build beds and ventilator data set
+        if: success()
+        run: Rscript "R/build-beds-vents-data.R"
       - name: run soc-dist-line
         run: Rscript "R/mobility-line.R"
       - name: run daily-pos-rate
