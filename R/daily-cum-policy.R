@@ -159,6 +159,6 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line-{data_date}.png")
 
-ggsave(plot_path, plot = pos_policy_line, dpi = "print", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm")
 
 

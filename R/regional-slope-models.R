@@ -364,5 +364,5 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/region-dea-line-{data_date}.png")
-ggsave(plot_path, plot = mw_dea_line, dpi = "print", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = mw_dea_line, dpi = "screen", width = 33, height = 20, units = "cm")
 

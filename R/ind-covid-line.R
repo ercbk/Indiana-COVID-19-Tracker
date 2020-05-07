@@ -297,6 +297,6 @@ gtab <- gtable::gtable_add_grob(gtab, dea_tab_grob, t = 3, l = 5)
 # grid.newpage()
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/ind-combo-line-{label_dat$date[[1]]}.png")
-ggsave(plot_path, plot = gtab, dpi = "print", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = gtab, dpi = "screen", width = 33, height = 20, units = "cm")
 
 

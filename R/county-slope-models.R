@@ -104,4 +104,6 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/county-pos-bar-{data_date}.png")
 
-ggsave(plot_path, plot = county_pos_bar, dpi = "print", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = county_pos_bar, dpi = "screen", width = 33, height = 20, units = "cm")
+
+

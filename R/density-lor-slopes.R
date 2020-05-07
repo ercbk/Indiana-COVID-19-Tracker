@@ -153,5 +153,5 @@ pos_lor_line <- ggplot(data = pos_lor_dat,
    )
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/density-pos-line-{data_date}.png")
-ggsave(plot_path, plot = pos_lor_line, dpi = "print", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = pos_lor_line, dpi = "screen", width = 33, height = 20, units = "cm")
 
