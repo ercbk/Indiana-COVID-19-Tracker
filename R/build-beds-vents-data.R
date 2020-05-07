@@ -23,8 +23,8 @@ bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
 
 old_complete <- readr::read_rds("data/beds-vents-complete.rds")
 
-new_complete <- bv_dat_current %>% 
-      bind_rows(old_complete)
+new_complete <- old_complete %>% 
+      bind_rows(bv_dat_current)
 
 readr::write_rds(new_complete, "data/beds-vents-complete.rds")
 
