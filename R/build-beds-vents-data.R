@@ -18,7 +18,7 @@ download.file(try_address, destfile = try_destfile, mode = "wb")
 
 bv_dat_current <- readxl::read_xlsx(try_destfile) %>% 
       tidyr::pivot_wider(names_from = "STATUS_TYPE", values_from = "TOTAL") %>%
-      mutate(date = try_date) %>% 
+      mutate(date = todays_date) %>% 
       select(date, everything())
 
 old_complete <- readr::read_rds("data/beds-vents-complete.rds")
