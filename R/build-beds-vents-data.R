@@ -4,7 +4,7 @@
 
 library(dplyr, warn.conflicts = F, quietly = T)
 
-todays_date <- lubridata::today()
+todays_date <- lubridate::today()
 
 try_date_str <- todays_date %>% 
       stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>% 
