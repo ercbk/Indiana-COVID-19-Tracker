@@ -153,12 +153,13 @@ indy_chart <- ggplot(data = ind_chart_dat, aes(x = date, y = mob_index, group = 
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
 
-
+caption_text <- glue("Last updated: {data_date}
+                  Source: Apple Mobility Trends Reports")
 # patchwork goodness
 all_charts <- indy_chart + region_plots$plots[[1]] + region_plots$plots[[2]] + region_plots$plots[[3]] + region_plots$plots[[4]] + region_plots$plots[[5]] + 
    plot_annotation(title = "Approximating levels of social distancing using Apple maps data",
                    subtitle = "Lower values for Apple's driving index indicate higher levels of social distancing",
-                   caption = "Source: Apple Mobility Trends Reports") &
+                   caption = caption_text) &
    theme(plot.title = element_textbox_simple(color = "white",
                                              size = 16,
                                              family = "Roboto"),
@@ -173,8 +174,6 @@ all_charts <- indy_chart + region_plots$plots[[1]] + region_plots$plots[[2]] + r
          panel.border = element_blank(),
          plot.background = element_rect(fill = "black",
                                         color = NA))
-
-
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/soc-dist-line-{data_date}.png")

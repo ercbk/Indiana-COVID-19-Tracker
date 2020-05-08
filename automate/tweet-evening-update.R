@@ -52,15 +52,17 @@ png_dates <- png_files %>%
       pull(date)
 
 
-msg <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+msg_e <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
+msg_f <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+                  https://github.com/ercbk/Indiana-COVID-19-Tracker")
 
 
 
-rtweet::post_tweet(msg,
+rtweet::post_tweet(msg_e,
                    media = pngs,
                    token = rt_tok_e)
 
-rtweet::post_tweet(msg,
+rtweet::post_tweet(msg_f,
                    media = pngs,
                    token = rt_tok_f)

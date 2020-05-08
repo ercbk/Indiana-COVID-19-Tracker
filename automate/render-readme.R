@@ -40,7 +40,7 @@ paths <- png_files %>%
       filter(date == min(date)) %>% 
       pull(paths)
 
-if (nrow(png_files) > 22) {
+if (nrow(png_files) > 36) {
    fs::file_delete(paths)
 }
 

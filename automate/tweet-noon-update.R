@@ -59,20 +59,22 @@ png_dates <- png_files %>%
       mutate(date = format(date, "%b %d")) %>% 
       pull(date)
 
-msg1 <- glue::glue("@StateHealthIN Charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+msg <- glue::glue("@StateHealthIN Charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
-msg2 <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+msg_e <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
+msg_f <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+                  https://github.com/ercbk/Indiana-COVID-19-Tracker")
 
-rtweet::post_tweet(msg1,
+rtweet::post_tweet(msg,
            in_reply_to_status_id = tweet_id,
            media = pngs,
            token = rt_tok_e)
 
-rtweet::post_tweet(msg2,
+rtweet::post_tweet(msg_e,
            media = pngs,
            token = rt_tok_e)
 
-rtweet::post_tweet(msg2,
+rtweet::post_tweet(msg_f,
            media = pngs,
            token = rt_tok_f)

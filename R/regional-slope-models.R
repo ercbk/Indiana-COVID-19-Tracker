@@ -151,20 +151,20 @@ pos_lbl_dat <- pos_mov_avg %>%
 
 # assemble label text
 pos_mi_lbl <- glue("Michigan
-                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[4]]}
-                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[4]]}")
+                   Avg over previous 7 days: {pos_lbl_dat$daily_sevDy_ma[[4]]}
+                   Avg over previous 14 days: {pos_lbl_dat$daily_twoWk_ma[[4]]}")
 pos_in_lbl <- glue("Indiana
-                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[2]]}
-                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[2]]}")
+                   Avg over previous 7 days: {pos_lbl_dat$daily_sevDy_ma[[2]]}
+                   Avg over previous 14 days: {pos_lbl_dat$daily_twoWk_ma[[2]]}")
 pos_il_lbl <- glue("Illinois
-                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[1]]}
-                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[1]]}")
+                   Avg over previous 7 days: {pos_lbl_dat$daily_sevDy_ma[[1]]}
+                   Avg over previous 14 days: {pos_lbl_dat$daily_twoWk_ma[[1]]}")
 pos_oh_lbl <- glue("Ohio
-                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[5]]}
-                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[5]]}")
+                   Avg over previous 7 days: {pos_lbl_dat$daily_sevDy_ma[[5]]}
+                   Avg over previous 14 days: {pos_lbl_dat$daily_twoWk_ma[[5]]}")
 pos_ky_lbl <- glue("Kentucky
-                   7 day moving avg: {pos_lbl_dat$daily_sevDy_ma[[3]]}
-                   14 day moving avg: {pos_lbl_dat$daily_twoWk_ma[[3]]}")
+                   Avg over previous 7 days: {pos_lbl_dat$daily_sevDy_ma[[3]]}
+                   Avg over previous 14 days: {pos_lbl_dat$daily_twoWk_ma[[3]]}")
 
 # coordinates for the data pt that ggforce will use for label
 pos_mark_circle_dat <- tibble(
@@ -194,20 +194,20 @@ dea_lbl_dat <- dea_mov_avg %>%
 
 
 dea_mi_lbl <- glue("Michigan
-                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[4]]}
-                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[4]]}")
+                   Avg over previous 7 days: {dea_lbl_dat$daily_sevDy_ma[[4]]}
+                   Avg over previous 14 days: {dea_lbl_dat$daily_twoWk_ma[[4]]}")
 dea_in_lbl <- glue("Indiana
-                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[2]]}
-                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[2]]}")
+                   Avg over previous 7 days: {dea_lbl_dat$daily_sevDy_ma[[2]]}
+                   Avg over previous 14 days: {dea_lbl_dat$daily_twoWk_ma[[2]]}")
 dea_il_lbl <- glue("Illinois
-                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[1]]}
-                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[1]]}")
+                   Avg over previous 7 days: {dea_lbl_dat$daily_sevDy_ma[[1]]}
+                   Avg over previous 14 days: {dea_lbl_dat$daily_twoWk_ma[[1]]}")
 dea_oh_lbl <- glue("Ohio
-                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[5]]}
-                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[5]]}")
+                   Avg over previous 7 days: {dea_lbl_dat$daily_sevDy_ma[[5]]}
+                   Avg over previous 14 days: {dea_lbl_dat$daily_twoWk_ma[[5]]}")
 dea_ky_lbl <- glue("Kentucky
-                   7 day moving average: {dea_lbl_dat$daily_sevDy_ma[[3]]}
-                   14 day moving average: {dea_lbl_dat$daily_twoWk_ma[[3]]}")
+                   Avg over previous 7 days: {dea_lbl_dat$daily_sevDy_ma[[3]]}
+                   Avg over previous 14 days: {dea_lbl_dat$daily_twoWk_ma[[3]]}")
 
 dea_mark_circle_dat <- tibble(
    days = dea_chart_dat %>% 
@@ -327,7 +327,7 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
    expand_limits(y = max(pos_chart_dat$deaths)*nrow(pos_chart_dat)*0.05,
                  x = max(pos_chart_dat$days)+(nrow(pos_chart_dat)*0.02)) +
    labs(x = "Number of days since a total of 5 <b style='color:#BE454F'>deaths</b> first recorded", y = NULL,
-        title = "Regional COVID-19 <b style='color:#BE454F'> Cumulative Deaths</b>",
+        title = "Regional COVID-19 <b style='color:#BE454F'> Cumulative  Deaths</b>",
         subtitle = glue("Last updated: {data_date}"),
         caption = "Source: The New York Times, based on reports from state and local health agencies") +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
@@ -342,11 +342,14 @@ mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) +
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
    theme(plot.title = element_textbox_simple(size = rel(1.5),
-                                             color = "white"),
+                                             color = "white",
+                                             family = "Roboto"),
          plot.subtitle = element_text(size = rel(1),
-                                      color = "white"),
+                                      color = "white",
+                                      family = "Roboto"),
          plot.caption = element_text(color = "white",
-                                     size = rel(0.95)),
+                                     size = rel(0.95),
+                                     family = "Roboto"),
          text = element_text(family = "Roboto"),
          legend.position = "none",
          axis.text.x = element_text(color = "white",
