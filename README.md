@@ -18,7 +18,7 @@ and The Indiana Data [Hub](https://hub.mph.in.gov/dataset). State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
-<img src="plots/ind-combo-line-2020-05-07.png" width="935" />
+<img src="plots/ind-combo-line-2020-05-08.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -49,7 +49,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/pos-rate-line-2020-05-06.png" width="935" />
+<img src="plots/pos-rate-line-2020-05-07.png" width="935" />
 
   - The Positive Test Rate is the total number of positive test results
     divided by the total number of tests that have been administered.  
@@ -59,7 +59,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     spreading of the virus.  
   - April 20th, so far, is the date of largest single day of testing.
 
-<img src="plots/soc-dist-line-2020-05-04.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-06.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
