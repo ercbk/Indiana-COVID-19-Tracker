@@ -40,7 +40,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
 </center>
 
-<img src="plots/pos-policy-line-2020-05-06.png" width="935" />
+<img src="plots/pos-policy-line-2020-05-07.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
@@ -59,7 +59,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     spreading of the virus.  
   - April 20th, so far, is the date of largest single day of testing.
 
-<img src="plots/soc-dist-line-2020-05-06.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-07.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
@@ -75,7 +75,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     horizontal dashed line represents Indianpolis’s current driving
     index.
 
-<img src="plots/density-pos-line-2020-05-06.png" width="935" />
+<img src="plots/density-pos-line-2020-05-07.png" width="935" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -98,9 +98,9 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     prior to the change. Without an adjustment, it destroyed the
     coherence of the data, so I’ve replaced them with South Carolina.
 
-<img src="plots/region-dea-line-2020-05-06.png" width="935" />
+<img src="plots/region-dea-line-2020-05-07.png" width="935" />
 
-<img src="plots/region-pos-line-2020-05-06.png" width="3897" />
+<img src="plots/region-pos-line-2020-05-07.png" width="3897" />
 
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
@@ -110,7 +110,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - 7-day moving averages *less* than 14 day moving averages indicate a
     *decreasing* trend in positive cases or deaths.
 
-<img src="plots/county-pos-bar-2020-05-06.png" width="935" />
+<img src="plots/county-pos-bar-2020-05-07.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -118,7 +118,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - The average percent changes are estimated using county data in a
     log-linear model.
 
-<img src="plots/daily-re-line-2020-05-06.png" width="935" />
+<img src="plots/daily-re-line-2020-05-07.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
