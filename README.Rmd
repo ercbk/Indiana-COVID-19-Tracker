@@ -23,7 +23,9 @@ knitr::opts_chunk$set(echo=FALSE)
 ![Evening Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Update/badge.svg)
 
 # Indiana COVID-19 Tracker
-(Charts updated between noon and 1pm ET and at 6:30 pm ET)
+(Charts updated between noon and 1pm ET and at 6:30 pm ET)  
+  
+Changelog located in [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md)
 
 Repository to track COVID-19 data statewide and by county. Most of the State and County data for positive tests and deaths are gathered from The New York Times COVID-19 [repository](https://github.com/nytimes/covid-19-data), the Indiana State Department of Heath Twitter [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor), and The Indiana Data [Hub](https://hub.mph.in.gov/dataset). State policy [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0) comes from Julia Raifman, Kristen Nocka, et al at Boston University.  
   
@@ -80,7 +82,6 @@ knitr::include_graphics(density_pos_path)
    * This chart shows the single day growth rates over a period of time for each state. LOESS regression curves are used here instead of a connected line graph of the actual data because the fluctuations of the data would obscure the trends.  
    * These curves can be used to compare the effectiveness of state responses. Population density is a potential factor for how quickly a virus spreads through a state. Therefore, a fairer comparison might be to use states with similar population densities if we want to get an idea of how well Indiana's governmental response has been.  
    * Doubling times, as shown in the previous equation, are calculated from growth rates, so I've included a second y-axis to show how these have changed over time as well. Since the curves are being fit to data, the actual doubling-times won't match-up exactly to points on the curves.  
-   * Previous versions of this chart included Georgia. As of 2020-04-12, Georgia started separating non-state residents from their patient counts. Neither The New York Times nor Georgia adjusted the counts prior to the change. Without an adjustment, it destroyed the coherence of the data, so I've replaced them with South Carolina.  
 
 ```{r, align="center"}
 region_dea_path <- glue::glue("plots/region-dea-line-{params$region_dea_date}.png")
