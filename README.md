@@ -19,13 +19,13 @@ Data [Hub](https://hub.mph.in.gov/dataset). State policy
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
 Governor Holcomb has begun scaling back policies aimed at stopping the
-spread of COVID-19. Much of the his plan seems to follow the White House
+spread of COVID-19. Much of his plan seems to follow the White House
 [plan](https://www.whitehouse.gov/openingamerica/), and both are simliar
 to the
 [guidelines](https://www.aei.org/research-products/report/national-coronavirus-response-a-road-map-to-reopening/)
-published by the American Enterpise Institute (AEI) and Johns Hopkins,
-although, neither Governor Holcomb’s nor the White House’s plan include
-the snapback (i.e. reverting to a previous stage) triggering conditions
+published by the American Enterpise Institute (AEI) and Johns Hopkins.
+Neither Governor Holcomb’s nor the White House’s plan includes the
+snapback (i.e. reverting to a previous stage) triggering conditions
 listed in the AEI proposal. Along with tracking virus spread metrics,
 I’ll also be tracking as many of these triggers as I can with the data
 that’s available.
