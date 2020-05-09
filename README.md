@@ -8,6 +8,9 @@ Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Up
 
 (Charts updated between noon and 1pm ET and at 6:30 pm ET)
 
+Changelog located in
+[NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md)
+
 Repository to track COVID-19 data statewide and by county. Most of the
 State and County data for positive tests and deaths are gathered from
 The New York Times COVID-19
@@ -17,6 +20,18 @@ State Department of Heath Twitter
 and The Indiana Data [Hub](https://hub.mph.in.gov/dataset). State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
+
+Governor Holcomb has begun scaling back policies aimed at stopping the
+spread of COVID-19. Much of the his plan seems to follow the White House
+[plan](https://www.whitehouse.gov/openingamerica/), and both are simliar
+to the
+[guidelines](https://www.aei.org/research-products/report/national-coronavirus-response-a-road-map-to-reopening/)
+published by the American Enterpise Institute (AEI) and Johns Hopkins,
+although, neither Governor Holcomb’s nor the White House’s plan include
+the snapback (i.e. reverting to a previous stage) triggering conditions
+listed in the AEI proposal. Along with tracking virus spread metrics,
+I’ll also be tracking as many of these triggers as I can with the data
+that’s available.
 
 <img src="plots/ind-combo-line-2020-05-08.png" width="935" />
 
@@ -40,7 +55,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
 </center>
 
-<img src="plots/pos-policy-line-2020-05-07.png" width="935" />
+<img src="plots/pos-policy-line-2020-05-08.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
@@ -49,7 +64,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/pos-rate-line-2020-05-07.png" width="935" />
+<img src="plots/pos-rate-line-2020-05-08.png" width="935" />
 
   - The Positive Test Rate is the total number of positive test results
     divided by the total number of tests that have been administered.  
@@ -57,7 +72,11 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     be attributed to increased levels of testing, but as testing becomes
     widespread, increases in this rate can be attributed to increased
     spreading of the virus.  
-  - April 20th, so far, is the date of largest single day of testing.
+  - April 20th, so far, is the date of largest single day of testing.  
+  - In the AEI reopening guidelines, one of the triggers for returning
+    to stage one is five or more consecutive days where the value of
+    daily cases has increased. I’m monitoring this trigger in the
+    subtitle section of the chart.
 
 <img src="plots/soc-dist-line-2020-05-07.png" width="935" />
 
@@ -75,7 +94,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     horizontal dashed line represents Indianpolis’s current driving
     index.
 
-<img src="plots/density-pos-line-2020-05-07.png" width="935" />
+<img src="plots/density-pos-line-2020-05-08.png" width="935" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -91,16 +110,11 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
     from growth rates, so I’ve included a second y-axis to show how
     these have changed over time as well. Since the curves are being fit
     to data, the actual doubling-times won’t match-up exactly to points
-    on the curves.  
-  - Previous versions of this chart included Georgia. As of 2020-04-12,
-    Georgia started separating non-state residents from their patient
-    counts. Neither The New York Times nor Georgia adjusted the counts
-    prior to the change. Without an adjustment, it destroyed the
-    coherence of the data, so I’ve replaced them with South Carolina.
+    on the curves.
 
-<img src="plots/region-dea-line-2020-05-07.png" width="935" />
+<img src="plots/region-dea-line-2020-05-08.png" width="935" />
 
-<img src="plots/region-pos-line-2020-05-07.png" width="3897" />
+<img src="plots/region-pos-line-2020-05-08.png" width="3897" />
 
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
@@ -110,7 +124,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - 7-day moving averages *less* than 14 day moving averages indicate a
     *decreasing* trend in positive cases or deaths.
 
-<img src="plots/county-pos-bar-2020-05-07.png" width="935" />
+<img src="plots/county-pos-bar-2020-05-08.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -118,7 +132,7 @@ comes from Julia Raifman, Kristen Nocka, et al at Boston University.
   - The average percent changes are estimated using county data in a
     log-linear model.
 
-<img src="plots/daily-re-line-2020-05-07.png" width="935" />
+<img src="plots/daily-re-line-2020-05-08.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
