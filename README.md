@@ -6,18 +6,15 @@ Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Up
 
 # Indiana COVID-19 Tracker
 
-(Charts updated between noon and 1pm ET and at 6:30 pm ET)
-
+Charts updated between noon and 1pm ET and at 6:30 pm ET  
 Changelog located in
 [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md)
 
 Repository to track COVID-19 data statewide and by county. Most of the
 State and County data for positive tests and deaths are gathered from
 The New York Times COVID-19
-[repository](https://github.com/nytimes/covid-19-data), the Indiana
-State Department of Heath Twitter
-[account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor),
-and The Indiana Data [Hub](https://hub.mph.in.gov/dataset). State policy
+[repository](https://github.com/nytimes/covid-19-data) and The Indiana
+Data [Hub](https://hub.mph.in.gov/dataset). State policy
 [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
 comes from Julia Raifman, Kristen Nocka, et al at Boston University.
 
@@ -61,6 +58,9 @@ that’s available.
     versus the cumulative total of positive cases on the x-axis, where
     both axes are on a logarithmic scale. When the transmission rate
     lessens, the trend will decline and become increasingly vertical.  
+  - In the AEI reopening guidelines, one of the triggers for returning
+    to stage one is five or more consecutive days where the value of
+    daily cases has increased.  
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
@@ -72,11 +72,7 @@ that’s available.
     be attributed to increased levels of testing, but as testing becomes
     widespread, increases in this rate can be attributed to increased
     spreading of the virus.  
-  - April 20th, so far, is the date of largest single day of testing.  
-  - In the AEI reopening guidelines, one of the triggers for returning
-    to stage one is five or more consecutive days where the value of
-    daily cases has increased. I’m monitoring this trigger in the
-    subtitle section of the chart.
+  - April 20th, so far, is the date of largest single day of testing.
 
 <img src="plots/soc-dist-line-2020-05-07.png" width="935" />
 
@@ -119,10 +115,10 @@ that’s available.
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
     exponential curves.  
-  - 7-day moving averages *greater* than 14 day moving averages indicate
-    an *increasing* trend of positive cases or deaths.  
-  - 7-day moving averages *less* than 14 day moving averages indicate a
-    *decreasing* trend in positive cases or deaths.
+  - 7-day averages *greater* than 14 day averages indicate an
+    *increasing* trend of positive cases or deaths.  
+  - 7-day averages *less* than 14 day averages indicate a *decreasing*
+    trend in positive cases or deaths.
 
 <img src="plots/county-pos-bar-2020-05-08.png" width="935" />
 

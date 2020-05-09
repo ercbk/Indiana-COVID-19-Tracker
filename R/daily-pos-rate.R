@@ -112,6 +112,11 @@ chart_dat <- test_dat %>%
       filter(date >= "2020-04-20") %>% 
       mutate(pos_test_rate = cum_postives/cum_tests)
 
+# y-coord for geom_text
+text_coord <- chart_dat %>% 
+   filter(date == max(date)) %>% 
+   pull(pos_test_rate)
+
 
 
 rate_plot <- ggplot(data = chart_dat,
@@ -124,9 +129,9 @@ rate_plot <- ggplot(data = chart_dat,
    ggrepel::geom_label_repel(data = chart_dat %>% 
                                 filter(date == max(date)),
                              aes(label = scales::percent(pos_test_rate, accuracy = 0.1), size = 12),
-                             nudge_x = -0.45, nudge_y = 0.02) +
+                             nudge_x = -0.45, nudge_y = 0.002) +
    geom_text(data = data.frame(x = as.Date("2020-04-22"),
-                               y = 0.177,
+                               y = text_coord + 0.002,
                                label = glue("US Average: {us_pos_rate}")),
              mapping = aes(x = x, y = y,
                            label = label),
@@ -136,7 +141,7 @@ rate_plot <- ggplot(data = chart_dat,
              family = "Roboto", fontface = "plain",
              inherit.aes = FALSE, show.legend = FALSE) +
    geom_text(data = data.frame(x = as.Date("2020-04-22"),
-                               y = 0.179,
+                               y = text_coord + 0.004,
                                label = glue("
                                             Without Cass Co: {without_cass}")),
              mapping = aes(x = x, y = y,
