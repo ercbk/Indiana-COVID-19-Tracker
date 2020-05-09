@@ -5,7 +5,22 @@
 # 1. When line starts steadily going vertical, it indicates the disease spread is coming under control.
 # 2. Snagged from a Aussie blog post mention in readme description of R_e
 # 3. Policy data has other types of columns which maybe useful for other types of visuals/analysis
+# 4. One of the triggers in the AEI/JHop guidelines for moving back to stage 1 is 5 consecutive days in which daily cases increases.
 
+
+# Sections
+# 1. Set-up
+# 2. Cleaning
+# 3. AEI Snapback Trigger
+# 4. Policy label data
+# 5. Chart
+
+
+
+
+########################
+# Set-up
+########################
 
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
@@ -18,6 +33,12 @@ deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()
 
 # wanted something a little lighter for segments and curves
 deep_light <- prismatic::clr_lighten(deep_rooted, shift = 0.25)
+
+
+
+########################
+# Cleaning
+########################
 
 
 # calculated daily positive cases
@@ -53,7 +74,65 @@ policy_dat <- state_policy %>%
 
 
 
+########################
+# AEI Snapback Trigger
+########################
+
+
+# calc difference between one day and the previous day
+daily_change <- cases_dat %>%
+   as_tibble() %>% 
+   mutate(cases_diff = difference(daily_cases)) %>%
+   arrange(desc(date)) %>% 
+   pull(cases_diff)
+
+# calculate how many consecutive days of increasing/decreasing daily cases
+count_consec_days <- function(x) {
+   # rle: "run length encoding," counts runs of same value or in this case, the same sign
+   pos_runs <- rle(sign(x))
+   conseq_days <- tibble(
+      num_days = pos_runs$lengths,
+      sign = pos_runs$values
+   ) %>% 
+      mutate(trend = case_when(sign == 1 ~ "increasing",
+                               sign == -1 ~ "decreasing",
+                               TRUE ~ "no change in")) %>% 
+      slice(1) %>% 
+      select(-sign)
+}
+
+consec_days <- count_consec_days(daily_change)
+
+
+# text styled depending on number of consecutive days and increasing or decreasing trend
+neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} daily cases")
+pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} daily cases")
+zero_days <- glue("{consec_days$trend[[1]]} daily cases")
+under_five <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} daily cases")
+five_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} daily cases <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} daily cases")
+
+
+# choose the subtitle text based number of consecutive days and trend
+subtitle_dat <- consec_days %>% 
+   mutate(text = case_when(num_days == 1 & trend == "increasing" ~
+                              pos_one,
+                          num_days == 1 & trend == "decreasing" ~
+                             neg_one,
+                          between(num_days, 2, 4) & trend == "increasing" ~
+                             under_five,
+                          num_days >= 5 & trend == "increasing" ~ five_over,
+                          num_days > 1 & trend == "decreasing" ~
+                             under_neg_one,
+                          TRUE ~ zero_days))
+
+
+
+
+############################
 # policy label data
+############################
+
 
 label_dat <- cases_dat %>% 
    as_tibble() %>% 
@@ -72,6 +151,17 @@ label_dat <- cases_dat %>%
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
 arw <- arrow(length = unit(6, "pt"), type = "closed")
+
+# multiline caption text; trying to keep ggplot code mess to a minimum
+caption_text <- glue("Last updated: {data_date}
+                     Sources: The New York Times, based on reports from state and local health agencies
+                     Julia Raifman,  Kristen Nocka, et al at Boston University")
+
+
+
+###########################
+# Chart
+###########################
 
 
 # daily cases has some zeros and we're taking logs, so adding 1
@@ -131,15 +221,15 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
    ) +
    labs(x = "Cumulative Cases", y = NULL,
         title = "Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
-        subtitle = glue("Last updated: {data_date}"),
-        caption = "Source: The New York Times, based on reports from state and local health agencies\nJulia Raifman,  Kristen Nocka, et al at Boston University") +
-   theme(plot.title = element_textbox_simple(size = rel(1.5),
+        subtitle = subtitle_dat$text[[1]],
+        caption = caption_text) +
+   theme(plot.title = element_textbox_simple(size = 16,
                                              color = "white",
                                              family = "Roboto"),
-         plot.subtitle = element_text(size = rel(0.95),
+         plot.subtitle = element_textbox_simple(size = 14,
                                       color = "white"),
          plot.caption = element_text(color = "white",
-                                     size = rel(1)),
+                                     size = 12),
          text = element_text(family = "Roboto"),
          legend.position = "none",
          axis.text.x = element_text(color = "white",

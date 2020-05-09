@@ -32,24 +32,24 @@ latest_date <- nyt_dat %>%
    pull(max_date)
 
 
-# necessary for github actions
-token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
-
-rt_tok <- rtweet::create_token(
-   app = token_stuff[[1]],
-   consumer_key = token_stuff[[2]],
-   consumer_secret = token_stuff[[3]],
-   access_token = token_stuff[[4]],
-   access_secret = token_stuff[[5]],
-   set_renv = FALSE)
-
-# get Indiana Health Department's last 150 tweets + some cleaning
-in_health_tweets <- rtweet::get_timeline("StateHealthIN",
-                                         n = 150,
-                                         token = rt_tok) %>% 
-   tidyr::separate(col = "created_at", into = c("date", "time"), sep = " ") %>% 
-   mutate(date = as_date(date),
-          time = hms::as_hms(time))
+# # necessary for github actions
+# token_stuff <- Sys.getenv(c("APPNAME", "APIKEY", "APISECRET", "ACCESSTOKEN", "ACCESSSECRET"))
+# 
+# rt_tok <- rtweet::create_token(
+#    app = token_stuff[[1]],
+#    consumer_key = token_stuff[[2]],
+#    consumer_secret = token_stuff[[3]],
+#    access_token = token_stuff[[4]],
+#    access_secret = token_stuff[[5]],
+#    set_renv = FALSE)
+# 
+# # get Indiana Health Department's last 150 tweets + some cleaning
+# in_health_tweets <- rtweet::get_timeline("StateHealthIN",
+#                                          n = 150,
+#                                          token = rt_tok) %>% 
+#    tidyr::separate(col = "created_at", into = c("date", "time"), sep = " ") %>% 
+#    mutate(date = as_date(date),
+#           time = hms::as_hms(time))
 
 
 
@@ -59,27 +59,27 @@ in_health_tweets <- rtweet::get_timeline("StateHealthIN",
 #######################
 
 
-# filter tweets that have the updated info, create columns for covid data
-ind_tweet_dat <- in_health_tweets %>% 
-   mutate(hour = hour(time)) %>% 
-   select(date, hour, text) %>% 
-   filter(str_detect(text, pattern = "latest #COVID19 case information") | str_detect(text, pattern = "positive cases")) %>% 
-   mutate(
-      text = str_remove_all(text, ","),
-      positives = str_extract(text, pattern = "cases: [0-9]*") %>% 
-         str_remove("cases:") %>% 
-         as.numeric(),
-      deaths = str_extract(text, pattern = "deaths: [0-9]*") %>% 
-         str_remove("deaths:") %>% 
-         as.numeric(),
-      num_tests = str_extract(text, pattern = "(ISDH: [0-9]*)|(tested: [0-9]*)") %>% 
-         str_remove("ISDH:") %>%
-         str_remove("tested: ") %>% 
-         as.numeric()
-   ) %>% 
-   filter(date > latest_date) %>% 
-   tidyr::drop_na() %>% 
-   select(date, positives, deaths)
+# # filter tweets that have the updated info, create columns for covid data
+# ind_tweet_dat <- in_health_tweets %>% 
+#    mutate(hour = hour(time)) %>% 
+#    select(date, hour, text) %>% 
+#    filter(str_detect(text, pattern = "latest #COVID19 case information") | str_detect(text, pattern = "positive cases")) %>% 
+#    mutate(
+#       text = str_remove_all(text, ","),
+#       positives = str_extract(text, pattern = "cases: [0-9]*") %>% 
+#          str_remove("cases:") %>% 
+#          as.numeric(),
+#       deaths = str_extract(text, pattern = "deaths: [0-9]*") %>% 
+#          str_remove("deaths:") %>% 
+#          as.numeric(),
+#       num_tests = str_extract(text, pattern = "(ISDH: [0-9]*)|(tested: [0-9]*)") %>% 
+#          str_remove("ISDH:") %>%
+#          str_remove("tested: ") %>% 
+#          as.numeric()
+#    ) %>% 
+#    filter(date > latest_date) %>% 
+#    tidyr::drop_na() %>% 
+#    select(date, positives, deaths)
 
 
 # Filter Indiana data, calc percent change
@@ -88,7 +88,7 @@ ind_dat <- nyt_dat %>%
    group_by(date) %>% 
    summarize(positives = sum(cases),
              deaths = sum(deaths)) %>% 
-   bind_rows(ind_tweet_dat) %>%
+   # bind_rows(ind_tweet_dat) %>%
    arrange(date) %>% 
    mutate(pos_pct_change = round((positives/lag(positives) - 1) * 100, 1),
           dea_pct_change = round((deaths/lag(deaths) - 1) * 100, 1),

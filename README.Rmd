@@ -26,6 +26,8 @@ knitr::opts_chunk$set(echo=FALSE)
 (Charts updated between noon and 1pm ET and at 6:30 pm ET)
 
 Repository to track COVID-19 data statewide and by county. Most of the State and County data for positive tests and deaths are gathered from The New York Times COVID-19 [repository](https://github.com/nytimes/covid-19-data), the Indiana State Department of Heath Twitter [account](https://twitter.com/StateHealthIN?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor), and The Indiana Data [Hub](https://hub.mph.in.gov/dataset). State policy [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0) comes from Julia Raifman, Kristen Nocka, et al at Boston University.  
+  
+Governor Holcomb has begun scaling back policies aimed at stopping the spread of COVID-19. Much of the his plan seems to follow the White House [plan](https://www.whitehouse.gov/openingamerica/), and both are simliar to the [guidelines](https://www.aei.org/research-products/report/national-coronavirus-response-a-road-map-to-reopening/) published by the American Enterpise Institute (AEI) and Johns Hopkins, although, neither Governor Holcomb's nor the White House's plan include the snapback (i.e. reverting to a previous stage) triggering conditions listed in the AEI proposal. Along with tracking virus spread metrics, I'll also be tracking as many of these triggers as I can with the data that's available. 
 
 ```{r}
 ind_line_path <- glue::glue("plots/ind-combo-line-{params$ind_combo_date}.png")
@@ -58,6 +60,7 @@ knitr::include_graphics(pos_rate_path)
    * The Positive Test Rate is the total number of positive test results divided by the total number of tests that have been administered.  
    * In the beginning of the pandemic, increased postive test rates can be attributed to increased levels of testing, but as testing becomes widespread, increases in this rate can be attributed to increased spreading of the virus.  
    * April 20th, so far, is the date of largest single day of testing.  
+   * In the AEI reopening guidelines, one of the triggers for returning to stage one is five or more consecutive days where the value of daily cases has increased. I'm monitoring this trigger in the subtitle section of the chart.
 
 ```{r}
 soc_dist_path <- glue::glue("plots/soc-dist-line-{params$soc_dist_date}.png")
