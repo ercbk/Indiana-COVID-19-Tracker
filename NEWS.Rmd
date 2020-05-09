@@ -1,7 +1,4 @@
 ---
-title: "NEWS"
-author: "Eric"
-date: "5/9/2020"
 output: github_document
 ---
 
