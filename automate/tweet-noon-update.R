@@ -59,12 +59,23 @@ png_dates <- png_files %>%
       mutate(date = format(date, "%b %d")) %>% 
       pull(date)
 
-msg <- glue::glue("@StateHealthIN Charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+
+if (length(png_dates) > 2) {
+   date_str <- glue::glue_collapse(png_dates, sep = ", ", last = ", and ")
+} else {
+   date_str <- glue::glue_collapse(png_dates, sep = " and ")
+}
+
+
+msg <- glue::glue("@StateHealthIN Charts current for {date_str}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
-msg_e <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+
+msg_e <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {date_str}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
-msg_f <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {png_dates[[1]]} and {png_dates[[2]]}. More charts and analysis at
+
+msg_f <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {date_str}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
+
 
 rtweet::post_tweet(msg,
            in_reply_to_status_id = tweet_id,
