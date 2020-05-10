@@ -94,8 +94,8 @@ count_consec_days <- function(x) {
       num_days = pos_runs$lengths,
       sign = pos_runs$values
    ) %>% 
-      mutate(trend = case_when(sign == 1 ~ "increasing",
-                               sign == -1 ~ "decreasing",
+      mutate(trend = case_when(sign == 1 ~ "increased",
+                               sign == -1 ~ "decreased",
                                TRUE ~ "no change in")) %>% 
       slice(1) %>% 
       select(-sign)
@@ -105,24 +105,25 @@ consec_days <- count_consec_days(daily_change)
 
 
 # text styled depending on number of consecutive days and increasing or decreasing trend
-neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} daily cases")
-pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} daily cases")
-zero_days <- glue("{consec_days$trend[[1]]} daily cases")
-under_five <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} daily cases")
-five_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} daily cases <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
-under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} daily cases")
+neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} new cases")
+pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} new cases")
+zero_days <- glue("{consec_days$trend[[1]]} new cases")
+under_five <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new cases")
+five_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new cases <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new cases")
 
 
 # choose the subtitle text based number of consecutive days and trend
 subtitle_dat <- consec_days %>% 
-   mutate(text = case_when(num_days == 1 & trend == "increasing" ~
+   mutate(text = case_when(num_days == 1 & trend == "increased" ~
                               pos_one,
-                          num_days == 1 & trend == "decreasing" ~
+                          num_days == 1 & trend == "decreased" ~
                              neg_one,
-                          between(num_days, 2, 4) & trend == "increasing" ~
+                          between(num_days, 2, 4) & trend == "increased" ~
                              under_five,
-                          num_days >= 5 & trend == "increasing" ~ five_over,
-                          num_days > 1 & trend == "decreasing" ~
+                          num_days >= 5 & trend == "increased" ~
+                             five_over,
+                          num_days > 1 & trend == "decreased" ~
                              under_neg_one,
                           TRUE ~ zero_days))
 

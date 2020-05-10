@@ -27,6 +27,7 @@ new_complete <- old_complete %>%
       bind_rows(bv_dat_current)
 
 readr::write_rds(new_complete, "data/beds-vents-complete.rds")
+readr::write_csv(new_complete, "data/beds-vents-complete.csv")
 
 
 
