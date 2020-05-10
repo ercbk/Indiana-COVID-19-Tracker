@@ -1,0 +1,7 @@
+date,beds_all_occupied_beds_covid_19,beds_icu_total,beds_icu_occupied_beds_covid_19,bed_occupied_icu_non_covid,beds_available_icu_beds_total,vents_total,vents_all_in_use_covid_19,vents_non_covid_pts_on_vents,vents_all_available_vents_not_in_use
+2020-05-02,1431,2954,514,1167,1273,3052,257,332,2463
+2020-05-06,1558,2736,526,1092,1118,3091,281,356,2454
+2020-05-07,1457,2763,487,1117,1159,3101,228,381,2492
+2020-05-08,1379,2719,481,1153,1085,3026,219,353,2454
+2020-05-09,1361,2699,458,1151,1090,3064,213,368,2483
+2020-05-10,1328,2675,462,1100,1113,3078,205,362,2511

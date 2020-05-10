@@ -74,7 +74,7 @@ that’s available.
     spreading of the virus.  
   - April 20th, so far, is the date of largest single day of testing.
 
-<img src="plots/soc-dist-line-2020-05-08.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-09.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
