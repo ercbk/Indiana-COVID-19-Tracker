@@ -30,7 +30,7 @@ listed in the AEI proposal. Along with tracking virus spread metrics,
 I’ll also be tracking as many of these triggers as I can with the data
 that’s available.
 
-<img src="plots/ind-combo-line-2020-05-08.png" width="935" />
+<img src="plots/ind-combo-line-2020-05-09.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -52,7 +52,7 @@ that’s available.
 
 </center>
 
-<img src="plots/pos-policy-line-2020-05-08.png" width="935" />
+<img src="plots/pos-policy-line-2020-05-09.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
@@ -64,7 +64,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/pos-rate-line-2020-05-08.png" width="935" />
+<img src="plots/pos-rate-line-2020-05-09.png" width="935" />
 
   - The Positive Test Rate is the total number of positive test results
     divided by the total number of tests that have been administered.  
@@ -74,7 +74,7 @@ that’s available.
     spreading of the virus.  
   - April 20th, so far, is the date of largest single day of testing.
 
-<img src="plots/soc-dist-line-2020-05-07.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-08.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
@@ -90,7 +90,7 @@ that’s available.
     horizontal dashed line represents Indianpolis’s current driving
     index.
 
-<img src="plots/density-pos-line-2020-05-08.png" width="935" />
+<img src="plots/density-pos-line-2020-05-09.png" width="935" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -108,9 +108,9 @@ that’s available.
     to data, the actual doubling-times won’t match-up exactly to points
     on the curves.
 
-<img src="plots/region-dea-line-2020-05-08.png" width="935" />
+<img src="plots/region-dea-line-2020-05-09.png" width="935" />
 
-<img src="plots/region-pos-line-2020-05-08.png" width="3897" />
+<img src="plots/region-pos-line-2020-05-09.png" width="3897" />
 
   - The y-axis has been transformed to the log base-10 scale. Slopes and
     trends of straight(-ish) lines are easier to compare than
@@ -120,7 +120,7 @@ that’s available.
   - 7-day averages *less* than 14 day averages indicate a *decreasing*
     trend in positive cases or deaths.
 
-<img src="plots/county-pos-bar-2020-05-08.png" width="935" />
+<img src="plots/county-pos-bar-2020-05-09.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -128,7 +128,7 @@ that’s available.
   - The average percent changes are estimated using county data in a
     log-linear model.
 
-<img src="plots/daily-re-line-2020-05-08.png" width="935" />
+<img src="plots/daily-re-line-2020-05-09.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
