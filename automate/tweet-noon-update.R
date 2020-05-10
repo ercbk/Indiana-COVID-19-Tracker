@@ -70,10 +70,10 @@ if (length(png_dates) > 2) {
 msg <- glue::glue("@StateHealthIN Charts current for {date_str}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
 
-msg_e <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {date_str}. More charts and analysis at
+msg_e <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {date_str}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
 
-msg_f <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {date_str}. More charts and analysis at
+msg_f <- glue::glue("Indiana COVID-19 Tracker noon update: charts current for {date_str}. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
 
 
