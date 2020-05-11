@@ -5,7 +5,7 @@
     their patient counts. Neither The New York Times nor Georgia
     adjusted the counts prior to the change. Without an adjustment, it
     destroyed the coherence of the data, so I’ve replaced them with
-    South Carolina.  
+    South Carolina in the daily growth rate chart.  
   - 2020-05-07 - The New York Times
     [decided](https://github.com/nytimes/covid-19-data/blob/master/PROBABLE-CASES-NOTE.md)
     to combine “probable” and “confirmed” positive cases and deaths in
