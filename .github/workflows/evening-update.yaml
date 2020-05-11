@@ -52,7 +52,7 @@ jobs:
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       - name: build beds and ventilator data set
         if: success()
-        run: Rscript "R/build-beds-vents-data.R"
+        run: Rscript "R/build-datasets.R"
       - name: run soc-dist-line
         run: Rscript "R/mobility-line.R"
       - name: run daily-pos-rate
