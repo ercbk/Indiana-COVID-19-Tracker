@@ -64,7 +64,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/pos-rate-line-2020-05-09.png" width="935" />
+<img src="plots/pos-rate-line-2020-05-10.png" width="935" />
 
   - The Positive Test Rate is the total number of positive test results
     divided by the total number of tests that have been administered.  
