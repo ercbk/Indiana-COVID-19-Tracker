@@ -20,8 +20,8 @@ try_address <- glue::glue("https://hub.mph.in.gov/dataset/5a905d51-eb50-4a83-8f7
 
 try_destfile <- glue::glue("data/beds-vents-{try_date_str}.xlsx")
 download.file(try_address, destfile = try_destfile, mode = "wb")
-# try_destfile2 <- glue::glue("data/cases-deaths-trends-{try_date_str}.xlsx")
-# download.file(try_address2, destfile = try_destfile2, mode = "wb")
+try_destfile2 <- glue::glue("data/cases-deaths-trends-{try_date_str}.xlsx")
+download.file(try_address2, destfile = try_destfile2, mode = "wb")
 
 bv_dat_current <- readxl::read_xlsx(try_destfile) %>% 
       tidyr::pivot_wider(names_from = "STATUS_TYPE", values_from = "TOTAL") %>%

@@ -37,13 +37,6 @@ knitr::include_graphics(ind_line_path)
 
    * Each point is the total cases that have accumulated until that date. The lines show the exponential nature of the spread of the virus at the beginning of the epidemic and changes in trend as policy and behavior changes.  
    * *Doubling time* is the amount of time it would take for the current total to double. It assumes that the rate of change is constant. The doubling time shown here assumes that the total change from yesterday to today (i.e. single day *growth rate*) will remain constant in the future. As we'll see in another chart, it's not a valid assumption in this situation, but it's interesting as a hypothetical. 
-   * The equation for doubling time, T~d~, where r is the growth rate.  
-   
-<center>
-```{r}
-knitr::include_graphics("images/doubling-time.png")
-```
-</center>  
   
 ```{r ,align="center"}
 pos_policy_path <- glue::glue("plots/pos-policy-line-{params$pos_policy_date}.png")
@@ -64,6 +57,7 @@ knitr::include_graphics(pos_rate_path)
    * A Johns Hopkins [article](https://coronavirus.jhu.edu/testing/testing-positivity) calculates this rate for states over three day windows and uses the WHO benchmark to classify state programs as adequate or not.  
    * Indiana Data Hub tends to revise its counts as it continues to collect more data. When analyzing this chart, it would be prudent not to assess the last few rates too confidently as they are likely to change.  
    * The green, horizontal bar shows the WHO recommended range from 3% to 12%.  
+   * U.S. average calculated using data from [The COVID Tracking Project](https://covidtracking.com/api).
 
 ```{r}
 soc_dist_path <- glue::glue("plots/soc-dist-line-{params$soc_dist_date}.png")
@@ -82,7 +76,7 @@ knitr::include_graphics(density_pos_path)
 
    * This chart shows the single day growth rates over a period of time for each state. LOESS regression curves are used here instead of a connected line graph of the actual data because the fluctuations of the data would obscure the trends.  
    * These curves can be used to compare the effectiveness of state responses. Population density is a potential factor for how quickly a virus spreads through a state. Therefore, a fairer comparison might be to use states with similar population densities if we want to get an idea of how well Indiana's governmental response has been.  
-   * Doubling times, as shown in the previous equation, are calculated from growth rates, so I've included a second y-axis to show how these have changed over time as well. Since the curves are being fit to data, the actual doubling-times won't match-up exactly to points on the curves.  
+   * Doubling times are calculated from growth rates, so I've included a second y-axis to show how these have changed over time as well. Since the curves are being fit to data, the actual doubling-times won't match-up exactly to points on the curves.  
 
 ```{r, align="center"}
 region_dea_path <- glue::glue("plots/region-dea-line-{params$region_dea_date}.png")
@@ -94,7 +88,7 @@ region_pos_path <- glue::glue("plots/region-pos-line-{params$region_pos_date}.pn
 knitr::include_graphics(region_pos_path)
 ```
 
-   * The y-axis has been transformed to the log base-10 scale. Slopes and trends of straight(-ish) lines are easier to compare than exponential curves.  
+   * The y-axis has been transformed to the logarithmic base-10 scale. Slopes and trends of straight(-ish) lines are easier to compare than exponential curves.  
    * 7-day averages *greater* than 14 day averages indicate an *increasing* trend of positive cases or deaths.  
    * 7-day averages *less* than 14 day averages indicate a *decreasing* trend in positive cases or deaths. 
 
