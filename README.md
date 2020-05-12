@@ -30,7 +30,7 @@ listed in the AEI proposal. Along with tracking virus spread metrics,
 I’ll also be tracking as many of these triggers as I can with the data
 that’s available.
 
-<img src="plots/ind-combo-line-2020-05-10.png" width="935" />
+<img src="plots/ind-combo-line-2020-05-11.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -43,16 +43,8 @@ that’s available.
     constant in the future. As we’ll see in another chart, it’s not a
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
-  - The equation for doubling time, T<sub>d</sub>, where r is the growth
-    rate.
 
-<center>
-
-<img src="images/doubling-time.png" width="146" />
-
-</center>
-
-<img src="plots/pos-policy-line-2020-05-10.png" width="935" />
+<img src="plots/pos-policy-line-2020-05-11.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis, where
@@ -64,15 +56,26 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/pos-rate-line-2020-05-10.png" width="935" />
+<img src="plots/pos-rate-line-2020-05-11.png" width="935" />
 
-  - The Positive Test Rate is the total number of positive test results
-    divided by the total number of tests that have been administered.  
-  - In the beginning of the pandemic, increased postive test rates can
-    be attributed to increased levels of testing, but as testing becomes
-    widespread, increases in this rate can be attributed to increased
-    spreading of the virus.  
-  - April 20th, so far, is the date of largest single day of testing.
+  - The Positive Test Rate is the number of positive test results
+    divided by the number of tests administered over a period of time.
+  - According to the World Health Organization (WHO), the positive test
+    rate can be a good indicator of whether a virus testing program is
+    sufficient. It finds that successful programs have a positive test
+    rate in the range of 3% to 12%.  
+  - A Johns Hopkins
+    [article](https://coronavirus.jhu.edu/testing/testing-positivity)
+    calculates this rate for states over three day windows and uses the
+    WHO benchmark to classify state programs as adequate or not.  
+  - Indiana Data Hub tends to revise its counts as it continues to
+    collect more data. When analyzing this chart, it would be prudent
+    not to assess the last few rates too confidently as they are likely
+    to change.  
+  - The green, horizontal bar shows the WHO recommended range from 3% to
+    12%.  
+  - U.S. average calculated using data from [The COVID Tracking
+    Project](https://covidtracking.com/api).
 
 <img src="plots/soc-dist-line-2020-05-10.png" width="935" />
 
@@ -90,7 +93,7 @@ that’s available.
     horizontal dashed line represents Indianpolis’s current driving
     index.
 
-<img src="plots/density-pos-line-2020-05-10.png" width="935" />
+<img src="plots/density-pos-line-2020-05-11.png" width="935" />
 
   - This chart shows the single day growth rates over a period of time
     for each state. LOESS regression curves are used here instead of a
@@ -102,25 +105,24 @@ that’s available.
     might be to use states with similar population densities if we want
     to get an idea of how well Indiana’s governmental response has
     been.  
-  - Doubling times, as shown in the previous equation, are calculated
-    from growth rates, so I’ve included a second y-axis to show how
-    these have changed over time as well. Since the curves are being fit
-    to data, the actual doubling-times won’t match-up exactly to points
-    on the curves.
+  - Doubling times are calculated from growth rates, so I’ve included a
+    second y-axis to show how these have changed over time as well.
+    Since the curves are being fit to data, the actual doubling-times
+    won’t match-up exactly to points on the curves.
 
-<img src="plots/region-dea-line-2020-05-10.png" width="935" />
+<img src="plots/region-dea-line-2020-05-11.png" width="935" />
 
-<img src="plots/region-pos-line-2020-05-10.png" width="3897" />
+<img src="plots/region-pos-line-2020-05-11.png" width="3897" />
 
-  - The y-axis has been transformed to the log base-10 scale. Slopes and
-    trends of straight(-ish) lines are easier to compare than
+  - The y-axis has been transformed to the logarithmic base-10 scale.
+    Slopes and trends of straight(-ish) lines are easier to compare than
     exponential curves.  
   - 7-day averages *greater* than 14 day averages indicate an
     *increasing* trend of positive cases or deaths.  
   - 7-day averages *less* than 14 day averages indicate a *decreasing*
     trend in positive cases or deaths.
 
-<img src="plots/county-pos-bar-2020-05-10.png" width="935" />
+<img src="plots/county-pos-bar-2020-05-11.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -128,7 +130,7 @@ that’s available.
   - The average percent changes are estimated using county data in a
     log-linear model.
 
-<img src="plots/daily-re-line-2020-05-10.png" width="935" />
+<img src="plots/daily-re-line-2020-05-11.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
