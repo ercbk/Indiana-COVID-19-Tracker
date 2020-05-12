@@ -59,9 +59,11 @@ pos_rate_path <- glue::glue("plots/pos-rate-line-{params$pos_rate_date}.png")
 knitr::include_graphics(pos_rate_path)
 ```
 
-   * The Positive Test Rate is the total number of positive test results divided by the total number of tests that have been administered.  
-   * In the beginning of the pandemic, increased postive test rates can be attributed to increased levels of testing, but as testing becomes widespread, increases in this rate can be attributed to increased spreading of the virus.  
-   * April 20th, so far, is the date of largest single day of testing.  
+   * The Positive Test Rate is the number of positive test results divided by the number of tests administered over a period of time.
+   * According to the World Health Organization (WHO), the positive test rate can be a good indicator of whether a virus testing program is sufficient. It finds that successful programs have a positive test rate in the range of 3% to 12%.  
+   * A Johns Hopkins [article](https://coronavirus.jhu.edu/testing/testing-positivity) calculates this rate for states over three day windows and uses the WHO benchmark to classify state programs as adequate or not.  
+   * Indiana Data Hub tends to revise its counts as it continues to collect more data. When analyzing this chart, it would be prudent not to assess the last few rates too confidently as they are likely to change.  
+   * The green, horizontal bar shows the WHO recommended range from 3% to 12%.  
 
 ```{r}
 soc_dist_path <- glue::glue("plots/soc-dist-line-{params$soc_dist_date}.png")

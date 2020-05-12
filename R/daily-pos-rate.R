@@ -1,7 +1,8 @@
 
 
 # Notes
-# 1. Positive test rate as a spread indicator should be most informative when testing has leveled off, and it's value isn't mostly due to testing increases. For this reason I'm only including data at the daily testing peak and after, Apr 20th.
+# 1. The WHO says that the positive test rate can be a good indicator of whether enough virus testing is happening. It recommends a positive test rate range of 3% - 12%.
+# 2. A Johns Hopkins article calcs this rate for states over a 3 day window and uses the WHO benchmark to rate states' amount of testing as sufficient or not
 
 
 
@@ -15,10 +16,13 @@ pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, ggtext)
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 
-us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/current.csv") %>% 
-   select(lastModified, positive, totalTestResults) %>% 
-   mutate(pos_rate = positive/totalTestResults,
+us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") %>% 
+   select(date, positiveIncrease, totalTestResultsIncrease) %>% 
+   # .before = 2 says take the current value and the 2 before it.
+   mutate(pos_rate = slider::slide2_dbl(positiveIncrease, totalTestResultsIncrease,
+                                                   ~sum(.x)/sum(.y), .before = 2),
           pos_rate_text = scales::percent(pos_rate, accuracy = 0.1)) %>% 
+   slice(1) %>% 
    pull(pos_rate_text)
 
 
@@ -46,49 +50,19 @@ while (TRUE) {
    }
 }
 
-# county data: same but only most recent cumulative counts
-download.file("https://hub.mph.in.gov/dataset/89cfa2e3-3319-4d31-a60d-710f76856588/resource/8b8e6cd7-ede2-4c41-a9bd-4266df783145/download/covid_report_county.xlsx", destfile = "data/covid-county.xlsx", mode = "wb")
-
-
-county_dat <- readxl::read_xlsx("data/covid-county.xlsx")
-
 test_dat_raw <- readxl::read_xlsx("data/test-case-trend.xlsx")
 
-# rename cols, make tsibble
+
+# rename cols, make tsibble, calc 3-day moving positive rate
 test_dat <- test_dat_raw %>% 
-      select(date = DATE,
-             daily_tests = COVID_TEST,
-             cum_tests = COVID_TEST_CUMSUM,
-             cum_postives = COVID_COUNT_CUMSUM) %>%
-      mutate(date = lubridate::ymd(date)) %>% 
-      as_tsibble(index = date)
+   select(date = DATE,
+          daily_tests = COVID_TEST,
+          daily_positives = COVID_COUNT) %>%
+   mutate(date = lubridate::ymd(date), 
+          pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
+                                        ~sum(.x)/sum(.y), .before = 2)) %>% 
+   as_tsibble(index = date)
 
-
-
-#############################
-# Rate Without Cass County
-#############################
-
-
-# make sure both data sources have the same test total
-test_dat_total <- test_dat %>% 
-   filter(date == max(date)) %>% 
-   pull(cum_tests)
-county_dat_total <- county_dat %>% 
-   summarize(test_total = sum(COVID_TEST)) %>% 
-   pull(test_total)
-
-if (test_dat_total == county_dat_total) {
-   without_cass <- county_dat %>% 
-      filter(COUNTY_NAME != "CASS") %>% 
-      summarize(total_positives = sum(COVID_COUNT),
-                total_tests = sum(COVID_TEST),
-                pos_test_rate = total_positives/total_tests,
-                pos_rate_text = scales::percent(pos_test_rate, accuracy = 0.1)) %>% 
-      pull(pos_rate_text)
-} else {
-   without_cass <- NA
-}
 
 
 
@@ -99,30 +73,33 @@ if (test_dat_total == county_dat_total) {
 
 # current date of data
 data_date <- test_dat %>% 
-      as_tibble() %>%
-      summarize(date = max(date)) %>% 
-      pull(date)
+   as_tibble() %>%
+   summarize(date = max(date)) %>% 
+   pull(date)
 
 # 2020-04-20 was the testing peak after about a month (see Notes)
 max_test_date <- test_dat %>% 
-      filter(daily_tests == max(daily_tests)) %>% 
-      pull(date)
+   filter(daily_tests == max(daily_tests)) %>% 
+   pull(date)
 
 chart_dat <- test_dat %>% 
-      filter(date >= "2020-04-20") %>% 
-      mutate(pos_test_rate = cum_postives/cum_tests)
+   filter(date >= "2020-04-20")
 
 # y-coord for geom_text
 text_coord <- chart_dat %>% 
-   filter(date == max(date)) %>% 
-   pull(pos_test_rate)
+   filter(date == max(date) | date == "2020-04-26") %>%
+   transmute(max_pos_rate = ifelse(pos_test_rate[[1]] < pos_test_rate[[2]], pos_test_rate[[2]], pos_test_rate[[1]])) %>% 
+   slice(1) %>% 
+   pull(max_pos_rate)
 
 
 
 rate_plot <- ggplot(data = chart_dat,
                     aes(x = date, y = pos_test_rate)) +
+   geom_ribbon(aes(ymin = 0.03, ymax = 0.12), fill = "#8db230", alpha = 0.2) +
    geom_point(color = deep_rooted[[4]]) +
    geom_line(color = deep_rooted[[4]]) +
+   expand_limits(y = c(0, max(chart_dat$pos_test_rate) + 0.05)) +
    scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
    scale_x_date(date_breaks = "4 days",
                 date_labels = "%b %d") +
@@ -133,17 +110,6 @@ rate_plot <- ggplot(data = chart_dat,
    geom_text(data = data.frame(x = as.Date("2020-04-22"),
                                y = text_coord + 0.002,
                                label = glue("US Average: {us_pos_rate}")),
-             mapping = aes(x = x, y = y,
-                           label = label),
-             size = 4.8, angle = 0L,
-             lineheight = 1L, hjust = 0.5,
-             vjust = 0.5, colour = "white",
-             family = "Roboto", fontface = "plain",
-             inherit.aes = FALSE, show.legend = FALSE) +
-   geom_text(data = data.frame(x = as.Date("2020-04-22"),
-                               y = text_coord + 0.004,
-                               label = glue("
-                                            Without Cass Co: {without_cass}")),
              mapping = aes(x = x, y = y,
                            label = label),
              size = 4.8, angle = 0L,

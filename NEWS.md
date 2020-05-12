@@ -15,4 +15,9 @@
     State Department of Health’s (ISDH). The ramification is that many
     charts’ data will be a day late. Hopefully ISDH will opensource
     their probable cases and probable deaths, so the charts can return
-    to being up-to-date.
+    to being up-to-date.  
+  - 2020-05-11 - The calculation of the rate for the Positive Test Rate
+    chart was changed from using total counts to a rolling calculation
+    over a 3 day windows. The interpretation has also changed based on
+    the Johns Hopkins
+    [article](https://coronavirus.jhu.edu/testing/testing-positivity).
