@@ -61,7 +61,9 @@ test_dat <- test_dat_raw %>%
    mutate(date = lubridate::ymd(date), 
           pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
                                         ~sum(.x)/sum(.y), .before = 2)) %>% 
-   as_tsibble(index = date)
+   as_tsibble(index = date) %>% 
+   # Ind Data Hub's most recent data point is usually still in the process of be collected. It causes pos rate to spike and is misleading, so I'm just going to remove it.
+   slice(-n())
 
 
 

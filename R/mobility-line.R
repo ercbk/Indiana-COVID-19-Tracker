@@ -76,6 +76,7 @@ gen_plots <- function(data, region) {
       geom_hline(data = ind_index, 
                  aes(yintercept = mob_index),
                  color = "#995c61", linetype = 8) +
+      expand_limits(x = max(data$date)+2) +
       labs(title = region)
    if (region == "Detroit" | region == "Louisville" | region == "St. Louis"){
       p + theme(plot.title = element_text(color = "white",
@@ -130,10 +131,11 @@ indy_chart <- ggplot(data = ind_chart_dat, aes(x = date, y = mob_index, group = 
                  filter(weekend == TRUE),
               aes(xintercept = date),
               color = "#755c99",size = 3.9, alpha = 0.1) +
+   expand_limits(x = max(ind_chart_dat$date)+2) +
    ggrepel::geom_text_repel(data = ind_chart_dat %>% 
                                filter(date == max(date)),
                             aes(label = mob_index),
-                            nudge_x = -5, nudge_y = 15,
+                            nudge_x = 2, nudge_y = -7,
                             segment.color = NA) +
    labs(x = NULL, y = NULL,
         title = "<b style='color:#995c61'>Indianapolis</b>") +
