@@ -13,7 +13,7 @@ pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, ggtext)
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 light_deep <- prismatic::clr_lighten(deep_rooted, shift = 0.2)
 
-goog_raw <- readr::read_csv("https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv?cachebust=722f3143b586a83f")
+goog_raw <- readr::read_csv("https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv")
 
 
 # Filter Indiana; cols: date, activity, index; calc median index of all counties
