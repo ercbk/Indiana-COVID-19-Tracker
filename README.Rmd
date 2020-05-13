@@ -4,7 +4,7 @@ output:
 params:
       ind_combo_date: !r Sys.Date()
       pos_policy_date: !r Sys.Date()-1
-      density_pos_date: !r Sys.Date()-1
+      goog_mob_date: !r Sys.Date()-4
       region_dea_date: !r Sys.Date()-1
       region_pos_date: !r Sys.Date()-1
       county_pos_date: !r Sys.Date()-1
@@ -70,13 +70,19 @@ knitr::include_graphics(soc_dist_path)
    * Weekends are shown as vertical bars, and for comparison, the horizontal dashed line represents Indianpolis's current driving index.
 
 ```{r}
-density_pos_path <- glue::glue("plots/density-pos-line-{params$density_pos_date}.png")
-knitr::include_graphics(density_pos_path)
+goog_mob_path <- glue::glue("plots/goog-mob-line-{params$goog_mob_date}.png")
+knitr::include_graphics(goog_mob_path)
 ```
 
-   * This chart shows the single day growth rates over a period of time for each state. LOESS regression curves are used here instead of a connected line graph of the actual data because the fluctuations of the data would obscure the trends.  
-   * These curves can be used to compare the effectiveness of state responses. Population density is a potential factor for how quickly a virus spreads through a state. Therefore, a fairer comparison might be to use states with similar population densities if we want to get an idea of how well Indiana's governmental response has been.  
-   * Doubling times are calculated from growth rates, so I've included a second y-axis to show how these have changed over time as well. Since the curves are being fit to data, the actual doubling-times won't match-up exactly to points on the curves.  
+   * Google like Apple has released some of the [data](https://www.google.com/covid19/mobility/) it collects from its Maps app that it uses to produce Community Mobility Reports and product recommendations.  
+   * From the "About this Data" section in the Report:
+      * These reports show how visits and length of
+stay at different places change compared to
+a baseline.
+      * The baseline is the median value, for the
+corresponding day of the week, during the 5-
+week period Jan 3–Feb 6, 2020.  
+   * Weekends are shown as vertical bars.  
 
 ```{r, align="center"}
 region_dea_path <- glue::glue("plots/region-dea-line-{params$region_dea_date}.png")

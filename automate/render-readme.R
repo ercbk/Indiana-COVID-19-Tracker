@@ -24,7 +24,7 @@ rmarkdown::render(
       "README.Rmd", params = list(
             ind_combo_date = png_dates$newest_date[[4]],
             pos_policy_date = png_dates$newest_date[[5]],
-            density_pos_date = png_dates$newest_date[[3]],
+            goog_mob_date = png_dates$newest_date[[3]],
             region_dea_date = png_dates$newest_date[[7]],
             region_pos_date = png_dates$newest_date[[8]],
             county_pos_date = png_dates$newest_date[[1]],

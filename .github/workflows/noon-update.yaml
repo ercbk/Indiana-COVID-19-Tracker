@@ -66,9 +66,9 @@ jobs:
       - name: run county-slope-models
         if: success()
         run: Rscript "R/county-slope-models.R"
-      - name: run density-lor-slopes
+      - name: run goog-mob-line
         if: success()
-        run: Rscript "R/density-lor-slopes.R"
+        run: Rscript "R/goog-mob-line.R"
       - name: run regional-slope-models
         if: success()
         run: Rscript "R/regional-slope-models.R"

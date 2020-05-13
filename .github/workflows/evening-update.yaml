@@ -63,8 +63,8 @@ jobs:
         run: Rscript "R/daily-cum-policy.R"
       - name: run county-slope-models
         run: Rscript "R/county-slope-models.R"
-      - name: run density-lor-slopes
-        run: Rscript "R/density-lor-slopes.R"
+      - name: run goog-mob-line
+        run: Rscript "R/goog-mob-line.R"
       - name: run regional-slope-models
         run: Rscript "R/regional-slope-models.R"
       - name: run daily-re-estimate

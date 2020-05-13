@@ -20,4 +20,11 @@
     chart was changed from using total counts to a rolling calculation
     over a 3 day windows. The interpretation has also changed based on
     the Johns Hopkins
-    [article](https://coronavirus.jhu.edu/testing/testing-positivity).
+    [article](https://coronavirus.jhu.edu/testing/testing-positivity).  
+  - 2020-05-12 - Replaced the chart that compares daily growth rates and
+    doubling times of states with similar population densities with a
+    social distancing chart that uses Google Maps data. The daily growth
+    rates chart ceased being interesting as doubling times and rates
+    have pretty much plateaued. Also, I don’t want to present too many
+    charts at once as it might create some information overload. If a
+    second or third wave happens, then this chart might return.
