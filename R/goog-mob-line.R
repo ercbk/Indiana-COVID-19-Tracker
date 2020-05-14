@@ -48,7 +48,8 @@ goog_plot <- ggplot(data = ind_goog %>%
    geom_vline(data = ind_goog %>% 
                  filter(weekend == TRUE),
               aes(xintercept = date),
-              color = "#755c99",size = 5.0, alpha = 0.1) +
+              color = "#755c99", size = 5.0,
+              alpha = 0.2) +
    scale_color_viridis_d(option = "magma", direction = 1,
                          begin = 0.5) +
    scale_x_date(limits = c(as.Date("2020-03-07"), max(ind_goog$date)+1),
