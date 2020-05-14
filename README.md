@@ -93,7 +93,7 @@ that’s available.
     horizontal dashed line represents Indianpolis’s current driving
     index.
 
-<img src="plots/goog-mob-line-2020-05-07.png" width="935" />
+<img src="plots/goog-mob-line-2020-05-09.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
