@@ -18,19 +18,19 @@ png_dates <- png_files %>%
       group_by(chart) %>% 
       summarize(newest_date = max(date))
 
-# png_dates
 
 rmarkdown::render(
       "README.Rmd", params = list(
-            ind_combo_date = png_dates$newest_date[[4]],
-            pos_policy_date = png_dates$newest_date[[5]],
+            ind_combo_date = png_dates$newest_date[[5]],
+            pos_policy_date = png_dates$newest_date[[6]],
             goog_mob_date = png_dates$newest_date[[3]],
-            region_dea_date = png_dates$newest_date[[7]],
-            region_pos_date = png_dates$newest_date[[8]],
+            region_dea_date = png_dates$newest_date[[8]],
+            region_pos_date = png_dates$newest_date[[9]],
             county_pos_date = png_dates$newest_date[[1]],
             daily_re_date = png_dates$newest_date[[2]],
-            pos_rate_date = png_dates$newest_date[[6]],
-            soc_dist_date = png_dates$newest_date[[9]]
+            pos_rate_date = png_dates$newest_date[[7]],
+            soc_dist_date = png_dates$newest_date[[10]],
+            hosp_iv_date = png_dates$newest_date[[4]]
       )
 )
 

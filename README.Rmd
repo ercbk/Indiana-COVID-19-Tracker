@@ -11,6 +11,7 @@ params:
       daily_re_date: !r Sys.Date()-1
       pos_rate_date: !r Sys.Date()-1
       soc_dist_date: !r Sys.Date()-3
+      hosp_iv_date: !r Sys.Date()-3
       
 ---
 
@@ -46,6 +47,16 @@ knitr::include_graphics(pos_policy_path)
    * This chart shows the number of daily positive cases on the y-axis versus the cumulative total of positive cases on the x-axis, where both axes are on a logarithmic scale. When the transmission rate lessens, the trend will decline and become increasingly vertical.  
    * In the AEI reopening guidelines, one of the triggers for returning to stage one is five or more consecutive days where the value of daily cases has increased.  
    * Details on the various stages of re-opening can be found at [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
+
+```{r}
+hosp_iv_path <- glue::glue("plots/hosp-icu-vent-{params$hosp_iv_date}.png")
+knitr::include_graphics(hosp_iv_path)
+```
+
+   * Even though Governor Holcomb hasn't explicitly stated the conditions that would necessitate a reversal of course to a previous stage, he did mention some benchmarks when discussing his guiding principles in his re-opening [speech](https://backontrack.in.gov/2362.htm). By negating a few of these, we can infer what some of the snapback conditions might entail.
+      * An increase in daily hospitalizations for 14 consecutive days.
+      * The proportion of available ICU beds to total ICU beds being below 40% for 14 consecutive days.
+      * The proportion of available ventilators to total ventilators being below 70% for 14 consecutive days.  
 
 ```{r}
 pos_rate_path <- glue::glue("plots/pos-rate-line-{params$pos_rate_date}.png")

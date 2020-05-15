@@ -54,6 +54,8 @@ jobs:
       - name: run soc-dist-line
         if: success()
         run: Rscript "R/mobility-line.R"
+      - name: run hosp-icu-vent
+        run: Rscript "R/hosp-icu-vent.R"
       - name: run daily-pos-rate
         if: success()
         run: Rscript "R/daily-pos-rate.R"

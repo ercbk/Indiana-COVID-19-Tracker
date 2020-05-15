@@ -56,6 +56,20 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
+<img src="plots/hosp-icu-vent-2020-05-15.png" width="935" />
+
+  - Even though Governor Holcomb hasn’t explicitly stated the conditions
+    that would necessitate a reversal of course to a previous stage, he
+    did mention some benchmarks when discussing his guiding principles
+    in his re-opening [speech](https://backontrack.in.gov/2362.htm). By
+    negating a few of these, we can infer what some of the snapback
+    conditions might entail.
+      - An increase in daily hospitalizations for 14 consecutive days.
+      - The proportion of available ICU beds to total ICU beds being
+        below 40% for 14 consecutive days.
+      - The proportion of available ventilators to total ventilators
+        being below 70% for 14 consecutive days.
+
 <img src="plots/pos-rate-line-2020-05-13.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results

@@ -43,26 +43,26 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
 
 
 pngs <- png_files %>%
-   slice(c(9,1,5)) %>% 
+   slice(c(4,3,6)) %>% 
    pull(paths)
 
-png_dates <- png_files %>% 
-   distinct(date) %>% 
-   mutate(date = format(date, "%b %d")) %>% 
-   pull(date)
+# png_dates <- png_files %>% 
+#    distinct(date) %>% 
+#    mutate(date = format(date, "%b %d")) %>% 
+#    pull(date)
 
 
-if (length(png_dates) > 2) {
-   date_str <- glue::glue_collapse(png_dates, sep = ", ", last = ", and ")
-} else {
-   date_str <- glue::glue_collapse(png_dates, sep = " and ")
-}
+# if (length(png_dates) > 2) {
+#    date_str <- glue::glue_collapse(png_dates, sep = ", ", last = ", and ")
+# } else {
+#    date_str <- glue::glue_collapse(png_dates, sep = " and ")
+# }
 
 
-msg_e <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {date_str}. More charts and analysis at
+msg_e <- glue::glue("Indiana COVID-19 Tracker evening update. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker #rstats")
 
-msg_f <- glue::glue("Indiana COVID-19 Tracker evening update: charts current for {date_str}. More charts and analysis at
+msg_f <- glue::glue("Indiana COVID-19 Tracker evening update. More charts and analysis at
                   https://github.com/ercbk/Indiana-COVID-19-Tracker")
 
 
