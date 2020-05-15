@@ -48,7 +48,7 @@ goog_plot <- ggplot(data = ind_goog %>%
    geom_vline(data = ind_goog %>% 
                  filter(weekend == TRUE),
               aes(xintercept = date),
-              color = "#755c99", size = 5.0,
+              color = "#755c99", size = 5.1,
               alpha = 0.2) +
    scale_color_viridis_d(option = "magma", direction = 1,
                          begin = 0.5) +

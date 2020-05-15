@@ -262,7 +262,7 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       override.aes = list(color = "white",
                           stroke = 1.5)
    )) +
-   scale_y_log10() +
+   scale_y_log10(labels = scales::label_comma()) +
    # needed to provide space to ggforce labels
    # just multiplying the max by a constant wasn't keeping me from having to continually adjust the constant, so I had to come-up with something else
    expand_limits(y = max(pos_chart_dat$positives)*nrow(pos_chart_dat)*0.05,
@@ -322,7 +322,7 @@ ggsave(plot_path, plot = mw_pos_line, dpi = "print", width = 33, height = 20, un
 mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) + 
    geom_line() + 
    geom_point() +
-   scale_y_log10() +
+   scale_y_log10(labels = scales::label_comma()) +
    # needed to provide space to ggforce labels
    expand_limits(y = max(pos_chart_dat$deaths)*nrow(pos_chart_dat)*0.05,
                  x = max(pos_chart_dat$days)+(nrow(pos_chart_dat)*0.02)) +

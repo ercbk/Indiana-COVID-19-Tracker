@@ -9,6 +9,5 @@ ind-covid-line-rscript.R
 tweet-covid-update.R
 create_token.R
 death-pyr-bar.R
-beds-vents-line.R
-hosp-line.R
+hosp-icu-vent.R
 daily.csv

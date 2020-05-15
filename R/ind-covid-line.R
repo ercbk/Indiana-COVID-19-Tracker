@@ -151,6 +151,7 @@ ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
    geom_point(color = deep_rooted[[4]]) +
    # labels need some cushion at the top of the graph to render in decent positions
    expand_limits(y = max(ind_dat$positives)*1.15) +
+   scale_y_continuous(labels = scales::label_comma()) +
    ggforce::geom_mark_circle(aes(
       filter = date == label_dat$date[[1]],
       description = pos_lbl),
@@ -186,6 +187,7 @@ ind_statewide_dea <- ggplot(ind_dat, aes(x = date, y = deaths)) +
    geom_line(color = deep_rooted[[2]]) +
    geom_point(color = deep_rooted[[2]]) +
    expand_limits(y = max(ind_dat$deaths)*1.15) +
+   scale_y_continuous(labels = scales::label_comma()) +
    ggforce::geom_mark_circle(aes(
       filter = date == label_dat$date[[1]],
       description = dea_lbl),
