@@ -32,7 +32,7 @@ light_haz <- prismatic::clr_lighten(purp_haz, shift = 0.25)
 # hospitalizations data
 ct_dat_raw <- readr::read_csv("https://covidtracking.com/api/v1/states/daily.csv")
 # beds, ventilators data
-iv_dat_raw <- readr::read_rds("data/beds-vents-complete.rds")
+iv_dat_raw <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-complete.rds"))
 
 
 
@@ -113,7 +113,8 @@ trigger_dat_h <- consec_days %>%
                             ft_over,
                           num_days > 1 & trend == "decreased" ~
                             under_neg_one,
-                          TRUE ~ zero_days))
+                          TRUE ~ zero_days),
+         type = "hosp")
 
 
 caption_text <- glue("Last updated: {data_date}
@@ -217,7 +218,8 @@ trigger_dat_i <- consec_days_i %>%
                             ft_over_i,
                           num_days > 1 & trend == "above" ~
                             above_pos_one_i,
-                          TRUE ~ zero_days_i))
+                          TRUE ~ zero_days_i),
+         type = "icu")
 
 
 
@@ -247,7 +249,8 @@ trigger_dat_v<- consec_days_v %>%
                             ft_over_v,
                           num_days > 1 & trend == "above" ~
                             above_pos_one_v,
-                          TRUE ~ zero_days_v))
+                          TRUE ~ zero_days_v),
+         type = "vent")
 
 
 
@@ -332,39 +335,35 @@ vents_gauge <- ggplot(data = gauge_dat %>%
 
 
 # length of html affects the correct x-coord in plot
-status_dat <- trigger_dat_h %>% 
-  bind_rows(trigger_dat_i) %>% 
-  bind_rows(trigger_dat_v) %>% 
-  mutate(xcoord = case_when(trend == "above" ~ 0.335,
-                            trend == "below" ~ 0.205,
-                            trend == "No change in" ~ 0.185))
-
+status_dat <- trigger_dat_h %>%
+  bind_rows(trigger_dat_i) %>%
+  bind_rows(trigger_dat_v)
 
 status_plot <- ggplot(status_dat, aes(y = text)) +
   ggtext::geom_richtext(data = status_dat %>% 
                           slice(1), 
                         aes(label= text,
-                           x = xcoord,y = 0.8,
+                           x = 0,y = 0.8,
                            label.color = NA),
                         fill = "black",
                         color = "white",
-                        size = 5) +
+                        size = 5, hjust = "left") +
   ggtext::geom_richtext(data = status_dat %>% 
                           slice(2), 
                         aes(label= text,
-                           x = xcoord, y = 0.50,
+                           x = 0, y = 0.50,
                            label.color = NA),
                         fill = "black",
                         color = "white",
-                        size = 5) +
+                        size = 5, hjust = "left") +
   ggtext::geom_richtext(data = status_dat %>% 
                           slice(3), 
                         aes(label= text,
-                           x = xcoord, y = 0.20,
+                           x = 0, y = 0.20,
                            label.color = NA),
                         fill = "black",
                         color = "white",
-                        size = 5) +
+                        size = 5, hjust = "left") +
   # sets the range of the grid, so you have some idea of coord system for text.
 xlim(0, 1) + ylim(0, 1) +
   theme_void() +

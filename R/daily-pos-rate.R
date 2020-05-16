@@ -18,11 +18,12 @@ deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()
 
 us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") %>% 
    select(date, positiveIncrease, totalTestResultsIncrease) %>% 
+   arrange(date) %>% 
    # .before = 2 says take the current value and the 2 before it.
    mutate(pos_rate = slider::slide2_dbl(positiveIncrease, totalTestResultsIncrease,
                                                    ~sum(.x)/sum(.y), .before = 2),
           pos_rate_text = scales::percent(pos_rate, accuracy = 0.1)) %>% 
-   slice(1) %>% 
+   slice(n()) %>% 
    pull(pos_rate_text)
 
 
