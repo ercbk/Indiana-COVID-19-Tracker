@@ -1,4 +1,18 @@
-# Monitors number of hospitalizations
+# Monitors number of hospitalizations, availabilty of icu beds and ventilators
+
+
+# Notes
+# 1. The "triggers" are benchmarks for hospitalizations, icu beds, and ventilators that I'm monitoring. Discussed further in the readme.
+
+
+# Sections
+# 1. Set-up
+# 2. hospitalizations: clean, calculate trigger
+# 3. Hospitalizations chart
+# 4. ICU, Vents: clean, calculate triggers
+# 5. Gauge Plots
+# 6. Trigger Plot
+# 7. Combine all charts
 
 
 
@@ -135,9 +149,9 @@ hosp_plot <- ggplot(data = ind_hosp,
 
 
 
-########################
-# Gauge Plots
-########################
+#########################################
+# ICU, Vents: clean, calculate triggers
+#########################################
 
 iv_dat <- iv_dat_raw %>%
   mutate(icu_beds_pct = beds_available_icu_beds_total/beds_icu_total,
@@ -175,7 +189,7 @@ neg_one_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> d
 zero_days_i <- glue("{consec_days_i$trend[[1]]} in availability of ICU beds from yesterday")
 # between 2 and 13 days below 40%
 under_ft_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
-# 14 and over days below 40%
+# 14 days and over days below 40%
 ft_over_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
 # more than 1 day above 40%
 above_pos_one_i <- glue("<b style='color: #33a532'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
@@ -225,6 +239,12 @@ subtitle_dat_v<- consec_days_v %>%
                           TRUE ~ zero_days_v))
 
 
+
+################
+# Gauge Plots
+################
+
+
 gauge_dat <- iv_dat %>% 
   slice(n()) %>% 
   select(icu_beds_pct, vent_pct) %>% 
@@ -260,7 +280,6 @@ icu_gauge <- ggplot(data = gauge_dat %>%
         plot.background = element_rect(fill = "black",
                                        color = NA))
 
-# icu_gauge
 
 
 vents_gauge <- ggplot(data = gauge_dat %>% 
@@ -288,7 +307,12 @@ vents_gauge <- ggplot(data = gauge_dat %>%
         plot.background = element_rect(fill = "black",
                                        color = NA))
 
-# vents_gauge
+
+
+################
+# Trigger plot
+################
+
 
 all_subtitles <- glue("{subtitle_dat$text[[1]]}\n
                       {subtitle_dat_i$text[[1]]}\n
@@ -330,10 +354,16 @@ xlim(0, 1) + ylim(0, 1) +
         panel.border = element_blank(),
         plot.background = element_rect(fill = "black",
                                        color = NA))
-# status_plot
 
 
-all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('cm', 'null')))) | (icu_gauge/vents_gauge)) +
+
+######################
+# Combine all charts
+######################
+
+
+all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('cm', 'null')))) | 
+                 (icu_gauge/vents_gauge)) +
   plot_layout(widths = c(2,1)) +
   plot_annotation(title = "New Hospitalizations, ICU and Ventilator Availability",
                   subtitle = glue("Last updated: {data_date}"),

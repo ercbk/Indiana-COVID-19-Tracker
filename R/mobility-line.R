@@ -3,8 +3,8 @@
 
 
 # Notes
-# 1. Apple decided to make it programmatically difficult to download their mobility data. They had download button that didn't give an address to the data when you right-click it. "Inspected" the button in the browser and the download address had the date included. So the while-loop below searches for that date in order to get a valid address to download the data from.
-# 2. Lifted form Kieren Healy blog post
+# 1. Apple decided to make it programmatically difficult to download their mobility data. They had download button that didn't give an address to the data when you right-click it. "Inspected" the button in the browser to get the download address. Apple has 3 parts in the address that change. Hence the nested monstrosity below. Had to shorten the sequences to keep the loop time down to a couple mins, so still isn't guaranteed to get the damn data.
+# 2. Chart lifted form Kieren Healy blog post
 
 
 
@@ -16,25 +16,49 @@ deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()
 eth_mat <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Ethereal Material.ase"))
 light_eth <- prismatic::clr_lighten(eth_mat, shift = 0.1)
 
-# Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds. The "Dev" number also changes with the date.
-c <- 0
-while (TRUE) {
-   mob_dat <- try({
-      try_date <- lubridate::today() - c
-      dev_num <- as.numeric(try_date) - 18337
-      try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/2007HotfixDev{dev_num}/v2/en-us/applemobilitytrends-{try_date}.csv")
-      
-      readr::read_csv(try_address)
-   }, silent = TRUE)
+
+# Using rev to start at the larger numbers so as to avoid contacting older data before the newest data
+# str_pad adds 0s in front of single digit numbers
+# sequence for hotfix part of data address
+hf_seq <- rev(stringr::str_pad(1:10, pad = 0,width = 2 , "left"))
+# sequence for dev part of data address
+dev_seq <- rev(stringr::str_pad(20:60, pad = 0,width = 2 , "left"))
+
+# heinous loop to get apple's data
+get_apple_data <- function(h_seq, d_seq){
    
-   if (class(mob_dat) != "try-error"){
-      break
-   } else if (c >= 14) {
-      stop("Looks like Apple stopped handing out recent data")
-   } else {
-      c <- c + 1
+   # hotfix number loop
+   for (i in 1:length(h_seq)){
+      
+      # dev number loop
+      for (j in 1:length(d_seq)){
+         
+         c <- 0
+         # Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds or limit reached.
+         while (TRUE) {
+            dat <- try({
+               try_date <- lubridate::today() - c
+               try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/20{h_seq[[i]]}HotfixDev{d_seq[[j]]}/v2/en-us/applemobilitytrends-{try_date}.csv")
+               readr::read_csv(try_address)
+            }, silent = TRUE)
+            # no error then exit and return data
+            if (class(dat) != "try-error"){
+               return(dat)
+            } else if (c >= 5) {
+               # if try_date reaches 5 days ago, then break to next dev number
+               break
+            } else {
+               # try next earlier day
+               c <- c + 1
+            }
+         }
+         
+      }
    }
 }
+
+mob_dat <- get_apple_data(hf_seq, dev_seq)
+
 
 # Filter regional cities; gather date columns; date is arbitrary - just wanted enough days to show index values before pandemic
 region_mob <- mob_dat %>% 

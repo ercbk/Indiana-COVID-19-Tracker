@@ -15,7 +15,6 @@ light_deep <- prismatic::clr_lighten(deep_rooted, shift = 0.2)
 
 goog_raw <- readr::read_csv("https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv")
 
-
 # Filter Indiana; cols: date, activity, index; calc median index of all counties
 ind_goog <- goog_raw %>% 
    filter(sub_region_1 == "Indiana") %>% 
@@ -38,18 +37,21 @@ data_date <- ind_goog %>%
    summarize(date = max(date)) %>% 
    pull(date)
 
-
+# grouped line chart
 goog_plot <- ggplot(data = ind_goog %>% 
           filter(date > "2020-03-07"), aes(x = date, y = index,
                             group = activity, color = Activity)) + 
    geom_line(key_glyph = "timeseries") +
+   # emphasize y = 0 a little bit
    geom_hline(aes(yintercept = 0),
               color = light_deep[[7]], size = 1) +
+   # add vertical bars to show the weekends
    geom_vline(data = ind_goog %>% 
                  filter(weekend == TRUE),
               aes(xintercept = date),
               color = "#755c99", size = 5.1,
               alpha = 0.2) +
+   # viridis pal is continuous, begin, [0, 1], says where rightside endpt is
    scale_color_viridis_d(option = "magma", direction = 1,
                          begin = 0.5) +
    scale_x_date(limits = c(as.Date("2020-03-07"), max(ind_goog$date)+1),
