@@ -71,7 +71,7 @@ count_consec_days <- function(x) {
   ) %>% 
     mutate(trend = case_when(sign == 1 ~ "increased",
                              sign == -1 ~ "decreased",
-                             TRUE ~ "no change in")) %>% 
+                             TRUE ~ "No change in")) %>% 
     slice(1) %>% 
     select(-sign)
 }
@@ -87,15 +87,22 @@ consec_days <- count_consec_days(hosp_changes)
 
 # Trigger
 # text styled depending on number of consecutive days and increasing or decreasing trend
+
+# 1 day of decreased hospitalizations
 neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} new hospitializations")
+# 1 day of increased hospitalizations
 pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} new hospitializations")
+# no change from yesterday
 zero_days <- glue("{consec_days$trend[[1]]} new hospitializations")
+# between 2 and 13 days of increased hospitalizations
 under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new hospitializations")
+# more than threshold of 14 days of increased hospitalizations
 ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+# more than 1 day of decreased hospitalizations
 under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new hospitalizations")
 
 # choose the subtitle text based number of consecutive days and trend light_haz[[2]]
-subtitle_dat <- consec_days %>% 
+trigger_dat_h <- consec_days %>% 
   mutate(text = case_when(num_days == 1 & trend == "increased" ~
                             pos_one,
                           num_days == 1 & trend == "decreased" ~
@@ -153,12 +160,16 @@ hosp_plot <- ggplot(data = ind_hosp,
 # ICU, Vents: clean, calculate triggers
 #########################################
 
+
+# calcs percentages, assigns 1 for above threshold, -1 for below (needed for sign() fun below)
 iv_dat <- iv_dat_raw %>%
   mutate(icu_beds_pct = beds_available_icu_beds_total/beds_icu_total,
          vent_pct = vents_all_available_vents_not_in_use/vents_total,
-         icu_status = ifelse(icu_beds_pct >= 0.40, 1, -1),
-         vent_status = ifelse(vent_pct >= 0.70, 1, -1))
+         icu_status = ifelse(icu_beds_pct >= 0.400, 1, -1),
+         vent_status = ifelse(vent_pct >= 0.700, 1, -1)) %>% 
+  arrange(desc(date))
 
+# count consecutive days above and below threshold
 count_consec_days_iv <- function(x) {
   # rle: "run length encoding," counts runs of same value
   iv_runs <- rle(sign(x))
@@ -195,7 +206,7 @@ ft_over_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> c
 above_pos_one_i <- glue("<b style='color: #33a532'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
 
 # choose the subtitle text based number of consecutive days and trend
-subtitle_dat_i <- consec_days_i %>% 
+trigger_dat_i <- consec_days_i %>% 
   mutate(text = case_when(num_days == 1 & trend == "above" ~
                             pos_one_i,
                           num_days == 1 & trend == "below" ~
@@ -225,7 +236,7 @@ ft_over_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> c
 above_pos_one_v <- glue("<b style='color: #33a532'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators")
 
 # choose the subtitle text based number of consecutive days and trend
-subtitle_dat_v<- consec_days_v %>% 
+trigger_dat_v<- consec_days_v %>% 
   mutate(text = case_when(num_days == 1 & trend == "above" ~
                             pos_one_v,
                           num_days == 1 & trend == "below" ~
@@ -244,9 +255,10 @@ subtitle_dat_v<- consec_days_v %>%
 # Gauge Plots
 ################
 
-
+# used for both gauge plots
+# cols: type (icu or vent), percent, title, label (text of percent col)
 gauge_dat <- iv_dat %>% 
-  slice(n()) %>% 
+  slice(1) %>% 
   select(icu_beds_pct, vent_pct) %>% 
   tidyr::pivot_longer(cols = everything(),
                       names_to = "type",
@@ -257,21 +269,28 @@ gauge_dat <- iv_dat %>%
 
 icu_gauge <- ggplot(data = gauge_dat %>% 
                       filter(type == "icu_beds_pct")) +
+  # green bar
   geom_rect(aes(ymax=1, ymin=0, xmax=2, xmin=1), fill ="#33a532") +
+  # red bar that overlays the green bar
   geom_rect(aes(fill = type, ymax = 0.4, ymin = 0, xmax = 2, xmin = 1)) + 
+  # bends bars to a half circle
   coord_polar(theta = "y",start=-pi/2) + xlim(c(0, 2)) + ylim(c(0,2)) +
+  # segments the bar between red and green; black blends with black background
   geom_hline(aes(yintercept = 0.40),
              color = "black", size = 1.3) +
+  # the "needle"
   geom_hline(aes(yintercept = percent),
              color = "white", size = 1.3) +
+  # percent text
   geom_text(aes(x = 0.85, y = 1.5, label = label), colour="white", size=6.5, fontface = "bold", family = "Roboto") +
+  # title depending on type
   geom_text(aes(x=1.5, y=1.5, label=title), size=6.2, family = "Roboto", color = "white") +
   theme_void() +
+  # not sure why there's two values
   scale_fill_manual(values = c("#cf142b", "#cf142b")) +
+  # maybe this the stroke for the bars?
   scale_colour_manual(values = c("#cf142b", "#cf142b")) +
   theme(legend.position = "none",
-        # strip.background = element_blank(),
-        # strip.text.x = element_blank(),
         axis.ticks = element_blank(),
         axis.line = element_blank(),
         axis.text = element_blank(),
@@ -297,8 +316,6 @@ vents_gauge <- ggplot(data = gauge_dat %>%
   scale_fill_manual(values = c("#cf142b", "#cf142b")) +
   scale_colour_manual(values = c("#cf142b", "#cf142b")) +
   theme(legend.position = "none",
-        # strip.background = element_blank(),
-        # strip.text.x = element_blank(),
         axis.ticks = element_blank(),
         axis.line = element_blank(),
         axis.text = element_blank(),
@@ -314,19 +331,20 @@ vents_gauge <- ggplot(data = gauge_dat %>%
 ################
 
 
-all_subtitles <- glue("{subtitle_dat$text[[1]]}\n
-                      {subtitle_dat_i$text[[1]]}\n
-                      {subtitle_dat_v$text[[1]]}")
+# length of html affects the correct x-coord in plot
+status_dat <- trigger_dat_h %>% 
+  bind_rows(trigger_dat_i) %>% 
+  bind_rows(trigger_dat_v) %>% 
+  mutate(xcoord = case_when(trend == "above" ~ 0.335,
+                            trend == "below" ~ 0.205,
+                            trend == "No change in" ~ 0.185))
 
-status_dat <- subtitle_dat %>% 
-  bind_rows(subtitle_dat_i) %>% 
-  bind_rows(subtitle_dat_v)
 
 status_plot <- ggplot(status_dat, aes(y = text)) +
   ggtext::geom_richtext(data = status_dat %>% 
                           slice(1), 
                         aes(label= text,
-                           x=0.195,y = 0.8,
+                           x = xcoord,y = 0.8,
                            label.color = NA),
                         fill = "black",
                         color = "white",
@@ -334,7 +352,7 @@ status_plot <- ggplot(status_dat, aes(y = text)) +
   ggtext::geom_richtext(data = status_dat %>% 
                           slice(2), 
                         aes(label= text,
-                           x=0.335, y = 0.50,
+                           x = xcoord, y = 0.50,
                            label.color = NA),
                         fill = "black",
                         color = "white",
@@ -342,11 +360,12 @@ status_plot <- ggplot(status_dat, aes(y = text)) +
   ggtext::geom_richtext(data = status_dat %>% 
                           slice(3), 
                         aes(label= text,
-                           x=0.335, y = 0.20,
+                           x = xcoord, y = 0.20,
                            label.color = NA),
                         fill = "black",
                         color = "white",
                         size = 5) +
+  # sets the range of the grid, so you have some idea of coord system for text.
 xlim(0, 1) + ylim(0, 1) +
   theme_void() +
   theme(panel.background = element_rect(fill = "black",
@@ -361,7 +380,9 @@ xlim(0, 1) + ylim(0, 1) +
 # Combine all charts
 ######################
 
-
+# Pay attention to groupings by parentheses
+# 1st plot_layout affects left col; 2nd plot_layout affects entire chart
+# see gtable notes for "null" explanation
 all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('cm', 'null')))) | 
                  (icu_gauge/vents_gauge)) +
   plot_layout(widths = c(2,1)) +
