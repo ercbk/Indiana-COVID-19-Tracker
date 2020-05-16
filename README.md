@@ -1,10 +1,10 @@
 
+# Indiana COVID-19 Tracker
+
 ![Noon
 Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Noon%20Update/badge.svg)
 ![Evening
 Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Update/badge.svg)
-
-# Indiana COVID-19 Tracker
 
 Charts updated between noon and 1pm ET and at 6:30 pm ET  
 Changelog located in
@@ -91,7 +91,7 @@ that’s available.
   - U.S. average calculated using data from [The COVID Tracking
     Project](https://covidtracking.com/api).
 
-<img src="plots/soc-dist-line-2020-05-14.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-15.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
