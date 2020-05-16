@@ -20,10 +20,10 @@ params:
 knitr::opts_chunk$set(echo=FALSE)
 ```
 
+# Indiana COVID-19 Tracker  
 ![Noon Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Noon%20Update/badge.svg)
 ![Evening Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Update/badge.svg)
 
-# Indiana COVID-19 Tracker
 Charts updated between noon and 1pm ET and at 6:30 pm ET  
 Changelog located in [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md)  
 
