@@ -56,7 +56,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/hosp-icu-vent-2020-05-17.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-05-18.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -91,7 +91,7 @@ that’s available.
   - U.S. average calculated using data from [The COVID Tracking
     Project](https://covidtracking.com/api).
 
-<img src="plots/soc-dist-line-2020-05-16.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-17.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
