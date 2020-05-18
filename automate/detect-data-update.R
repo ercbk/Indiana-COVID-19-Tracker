@@ -22,6 +22,8 @@ rt_tok <- rtweet::create_token(
 # need to set the initial value
 tweet_rows <- 0
 
+Sys.time()
+
 # Runner uses UTC timezone so 17:00 should be 1pm ET
 while (lubridate::hour(Sys.time()) <= 17 & tweet_rows == 0) {
    
