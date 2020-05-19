@@ -20,26 +20,26 @@ trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/pal
 # daily counts of positive cases
 # EpiEstim pkg expects certain column names for models
 ind_incidence <- nyt_dat %>% 
-      filter(state == "Indiana") %>% 
-      as_tsibble(index = "date") %>% 
-      mutate(I = difference(cases),
-             I = tidyr::replace_na(I, 1)) %>% 
-      select(dates = date, I)
+  filter(state == "Indiana") %>% 
+  as_tsibble(index = "date") %>% 
+  mutate(I = difference(cases),
+         I = tidyr::replace_na(I, 1)) %>% 
+  select(dates = date, I)
 
 # current data date
 data_date <- ind_incidence %>% 
-      as_tibble() %>%
-      summarize(dates = max(dates)) %>% 
-      pull(dates)
+  as_tibble() %>%
+  summarize(dates = max(dates)) %>% 
+  pull(dates)
 
 
 # calc effective reproduction number
 ind_res_parametric_si <- estimate_R(ind_incidence, 
-                                      method = "parametric_si",
+                                    method = "parametric_si",
                                     config = make_config(
                                       list(mean_si = 7.5,
                                            std_si = 3.4))
-                                    )
+)
 
 
 # getting the point est, and 95% credible intervals
@@ -85,15 +85,17 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
        title = "Estimated daily effective reproduction number",
        subtitle = glue("Last updated: {data_date}"),
        caption = "*Daily effective reproduction number calculated over a 7 day window\nSource: The New York Times, based on reports from state and local health agencies"
-       ) +
+  ) +
   theme(
     legend.position = 'none',
     plot.title = element_text(color = "white",
-                                        family = "Roboto"),
+                              family = "Roboto",
+                              size = 16),
     plot.subtitle = element_text(color = "white",
-                                           family = "Roboto"),
+                                 family = "Roboto",
+                                 size = 14),
     plot.caption = element_text(color = "white",
-                                size = rel(1),
+                                size = 12,
                                 family = "Roboto"),
     text = element_text(family = "Roboto"),
     axis.text.x = element_text(color = "white",

@@ -164,7 +164,8 @@ ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
       label.buffer = unit(15, "mm"),
       color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#B28330'>Cumulative Positive Test Results</b>") +
-   theme(plot.title = element_textbox_simple(size = rel(0.9)),
+   theme(plot.title = element_textbox_simple(size = 14,
+                                             family = "Roboto"),
          text = element_text(family = "Roboto"),
          legend.position = "none",
          axis.text.x = element_text(color = "white",
@@ -175,8 +176,6 @@ ind_statewide_pos <- ggplot(ind_dat, aes(x = date, y = positives)) +
                                          color = NA),
          plot.background = element_rect(fill = "black",
                                         color = NA),
-         plot.subtitle = element_text(size = rel(0.85),
-                                      color = "white"),
          panel.border = element_blank(),
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
@@ -197,7 +196,7 @@ ind_statewide_dea <- ggplot(ind_dat, aes(x = date, y = deaths)) +
       label.fill = deep_rooted[[7]],
       color = deep_rooted[[7]]) +
    labs(x = NULL, y = NULL, title = "<b style='color:#BE454F'>Cumulative Deaths</b>") +
-   theme(plot.title = element_textbox_simple(size = rel(0.9),
+   theme(plot.title = element_textbox_simple(size = 14,
                                              family = "Roboto"),
          text = element_text(family = "Roboto"),
          legend.position = "none",
@@ -209,8 +208,6 @@ ind_statewide_dea <- ggplot(ind_dat, aes(x = date, y = deaths)) +
                                          color = NA),
          plot.background = element_rect(fill = "black",
                                         color = NA),
-         plot.subtitle = element_text(size = rel(0.85),
-                                      color = "white"),
          panel.border = element_blank(),
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
@@ -263,7 +260,7 @@ dea_tab_grob <- gridExtra::tableGrob(tab_dat %>%
 title_grob <- grobTree(rectGrob(gp = gpar(fill = "black")), textGrob("Indiana COVID-19", hjust = 3.75, gp = gpar(fontsize = 15, col = "white")))
 
 # An absolute bitch to align both data source strings. Can only add spaces at the end of the string and \s doesn't work.
-caption_grob <- grobTree(rectGrob(gp = gpar(fill = "black")), textGrob("Sources: The New York Times, according to reports from state and local health agencies\nIndiana State Department of Health Twitter account, @StateHealthIN", just = "left", hjust = 0.5, gp = gpar(fontsize = 10, col = "white")))
+caption_grob <- grobTree(rectGrob(gp = gpar(fill = "black")), textGrob("Sources: The New York Times, according to reports from state and local health agencies", just = "left", hjust = 0.5, gp = gpar(fontsize = 11, col = "white")))
 
 # its easier align caption text if its confined in a few cells instead of spanning entire layout. So, another black rectangle is needed to take up the extra white space
 black_rect_grob <- rectGrob(gp = gpar(fill = "black"))

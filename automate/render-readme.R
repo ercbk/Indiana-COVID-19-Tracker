@@ -35,9 +35,11 @@ rmarkdown::render(
 )
 
 # clean-up old pngs and extraneous html output
+# google isn't releasing data very often; need to keep its old pngs around longer
 paths <- png_files %>% 
       group_by(chart) %>% 
-      filter(date == min(date)) %>% 
+      filter(date == min(date),
+             chart != "goog-mob-line") %>% 
       pull(paths)
 
 if (nrow(png_files) > 36) {
