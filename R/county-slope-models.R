@@ -81,7 +81,7 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
            title = "Estimated change in <b style='color:#B28330'>cumulative positive tests</b> per day",
            subtitle = glue("Last updated: {data_date}\nNumber of positive tests in black"),
            caption = "Source: The New York Times, based on reports from state and local health agencies") +
-      theme(plot.title = element_textbox_simple(size = 14,
+      theme(plot.title = element_textbox_simple(size = 16,
                                                 color = "white",
                                                 family = "Roboto"),
             plot.subtitle = element_text(size = 12,
