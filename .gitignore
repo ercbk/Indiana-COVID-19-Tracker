@@ -9,3 +9,5 @@ ind-covid-line-rscript.R
 tweet-covid-update.R
 create_token.R
 death-pyr-bar.R
+state_of_industry_data.csv
+opentab-rest-line.R

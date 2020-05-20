@@ -72,7 +72,7 @@ test_dat <- test_dat_raw %>%
           pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
                                         ~sum(.x)/sum(.y), .before = 2)) %>% 
    as_tsibble(index = date) %>% 
-   # Ind Data Hub's most recent data point is usually still in the process of be collected. It causes pos rate to spike and is misleading, so I'm just going to remove it.
+   # Ind Data Hub's most recent data point is usually still in the process of be collected. It causes pos rate to spike and is misleading, so I'm just going to remove the most recent entry.
    slice(-n())
 
 
@@ -108,10 +108,10 @@ text_coord <- chart_dat %>%
 
 rate_plot <- ggplot(data = chart_dat,
                     aes(x = date, y = pos_test_rate)) +
-   geom_ribbon(aes(ymin = 0.03, ymax = 0.12), fill = "#8db230", alpha = 0.2) +
    geom_point(color = deep_rooted[[4]]) +
    geom_line(color = deep_rooted[[4]]) +
    expand_limits(y = c(0, max(chart_dat$pos_test_rate) + 0.05)) +
+   geom_ribbon(aes(ymin = 0.03, ymax = 0.12), fill = "#8db230", alpha = 0.2) +
    scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
    scale_x_date(date_breaks = "4 days",
                 date_labels = "%b %d") +
