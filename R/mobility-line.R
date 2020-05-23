@@ -53,6 +53,9 @@ get_apple_data <- function(h_seq, d_seq, v_seq){
                   # if try_date reaches 5 days ago, then break to next dev number
                   break
                } else {
+                  Sys.sleep(5) 
+                  closeAllConnections()
+                  gc()
                   # try next earlier day
                   c <- c + 1
                }
