@@ -77,9 +77,9 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
   geom_label(data = r_chart_dat %>% 
                filter(date == max(date)) %>% 
                mutate(zoom = TRUE),
-             aes(label = label),
+             aes(label = label, vjust = "top"),
              family="Roboto", fill = "black",
-             size = 4, nudge_y = 0.20, parse = T,
+             size = 4, nudge_y = 0.10, parse = T,
              label.size = 0, color="white") +
   labs(x = NULL, y = NULL,
        title = "Estimated daily effective reproduction number",
