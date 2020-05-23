@@ -3,7 +3,7 @@ name: Evening Update
 on:
   schedule:
     # says run at the 48th min, 21th hr UTC (5:54pm ET) of every day
-    - cron: '48 21 * * *'
+    - cron: '40 21 * * *'
 
 jobs:
   update:

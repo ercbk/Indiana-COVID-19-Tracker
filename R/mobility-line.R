@@ -20,12 +20,14 @@ light_eth <- prismatic::clr_lighten(eth_mat, shift = 0.1)
 # Using rev to start at the larger numbers so as to avoid contacting older data before the newest data
 # str_pad adds 0s in front of single digit numbers
 # sequence for hotfix part of data address
-hf_seq <- rev(stringr::str_pad(1:10, pad = 0,width = 2 , "left"))
+hf_seq <- stringr::str_pad(10:1, pad = 0,width = 2 , "left")
 # sequence for dev part of data address
-dev_seq <- rev(stringr::str_pad(20:60, pad = 0,width = 2 , "left"))
+dev_seq <- stringr::str_pad(60:20, pad = 0,width = 2 , "left")
+# sequence for version part of data address
+vers_seq <- seq(5,1)
 
 # heinous loop to get apple's data
-get_apple_data <- function(h_seq, d_seq){
+get_apple_data <- function(h_seq, d_seq, v_seq){
    
    # hotfix number loop
    for (i in 1:length(h_seq)){
@@ -33,38 +35,42 @@ get_apple_data <- function(h_seq, d_seq){
       # dev number loop
       for (j in 1:length(d_seq)){
          
-         c <- 0
-         # Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds or limit reached.
-         while (TRUE) {
-            dat <- try({
-               try_date <- lubridate::today() - c
-               try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/20{h_seq[[i]]}HotfixDev{d_seq[[j]]}/v2/en-us/applemobilitytrends-{try_date}.csv")
-               readr::read_csv(try_address)
-            }, silent = TRUE)
-            # no error then exit and return data
-            if (class(dat) != "try-error"){
-               return(dat)
-            } else if (c >= 5) {
-               # if try_date reaches 5 days ago, then break to next dev number
-               break
-            } else {
-               # try next earlier day
-               c <- c + 1
+         # version number loop
+         for(k in 1:length(v_seq)) {
+            
+            c <- 0
+            # Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds or limit reached.
+            while (TRUE) {
+               dat <- try({
+                  try_date <- lubridate::today() - c
+                  try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/20{h_seq[[i]]}HotfixDev{d_seq[[j]]}/v{v_seq[[k]]}/en-us/applemobilitytrends-{try_date}.csv")
+                  readr::read_csv(try_address)
+               }, silent = TRUE)
+               # no error then exit and return data
+               if (class(dat) != "try-error"){
+                  return(dat)
+               } else if (c >= 5) {
+                  # if try_date reaches 5 days ago, then break to next dev number
+                  break
+               } else {
+                  # try next earlier day
+                  c <- c + 1
+               }
             }
          }
-         
       }
    }
 }
 
-mob_dat <- get_apple_data(hf_seq, dev_seq)
+
+mob_dat <- get_apple_data(hf_seq, dev_seq, vers_seq)
 
 
 # Filter regional cities; gather date columns; date is arbitrary - just wanted enough days to show index values before pandemic
 region_mob <- mob_dat %>% 
    filter(region %in% c("Chicago", "Indianapolis", "Detroit", "Cincinnati", "Louisville", "St. Louis"),
           transportation_type == "driving") %>% 
-   select(-c(1,3,4)) %>% 
+   select(-c(1,3,4,5,6)) %>% 
    mutate(region = factor(region)) %>% 
    tidyr::pivot_longer(cols = -region,
                        values_to = "mob_index",
