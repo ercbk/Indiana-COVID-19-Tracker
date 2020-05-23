@@ -2,8 +2,8 @@ name: Noon Update
 
 on:
   schedule:
-    # says run at the 32th min, 15th hr UTC (11:49am ET) of every day
-    - cron: '25 15 * * *'
+    # says run at the 22th min, 15th hr UTC (11:49am ET) of every day
+    - cron: '22 15 * * *'
 
 jobs:
   update:
