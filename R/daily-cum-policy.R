@@ -68,9 +68,12 @@ policy_dat <- state_policy %>%
    add_row(policy = "Resumes elective medical procedures",
            date = as.Date("2020-04-24"),
            date_text = "4/24/2020") %>%
-   add_row(policy = "Stage 2 Re-opening begins",
+   add_row(policy = "Stage 2 Re-opening",
            date = as.Date("2020-05-04"),
-           date_text = "5/04/2020")
+           date_text = "5/04/2020") %>% 
+   add_row(policy = "Stage 3 Re-opening",
+           date = as.Date("2020-05-22"),
+           date_text = "5/22/2020")
 
 
 
@@ -146,8 +149,8 @@ label_dat <- cases_dat %>%
              policy ~ date + cumulative_cases + daily_cases,
              FUN = paste0, collapse = "\n") %>% 
    # painstakingly searched-for values for nudging the labels
-   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 1, 1.3),
-          vjust = c(-7, 2, -1.32, -2.3, 6, -2))
+   mutate(hjust = c(-0.2, -0.25, 1.3, 1, 0.6, 1.2, 1.3),
+          vjust = c(-7, 2, -1.32, -2.3, 7.0, 5.5, -2))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -169,7 +172,7 @@ caption_text <- glue("Last updated: {data_date}
 pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1)) +
    geom_point(color = "#B28330") +
    geom_line(color = "#B28330") +
-   expand_limits(y = 1500) +
+   expand_limits(y = 1500, x = 50000) +
    scale_x_log10(breaks = c(0, 10, 100, 1000, 10000),
                  labels = c("0", "10", "100", "1,000", "10,000")) +
    # adding 1 to match the adjustment above
@@ -179,7 +182,7 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
    geom_label(aes(x=0, y=1000, label="Daily Cases"),
               family="Roboto", fill = "black",
               size=4, hjust=0, label.size=0, color="white") +
-   # policy labels
+   # policy labels, hjust and vjust values depends on label
    geom_label(data=label_dat, aes(x = cumulative_cases,
                                   y = daily_cases,
                                   label= policy,
@@ -215,9 +218,16 @@ pos_policy_line <- ggplot(cases_dat, aes(x = cumulative_cases, y = daily_cases+1
                                yend = 750, y = 1000),
       color = deep_light[[7]], arrow = arw
    ) +
+   # stage 2
    geom_segment(
-      data = data.frame(), aes(x = 13500, xend = 19000,
-                               yend = 450, y = 175),
+      data = data.frame(), aes(x = 10000, xend = 17000,
+                               yend = 450, y = 170),
+      color = deep_light[[7]], arrow = arw
+   ) +
+   # stage 3
+   geom_segment(
+      data = data.frame(), aes(x = 25000, xend = 30000,
+                               yend = 330, y = 110),
       color = deep_light[[7]], arrow = arw
    ) +
    labs(x = "Cumulative Cases", y = NULL,

@@ -96,6 +96,12 @@ ind_index <- region_mob %>%
    filter(region == "Indianapolis",
           date == max(date))
 
+# upper limit for y-axis
+y_upper <- region_mob %>% 
+   as_tibble() %>% 
+   summarize(mob_index = max(mob_index, na.rm = TRUE)) %>% 
+   pull(mob_index)
+
 # creates plots for each city; keeps x axis for bottom level (patchwork) charts
 gen_plots <- function(data, region) {
    p <- ggplot(data = data, aes(x = date, y = mob_index, group = region)) + 
@@ -107,7 +113,8 @@ gen_plots <- function(data, region) {
       geom_hline(data = ind_index, 
                  aes(yintercept = mob_index),
                  color = "#995c61", linetype = 8) +
-      expand_limits(x = max(data$date)+2) +
+      expand_limits(x = max(data$date)+2,
+                    y = y_upper * 1.15) +
       labs(title = region)
    if (region == "Detroit" | region == "Louisville" | region == "St. Louis"){
       p + theme(plot.title = element_text(color = "white",
@@ -162,7 +169,8 @@ indy_chart <- ggplot(data = ind_chart_dat, aes(x = date, y = mob_index, group = 
                  filter(weekend == TRUE),
               aes(xintercept = date),
               color = "#755c99",size = 3.9, alpha = 0.1) +
-   expand_limits(x = max(ind_chart_dat$date)+2) +
+   expand_limits(x = max(ind_chart_dat$date)+2,
+                 y = y_upper * 1.15) +
    ggrepel::geom_text_repel(data = ind_chart_dat %>% 
                                filter(date == max(date)),
                             aes(label = mob_index),
