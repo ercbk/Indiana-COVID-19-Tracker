@@ -150,7 +150,7 @@ label_dat <- cases_dat %>%
              FUN = paste0, collapse = "\n") %>% 
    # painstakingly searched-for values for nudging the labels
    mutate(hjust = c(-0.2, -0.25, 1.3, 1, 0.6, 1.2, 1.3),
-          vjust = c(-7, 2, -1.32, -2.3, 7.0, 5.5, -2))
+          vjust = c(-7, 2, -1.32, -2.3, 7.0, 5.7, -2))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum

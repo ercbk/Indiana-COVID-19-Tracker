@@ -134,7 +134,7 @@ hosp_plot <- ggplot(data = ind_hosp,
                             nudge_x = 0, nudge_y = 18, point.padding = 1) +
   geom_label(aes(x = as.Date("2020-04-24"),
                  y = max(hospitalizedCurrently) + 60,
-                 label="New Hospitalizations"),
+                 label="Current COVID-19 Hospitalizations"),
              family="Roboto", fill = "black",
              size = 6, hjust = 0,
              label.size = 0, color = "white") +
@@ -385,7 +385,7 @@ xlim(0, 1) + ylim(0, 1) +
 all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('cm', 'null')))) | 
                  (icu_gauge/vents_gauge)) +
   plot_layout(widths = c(2,1)) +
-  plot_annotation(title = "New Hospitalizations, ICU and Ventilator Availability",
+  plot_annotation(title = "Tracking New Hospitalizations, ICU and Ventilator Availability",
                   subtitle = glue("Last updated: {data_date}"),
                   caption = glue("Sources: The Indiana Data Hub
                                  The COVID Tracking Project")) &
