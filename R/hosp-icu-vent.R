@@ -136,7 +136,7 @@ hosp_plot <- ggplot(data = ind_hosp,
                  y = max(hospitalizedCurrently) + 60,
                  label="Current COVID-19 Hospitalizations"),
              family="Roboto", fill = "black",
-             size = 6, hjust = 0,
+             size = 5, hjust = 0,
              label.size = 0, color = "white") +
   labs(x = NULL, y = NULL) +
   theme(text = element_text(family = "Roboto"),
