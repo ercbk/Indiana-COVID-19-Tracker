@@ -39,7 +39,8 @@ rmarkdown::render(
 paths <- png_files %>% 
       group_by(chart) %>% 
       filter(date == min(date),
-             chart != "goog-mob-line") %>% 
+             chart != "goog-mob-line",
+             chart != "soc-dist-line") %>% 
       pull(paths)
 
 if (nrow(png_files) > 36) {

@@ -91,7 +91,7 @@ that’s available.
   - U.S. average calculated using data from [The COVID Tracking
     Project](https://covidtracking.com/api).
 
-<img src="plots/soc-dist-line-2020-05-22.png" width="935" />
+<img src="plots/soc-dist-line-2020-05-23.png" width="935" />
 
   - Apple made available some of the
     [data](https://www.apple.com/covid19/mobility) it collects from its
