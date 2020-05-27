@@ -56,7 +56,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/hosp-icu-vent-2020-05-25.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-05-26.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -64,7 +64,8 @@ that’s available.
     in his re-opening [speech](https://backontrack.in.gov/2362.htm). By
     negating a few of these, we can infer what some of the snapback
     conditions might entail.
-      - An increase in daily hospitalizations for 14 consecutive days.
+      - An increase for 14 consecutive days in the daily total of those
+        hospitalized for COVID-19.  
       - The proportion of available ICU beds to total ICU beds being
         below 40% for 14 consecutive days.
       - The proportion of available ventilators to total ventilators

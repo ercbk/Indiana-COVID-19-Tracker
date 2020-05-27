@@ -54,7 +54,7 @@ knitr::include_graphics(hosp_iv_path)
 ```
 
    * Even though Governor Holcomb hasn't explicitly stated the conditions that would necessitate a reversal of course to a previous stage, he did mention some benchmarks when discussing his guiding principles in his re-opening [speech](https://backontrack.in.gov/2362.htm). By negating a few of these, we can infer what some of the snapback conditions might entail.
-      * An increase in daily hospitalizations for 14 consecutive days.
+      * An increase for 14 consecutive days in the daily total of those hospitalized for COVID-19.  
       * The proportion of available ICU beds to total ICU beds being below 40% for 14 consecutive days.
       * The proportion of available ventilators to total ventilators being below 70% for 14 consecutive days.  
 

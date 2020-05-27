@@ -89,17 +89,17 @@ consec_days <- count_consec_days(hosp_changes)
 # text styled depending on number of consecutive days and increasing or decreasing trend
 
 # 1 day of decreased hospitalizations
-neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} new hospitializations")
+neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospitializations")
 # 1 day of increased hospitalizations
-pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} new hospitializations")
+pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospitializations")
 # no change from yesterday
-zero_days <- glue("{consec_days$trend[[1]]} new hospitializations")
+zero_days <- glue("{consec_days$trend[[1]]} COVID-19 hospitializations")
 # between 2 and 13 days of increased hospitalizations
-under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new hospitializations")
+under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations")
 # more than threshold of 14 days of increased hospitalizations
-ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
 # more than 1 day of decreased hospitalizations
-under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} new hospitalizations")
+under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitalizations")
 
 # choose the subtitle text based number of consecutive days and trend light_haz[[2]]
 trigger_dat_h <- consec_days %>% 
@@ -385,7 +385,7 @@ xlim(0, 1) + ylim(0, 1) +
 all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('cm', 'null')))) | 
                  (icu_gauge/vents_gauge)) +
   plot_layout(widths = c(2,1)) +
-  plot_annotation(title = "Tracking New Hospitalizations, ICU and Ventilator Availability",
+  plot_annotation(title = "Tracking COVID-19 Hospitalizations, ICU and Ventilator Availability",
                   subtitle = glue("Last updated: {data_date}"),
                   caption = glue("Sources: The Indiana Data Hub
                                  The COVID Tracking Project")) &
