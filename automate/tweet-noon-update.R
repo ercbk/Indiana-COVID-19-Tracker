@@ -49,22 +49,13 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
       filter(date == max(date)) %>% 
       ungroup()
 
-      
+random_pic <- sample(c(1,2,3,5,7,8,9,10), size = 1)
+fixed_pics <- c(4, 6)
+lineup <- c(fixed_pics, random_pic)
+
 pngs <- png_files %>%
-      slice(c(4,10,6)) %>% 
+      slice(lineup) %>% 
       pull(paths)
-
-# png_dates <- png_files %>% 
-#       distinct(date) %>% 
-#       mutate(date = format(date, "%b %d")) %>% 
-#       pull(date)
-
-
-# if (length(png_dates) > 2) {
-#    date_str <- glue::glue_collapse(png_dates, sep = ", ", last = ", and ")
-# } else {
-#    date_str <- glue::glue_collapse(png_dates, sep = " and ")
-# }
 
 
 msg <- glue::glue("@StateHealthIN More charts and analysis at

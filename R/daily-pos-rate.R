@@ -27,30 +27,6 @@ us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") 
    pull(pos_rate_text)
 
 
-# Indiana Data Hub
-# state positives, deaths, tests counts
-# Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds.
-# c <- 0
-# while (TRUE) {
-#    try_result <- try({
-#       try_date <- lubridate::today() - c
-#       try_date_str <- try_date %>% 
-#          stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>% 
-#          stringr::str_remove_all(pattern = "-") %>% 
-#          stringr::str_remove(pattern = "^[0-9]")
-#       try_address <- glue::glue("https://hub.mph.in.gov/dataset/ab9d97ab-84e3-4c19-97f8-af045ee51882/resource/182b6742-edac-442d-8eeb-62f96b17773e/download/covid-19_statewidetestcasedeathtrends_{try_date_str}.xlsx")
-#       download.file(try_address, destfile = "data/test-case-trend.xlsx", mode = "wb")
-#    }, silent = TRUE)
-#    
-#    if (class(try_result) != "try-error"){
-#       break
-#    } else if (c >= 14) {
-#       stop("Uh, something's probably wrong with the Indiana Data Hub link. Might've changed the pattern.")
-#    } else {
-#       c <- c + 1
-#    }
-# }
-
 
 # Indiana Data Hub
 # state positives, deaths, tests counts

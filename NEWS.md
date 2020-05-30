@@ -38,4 +38,9 @@
     of people being admitted to the hospital for COVID-19 when it was
     the change in the present count of people hospitalized for COVID-19.
     It’s still relevant because the governor’s speech used present count
-    and not daily admittance as a guideline anyways. Apologees though.
+    and not daily admittance as a guideline anyways. Apologees though.  
+
+  - 2020-05-29 - County chart - Instead of using all the historic data
+    to calculate average daily growth rates, I’m switching to only using
+    data over the past 2 weeks which will make the estimates more
+    sensitive to outbreaks if they happen.

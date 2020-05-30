@@ -16,45 +16,6 @@ eth_mat <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/pa
 light_eth <- prismatic::clr_lighten(eth_mat, shift = 0.1)
 
 
-# # Start with the larger numbers so as to avoid contacting older data before the newest data
-# # str_pad adds 0s in front of single digit numbers
-# # sequence for hotfix part of data address
-# hf_seq <- stringr::str_pad(10:1, pad = 0,width = 2 , "left")
-# # sequence for dev part of data address
-# dev_seq <- stringr::str_pad(60:20, pad = 0,width = 2 , "left")
-# 
-# # heinous loop to get apple's data
-# get_apple_data <- function(h_seq, d_seq){
-#    
-#    # hotfix number loop
-#    for (i in 1:length(h_seq)){
-#       
-#       # dev number loop
-#       for (j in 1:length(d_seq)){
-#          
-#          c <- 0
-#          # Trys a sequence of dates, starting with today, and if the data download errors, it trys the previous day, and so on, until download succeeds or limit reached.
-#          while (TRUE) {
-#             dat <- try({
-#                try_date <- lubridate::today() - c
-#                try_address <- glue::glue("https://covid19-static.cdn-apple.com/covid19-mobility-data/20{h_seq[[i]]}HotfixDev{d_seq[[j]]}/v3/en-us/applemobilitytrends-{try_date}.csv")
-#                readr::read_csv(try_address)
-#             }, silent = TRUE)
-#             # no error then exit and return data
-#             if (class(dat) != "try-error"){
-#                return(dat)
-#             } else if (c >= 5) {
-#                # if try_date reaches 5 days ago, then break to next dev number
-#                break
-#             } else {
-#                # try next earlier day
-#                c <- c + 1
-#             }
-#          }
-#       }
-#    }
-# }
-
 
 get_apple_target <- function(cdn_url = "https://covid19-static.cdn-apple.com",
                              json_file = "covid19-mobility-data/current/v3/index.json") {
