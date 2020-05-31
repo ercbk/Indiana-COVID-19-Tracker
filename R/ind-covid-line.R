@@ -23,7 +23,9 @@ pacman::p_load(grid, extrafont, prismatic, ggtext, dplyr, glue, lubridate, strin
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 
 
-nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
+nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
+
+
 
 # date of latest Indiana info that's been uploaded to the nyt repo
 latest_date <- nyt_dat %>% 
@@ -85,9 +87,7 @@ latest_date <- nyt_dat %>%
 # Filter Indiana data, calc percent change
 ind_dat <- nyt_dat %>% 
    filter(state == "Indiana") %>% 
-   group_by(date) %>% 
-   summarize(positives = sum(cases),
-             deaths = sum(deaths)) %>% 
+   rename(positives = cases) %>% 
    # bind_rows(ind_tweet_dat) %>%
    arrange(date) %>% 
    mutate(pos_pct_change = round((positives/lag(positives) - 1) * 100, 1),
