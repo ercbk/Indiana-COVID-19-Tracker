@@ -35,16 +35,24 @@ rmarkdown::render(
 )
 
 # clean-up old pngs and extraneous html output
-# google isn't releasing data very often; need to keep its old pngs around longer
-paths <- png_files %>% 
-      group_by(chart) %>% 
-      filter(date == min(date),
-             chart != "goog-mob-line",
-             chart != "soc-dist-line") %>% 
-      pull(paths)
+png_files %>% 
+   group_by(chart) %>% 
+   add_count() %>% 
+   filter(n > 3) %>%
+   filter(date == min(date)) %>% 
+   pull(paths) %>% 
+   fs::file_delete(.)
 
-if (nrow(png_files) > 36) {
-   fs::file_delete(paths)
-}
+# # google isn't releasing data very often; need to keep its old pngs around longer
+# paths <- png_files %>% 
+#       group_by(chart) %>% 
+#       filter(date == min(date),
+#              chart != "goog-mob-line",
+#              chart != "soc-dist-line") %>% 
+#       pull(paths)
+# 
+# if (nrow(png_files) > 36) {
+#    fs::file_delete(paths)
+# }
 
 fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/README.html"))
