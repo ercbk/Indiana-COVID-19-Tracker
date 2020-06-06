@@ -56,7 +56,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/hosp-icu-vent-2020-06-05.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-06-06.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
