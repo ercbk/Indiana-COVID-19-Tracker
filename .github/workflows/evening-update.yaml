@@ -50,9 +50,9 @@ jobs:
         run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      - name: build beds and ventilator data set
-        if: success()
-        run: Rscript "R/build-datasets.R"
+      #- name: build beds and ventilator data set
+        #if: success()
+        #run: Rscript "R/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/opentab-rest-line.R"
       - name: run hosp-icu-vent
@@ -83,5 +83,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tweet evening update
-        run: Rscript "automate/tweet-evening-update.R"
+      #- name: Tweet evening update
+        #run: Rscript "automate/tweet-evening-update.R"
