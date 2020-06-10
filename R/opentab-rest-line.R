@@ -4,6 +4,7 @@
 
 # Notes
 # 1. The regular RSelenium server shutdown method isn't working. Github issue is recent-ish, so might not be a problem for long.
+# 2. There will be a problem if the Github actions runner gets updated from Ubuntu 18.04 to 20.04. Will need to change chrome driver version to the newer version. See https://github.com/actions/virtual-environments/tree/master/images/linux
 
 
 

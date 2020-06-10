@@ -12,7 +12,7 @@
 
 pacman::p_load(extrafont, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
-palette <- pals::brewer.oranges(100)
+palette <- pals::brewer.oranges(30)
 
 
 # remove scientific notations
@@ -76,8 +76,9 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
    geom_text(aes(label = pos_est_text), hjust = -0.3,  size = 4, color = "white", fontface = "bold") +
    # counts
    geom_text(aes(label = positives), hjust = 1.3,  size = 4, color = "black", fontface = "bold") +
-   scale_fill_gradientn(colors = palette,
-                        guide = 'none') +
+   # na.value is color of data values above 20%
+   scale_fill_gradientn(colors = palette, limits = c(1,20),
+                        guide = 'none', na.value = "#7F2704") +
    labs(x = NULL, y = NULL,
         title = "Estimated change in <b style='color:#B28330'>cumulative positive tests</b> per day",
         subtitle = glue("Calculated over the previous 14 days\nTotal number of positive tests in black"),
