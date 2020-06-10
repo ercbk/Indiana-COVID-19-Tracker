@@ -12,7 +12,7 @@
 
 pacman::p_load(extrafont, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
-palette <- pals::brewer.oranges(30)
+palette <- pals::brewer.oranges(20)
 
 
 # remove scientific notations
