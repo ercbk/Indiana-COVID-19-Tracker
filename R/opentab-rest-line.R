@@ -192,7 +192,7 @@ caption_text <- glue("Last updated: {data_date}
 # patchwork goodness
 all_charts <- indy_chart + region_plots$plots[[1]] + region_plots$plots[[2]] + region_plots$plots[[3]] + region_plots$plots[[4]] + region_plots$plots[[5]] + 
       plot_annotation(title = "How COVID-19 is affecting the restaurant industry",
-                      subtitle = "Daily percent difference in seated diners from the previous year",
+                      subtitle = "Daily percent difference from the previous year in seated diners",
                       caption = caption_text) &
       theme(plot.title = element_textbox_simple(color = "white",
                                                 size = 16,

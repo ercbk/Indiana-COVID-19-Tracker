@@ -53,8 +53,8 @@ jobs:
       - name: build beds and ventilator data set
         if: success()
         run: Rscript "R/build-datasets.R"
-      - name: run soc-dist-line
-        run: Rscript "R/mobility-line.R"
+      - name: run opentab-rest-line
+        run: Rscript "R/opentab-rest-line.R"
       - name: run hosp-icu-vent
         run: Rscript "R/hosp-icu-vent.R"
       - name: run daily-pos-rate

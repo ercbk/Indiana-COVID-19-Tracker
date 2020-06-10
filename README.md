@@ -92,21 +92,30 @@ that’s available.
   - U.S. average calculated using data from [The COVID Tracking
     Project](https://covidtracking.com/api).
 
-<img src="plots/soc-dist-line-2020-06-08.png" width="935" />
+<img src="plots/ot-rest-line-2020-06-09.png" width="935" />
 
-  - Apple made available some of the
-    [data](https://www.apple.com/covid19/mobility) it collects from its
-    Apple Maps app which is used in its Mobility Trends Reports.  
-  - The dataset has walking, transit, and driving mobility indexes,
-    which represent counts of direction requests it receives from that
-    app.  
-  - As the virus spread and states mitigated with social distancing and
-    closures, you can see the driving index trend take a dive. Given
-    this correlation, it might be useful as an indirect measure of the
-    level of social distancing taking place in these cities.  
+  - OpenTable is a service for reviewing and making reservations at
+    restaurants. On its “The state of the restaurant industry”
+    [page](https://www.opentable.com/state-of-industry), it provides a
+    couple different datasets that uses reservation and food order data
+    to summarize the state of the restaurant industry regionally by
+    city, state, and country.  
+  - The dataset being visualized uses reservation data from a sample of
+    restaurants across Indiana. Each data point is the median daily
+    percent difference in seated diners from the previous year to this
+    year. So, if the day is the first Tuesday in June 2020, then the
+    comparison is between that day and the first Tuesday of June 2019.  
+  - At stages two and three, restaurants are allowed to reopen at 50%
+    capacity. So, if a restaurant was fully-booked on a specific day in
+    2019 and fully booked on that same day in 2020, then we’d see a 50%
+    difference for that one restaurant during stage 2. In stage 3,
+    restaurants can open to 75% capacity, so the fully-booked, percent
+    difference benchmark becomes 25%. Numbers around these benchmarks
+    could indicate the level at which hoosiers are responding after each
+    re-opening stage.
   - Weekends are shown as vertical bars, and for comparison, the
-    horizontal dashed line represents Indianpolis’s current driving
-    index.
+    horizontal dashed line represents Indiana’s current percent
+    difference.
 
 <img src="plots/goog-mob-line-2020-06-05.png" width="935" />
 

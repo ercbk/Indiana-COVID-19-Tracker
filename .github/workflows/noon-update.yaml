@@ -49,8 +49,8 @@ jobs:
         run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      - name: run soc-dist-line
-        run: Rscript "R/mobility-line.R"
+      - name: run opentab-rest-line
+        run: Rscript "R/opentab-rest-line.R"
       - name: run detect data update
         run: Rscript "automate/detect-data-update.R"
       - name: run hosp-icu-vent

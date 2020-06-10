@@ -22,14 +22,14 @@ png_dates <- png_files %>%
 rmarkdown::render(
       "README.Rmd", params = list(
             ind_combo_date = png_dates$newest_date[[5]],
-            pos_policy_date = png_dates$newest_date[[6]],
+            pos_policy_date = png_dates$newest_date[[7]],
             goog_mob_date = png_dates$newest_date[[3]],
-            region_dea_date = png_dates$newest_date[[8]],
-            region_pos_date = png_dates$newest_date[[9]],
+            region_dea_date = png_dates$newest_date[[9]],
+            region_pos_date = png_dates$newest_date[[10]],
             county_pos_date = png_dates$newest_date[[1]],
             daily_re_date = png_dates$newest_date[[2]],
-            pos_rate_date = png_dates$newest_date[[7]],
-            soc_dist_date = png_dates$newest_date[[10]],
+            pos_rate_date = png_dates$newest_date[[8]],
+            ot_rest_date = png_dates$newest_date[[6]],
             hosp_iv_date = png_dates$newest_date[[4]]
       )
 )
@@ -43,16 +43,5 @@ png_files %>%
    pull(paths) %>% 
    fs::file_delete(.)
 
-# # google isn't releasing data very often; need to keep its old pngs around longer
-# paths <- png_files %>% 
-#       group_by(chart) %>% 
-#       filter(date == min(date),
-#              chart != "goog-mob-line",
-#              chart != "soc-dist-line") %>% 
-#       pull(paths)
-# 
-# if (nrow(png_files) > 36) {
-#    fs::file_delete(paths)
-# }
 
 fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/README.html"))
