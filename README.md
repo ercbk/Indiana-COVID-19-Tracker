@@ -108,7 +108,7 @@ that’s available.
   - At stages two and three, restaurants are allowed to reopen at 50%
     capacity. So, if a restaurant was fully-booked on a specific day in
     2019 and fully booked on that same day in 2020, then we’d see a 50%
-    difference for that one restaurant during stage 2. In stage 3,
+    difference for that one restaurant during stage 2. In stage four,
     restaurants can open to 75% capacity, so the fully-booked, percent
     difference benchmark becomes 25%. Numbers around these benchmarks
     could indicate the level at which hoosiers are responding after each
