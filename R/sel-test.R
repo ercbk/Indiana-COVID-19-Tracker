@@ -5,11 +5,10 @@ library(devtools)
 # Use RSelenium to download dataset
 # start selenium server
 
-sel <- wdman::selenium(check = FALSE)
-sel$log()
 
 
-# driver <- rsDriver(browser = c("chrome"), chromever = "81.0.4044.138")
+
+driver <- rsDriver(browser = c("chrome"), chromever = "81.0.4044.138",check = FALSE)
 # Sys.sleep(10)
 # 
 # # browser
