@@ -2,7 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-ind-covid-tracker.bat
+build-opentab-dat.bat
 Rplots.pdf
 ind-covid-line-local.R
 ind-covid-line-rscript.R

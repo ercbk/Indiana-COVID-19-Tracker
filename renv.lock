@@ -468,13 +468,6 @@
       "Repository": "CRAN",
       "Hash": "ad32079fd09ceb386fe9be047fc3b19f"
     },
-    "installr": {
-      "Package": "installr",
-      "Version": "0.22.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "9c639b8d0d75fc2b5249c23886cf6ebe"
-    },
     "isoband": {
       "Package": "isoband",
       "Version": "0.2.0",
@@ -885,6 +878,13 @@
       "Repository": "CRAN",
       "Hash": "767de4760297e70995edb7b30fbda816"
     },
+    "shiny": {
+      "Package": "shiny",
+      "Version": "1.4.0.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a56d058adfc9df30bdd45dbb01cec39f"
+    },
     "slider": {
       "Package": "slider",
       "Version": "0.1.2",
@@ -1017,6 +1017,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "db20e883b0af01049a8973b75b603d30"
+    },
+    "whisker": {
+      "Package": "whisker",
+      "Version": "0.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ca970b96d894e90397ed20637a0c1bbe"
     },
     "withr": {
       "Package": "withr",
