@@ -5,10 +5,12 @@ library(devtools)
 # Use RSelenium to download dataset
 # start selenium server
 
+bin_path <- Sys.getenv("SELENIUM_JAR_PATH")
+selServ <- startServer(dir = bin_path)
 
-
-
-driver <- rsDriver(browser = c("chrome"), chromever = "81.0.4044.138",check = FALSE)
+remDr <- remoteDriver(browserName = "chrome", version = "81.0.4044.138")
+# driver <- rsDriver(browser = c("chrome"), chromever = "81.0.4044.138",
+#                    check = FALSE, port = 4444L)
 # Sys.sleep(10)
 # 
 # # browser
