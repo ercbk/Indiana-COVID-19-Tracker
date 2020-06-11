@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://cran.mtu.edu"
+        "URL": "https://cloud.r-project.org"
       }
     ]
   },
@@ -618,7 +618,8 @@
     "pack": {
       "Package": "pack",
       "Version": "0.1-1",
-      "Source": "unknown",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Hash": "c4f814b30334e8bc6124647794781a09"
     },
     "pacman": {
@@ -805,7 +806,8 @@
       "RemoteUsername": "rstudio",
       "RemoteRepo": "renv",
       "RemoteRef": "0.9.3",
-      "RemoteSha": "5ddaa59a65ce04a088f17404ebfca475f83f958e"
+      "RemoteSha": "5ddaa59a65ce04a088f17404ebfca475f83f958e",
+      "Hash": "d85d281ddad8e11132a347464de9e2be"
     },
     "reshape2": {
       "Package": "reshape2",
