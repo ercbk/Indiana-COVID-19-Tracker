@@ -5,7 +5,7 @@ library(devtools)
 # Use RSelenium to download dataset
 # start selenium server
 
-sel <- wdman::selenium()
+sel <- wdman::selenium(check = FALSE)
 sel$log()
 
 
