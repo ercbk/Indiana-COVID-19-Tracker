@@ -1,5 +1,6 @@
 library(RSelenium)
 library(stringi)
+library(devtools)
 
 # Use RSelenium to download dataset
 # start selenium server
