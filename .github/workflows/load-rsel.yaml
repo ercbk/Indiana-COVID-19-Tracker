@@ -27,8 +27,6 @@ jobs:
         run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
-      - name: install fonts
-        run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       - name: install RSelenium separately
         run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
       - name: run RSelenium script
