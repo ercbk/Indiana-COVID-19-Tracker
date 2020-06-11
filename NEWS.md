@@ -43,4 +43,11 @@
   - 2020-05-29 - County chart - Instead of using all the historic data
     to calculate average daily growth rates, I’m switching to only using
     data over the past 2 weeks which will make the estimates more
-    sensitive to outbreaks if they happen.
+    sensitive to outbreaks if they happen.  
+
+  - 2020-06-11 - Replaced the Apple Mobility chart with an OpenTables
+    chart. Driving levels seem to have returned to pre-COVID levels, and
+    with reopening stages well underway, it’ll be more useful to monitor
+    how industries, like restaurants, hard-hit by COVID are recovering.
+    The Apple Mobility chart will likely return if a second wave emerges
+    though.
