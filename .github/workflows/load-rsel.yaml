@@ -30,6 +30,6 @@ jobs:
       - name: install RSelenium separately
         run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
       - name: install stringi
-        run: Rscript -e "install.packages('stringi')"
+        run: Rscript -e "install.packages('stringi', repos = 'https://cloud.r-project.org')"
       - name: run RSelenium script
         run: Rscript "R/sel-test.R"
