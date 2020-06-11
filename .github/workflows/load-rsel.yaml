@@ -25,6 +25,8 @@ jobs:
       # needed for units package
       - name: Install udunits2
         run: sudo apt-get install libudunits2-dev
+      - name download a jar
+        run: wget https://selenium-release.storage.googleapis.com/4.0-alpha-6/selenium-server-4.0.0-alpha-6.jar
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
       - name: install RSelenium separately
