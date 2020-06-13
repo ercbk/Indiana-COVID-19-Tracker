@@ -71,7 +71,7 @@ that’s available.
       - The proportion of available ventilators to total ventilators
         being below 70% for 14 consecutive days.
 
-<img src="plots/pos-rate-line-2020-06-10.png" width="935" />
+<img src="plots/pos-rate-line-2020-06-11.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
@@ -92,7 +92,7 @@ that’s available.
   - U.S. average calculated using data from [The COVID Tracking
     Project](https://covidtracking.com/api).
 
-<img src="plots/ot-rest-line-2020-06-11.png" width="935" />
+<img src="plots/ot-rest-line-2020-06-12.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
