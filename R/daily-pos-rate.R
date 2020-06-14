@@ -88,7 +88,7 @@ rate_plot <- ggplot(data = chart_dat,
    geom_line(color = deep_rooted[[4]]) +
    expand_limits(y = c(0, max(chart_dat$pos_test_rate) + 0.05)) +
    geom_ribbon(aes(ymin = 0.03, ymax = 0.12), fill = "#8db230", alpha = 0.2) +
-   scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
+   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
    scale_x_date(date_breaks = "7 days",
                 date_labels = "%b %d") +
    ggrepel::geom_label_repel(data = chart_dat %>% 
