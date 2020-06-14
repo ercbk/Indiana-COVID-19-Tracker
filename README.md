@@ -30,7 +30,7 @@ listed in the AEI proposal. Along with tracking virus spread metrics,
 I’ll also be tracking as many of these triggers as I can with the data
 that’s available.
 
-<img src="plots/ind-combo-line-2020-06-12.png" width="935" />
+<img src="plots/ind-combo-line-2020-06-13.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -44,12 +44,10 @@ that’s available.
     valid assumption in this situation, but it’s interesting as a
     hypothetical.
 
-<img src="plots/pos-policy-line-2020-06-12.png" width="935" />
+<img src="plots/pos-policy-line-2020-06-13.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
-    versus the cumulative total of positive cases on the x-axis, where
-    both axes are on a logarithmic scale. When the transmission rate
-    lessens, the trend will decline and become increasingly vertical.  
+    versus the cumulative total of positive cases on the x-axis.  
   - In the AEI reopening guidelines, one of the triggers for returning
     to stage one is five or more consecutive days where the value of
     daily cases has increased.  
@@ -71,7 +69,7 @@ that’s available.
       - The proportion of available ventilators to total ventilators
         being below 70% for 14 consecutive days.
 
-<img src="plots/pos-rate-line-2020-06-11.png" width="935" />
+<img src="plots/pos-rate-line-2020-06-12.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
@@ -92,7 +90,7 @@ that’s available.
   - U.S. average calculated using data from [The COVID Tracking
     Project](https://covidtracking.com/api).
 
-<img src="plots/ot-rest-line-2020-06-12.png" width="935" />
+<img src="plots/ot-rest-line-2020-06-13.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
@@ -130,9 +128,9 @@ that’s available.
         the week, during the 5- week period Jan 3–Feb 6, 2020.  
   - Weekends are shown as vertical bars.
 
-<img src="plots/region-dea-line-2020-06-12.png" width="935" />
+<img src="plots/region-dea-line-2020-06-13.png" width="935" />
 
-<img src="plots/region-pos-line-2020-06-12.png" width="3897" />
+<img src="plots/region-pos-line-2020-06-13.png" width="3897" />
 
   - The y-axis has been transformed to the logarithmic base-10 scale.
     Slopes and trends of straight(-ish) lines are easier to compare than
@@ -142,7 +140,7 @@ that’s available.
   - 7-day averages *less* than 14 day averages indicate a *decreasing*
     trend in positive cases or deaths.
 
-<img src="plots/county-pos-bar-2020-06-12.png" width="935" />
+<img src="plots/county-pos-bar-2020-06-13.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -150,7 +148,7 @@ that’s available.
   - The average percent changes are estimated using county data in a
     log-linear model.
 
-<img src="plots/daily-re-line-2020-06-12.png" width="935" />
+<img src="plots/daily-re-line-2020-06-13.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
