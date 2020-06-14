@@ -44,7 +44,7 @@ pos_policy_path <- glue::glue("plots/pos-policy-line-{params$pos_policy_date}.pn
 knitr::include_graphics(pos_policy_path)
 ```
   
-   * This chart shows the number of daily positive cases on the y-axis versus the cumulative total of positive cases on the x-axis, where both axes are on a logarithmic scale. When the transmission rate lessens, the trend will decline and become increasingly vertical.  
+   * This chart shows the number of daily positive cases on the y-axis versus the cumulative total of positive cases on the x-axis.  
    * In the AEI reopening guidelines, one of the triggers for returning to stage one is five or more consecutive days where the value of daily cases has increased.  
    * Details on the various stages of re-opening can be found at [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 

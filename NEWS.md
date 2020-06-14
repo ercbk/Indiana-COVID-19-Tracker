@@ -50,4 +50,11 @@
     with reopening stages well underway, it’ll be more useful to monitor
     how industries, like restaurants, hard-hit by COVID are recovering.
     The Apple Mobility chart will likely return if a second wave emerges
-    though.
+    though.  
+
+  - 2020-06-13 - Changed the range and scale of the axes on the
+    daily-positives-cumulative-policy chart. The data trend was no
+    longer exponential so the log scaling isn’t really needed and it was
+    bunching up the data points. At this point in the pandemic, what
+    happens after the reopening stages is salient, so I’ve started the
+    data at the point a couple weeks before stage 2.

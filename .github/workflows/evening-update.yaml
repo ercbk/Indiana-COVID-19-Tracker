@@ -63,8 +63,8 @@ jobs:
         run: Rscript "R/daily-pos-rate.R"
       - name: run ind-covid-line
         run: Rscript "R/ind-covid-line.R"
-      - name: run daily-cum-policy
-        run: Rscript "R/daily-cum-policy.R"
+      - name: run pos-policy-line
+        run: Rscript "R/pos-policy-line.R"
       - name: run county-slope-models
         run: Rscript "R/county-slope-models.R"
       - name: run goog-mob-line

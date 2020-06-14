@@ -49,45 +49,35 @@ jobs:
         run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      - name: run opentab-rest-line
-        run: Rscript "R/opentab-rest-line.R"
       - name: run detect data update
         run: Rscript "automate/detect-data-update.R"
+      - name: run opentab-rest-line
+        run: Rscript "R/opentab-rest-line.R"
       - name: run hosp-icu-vent
         run: Rscript "R/hosp-icu-vent.R"
       - name: run daily-pos-rate
-        if: success()
         run: Rscript "R/daily-pos-rate.R"
       - name: run ind-covid-line
-        if: success()
         run: Rscript "R/ind-covid-line.R"
-      - name: run daily-cum-policy
-        if: success()
-        run: Rscript "R/daily-cum-policy.R"
+      - name: run pos-policy-line
+        run: Rscript "R/pos-policy-line.R"
       - name: run county-slope-models
-        if: success()
         run: Rscript "R/county-slope-models.R"
       - name: run goog-mob-line
-        if: success()
         run: Rscript "R/goog-mob-line.R"
       - name: run regional-slope-models
-        if: success()
         run: Rscript "R/regional-slope-models.R"
       - name: run daily-re-estimate
-        if: success()
         run: Rscript "R/daily-est-re.R"
       - name: render readme
-        if: success()
         run: Rscript "automate/render-readme.R"
       - name: Commit files
-        if: success()
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Noon charts update" || echo "No changes to commit"
       - name: Push changes
-        if: success()
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

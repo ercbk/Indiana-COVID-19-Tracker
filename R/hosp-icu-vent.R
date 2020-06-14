@@ -334,7 +334,7 @@ vents_gauge <- ggplot(data = gauge_dat %>%
 ################
 
 
-# length of html affects the correct x-coord in plot
+
 status_dat <- trigger_dat_h %>%
   bind_rows(trigger_dat_i) %>%
   bind_rows(trigger_dat_v)
