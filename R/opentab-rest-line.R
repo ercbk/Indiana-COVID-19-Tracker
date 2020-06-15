@@ -170,7 +170,7 @@ indy_chart <- ggplot(data = ind_chart_dat, aes(x = date, y = pct_diff)) +
                                      filter(date == max(date)),
                                aes(label = scales::percent(pct_diff, accuracy = 1),
                                    color = Name),
-                               nudge_x = .02, nudge_y = -.20,
+                               nudge_x = .02, nudge_y = .20,
                                segment.color = NA) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
       labs(x = NULL, y = NULL,
