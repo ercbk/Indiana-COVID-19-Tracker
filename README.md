@@ -51,7 +51,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/hosp-icu-vent-2020-06-17.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-06-18.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -113,7 +113,7 @@ that’s available.
     horizontal dashed line represents Indiana’s current percent
     difference.
 
-<img src="plots/goog-mob-line-2020-06-12.png" width="935" />
+<img src="plots/goog-mob-line-2020-06-14.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
