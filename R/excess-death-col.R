@@ -24,6 +24,8 @@
 
 pacman::p_load(extrafont, swatches, dplyr, lubridate, ggplot2, glue, patchwork, ggtext)
 
+extrafont::loadfonts()
+
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 
 deep_light <- prismatic::clr_lighten(deep_rooted[[7]], shift = .3)
@@ -267,7 +269,8 @@ both_charts <- excess_bar +
                      xmax = coord_dates$xmax[[1]],
                      ymin = 1675, ymax = 2575)
 
-plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
+# plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}-test.png")
 ggsave(plot_path, plot = both_charts, dpi = "screen", width = 33, height = 20, units = "cm")
 
 

@@ -3,7 +3,8 @@ name: Evening Update
 on:
   schedule:
     # says run at the 38th min, 21th hr UTC (5:54pm ET) of every day
-    - cron: '38 21 * * *'
+    #- cron: '38 21 * * *'
+    - cron: '55 23 * * *'
 
 jobs:
   update:
@@ -52,9 +53,9 @@ jobs:
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       #- name: install RSelenium separately
         #run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
-      - name: build beds and ventilator data set
-        if: success()
-        run: Rscript "R/build-datasets.R"
+      #- name: build beds and ventilator data set
+        #if: success()
+        #run: Rscript "R/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/opentab-rest-line.R"
       - name: run excess-death-col
@@ -75,8 +76,8 @@ jobs:
         run: Rscript "R/regional-slope-models.R"
       - name: run daily-re-estimate
         run: Rscript "R/daily-est-re.R"
-      - name: render readme
-        run: Rscript "automate/render-readme.R"
+      #- name: render readme
+        #run: Rscript "automate/render-readme.R"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
@@ -87,5 +88,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Tweet evening update
-        run: Rscript "automate/tweet-evening-update.R"
+      #- name: Tweet evening update
+        #run: Rscript "automate/tweet-evening-update.R"
