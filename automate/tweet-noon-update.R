@@ -49,8 +49,8 @@ png_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstu
       filter(date == max(date)) %>% 
       ungroup()
 
-random_pic <- sample(c(1,2,3,5,6,8,9,10), size = 1)
-fixed_pics <- c(4, 7)
+random_pic <- sample(c(1,2,3,4,6,7,9,10), size = 1)
+fixed_pics <- c(5, 8)
 lineup <- c(fixed_pics, random_pic)
 
 pngs <- png_files %>%
