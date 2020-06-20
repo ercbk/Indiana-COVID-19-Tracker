@@ -164,3 +164,23 @@ that’s available.
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data
     Research in Health.
+
+<img src="plots/excess-death-col-2020-06-06.png" width="935" />
+
+  - The
+    [CDC’s](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm)
+    model uses data from 2015 to present to calculate estimates for
+    weekly death counts. “Excess deaths” is defined as the difference
+    between these estimates and the actual reported number of deaths.  
+  - A portion of these excess deaths could be misclassified COVID-19
+    deaths, “or potentially could be indirectly related to COVID-19
+    (e.g., deaths from other causes occurring in the context of health
+    care shortages or overburdened health care systems).”  
+  - From the CDC site regarding the Causes-of-deaths data, “These causes
+    were selected based on analyses of comorbid conditions reported on
+    death certificates where COVID-19 was listed as a cause of death.
+    Deaths with an underlying cause of death of COVID-19 are not
+    included in these estimates of deaths due to other causes, but
+    deaths where COVID-19 appeared on the death certificate as a
+    multiple cause of death may be included in the cause-specific
+    estimates.”

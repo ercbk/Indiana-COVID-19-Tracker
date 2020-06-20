@@ -21,16 +21,17 @@ png_dates <- png_files %>%
 
 rmarkdown::render(
       "README.Rmd", params = list(
-            ind_combo_date = png_dates$newest_date[[5]],
-            pos_policy_date = png_dates$newest_date[[7]],
-            goog_mob_date = png_dates$newest_date[[3]],
-            region_dea_date = png_dates$newest_date[[9]],
-            region_pos_date = png_dates$newest_date[[10]],
+            ind_combo_date = png_dates$newest_date[[6]],
+            pos_policy_date = png_dates$newest_date[[8]],
+            goog_mob_date = png_dates$newest_date[[4]],
+            region_dea_date = png_dates$newest_date[[10]],
+            region_pos_date = png_dates$newest_date[[11]],
             county_pos_date = png_dates$newest_date[[1]],
             daily_re_date = png_dates$newest_date[[2]],
-            pos_rate_date = png_dates$newest_date[[8]],
-            ot_rest_date = png_dates$newest_date[[6]],
-            hosp_iv_date = png_dates$newest_date[[4]]
+            pos_rate_date = png_dates$newest_date[[9]],
+            ot_rest_date = png_dates$newest_date[[7]],
+            hosp_iv_date = png_dates$newest_date[[5]],
+            exc_death_date = png_dates$newest_date[[3]]
       )
 )
 

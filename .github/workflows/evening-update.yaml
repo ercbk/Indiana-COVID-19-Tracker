@@ -57,6 +57,8 @@ jobs:
         run: Rscript "R/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/opentab-rest-line.R"
+      - name: run excess-death-col
+        run: Rscript "R/excess-death-col.R"
       - name: run hosp-icu-vent
         run: Rscript "R/hosp-icu-vent.R"
       - name: run daily-pos-rate

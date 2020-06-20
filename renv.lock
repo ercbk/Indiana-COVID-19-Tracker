@@ -345,6 +345,13 @@
       "Repository": "CRAN",
       "Hash": "690f753a275a336022edcffcec5f9aea"
     },
+    "forcats": {
+      "Package": "forcats",
+      "Version": "0.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1cb4279e697650f0bd78cd3601ee7576"
+    },
     "fs": {
       "Package": "fs",
       "Version": "1.4.1",
@@ -358,6 +365,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "b8cff1d1391fd1ad8b65877f4c7f2e53"
+    },
+    "ggfittext": {
+      "Package": "ggfittext",
+      "Version": "0.9.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1c658d36302cf96a331c0059587fae70"
     },
     "ggforce": {
       "Package": "ggforce",
@@ -474,6 +488,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "15f6d57a664cd953a31ae4ea61e5e60e"
+    },
+    "janitor": {
+      "Package": "janitor",
+      "Version": "2.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7eb42c3bb09e2019b97de69d2ea9dfff"
     },
     "jpeg": {
       "Package": "jpeg",
@@ -879,6 +900,13 @@
       "Repository": "CRAN",
       "Hash": "767de4760297e70995edb7b30fbda816"
     },
+    "shades": {
+      "Package": "shades",
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3a2cf5eecb2cbca814d01d56bfb51494"
+    },
     "shiny": {
       "Package": "shiny",
       "Version": "1.4.0.2",
@@ -892,6 +920,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "b389446a46033ec13b421e0ade1852a7"
+    },
+    "snakecase": {
+      "Package": "snakecase",
+      "Version": "0.11.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4079070fc210c7901c0832a3aeab894f"
     },
     "stringi": {
       "Package": "stringi",

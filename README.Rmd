@@ -12,7 +12,7 @@ params:
       pos_rate_date: !r Sys.Date()-1
       ot_rest_date: !r Sys.Date()-1
       hosp_iv_date: !r Sys.Date()-3
-      
+      exc_death_date: !r as.Date("2020-06-06")
 ---
 
 
@@ -126,4 +126,13 @@ knitr::include_graphics(daily_re_path)
    * The instantaneous effective reproduction number, R~e~ is an estimate of the average number of people that an infected person is spreading the virus to for that time window.  
    * Estimates *slighly lower* than 1 indicate that the spread of the virus is decreasing. Estimates *slightly larger* than 1 indicate a slow spread of the virus. Estimates of *2 or greater* mean the virus is spreading rapidly.  
    * R~e~ is estimated over a 7-day window, and the shaded area shows the 95% credible interval.
-   * Further details on this metric can be found at a research [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up by South Western Sydney Clinical School and the Centre for Big Data Research in Health. 
+   * Further details on this metric can be found at a research [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up by South Western Sydney Clinical School and the Centre for Big Data Research in Health.  
+
+```{r}
+exc_death_path <- glue::glue("plots/excess-death-col-{params$exc_death_date}.png")
+knitr::include_graphics(exc_death_path)
+``` 
+
+  * The [CDC's](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm) model uses data from 2015 to present to calculate estimates for weekly death counts. "Excess deaths" is defined as the difference between these estimates and the actual reported number of deaths.  
+  * A portion of these excess deaths could be misclassified COVID-19 deaths, "or potentially could be indirectly related to COVID-19 (e.g., deaths from other causes occurring in the context of health care shortages or overburdened health care systems)."  
+  * From the CDC site regarding the Causes-of-deaths data, "These causes were selected based on analyses of comorbid conditions reported on death certificates where COVID-19 was listed as a cause of death. Deaths with an underlying cause of death of COVID-19 are not included in these estimates of deaths due to other causes, but deaths where COVID-19 appeared on the death certificate as a multiple cause of death may be included in the cause-specific estimates."  
