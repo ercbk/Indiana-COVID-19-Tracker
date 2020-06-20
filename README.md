@@ -66,7 +66,7 @@ that’s available.
       - The proportion of available ventilators to total ventilators
         being below 70% for 14 consecutive days.
 
-<img src="plots/pos-rate-line-2020-06-17.png" width="935" />
+<img src="plots/pos-rate-line-2020-06-18.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
