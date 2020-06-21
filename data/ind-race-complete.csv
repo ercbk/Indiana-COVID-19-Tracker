@@ -1,0 +1,2 @@
+date,state,cases_total,cases_white,cases_black,cases_latin_x,cases_asian,cases_aian,cases_nhpi,cases_multiracial,cases_other,cases_unknown,cases_ethnicity_hispanic,cases_ethnicity_non_hispanic,cases_ethnicity_unknown,deaths_total,deaths_white,deaths_black,deaths_latin_x,deaths_asian,deaths_aian,deaths_nhpi,deaths_multiracial,deaths_other,deaths_unknown,deaths_ethnicity_hispanic,deaths_ethnicity_non_hispanic,deaths_ethnicity_unknown
+2020-06-17,IN,41013,18254,5234,NA,650,NA,NA,NA,7489,9386,4769,13668,22576,2289,1469,345,NA,11,NA,NA,NA,295,169,43,1238,1008

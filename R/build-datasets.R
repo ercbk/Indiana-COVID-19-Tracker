@@ -2,11 +2,18 @@
 
 # Notes
 # 1. The Indiana Data Hub only sources the current days counts of beds and ventilators, so this script saves each days counts and creates a dataset with the historical data
-
+# 2. Race data from COVID Tracking Project
 
 
 
 library(dplyr, warn.conflicts = F, quietly = T)
+
+
+
+###########################
+# Beds and ventilators
+###########################
+
 
 todays_date <- lubridate::today()
 
@@ -44,4 +51,39 @@ del_date_str <- delete_date %>%
 
 fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-{del_date_str}.xlsx"))
 
+
+
+
+#################
+# Race
+#################
+
+
+race_dat_raw <- readr::read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vR_xmYt4ACPDZCDJcY12kCiMiH0ODyx3E1ZvgOHB8ae1tRcjXbs_yWBOA4j4uoCEADVfC1PS2jYO68B/pub?gid=43720681&single=true&output=csv")
+
+race_date <- race_dat_raw %>% 
+   janitor::clean_names() %>% 
+   filter(state == "IN") %>% 
+   mutate(date = lubridate::ymd(date)) %>% 
+   pull(date)
+
+race_complete <- readr::read_csv("data/ind-race-complete.csv")
+
+race_comp_date <- race_complete %>%
+   filter(date == max(date)) %>% 
+   pull(date)
+
+if (race_date != race_comp_date) {
+   
+   ind_race <- race_dat_raw %>%
+      janitor::clean_names() %>% 
+      filter(state == "IN") %>% 
+      mutate(date = lubridate::ymd(date))
+   
+   race_complete <- race_complete %>% 
+      bind_rows(ind_race)
+   
+   readr::write_csv(race_complete, "data/ind-race-complete.csv")
+   
+}
 
