@@ -121,10 +121,10 @@ age_dat_test <- age_dat %>%
    select(-date) %>% 
    slice(n())
 
-if (isTRUE(all.equal(age_comp_test, age_dat_test))) {
+if (!isTRUE(all.equal(age_comp_test, age_dat_test))) {
    
    age_comp <- age_comp %>%
-      bind_rows(age)
+      bind_rows(age_dat)
    
    readr::write_csv(age_comp, "data/ind-age-complete.csv")
    
