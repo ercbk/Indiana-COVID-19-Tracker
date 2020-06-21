@@ -5,7 +5,7 @@ on:
     # says run at the 38th min, 21th hr UTC (5:38pm ET) of every day
     # also, midnight is just 0, but 1 am is 01
     #- cron: '38 21 * * *'
-    - cron: '08 03 * * *'
+    - cron: '22 11 * * *'
 
 jobs:
   update:
