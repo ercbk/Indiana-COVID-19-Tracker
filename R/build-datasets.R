@@ -87,3 +87,58 @@ if (race_date != race_comp_date) {
    
 }
 
+
+
+###############
+# Age
+###############
+
+
+age_url <- "https://hub.mph.in.gov/dataset/62ddcb15-bbe8-477b-bb2e-175ee5af8629/resource/2538d7f1-391b-4733-90b3-9e95cd5f3ea6/download/covid_report_demographics.xlsx"
+
+age_dest <- glue::glue("data/ind-demog-{try_date_str}.xlsx")
+
+download.file(age_url, destfile = age_dest, mode = "wb")
+
+# Has multiple sheets, but this is fine since I only need the first one.
+age_raw <- readxl::read_xlsx(age_dest)
+
+age_dat <- age_raw %>% 
+   janitor::clean_names() %>%
+   mutate(date = lubridate::today()) %>% 
+   select(date, everything())
+
+
+age_comp <- readr::read_csv("data/ind-age-complete.csv")
+
+
+# Make sure data is new before adding it
+# test the last rows from both datasets
+age_comp_test <- age_comp %>% 
+   select(-date) %>% 
+   slice(n())
+age_dat_test <- age_dat %>% 
+   select(-date) %>% 
+   slice(n())
+
+if (isTRUE(all.equal(age_comp_test, age_dat_test))) {
+   
+   age_comp <- age_comp %>%
+      bind_rows(age)
+   
+   readr::write_csv(age_comp, "data/ind-age-complete.csv")
+   
+}
+
+
+# keep a week's worth of files, delete anything older
+delete_date <- todays_date - 7 
+del_date_str <- delete_date %>% 
+   stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>% 
+   stringr::str_remove_all(pattern = "-") %>% 
+   stringr::str_remove(pattern = "^[0-9]")
+
+fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/ind-demog-{del_date_str}.xlsx"))
+
+
+

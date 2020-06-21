@@ -2,9 +2,10 @@ name: Evening Update
 
 on:
   schedule:
-    # says run at the 38th min, 21th hr UTC (5:54pm ET) of every day
+    # says run at the 38th min, 21th hr UTC (5:38pm ET) of every day
+    # also, midnight is just 0, but 1 am is 01
     #- cron: '38 21 * * *'
-    - cron: '43 01 * * *'
+    - cron: '00 03 * * *'
 
 jobs:
   update:
