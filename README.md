@@ -158,8 +158,8 @@ that’s available.
     virus is decreasing. Estimates *slightly larger* than 1 indicate a
     slow spread of the virus. Estimates of *2 or greater* mean the virus
     is spreading rapidly.  
-  - R<sub>e</sub> is estimated over a 7-day window, and the shaded area
-    shows the 95% credible interval.
+  - The shaded area shows the 80% credible interval where the true value
+    is likely to be.
   - Further details on this metric can be found at a research
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data

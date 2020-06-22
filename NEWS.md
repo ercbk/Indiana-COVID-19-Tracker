@@ -57,4 +57,12 @@
     longer exponential so the log scaling isn’t really needed and it was
     bunching up the data points. At this point in the pandemic, what
     happens after the reopening stages is salient, so I’ve started the
-    data at the point a couple weeks before stage 2.
+    data at the point a couple weeks before stage 2.  
+
+  - 2020-06-21 - Switched to the rt.live model for R<sub>e</sub>. I
+    haven’t been confortable with estimate I’ve been using for awhile.
+    Their estimate along with their uncertainty range look more
+    reasonable than the one I was using before. They haven’t published
+    their code yet, so I haven’t been able to dig into it too much. But
+    the [faq](https://rt.live/faq) gives some hints to what they’re
+    doing, and it seems sound.

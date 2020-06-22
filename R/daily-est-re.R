@@ -8,63 +8,142 @@
 
 
 
-pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, EpiEstim)
+# pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, EpiEstim)
+pacman::p_load(extrafont, swatches, dplyr, ggplot2, ggtext, glue)
 
-nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
+# nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
+
+rtlive_dat <- readr::read_csv("https://d14wlfuexuxgcm.cloudfront.net/covid/rt.csv")
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Trippy.ase"))
 
 
 
-# daily counts of positive cases
-# EpiEstim pkg expects certain column names for models
-ind_incidence <- nyt_dat %>% 
-  filter(state == "Indiana") %>% 
-  as_tsibble(index = "date") %>% 
-  mutate(I = difference(cases),
-         I = tidyr::replace_na(I, 1)) %>% 
-  select(dates = date, I)
+# # daily counts of positive cases
+# # EpiEstim pkg expects certain column names for models
+# ind_incidence <- nyt_dat %>% 
+#   filter(state == "Indiana") %>% 
+#   as_tsibble(index = "date") %>% 
+#   mutate(I = difference(cases),
+#          I = tidyr::replace_na(I, 1)) %>% 
+#   select(dates = date, I)
+# 
+# # current data date
+# data_date <- ind_incidence %>% 
+#   as_tibble() %>%
+#   summarize(dates = max(dates)) %>% 
+#   pull(dates)
+# 
+# 
+# # calc effective reproduction number
+# ind_res_parametric_si <- estimate_R(ind_incidence, 
+#                                     method = "parametric_si",
+#                                     config = make_config(
+#                                       list(mean_si = 7.5,
+#                                            std_si = 3.4))
+# )
+# 
+# 
+# # getting the point est, and 95% credible intervals
+# r_chart_dat <- ind_incidence %>% 
+#   slice(-1:-7) %>% 
+#   bind_cols(ind_res_parametric_si$R) %>% 
+#   select(date = dates, estimate = `Mean(R)`,
+#          upper = `Quantile.0.975(R)`, lower = `Quantile.0.025(R)`) %>% 
+#   mutate(estimate = round(estimate, 2),
+#          label = as.character(estimate) %>% 
+#            paste("R[e] ==", .)) %>% 
+#   as_tibble()
+# 
+# zoom_yupper <- r_chart_dat %>% 
+#   filter(date == (max(date)-7)) %>% 
+#   summarize(upper_y = max(estimate)*1.5) %>% 
+#   pull(upper_y)
+# 
+# 
+# 
+# r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
+#   geom_point(color = trippy[[7]]) +
+#   geom_line(color = trippy[[7]]) +
+#   geom_ribbon(aes(ymin = lower, ymax = upper),
+#               fill = trippy[[7]], alpha = 0.20) +
+#   # hates tsibbles, data needs to be a tibble or df
+#   # zoom.data = zoom needed to only add label to zoomed area
+#   ggforce::facet_zoom(x = date > (max(date)-7),
+#                       ylim = c(0.5, zoom_yupper),
+#                       zoom.data = zoom,
+#                       zoom.size = 1.5,
+#                       show.area = FALSE,
+#                       horizontal = FALSE) +
+#   # adding zoom = TRUE col tells facet_zoom to only draw label in zoom area
+#   geom_label(data = r_chart_dat %>% 
+#                filter(date == max(date)) %>% 
+#                mutate(zoom = TRUE),
+#              aes(label = label, vjust = "top"),
+#              family="Roboto", fill = "black",
+#              size = 4, nudge_y = 0.10, parse = T,
+#              label.size = 0, color="white") +
+#   labs(x = NULL, y = NULL,
+#        title = "Estimated daily effective reproduction number",
+#        subtitle = glue("Last updated: {data_date}"),
+#        caption = "*Daily effective reproduction number calculated over a 7 day window\nSource: The New York Times, based on reports from state and local health agencies"
+#   ) +
+#   theme(
+#     legend.position = 'none',
+#     plot.title = element_text(color = "white",
+#                               family = "Roboto",
+#                               size = 16),
+#     plot.subtitle = element_text(color = "white",
+#                                  family = "Roboto",
+#                                  size = 14),
+#     plot.caption = element_text(color = "white",
+#                                 size = 12,
+#                                 family = "Roboto"),
+#     text = element_text(family = "Roboto"),
+#     axis.text.x = element_text(color = "white",
+#                                size = 12),
+#     axis.text.y = element_text(color = "white",
+#                                size = 12,
+#                                margin = margin(l = 18)),
+#     axis.title.y = element_text(color = "white"),
+#     panel.background = element_rect(fill = "black",
+#                                     color = NA),
+#     plot.background = element_rect(fill = "black",
+#                                    color = NA),
+#     panel.border = element_blank(),
+#     panel.grid.minor = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     panel.grid.major.y = element_line(color = deep_rooted[[7]])
+#     
+#   )
+
+
+
+r_chart_dat <- rtlive_dat %>% 
+  filter(region == "IN") %>% 
+  mutate(mean = round(mean, 2),
+         label = as.character(mean) %>% 
+                      paste("R[e] ==", .))
 
 # current data date
-data_date <- ind_incidence %>% 
-  as_tibble() %>%
-  summarize(dates = max(dates)) %>% 
-  pull(dates)
+data_date <- r_chart_dat %>%
+  summarize(date = max(date)) %>%
+  pull(date)
 
 
-# calc effective reproduction number
-ind_res_parametric_si <- estimate_R(ind_incidence, 
-                                    method = "parametric_si",
-                                    config = make_config(
-                                      list(mean_si = 7.5,
-                                           std_si = 3.4))
-)
-
-
-# getting the point est, and 95% credible intervals
-r_chart_dat <- ind_incidence %>% 
-  slice(-1:-7) %>% 
-  bind_cols(ind_res_parametric_si$R) %>% 
-  select(date = dates, estimate = `Mean(R)`,
-         upper = `Quantile.0.975(R)`, lower = `Quantile.0.025(R)`) %>% 
-  mutate(estimate = round(estimate, 2),
-         label = as.character(estimate) %>% 
-           paste("R[e] ==", .)) %>% 
-  as_tibble()
-
-zoom_yupper <- r_chart_dat %>% 
-  filter(date == (max(date)-7)) %>% 
-  summarize(upper_y = max(estimate)*1.5) %>% 
+zoom_yupper <- r_chart_dat %>%
+  filter(date == (max(date)-7)) %>%
+  summarize(upper_y = max(mean)*1.5) %>%
   pull(upper_y)
 
 
 
-r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
+r_chart <- ggplot(r_chart_dat, aes(x = date, y = mean)) +
   geom_point(color = trippy[[7]]) +
   geom_line(color = trippy[[7]]) +
-  geom_ribbon(aes(ymin = lower, ymax = upper),
-              fill = trippy[[7]], alpha = 0.20) +
+  geom_ribbon(aes(ymin = lower_80, ymax = upper_80),
+              fill = trippy[[7]], alpha = 0.40) +
   # hates tsibbles, data needs to be a tibble or df
   # zoom.data = zoom needed to only add label to zoomed area
   ggforce::facet_zoom(x = date > (max(date)-7),
@@ -74,8 +153,8 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
                       show.area = FALSE,
                       horizontal = FALSE) +
   # adding zoom = TRUE col tells facet_zoom to only draw label in zoom area
-  geom_label(data = r_chart_dat %>% 
-               filter(date == max(date)) %>% 
+  geom_label(data = r_chart_dat %>%
+               filter(date == max(date)) %>%
                mutate(zoom = TRUE),
              aes(label = label, vjust = "top"),
              family="Roboto", fill = "black",
@@ -84,7 +163,7 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
   labs(x = NULL, y = NULL,
        title = "Estimated daily effective reproduction number",
        subtitle = glue("Last updated: {data_date}"),
-       caption = "*Daily effective reproduction number calculated over a 7 day window\nSource: The New York Times, based on reports from state and local health agencies"
+       caption = "Source: rt.live"
   ) +
   theme(
     legend.position = 'none',
@@ -112,7 +191,7 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = estimate)) +
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_line(color = deep_rooted[[7]])
-    
+
   )
 
 
