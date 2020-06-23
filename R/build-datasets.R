@@ -22,6 +22,7 @@ try_date_str <- todays_date %>%
       stringr::str_remove_all(pattern = "-") %>% 
       stringr::str_remove(pattern = "^[0-9]")
 
+# Indiana Data Hub
 try_address <- glue::glue("https://hub.mph.in.gov/dataset/5a905d51-eb50-4a83-8f79-005239bd108b/resource/882a7426-886f-48cc-bbe0-a8d14e3012e4/download/covid_report_bedvent_{try_date_str}.xlsx")
 
 try_destfile <- glue::glue("data/beds-vents-{try_date_str}.xlsx")
@@ -59,6 +60,7 @@ fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/beds-vent
 #################
 
 
+# The Covid Tracking Project
 race_dat_raw <- readr::read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vR_xmYt4ACPDZCDJcY12kCiMiH0ODyx3E1ZvgOHB8ae1tRcjXbs_yWBOA4j4uoCEADVfC1PS2jYO68B/pub?gid=43720681&single=true&output=csv")
 
 race_date <- race_dat_raw %>% 
@@ -94,6 +96,7 @@ if (race_date != race_comp_date) {
 ###############
 
 
+# Indiana Data Hub
 age_url <- "https://hub.mph.in.gov/dataset/62ddcb15-bbe8-477b-bb2e-175ee5af8629/resource/2538d7f1-391b-4733-90b3-9e95cd5f3ea6/download/covid_report_demographics.xlsx"
 
 age_dest <- glue::glue("data/ind-demog-{try_date_str}.xlsx")
@@ -115,9 +118,11 @@ age_comp <- readr::read_csv("data/ind-age-complete.csv")
 # Make sure data is new before adding it
 # test the last rows from both datasets
 age_comp_test <- age_comp %>% 
+   filter(agegrp == "30-39") %>% 
    select(-date) %>% 
    slice(n())
 age_dat_test <- age_dat %>% 
+   filter(agegrp == "30-39") %>% 
    select(-date) %>% 
    slice(n())
 
