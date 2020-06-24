@@ -51,7 +51,7 @@ that’s available.
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
 
-<img src="plots/hosp-icu-vent-2020-06-23.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-06-24.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -165,7 +165,7 @@ that’s available.
     by South Western Sydney Clinical School and the Centre for Big Data
     Research in Health.
 
-<img src="plots/excess-death-col-2020-06-06.png" width="935" />
+<img src="plots/excess-death-col-2020-06-13.png" width="935" />
 
   - The
     [CDC’s](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm)
