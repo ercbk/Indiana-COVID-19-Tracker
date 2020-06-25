@@ -192,9 +192,7 @@ those from Governor Holcomb if any are presented.
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data
     Research in Health.  
-      
-      
-      
+     
 
 <img src="plots/excess-death-col-2020-06-13.png" width="935" />
 
