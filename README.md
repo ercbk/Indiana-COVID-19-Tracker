@@ -27,9 +27,7 @@ snapback (i.e. reverting to a previous stage) triggering conditions
 listed in the AEI proposal. Depending on the data that’s available, I’ll
 also be trying to track some of the triggers in the AEI proposal and
 those from Governor Holcomb if any are presented.  
-  
-  
-  
+<br /> <br /> <br />
 
 <img src="plots/ind-combo-line-2020-06-24.png" width="935" />
 
@@ -43,9 +41,7 @@ those from Governor Holcomb if any are presented.
     yesterday to today (i.e. single day *growth rate*) will remain
     constant in the future. It’s not a valid assumption in this
     situation, but it’s interesting as a hypothetical.  
-      
-      
-      
+    <br /> <br /> <br />
 
 <img src="plots/pos-policy-line-2020-06-24.png" width="935" />
 
@@ -56,9 +52,7 @@ those from Governor Holcomb if any are presented.
     daily cases has increased.  
   - Details on the various stages of re-opening can be found at
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
-      
-      
-      
+    <br /> <br /> <br />
 
 <img src="plots/hosp-icu-vent-2020-06-24.png" width="935" />
 
@@ -74,9 +68,7 @@ those from Governor Holcomb if any are presented.
         below 40% for 14 consecutive days.
       - The proportion of available ventilators to total ventilators
         being below 70% for 14 consecutive days.  
-          
-          
-          
+        <br /> <br /> <br />
 
 <img src="plots/pos-rate-line-2020-06-23.png" width="935" />
 
@@ -96,11 +88,8 @@ those from Governor Holcomb if any are presented.
     to change.  
   - The green, horizontal bar shows the WHO recommended range from 3% to
     12%.  
-  - U.S. average calculated using data from [The COVID Tracking
-    Project](https://covidtracking.com/api).  
-      
-      
-      
+  - U.S. average calculated using data from \[The COVID <br /> <br />
+    <br />
 
 <img src="plots/ot-rest-line-2020-06-24.png" width="935" />
 
@@ -127,9 +116,7 @@ those from Governor Holcomb if any are presented.
   - Weekends are shown as vertical bars, and for comparison, the
     horizontal dashed line represents Indiana’s current percent
     difference.  
-      
-      
-      
+    <br /> <br /> <br />
 
 <img src="plots/goog-mob-line-2020-06-19.png" width="935" />
 
@@ -143,9 +130,7 @@ those from Governor Holcomb if any are presented.
       - The baseline is the median value, for the corresponding day of
         the week, during the 5- week period Jan 3–Feb 6, 2020.  
   - Weekends are shown as vertical bars.  
-      
-      
-      
+    <br /> <br /> <br />
 
 <img src="plots/region-dea-line-2020-06-24.png" width="935" />
 
@@ -162,9 +147,7 @@ those from Governor Holcomb if any are presented.
     [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
     comes from Julia Raifman, Kristen Nocka, et al at Boston
     University.  
-      
-      
-      
+    <br /> <br /> <br />
 
 <img src="plots/county-pos-bar-2020-06-24.png" width="935" />
 
@@ -173,7 +156,7 @@ those from Governor Holcomb if any are presented.
     growth rates in positive test results.
   - The average percent changes are estimated using county data in a
     log-linear model.  
-    <br /> <br />  
+    <br /> <br /> <br />
 
 <img src="plots/daily-re-line-2020-06-23.png" width="935" />
 
@@ -190,7 +173,7 @@ those from Governor Holcomb if any are presented.
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data
     Research in Health.  
-     
+    <br /> <br /> <br />
 
 <img src="plots/excess-death-col-2020-06-13.png" width="935" />
 
