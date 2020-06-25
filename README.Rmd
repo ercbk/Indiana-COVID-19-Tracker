@@ -27,9 +27,9 @@ knitr::opts_chunk$set(echo=FALSE)
 Charts updated between noon and 1pm ET and at 6:30 pm ET  
 Changelog located in [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md)  
 
-Repository to track COVID-19 data statewide and by county. Most of the State and County data for positive tests and deaths are gathered from The New York Times COVID-19 [repository](https://github.com/nytimes/covid-19-data) and The Indiana Data [Hub](https://hub.mph.in.gov/dataset).   
+This repository tracks COVID-19 data statewide and by county. Most of the State and County data for positive tests and deaths are gathered from The New York Times COVID-19 [repository](https://github.com/nytimes/covid-19-data) and The Indiana Data [Hub](https://hub.mph.in.gov/dataset).   
   
-Governor Holcomb has begun scaling back policies aimed at stopping the spread of COVID-19. Much of his plan seems to follow the White House [plan](https://www.whitehouse.gov/openingamerica/), and both are simliar to the [guidelines](https://www.aei.org/research-products/report/national-coronavirus-response-a-road-map-to-reopening/) published by the American Enterpise Institute (AEI) and Johns Hopkins. Neither Governor Holcomb's nor the White House's plan includes the snapback (i.e. reverting to a previous stage) triggering conditions listed in the AEI proposal. Along with tracking virus spread metrics, I'll also be tracking as many of these triggers as I can with the data that's available. 
+Governor Holcomb's reopening plan began on May 4th, 2020. The plan resembled the White House [plan](https://www.whitehouse.gov/openingamerica/) in many aspects, and both were simliar to the [guidelines](https://www.aei.org/research-products/report/national-coronavirus-response-a-road-map-to-reopening/) published by the American Enterpise Institute (AEI) and Johns Hopkins. But neither Governor Holcomb's nor the White House's plan included the snapback (i.e. reverting to a previous stage) triggering conditions listed in the AEI proposal. Depending on the data that's available, I'll also be trying to track some of the triggers in the AEI proposal and those from Governor Holcomb if any are presented. 
 
 ```{r}
 ind_line_path <- glue::glue("plots/ind-combo-line-{params$ind_combo_date}.png")
