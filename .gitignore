@@ -14,3 +14,5 @@ build-opentab-dat.R
 excess-death-col-local.R
 pos-policy-line-old.R
 contact-tracing.csv
+cmu-ind-bar.R
+delphi-epidata.R
