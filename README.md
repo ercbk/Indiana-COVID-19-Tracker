@@ -173,9 +173,7 @@ those from Governor Holcomb if any are presented.
     growth rates in positive test results.
   - The average percent changes are estimated using county data in a
     log-linear model.  
-      
-      
-      
+    <br /> <br />  
 
 <img src="plots/daily-re-line-2020-06-23.png" width="935" />
 

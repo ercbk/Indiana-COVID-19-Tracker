@@ -141,8 +141,8 @@ knitr::include_graphics(county_pos_path)
 
    * The top 20 counties according to estimated average percent change are shown. Counties at the top are experiencing the highest average growth rates in positive test results.
    * The average percent changes are estimated using county data in a log-linear model.  
-\
-\
+<br />
+<br />
 \
   
 ```{r}
