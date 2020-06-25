@@ -10,23 +10,26 @@ Charts updated between noon and 1pm ET and at 6:30 pm ET
 Changelog located in
 [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md)
 
-Repository to track COVID-19 data statewide and by county. Most of the
-State and County data for positive tests and deaths are gathered from
-The New York Times COVID-19
+This repository tracks COVID-19 data statewide and by county. Most of
+the State and County data for positive tests and deaths are gathered
+from The New York Times COVID-19
 [repository](https://github.com/nytimes/covid-19-data) and The Indiana
 Data [Hub](https://hub.mph.in.gov/dataset).
 
-Governor Holcomb has begun scaling back policies aimed at stopping the
-spread of COVID-19. Much of his plan seems to follow the White House
-[plan](https://www.whitehouse.gov/openingamerica/), and both are simliar
-to the
+Governor Holcomb’s reopening plan began on May 4th, 2020. The plan
+resembled the White House
+[plan](https://www.whitehouse.gov/openingamerica/) in many aspects, and
+both were simliar to the
 [guidelines](https://www.aei.org/research-products/report/national-coronavirus-response-a-road-map-to-reopening/)
 published by the American Enterpise Institute (AEI) and Johns Hopkins.
-Neither Governor Holcomb’s nor the White House’s plan includes the
+But neither Governor Holcomb’s nor the White House’s plan included the
 snapback (i.e. reverting to a previous stage) triggering conditions
-listed in the AEI proposal. Along with tracking virus spread metrics,
-I’ll also be tracking as many of these triggers as I can with the data
-that’s available.
+listed in the AEI proposal. Depending on the data that’s available, I’ll
+also be trying to track some of the triggers in the AEI proposal and
+those from Governor Holcomb if any are presented.  
+  
+  
+  
 
 <img src="plots/ind-combo-line-2020-06-24.png" width="935" />
 
@@ -39,7 +42,10 @@ that’s available.
     doubling time shown here assumes that the total change from
     yesterday to today (i.e. single day *growth rate*) will remain
     constant in the future. It’s not a valid assumption in this
-    situation, but it’s interesting as a hypothetical.
+    situation, but it’s interesting as a hypothetical.  
+      
+      
+      
 
 <img src="plots/pos-policy-line-2020-06-24.png" width="935" />
 
@@ -49,7 +55,10 @@ that’s available.
     to stage one is five or more consecutive days where the value of
     daily cases has increased.  
   - Details on the various stages of re-opening can be found at
-    [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).
+    [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
+      
+      
+      
 
 <img src="plots/hosp-icu-vent-2020-06-24.png" width="935" />
 
@@ -64,7 +73,10 @@ that’s available.
       - The proportion of available ICU beds to total ICU beds being
         below 40% for 14 consecutive days.
       - The proportion of available ventilators to total ventilators
-        being below 70% for 14 consecutive days.
+        being below 70% for 14 consecutive days.  
+          
+          
+          
 
 <img src="plots/pos-rate-line-2020-06-23.png" width="935" />
 
@@ -85,7 +97,10 @@ that’s available.
   - The green, horizontal bar shows the WHO recommended range from 3% to
     12%.  
   - U.S. average calculated using data from [The COVID Tracking
-    Project](https://covidtracking.com/api).
+    Project](https://covidtracking.com/api).  
+      
+      
+      
 
 <img src="plots/ot-rest-line-2020-06-24.png" width="935" />
 
@@ -111,7 +126,10 @@ that’s available.
     reopening stage.
   - Weekends are shown as vertical bars, and for comparison, the
     horizontal dashed line represents Indiana’s current percent
-    difference.
+    difference.  
+      
+      
+      
 
 <img src="plots/goog-mob-line-2020-06-19.png" width="935" />
 
@@ -124,7 +142,10 @@ that’s available.
         places change compared to a baseline.
       - The baseline is the median value, for the corresponding day of
         the week, during the 5- week period Jan 3–Feb 6, 2020.  
-  - Weekends are shown as vertical bars.
+  - Weekends are shown as vertical bars.  
+      
+      
+      
 
 <img src="plots/region-dea-line-2020-06-24.png" width="935" />
 
@@ -139,7 +160,11 @@ that’s available.
     trend in positive cases or deaths.  
   - State policy
     [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0)
-    comes from Julia Raifman, Kristen Nocka, et al at Boston University.
+    comes from Julia Raifman, Kristen Nocka, et al at Boston
+    University.  
+      
+      
+      
 
 <img src="plots/county-pos-bar-2020-06-24.png" width="935" />
 
@@ -147,7 +172,10 @@ that’s available.
     are shown. Counties at the top are experiencing the highest average
     growth rates in positive test results.
   - The average percent changes are estimated using county data in a
-    log-linear model.
+    log-linear model.  
+      
+      
+      
 
 <img src="plots/daily-re-line-2020-06-23.png" width="935" />
 
@@ -163,7 +191,10 @@ that’s available.
   - Further details on this metric can be found at a research
     [site](https://cbdrh.github.io/ozcoviz/#national-level-r_t) set-up
     by South Western Sydney Clinical School and the Centre for Big Data
-    Research in Health.
+    Research in Health.  
+      
+      
+      
 
 <img src="plots/excess-death-col-2020-06-13.png" width="935" />
 
