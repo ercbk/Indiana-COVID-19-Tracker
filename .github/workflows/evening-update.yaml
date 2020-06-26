@@ -2,9 +2,9 @@ name: Evening Update
 
 on:
   schedule:
-    # says run at the 38th min, 21th hr UTC (5:38pm ET) of every day
-    # also, midnight is just 0, but 1 am is 01
-    - cron: '25 02 * * *'
+    # says run at the 24th min, 21th hr UTC (5:24pm ET) of every day
+    # also fyi, midnight is just 0, but 1 am is 01
+    - cron: '24 21 * * *'
 
 jobs:
   update:
@@ -28,7 +28,7 @@ jobs:
       ACCESSTOKENF: ${{ secrets.ACCESSTOKENF }}
       ACCESSSECRETF: ${{ secrets.ACCESSSECRETF }}
     steps:
-      # must checkout out of own repo to use "action" in someone elses  
+      # copy repo  
       - uses: actions/checkout@v2
       # installs r
       - uses: r-lib/actions/setup-r@v1
@@ -38,61 +38,63 @@ jobs:
       - name: Install libcurl
         run: sudo apt-get install libcurl4-openssl-dev
       # need these for rgdal package
-      #- name: Install gdal, proj, and geos
-        #run: sudo apt-get install libgdal-dev gdal-bin libproj-dev proj-data proj-bin libgeos-dev
+      - name: Install gdal, proj, and geos
+        run: sudo apt-get install libgdal-dev gdal-bin libproj-dev proj-data proj-bin libgeos-dev
       # needed for units package
-      #- name: Install udunits2
-        #run: sudo apt-get install libudunits2-dev
+      - name: Install udunits2
+        run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
-      #- uses: r-lib/actions/setup-pandoc@v1
-      #- name: Install renv
-        #run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.10.0.tar.gz', repos = NULL, type = 'source')"
-      #- name: copy dev environment to runner
-        #run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
-      #- name: install fonts
-        #run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      #- name: install RSelenium separately
-        #run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
-      #- name: build beds and ventilator data set
-        #if: success()
-        #run: Rscript "R/build-datasets.R"
-      #- name: run opentab-rest-line
-        #run: Rscript "R/opentab-rest-line.R"
-      #- name: run excess-death-col
-        #run: Rscript "R/excess-death-col.R"
-      #- name: run hosp-icu-vent
-        #run: Rscript "R/hosp-icu-vent.R"
-      #- name: run daily-pos-rate
-        #run: Rscript "R/daily-pos-rate.R"
-      #- name: run ind-covid-line
-        #run: Rscript "R/ind-covid-line.R"
-      #- name: run pos-policy-line
-        #run: Rscript "R/pos-policy-line.R"
-      #- name: run county-slope-models
-        #run: Rscript "R/county-slope-models.R"
-      #- name: run goog-mob-line
-        #run: Rscript "R/goog-mob-line.R"
-      #- name: run regional-slope-models
-        #run: Rscript "R/regional-slope-models.R"
-      #- name: run daily-re-estimate
-        #run: Rscript "R/daily-est-re.R"
-      #- name: render readme
-        #run: Rscript "automate/render-readme.R"
-      #- name: Commit files
-        #run: |
-          #git config --local user.email "action@github.com"
-          #git config --local user.name "GitHub Action"
-          #git add .
-          #git commit -m "6:30pm charts update" || echo "No changes to commit"
-#      #- name: Push changes
-        #uses: ad-m/github-push-action@master
-        #with:
-          #github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Install renv
+        run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.10.0.tar.gz', repos = NULL, type = 'source')"
+      - name: copy dev environment to runner
+        run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
+      - name: install fonts
+        run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
+      - name: install RSelenium separately
+        run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
+      - name: build beds and ventilator data set
+        if: success()
+        run: Rscript "R/build-datasets.R"
+      - name: run opentab-rest-line
+        run: Rscript "R/opentab-rest-line.R"
+      - name: run excess-death-col
+        run: Rscript "R/excess-death-col.R"
+      - name: run hosp-icu-vent
+        run: Rscript "R/hosp-icu-vent.R"
+      - name: run daily-pos-rate
+        run: Rscript "R/daily-pos-rate.R"
+      - name: run ind-covid-line
+        run: Rscript "R/ind-covid-line.R"
+      - name: run pos-policy-line
+        run: Rscript "R/pos-policy-line.R"
+      - name: run county-slope-models
+        run: Rscript "R/county-slope-models.R"
+      - name: run goog-mob-line
+        run: Rscript "R/goog-mob-line.R"
+      - name: run regional-slope-models
+        run: Rscript "R/regional-slope-models.R"
+      - name: run daily-re-estimate
+        run: Rscript "R/daily-est-re.R"
+      - name: render readme
+        run: Rscript "automate/render-readme.R"
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "6:30pm charts update" || echo "No changes to commit"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        # GITHUB_TOKEN automatically created
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       #- name: Tweet evening update
         #run: Rscript "automate/tweet-evening-update.R"
       # Sends signal to the website repo to start its evening update
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
+        # requires token with repo scope
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ercbk/Indiana-COVID-19-Website
