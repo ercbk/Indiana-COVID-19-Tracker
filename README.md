@@ -70,7 +70,7 @@ those from Governor Holcomb if any are presented.
         being below 70% for 14 consecutive days.  
         <br /> <br /> <br />
 
-<img src="plots/pos-rate-line-2020-06-23.png" width="935" />
+<img src="plots/pos-rate-line-2020-06-24.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
@@ -91,7 +91,7 @@ those from Governor Holcomb if any are presented.
   - U.S. average calculated using data from \[The COVID <br /> <br />
     <br />
 
-<img src="plots/ot-rest-line-2020-06-24.png" width="935" />
+<img src="plots/ot-rest-line-2020-06-25.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
@@ -158,7 +158,7 @@ those from Governor Holcomb if any are presented.
     log-linear model.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2020-06-24.png" width="935" />
+<img src="plots/daily-re-line-2020-06-25.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
