@@ -11,6 +11,7 @@ jobs:
     name: Update IN COVID Tracker
     runs-on: [ubuntu-latest]
     # env vars for rtweet; 1 old one just to pull tweets; 2 others to tweet from accts
+    
     env:
       APPNAME: ${{ secrets.APPNAME }}
       APIKEY: ${{ secrets.APIKEY }}
@@ -27,7 +28,11 @@ jobs:
       APISECRETF: ${{ secrets.APISECRETF }}
       ACCESSTOKENF: ${{ secrets.ACCESSTOKENF }}
       ACCESSSECRETF: ${{ secrets.ACCESSSECRETF }}
+    
+    
     steps:
+      
+      ## Set-up
       # copy repo  
       - uses: actions/checkout@v2
       # installs r
@@ -45,14 +50,29 @@ jobs:
         run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
-      - name: Install renv
-        run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.10.0.tar.gz', repos = NULL, type = 'source')"
-      - name: copy dev environment to runner
-        run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
+      #- name: Install renv
+        #run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.10.0.tar.gz', repos = NULL, type = 'source')"
+      #- name: copy dev environment to runner
+        #run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       #- name: install RSelenium separately
         #run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
+      
+      
+      ## Run scripts
       - name: build beds and ventilator data set
         if: success()
         run: Rscript "R/build-datasets.R"
@@ -78,6 +98,9 @@ jobs:
         run: Rscript "R/daily-est-re.R"
       - name: render readme
         run: Rscript "automate/render-readme.R"
+        
+        
+      ## Commit, Push, Trigger other repo workflow
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
@@ -89,8 +112,6 @@ jobs:
         # GITHUB_TOKEN automatically created
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      #- name: Tweet evening update
-        #run: Rscript "automate/tweet-evening-update.R"
       # Sends signal to the website repo to start its evening update
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
