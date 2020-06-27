@@ -3,7 +3,7 @@ name: Sel Test
 on:
   schedule:
     # says run at the 38th min, 21th hr UTC (5:54pm ET) of every day
-    - cron: '50 0 * * *'
+    #- cron: '50 0 * * *'
 
 jobs:
   update:
