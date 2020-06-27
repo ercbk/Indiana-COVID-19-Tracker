@@ -27,6 +27,7 @@ jobs:
       APISECRETF: ${{ secrets.APISECRETF }}
       ACCESSTOKENF: ${{ secrets.ACCESSTOKENF }}
       ACCESSSECRETF: ${{ secrets.ACCESSSECRETF }}
+      RENV_PATHS_ROOT: ~/.local/share/renv
 
 
     steps:
