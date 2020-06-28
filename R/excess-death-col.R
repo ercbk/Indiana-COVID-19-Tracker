@@ -268,7 +268,7 @@ both_charts <- excess_bar +
    annotation_custom(grob = inset_plot,
                      xmin = coord_dates$xmin[[1]],
                      xmax = coord_dates$xmax[[1]],
-                     ymin = 1675, ymax = 2700)
+                     ymin = 1650, ymax = 2700)
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
 ggsave(plot_path, plot = both_charts, dpi = "screen", width = 33, height = 20, units = "cm")
