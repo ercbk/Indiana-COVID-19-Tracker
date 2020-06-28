@@ -1,14 +1,14 @@
-name: renv caching
+name: excess deaths
 
 on:
   schedule:
     # says run at the 24th min, 21th hr UTC (5:24pm ET) of every day
     # also fyi, midnight is just 0, but 1 am is 01
-    - cron: '18 14 * * *'
+    - cron: '13 20 * * *'
 
 jobs:
-  caching:
-    name: renv cache test
+  excess:
+    name: excess chart font test
     runs-on: [ubuntu-latest]
     
     # env vars for rtweet; 1 old one just to pull tweets; 2 others to tweet from accts
@@ -31,23 +31,30 @@ jobs:
       RENV_PATHS_ROOT: ~/.local/share/renv
     
     steps:
+      
       # copy repo  
       - uses: actions/checkout@v2
+      
       # installs r
       - uses: r-lib/actions/setup-r@v1
         with:
           r-version: '3.6.2'
+      
       # need libcurl to install RCurl pkg on Linux
       - name: Install libcurl
         run: sudo apt-get install libcurl4-openssl-dev
+      
       # need these for rgdal package
       - name: Install gdal, proj, and geos
         run: sudo apt-get install libgdal-dev gdal-bin libproj-dev proj-data proj-bin libgeos-dev
+      
       # needed for units package
       - name: Install udunits2
         run: sudo apt-get install libudunits2-dev
+      
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
+      
       - name: Cache packages
         uses: actions/cache@v2
         with:
@@ -63,24 +70,21 @@ jobs:
           renv::restore()
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      - name: run opentab-rest-line
-        run: Rscript "R/opentab-rest-line.R"
+      
       - name: run excess-death-col
         run: Rscript "R/excess-death-col.R"
-      - name: run hosp-icu-vent
-        run: Rscript "R/hosp-icu-vent.R"
-      - name: run daily-pos-rate
-        run: Rscript "R/daily-pos-rate.R"
-      - name: run ind-covid-line
-        run: Rscript "R/ind-covid-line.R"
-      - name: run pos-policy-line
-        run: Rscript "R/pos-policy-line.R"
-      - name: run county-slope-models
-        run: Rscript "R/county-slope-models.R"
-      - name: run goog-mob-line
-        run: Rscript "R/goog-mob-line.R"
-      - name: run regional-slope-models
-        run: Rscript "R/regional-slope-models.R"
-      - name: run daily-re-estimate
-        run: Rscript "R/daily-est-re.R"
+        
+      ## Commit, Push, Trigger other repo workflow
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "6:30pm charts update" || echo "No changes to commit"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        # GITHUB_TOKEN automatically created
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  
         

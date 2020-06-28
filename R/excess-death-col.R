@@ -198,7 +198,7 @@ Totals<br>
 
 excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                        fill = type, label = label)) +
-   expand_limits(y = 2500) +
+   expand_limits(y = 2600) +
    geom_col() +
    scale_y_continuous(labels = scales::label_comma()) +
    scale_fill_manual(values = list(excess_higher_estimate = purp_light[[1]],
@@ -227,13 +227,13 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                                  size = 13),
          plot.caption = element_text(family = "Roboto",
                                 color = "white",
-                                size = 11),
+                                size = 12),
          legend.position = "none",
          axis.text.x = element_text(color = "white",
                                     size = 11,
                                     face = "bold"),
          axis.text.y = element_text(color = "white",
-                                    size = 11,
+                                    size = 12,
                                     face = "bold"),
          panel.background = element_rect(fill = "black",
                                          color = NA),
@@ -248,7 +248,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
 # need to programmatically figure out the inset plot coordinates
 coord_constant <- ind_excess %>% 
    # estimation of plot length date range from original plot
-   slice((n()-18):(n()-2)) %>% 
+   slice((n()-19):(n()-2)) %>% 
    # 61 days was original plot length
    # %/% is integer arithmetic so I don't get a decimal
    summarize(date_len = as.numeric(last(week_ending_date) - first(week_ending_date)),
@@ -258,7 +258,7 @@ coord_constant <- ind_excess %>%
 # coordinate dates of inset plot
 coord_dates <- ind_excess %>% 
    # estimation of plot length range from original plot
-   slice((n()-18):(n()-2)) %>% 
+   slice((n()-19):(n()-2)) %>% 
    summarize(xmin = first(week_ending_date) - coord_constant,
              xmax = last(week_ending_date) + coord_constant)
 
@@ -268,7 +268,7 @@ both_charts <- excess_bar +
    annotation_custom(grob = inset_plot,
                      xmin = coord_dates$xmin[[1]],
                      xmax = coord_dates$xmax[[1]],
-                     ymin = 1675, ymax = 2575)
+                     ymin = 1675, ymax = 2650)
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
 ggsave(plot_path, plot = both_charts, dpi = "screen", width = 33, height = 20, units = "cm")
