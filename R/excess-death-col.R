@@ -108,7 +108,7 @@ excess_lol <- ggplot(ind_cause, aes(x = pct_diff, y = cause_group,
                 color = "white") +
    geom_point(color = "#61c8b7", size=4) +
    # percent difference text
-   geom_text(nudge_x = 11.0, col = "white", fontface = "bold") +
+   geom_text(nudge_x = 11.5, col = "white", fontface = "bold") +
    labs(x = NULL, y = NULL,
         title = "Causes of death that are above historic averages",
         subtitle = "*Percent above average*") +
@@ -209,7 +209,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                             outside = TRUE,
                             min.size = 9) +
    # summary annotation
-   geom_textbox(aes(as.Date("2020-01-25"), 1950),
+   geom_textbox(aes(as.Date("2020-01-25"), 2000),
                  label = summary_text, halign = 0,
                  col = "white", fill = "black",
                 width = 0.30, size = 5, hjust = 0.45) +
