@@ -4,7 +4,7 @@ on:
   schedule:
     # says run at the 24th min, 21th hr UTC (5:24pm ET) of every day
     # also fyi, midnight is just 0 and 1 am is 1
-    - cron: '35 21 * * *'
+    - cron: '51 21 * * *'
 
 jobs:
   excess:

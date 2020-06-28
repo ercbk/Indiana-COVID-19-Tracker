@@ -200,7 +200,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                        fill = type, label = label)) +
    expand_limits(y = 2600) +
    geom_col() +
-   scale_y_continuous(labels = scales::label_comma(), n.breaks = 5) +
+   scale_y_continuous(labels = scales::label_comma(), n.breaks = 6) +
    scale_fill_manual(values = list(excess_higher_estimate = purp_light[[1]],
                                    average_expected_count = deep_light[[1]])) +
    # excess death values
@@ -252,7 +252,7 @@ coord_constant <- ind_excess %>%
    # 61 days was original plot length
    # %/% is integer arithmetic so I don't get a decimal
    summarize(date_len = as.numeric(last(week_ending_date) - first(week_ending_date)),
-             constant = (68 - date_len) %/% 2) %>% 
+             constant = (70 - date_len) %/% 2) %>% 
    pull(constant)
 
 # coordinate dates of inset plot
@@ -268,7 +268,7 @@ both_charts <- excess_bar +
    annotation_custom(grob = inset_plot,
                      xmin = coord_dates$xmin[[1]],
                      xmax = coord_dates$xmax[[1]],
-                     ymin = 1650, ymax = 2700)
+                     ymin = 1700, ymax = 2700)
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
 ggsave(plot_path, plot = both_charts, dpi = "screen", width = 33, height = 20, units = "cm")
