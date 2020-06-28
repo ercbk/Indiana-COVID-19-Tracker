@@ -120,12 +120,12 @@ excess_lol <- ggplot(ind_cause, aes(x = pct_diff, y = cause_group,
          plot.subtitle = element_textbox_simple(color = "white",
                               family = "Roboto",
                               face = "bold",
-                              size = 9),
+                              size = 10),
          legend.position = "none",
          axis.text.x = element_text(color = "white",
                                     size = 9),
          axis.text.y = element_text(color = "white",
-                                    size = 9,
+                                    size = 10,
                                     face = "bold",
                                     family = "Roboto"),
          axis.ticks.y = element_blank(),
@@ -200,7 +200,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                        fill = type, label = label)) +
    expand_limits(y = 2600) +
    geom_col() +
-   scale_y_continuous(labels = scales::label_comma()) +
+   scale_y_continuous(labels = scales::label_comma(), n.breaks = 6) +
    scale_fill_manual(values = list(excess_higher_estimate = purp_light[[1]],
                                    average_expected_count = deep_light[[1]])) +
    # excess death values
@@ -224,7 +224,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                               face = "bold"),
          plot.subtitle = element_text(family = "Roboto",
                                  color = "white",
-                                 size = 13),
+                                 size = 14),
          plot.caption = element_text(family = "Roboto",
                                 color = "white",
                                 size = 12),
