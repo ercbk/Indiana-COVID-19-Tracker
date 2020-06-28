@@ -166,12 +166,12 @@ indy_chart <- ggplot(data = ind_chart_dat, aes(x = date, y = pct_diff)) +
                  color = "#755c99",size = 1.5, alpha = 0.1) +
       expand_limits(x = max(ind_chart_dat$date)+2,
                     y = y_upper * 1.05) +
-      ggrepel::geom_text_repel(data = ind_chart_dat %>% 
+      ggrepel::geom_label_repel(data = ind_chart_dat %>% 
                                      filter(date == max(date)),
                                aes(label = scales::percent(pct_diff, accuracy = 1),
-                                   color = Name),
+                                   color = Name), fill = "black",
                                nudge_x = .02, nudge_y = .20,
-                               segment.color = NA) +
+                               segment.color = NA, label.size = NA) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
       labs(x = NULL, y = NULL,
            title = "<b style='color:#c47e5a'>Indiana</b>") +
