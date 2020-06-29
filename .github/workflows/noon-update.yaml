@@ -8,7 +8,8 @@ on:
 jobs:
   update:
     name: Update IN COVID Tracker
-    runs-on: [ubuntu-latest]
+    #runs-on: [ubuntu-latest]
+    runs-on: ubuntu-18.04
 
 
     env:

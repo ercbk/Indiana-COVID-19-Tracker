@@ -10,7 +10,7 @@ on:
 jobs:
   update:
     name: Update IN COVID Tracker
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-18.04
     
     # env vars for rtweet; 1 old one just to pull tweets; 2 others to tweet from accts
     env:

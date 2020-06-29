@@ -209,7 +209,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                             outside = TRUE,
                             min.size = 9) +
    # summary annotation
-   geom_textbox(aes(as.Date("2020-01-25"), 2000),
+   geom_textbox(aes(as.Date("2020-01-25"), 2050),
                  label = summary_text, halign = 0,
                  col = "white", fill = "black",
                 width = 0.30, size = 5, hjust = 0.45) +
