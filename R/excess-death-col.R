@@ -203,6 +203,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
    expand_limits(y = 2600) +
    geom_col() +
    scale_y_continuous(labels = scales::label_comma(), n.breaks = 6) +
+   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
    scale_fill_manual(values = list(excess_higher_estimate = purp_light[[1]],
                                    average_expected_count = deep_light[[1]])) +
    # excess death values
