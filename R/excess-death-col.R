@@ -251,17 +251,17 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
 # need to programmatically figure out the inset plot coordinates
 coord_constant <- ind_excess %>% 
    # estimation of plot length date range from original plot
-   slice((n()-20):(n()-2)) %>% 
+   slice((n()-21):(n()-2)) %>% 
    # 61 days was original plot length
    # %/% is integer arithmetic so I don't get a decimal
    summarize(date_len = as.numeric(last(week_ending_date) - first(week_ending_date)),
-             constant = (70 - date_len) %/% 2) %>% 
+             constant = (75 - date_len) %/% 2) %>% 
    pull(constant)
 
 # coordinate dates of inset plot
 coord_dates <- ind_excess %>% 
    # estimation of plot length range from original plot
-   slice((n()-20):(n()-2)) %>% 
+   slice((n()-21):(n()-2)) %>% 
    summarize(xmin = first(week_ending_date) - coord_constant,
              xmax = last(week_ending_date) + coord_constant)
 
