@@ -85,8 +85,10 @@ ind_cause <- ind_cause_raw %>%
                                       yr_to_date_totals/data_prev_years,
                                       yr_to_date_totals),
           cause_group = recode(cause_group, "Alzheimer disease and dementia" = "Alzheimer's disease and dementia",
-                               "Hypertensive dieases" = "Hypertensive diseases")) %>%
-   select(-yr_to_date_totals) %>%
+                               "Hypertensive dieases" = "Hypertensive diseases",
+                               "Other diseases of the circulatory system" = "Other circulatory diseases",
+                               "Other diseases of the respiratory system" = "Other respiratory diseases")) %>%
+   select(-yr_to_date_totals,) %>%
    # splitting the two groups' avgs into two cols
    tidyr::pivot_wider(id_cols = "cause_group",
                       names_from = "period",
