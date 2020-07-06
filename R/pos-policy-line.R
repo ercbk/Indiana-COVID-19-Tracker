@@ -59,6 +59,9 @@ policy_dat <- tibble(policy = "Stage 2 Reopening",
    add_row(policy = "Stage 4 Reopening",
            date = as.Date("2020-06-12"),
            date_text = "6/12/2020") %>% 
+   add_row(policy = "Stage 4.5 Reopening",
+           date = as.Date("2020-07-03"),
+           date_text = "7/3/2020") %>% 
    mutate(labels = glue("{policy}
                            ( {date_text} )     "))
 
@@ -128,8 +131,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(1.0, 0.9, 0.7),
-          vjust = c(3.1, 3.5, -2.5))
+   mutate(hjust = c(1.0, 0.9, 0.7, 0.7),
+          vjust = c(3.1, 3.5, -2.5, -2.0))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -187,6 +190,12 @@ pos_policy_line <- ggplot(cases_dat %>%
    geom_segment(
       data = data.frame(), aes(x = 39000, xend = 39750,
                                y = 588, yend = 470),
+      color = deep_light[[7]], arrow = arw
+   ) +
+   # stage 4.5
+   geom_segment(
+      data = data.frame(), aes(x = 46660, xend = 47600,
+                               y = 690, yend = 590),
       color = deep_light[[7]], arrow = arw
    ) +
    labs(x = "Cumulative Cases", y = NULL,

@@ -51,10 +51,7 @@ jobs:
         run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
-      #- name: Install renv
-        #run: Rscript -e "install.packages('https://cran.r-project.org/src/contrib/renv_0.10.0.tar.gz', repos = NULL, type = 'source')"
-      #- name: copy dev environment to runner
-        #run: Rscript -e 'renv::restore(repos = c(CRAN = "https://cloud.r-project.org"))'
+      # cache R package dev environment; install dev environment onto runner
       - name: Cache packages
         uses: actions/cache@v2
         with:
@@ -108,8 +105,6 @@ jobs:
         # GITHUB_TOKEN automatically created
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      #- name: Tweet noon update
-        #run: Rscript "automate/tweet-noon-update.R"
       # Send signal to website repo to start its noon update
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
