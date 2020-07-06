@@ -29,7 +29,7 @@ also be trying to track some of the triggers in the AEI proposal and
 those from Governor Holcomb if any are presented.  
 <br /> <br /> <br />
 
-<img src="plots/ind-combo-line-2020-07-03.png" width="935" />
+<img src="plots/ind-combo-line-2020-07-04.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -43,7 +43,7 @@ those from Governor Holcomb if any are presented.
     situation, but it’s interesting as a hypothetical.  
     <br /> <br /> <br />
 
-<img src="plots/pos-policy-line-2020-07-03.png" width="935" />
+<img src="plots/pos-policy-line-2020-07-04.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis.  
@@ -54,7 +54,7 @@ those from Governor Holcomb if any are presented.
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
     <br /> <br /> <br />
 
-<img src="plots/hosp-icu-vent-2020-07-04.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-07-05.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -91,7 +91,7 @@ those from Governor Holcomb if any are presented.
   - U.S. average calculated using data from \[The COVID <br /> <br />
     <br />
 
-<img src="plots/ot-rest-line-2020-07-03.png" width="935" />
+<img src="plots/ot-rest-line-2020-07-04.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
@@ -132,9 +132,9 @@ those from Governor Holcomb if any are presented.
   - Weekends are shown as vertical bars.  
     <br /> <br /> <br />
 
-<img src="plots/region-dea-line-2020-07-03.png" width="935" />
+<img src="plots/region-dea-line-2020-07-04.png" width="935" />
 
-<img src="plots/region-pos-line-2020-07-03.png" width="935" />
+<img src="plots/region-pos-line-2020-07-04.png" width="935" />
 
   - The y-axis has been transformed to the logarithmic base-10 scale.
     Slopes and trends of straight(-ish) lines are easier to compare than
@@ -149,7 +149,7 @@ those from Governor Holcomb if any are presented.
     University.  
     <br /> <br /> <br />
 
-<img src="plots/county-pos-bar-2020-07-03.png" width="935" />
+<img src="plots/county-pos-bar-2020-07-04.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
