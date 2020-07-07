@@ -3,7 +3,8 @@
 # Fits and visualizes log-linear models to positive cases for  Indiana counties.
 
 # Notes
-# 1. Going to ranking counties by rate of positive cases. Limiting to counties with > 5 positive cases for longer than a week. Want to try and smooth out any large rate jumps due to a spike in increased testing. Will probably need to adjust this in future.
+# 1. Modelling cumulative cases because daily cases means I have to add 1 to the zeros in order to do a log transformation. Then the interpretation is increase in log(cases + 1) and I don't want to deal with that.
+# 2. Per NYT data dictionary. Cases = cumulative positive cases
 
 
 
@@ -27,9 +28,8 @@ nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-d
 # get daily cumulative totals
 counties_dat <- nyt_dat %>%
    filter(state == "Indiana") %>%
-   group_by(county, date) %>% 
-   summarize(positives = sum(cases),
-             deaths = sum(deaths)) %>% 
+   rename(positives = cases) %>% 
+   select(-state, -fips) %>% 
    as_tsibble(index = "date", key = "county")
 
 # current date of the data
