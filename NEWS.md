@@ -65,4 +65,12 @@
     reasonable than the one I was using before. They haven’t published
     their code yet, so I haven’t been able to dig into it too much. But
     the [faq](https://rt.live/faq) gives some hints to what they’re
-    doing, and it seems sound.
+    doing, and it seems sound.  
+
+  - 2020-07-08 - Daily positive rate - During a
+    [briefing](https://twitter.com/i/broadcasts/1ypKdwaqLegxW) I watched
+    with Gov. Holcomb and Dr. Box, it was pretty clear that they pay
+    close attention to positivity rates and use a seven day window to
+    calculate theirs, so I’m switching my calculation window to 7 days.
+    A 5% percent target was also emphasized by Dr. Box, so also changing
+    my shaded region to a range from 0% - 5%.

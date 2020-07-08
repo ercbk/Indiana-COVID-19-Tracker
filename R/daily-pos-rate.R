@@ -21,7 +21,7 @@ us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") 
    arrange(date) %>% 
    # .before = 2 says take the current value and the 2 before it.
    mutate(pos_rate = slider::slide2_dbl(positiveIncrease, totalTestResultsIncrease,
-                                                   ~sum(.x)/sum(.y), .before = 2),
+                                                   ~sum(.x)/sum(.y), .before = 6),
           pos_rate_text = scales::percent(pos_rate, accuracy = 0.1)) %>% 
    slice(n()) %>% 
    pull(pos_rate_text)
@@ -46,7 +46,7 @@ test_dat <- test_dat_raw %>%
           daily_positives = COVID_COUNT) %>%
    mutate(date = lubridate::ymd(date), 
           pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
-                                        ~sum(.x)/sum(.y), .before = 2)) %>% 
+                                        ~sum(.x)/sum(.y), .before = 6)) %>% 
    as_tsibble(index = date) %>% 
    # Ind Data Hub's most recent data point is usually still in the process of be collected. It causes pos rate to spike and is misleading, so I'm just going to remove the most recent entry.
    slice(-n())
@@ -87,7 +87,7 @@ rate_plot <- ggplot(data = chart_dat,
    geom_point(color = deep_rooted[[4]]) +
    geom_line(color = deep_rooted[[4]]) +
    expand_limits(y = c(0, max(chart_dat$pos_test_rate) + 0.05)) +
-   geom_ribbon(aes(ymin = 0.03, ymax = 0.12), fill = "#8db230", alpha = 0.2) +
+   geom_ribbon(aes(ymin = 0.00, ymax = 0.05), fill = "#8db230", alpha = 0.2) +
    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
    scale_x_date(date_breaks = "7 days",
                 date_labels = "%b %d") +
