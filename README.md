@@ -74,22 +74,18 @@ those from Governor Holcomb if any are presented.
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
-  - According to the World Health Organization (WHO), the positive test
-    rate can be a good indicator of whether a virus testing program is
-    sufficient. It finds that successful programs have a positive test
-    rate in the range of 3% to 12%.  
-  - A Johns Hopkins
-    [article](https://coronavirus.jhu.edu/testing/testing-positivity)
-    calculates this rate for states over three day windows and uses the
-    WHO benchmark to classify state programs as adequate or not.  
+  - During a [briefing](https://twitter.com/i/broadcasts/1ypKdwaqLegxW)
+    with Gov. Holcomb and Dr. Box, it was pretty clear that they pay
+    close attention to positivity rates and use a seven day window for
+    their calculation along with a target rate of less than 5%.
   - Indiana Data Hub tends to revise its counts as it continues to
-    collect more data. When analyzing this chart, it would be prudent
-    not to assess the last few rates too confidently as they are likely
+    collect more data. The rate is calculated over a seven day window,
+    so it should be pretty consistent. Even so, it would be prudent not
+    to assess the last couple rates too confidently as they are likely
     to change.  
-  - The green, horizontal bar shows the WHO recommended range from 3% to
-    12%.  
-  - U.S. average calculated using data from \[The COVID <br /> <br />
-    <br />
+  - U.S. average calculated using data from [The COVID Tracking
+    Project](https://covidtracking.com/data)  
+    <br /> <br /> <br />
 
 <img src="plots/ot-rest-line-2020-07-07.png" width="935" />
 
@@ -118,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2020-07-03.png" width="935" />
+<img src="plots/goog-mob-line-2020-07-05.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
@@ -159,7 +155,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2020-07-06.png" width="935" />
+<img src="plots/daily-re-line-2020-07-07.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
