@@ -84,6 +84,7 @@ ind_cause <- ind_cause_raw %>%
    mutate(yr_to_date_avgs = ifelse(period == "prev_years",
                                       yr_to_date_totals/data_prev_years,
                                       yr_to_date_totals),
+          # clean and shorten some names
           cause_group = recode(cause_group, "Alzheimer disease and dementia" = "Alzheimer's disease and dementia",
                                "Hypertensive dieases" = "Hypertensive diseases",
                                "Other diseases of the circulatory system" = "Other circulatory diseases",
@@ -172,7 +173,7 @@ ind_excess <- natstat_excess_raw %>%
           week_ending_date > "2020-01-01",
           condition == "Predicted (weighted)_All causes, excluding COVID-19"
    ) %>% 
-   select(week_ending_date, average_expected_count, excess_higher_estimate) %>% 
+   select(week_ending_date, observed_number, average_expected_count, excess_higher_estimate) %>% 
    tidyr::pivot_longer(cols = c("average_expected_count", "excess_higher_estimate"), names_to = "type", values_to = "value") %>% 
    mutate(type = factor(type, levels = c("excess_higher_estimate", "average_expected_count")),
           # only want labels for excess deaths, otherwise blank
@@ -187,15 +188,17 @@ data_date <- ind_excess %>%
 # summary stats (totals)
 excess_summary <- ind_excess %>%
    group_by(type) %>% 
-   summarize(val_sum = sum(value)) %>%
+   summarize(val_sum = sum(value),
+             noncov_class_deaths = sum(observed_number)) %>%
    mutate(pct = scales::percent(round(val_sum/sum(val_sum), 2)),
-          sum_text = scales::comma(val_sum))
+          sum_text = scales::comma(val_sum),
+          nccd_text = scales::comma(noncov_class_deaths))
 
 summary_text <- glue("
 Totals<br>
 <b style='color: #C8619DFF'>Excess Deaths</b>: {excess_summary$sum_text[[1]]} ({excess_summary$pct[[1]]})<br>
                      <b style='color: #7F7E84FF'>Expected Deaths</b>: {excess_summary$sum_text[[2]]} ({excess_summary$pct[[2]]})<br>
-                     <b>Non-COVID Classified Deaths</b>: {scales::comma(excess_summary$val_sum[[1]]+excess_summary$val_sum[[2]])}")
+                     <b>Non-COVID Classified Deaths</b>: {excess_summary$nccd_text[[1]]}")
 
 
 excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
@@ -255,6 +258,7 @@ coord_constant <- ind_excess %>%
    # 61 days was original plot length
    # %/% is integer arithmetic so I don't get a decimal
    summarize(date_len = as.numeric(last(week_ending_date) - first(week_ending_date)),
+             # value gets added to both sides, so divide by 2
              constant = (75 - date_len) %/% 2) %>% 
    pull(constant)
 
