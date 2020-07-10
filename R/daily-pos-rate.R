@@ -39,17 +39,16 @@ download.file(hub_dat_url, destfile = "data/test-case-trend.xlsx", mode = "wb")
 test_dat_raw <- readxl::read_xlsx("data/test-case-trend.xlsx")
 
 
-# rename cols, make tsibble, calc 3-day moving positive rate
+# rename cols, make tsibble, calc 7-day moving positive rate
 test_dat <- test_dat_raw %>% 
-   select(date,
-          daily_tests = m1e_covid_tests,
-          daily_positives = m1e_covid_cases) %>%
+   select(date = DATE,
+          daily_tests = COVID_TEST,
+          daily_positives = COVID_COUNT) %>%
    mutate(date = lubridate::ymd(date), 
           pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
                                         ~sum(.x)/sum(.y), .before = 6)) %>% 
    as_tsibble(index = date) %>% 
-   # Ind Data Hub's most recent data point is usually still in the process of be collected. It causes pos rate to spike and is misleading, so I'm just going to remove the most recent entry.
-   slice(-n())
+      slice(-n())
 
 
 
