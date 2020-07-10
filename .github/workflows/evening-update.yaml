@@ -5,7 +5,7 @@ on:
     # says run at the 24th min, 21th hr UTC (5:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
     #- cron: '45 21 * * *'
-    - cron: '15 22 * * *'
+    - cron: '10 0 * * *'
 
 jobs:
   update:
@@ -72,9 +72,9 @@ jobs:
       
       
       ## Run scripts
-      - name: build beds and ventilator data set
-        if: success()
-        run: Rscript "R/build-datasets.R"
+      #- name: build beds and ventilator data set
+        #if: success()
+        #run: Rscript "R/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/opentab-rest-line.R"
       - name: run excess-death-col

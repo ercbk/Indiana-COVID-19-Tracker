@@ -33,13 +33,28 @@ bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
       mutate(date = todays_date) %>%
       select(date, everything())
 
+# indy data hub changed col names mid-pandemic, so I needed to revert them back to maintain consistency with scripts and past data 
+bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
+   rename(beds_icu_occupied_beds_covid_19 = m2b_hospitalized_icu_occupied_covid,
+          beds_icu_total = m2b_hospitalized_icu_supply,
+          bed_occupied_icu_non_covid = m2b_hospitalized_icu_occupied_non_covid,
+          beds_available_icu_beds_total = m2b_hospitalized_icu_available,
+          vents_all_available_vents_not_in_use = m2b_hospitalized_vent_available,
+          vents_total = m2b_hospitalized_vent_supply,
+          vents_all_in_use_covid_19 = m2b_hospitalized_vent_occupied_covid,
+          vents_non_covid_pts_on_vents = m2b_hospitalized_vent_occupied_non_covid) %>%
+      mutate(date = lubridate::ymd(date)) %>%
+      select(date, beds_icu_total, beds_icu_occupied_beds_covid_19,
+             bed_occupied_icu_non_covid, beds_available_icu_beds_total,
+             vents_total, vents_all_in_use_covid_19,
+             vents_non_covid_pts_on_vents, vents_all_available_vents_not_in_use)
 
-old_complete <- readr::read_rds("data/beds-vents-complete.rds")
+
+old_complete <- readr::read_csv("data/beds-vents-complete.csv")
 
 new_complete <- old_complete %>%
       bind_rows(bv_dat_current)
 
-readr::write_rds(new_complete, "data/beds-vents-complete.rds")
 readr::write_csv(new_complete, "data/beds-vents-complete.csv")
 
 
@@ -106,14 +121,19 @@ download.file(age_url, destfile = age_dest, mode = "wb")
 # Has multiple sheets, but this is fine since I only need the first one.
 age_raw <- readxl::read_xlsx(age_dest)
 
+# indyhub changed col names and order mid-pandemic, so need to revert names to keep scripts/data consistent
 age_dat <- age_raw %>% 
    janitor::clean_names() %>%
-   mutate(date = lubridate::today()) %>% 
-   select(date, everything())
+   mutate(date = lubridate::today()) %>%
+   rename_at(vars(-date), ~stringr::str_remove(.,"m1d_")) %>%
+   rename(covid_count = covid_cases, covid_count_pct = covid_cases_pct,
+          covid_test = covid_tests, covid_test_pct = covid_tests_pct) %>% 
+   select(date, agegrp, covid_count, covid_deaths,
+          covid_test, covid_count_pct, covid_deaths_pct,
+          covid_test_pct)
 
 
 age_comp <- readr::read_csv("data/ind-age-complete.csv")
-
 
 # Make sure data is new before adding it
 # test the last rows from both datasets
