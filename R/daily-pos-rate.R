@@ -41,9 +41,12 @@ test_dat_raw <- readxl::read_xlsx("data/test-case-trend.xlsx")
 
 # rename cols, make tsibble, calc 7-day moving positive rate
 test_dat <- test_dat_raw %>% 
-   select(date,
-          daily_tests = m1e_covid_tests,
-          daily_positives = m1e_covid_cases) %>%
+   # select(date,
+   #        daily_tests = m1e_covid_tests,
+   #        daily_positives = m1e_covid_cases) %>%
+   select(date = DATE,
+          daily_tests = COVID_TEST,
+          daily_positives = COVID_COUNT) %>%
    mutate(date = lubridate::ymd(date), 
           pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
                                         ~sum(.x)/sum(.y), .before = 6)) %>% 
