@@ -97,9 +97,9 @@ zero_days <- glue("{consec_days$trend[[1]]} COVID-19 hospitializations")
 # between 2 and 6 days of increased hospitalizations
 under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations")
 # more than threshold of 14 days of increased hospitalizations
-ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf06A;</span>")
 # between 7 and 13 days of increased hospitalizations
-ft_over_sev <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf06A;</span>")
+ft_over_sev <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf071;</span>")
 # more than 1 day of decreased hospitalizations
 under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitalizations")
 
@@ -206,9 +206,9 @@ zero_days_i <- glue("{consec_days_i$trend[[1]]} in availability of ICU beds from
 # between 2 and 6 days below 40%
 under_ft_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
 # 14 days and over days below 40%
-ft_over_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+ft_over_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf06A;</span>")
 # between 7 and 13 days below 40%
-ft_over_i_sev <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf06A;</span>")
+ft_over_i_sev <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf071;</span>")
 # more than 1 day above 40%
 above_pos_one_i <- glue("<b style='color: #33a532'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
 
@@ -241,9 +241,9 @@ zero_days_v <- glue("{consec_days_v$trend[[1]]} in availability of ventilators f
 # between 2 and 6 days below 70%
 under_ft_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators")
 # 14 and over days below 70%
-ft_over_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+ft_over_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf06A;</span>")
 # betweeen 7 and 13 days below 70%
-ft_over_v_sev <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf06A;</span>")
+ft_over_v_sev <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf071;</span>")
 # more than 1 day above 70%
 above_pos_one_v <- glue("<b style='color: #33a532'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators")
 
