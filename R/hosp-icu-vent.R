@@ -94,10 +94,12 @@ neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day o
 pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospitializations")
 # no change from yesterday
 zero_days <- glue("{consec_days$trend[[1]]} COVID-19 hospitializations")
-# between 2 and 13 days of increased hospitalizations
+# between 2 and 6 days of increased hospitalizations
 under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations")
 # more than threshold of 14 days of increased hospitalizations
 ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+# between 7 and 13 days of increased hospitalizations
+ft_over_sev <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf06A;</span>")
 # more than 1 day of decreased hospitalizations
 under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitalizations")
 
@@ -107,8 +109,10 @@ trigger_dat_h <- consec_days %>%
                             pos_one,
                           num_days == 1 & trend == "decreased" ~
                             neg_one,
-                          between(num_days, 2, 13) & trend == "increased" ~
+                          between(num_days, 2, 6) & trend == "increased" ~
                             under_ft,
+                          between(num_days, 7, 13) & trend == "increased" ~
+                            ft_over_sev,
                           num_days >= 14 & trend == "increased" ~
                             ft_over,
                           num_days > 1 & trend == "decreased" ~
@@ -126,7 +130,7 @@ hosp_plot <- ggplot(data = ind_hosp,
   geom_line(color = "#32a5a3") +
   expand_limits(y = c(min(ind_hosp$hospitalizedCurrently)-60, max(ind_hosp$hospitalizedCurrently) + 60),
                 x = max(ind_hosp$date) + 2) +
-  scale_x_date(date_breaks = "7 days",
+  scale_x_date(date_breaks = "14 days",
                date_labels = "%b %d") +
   ggrepel::geom_label_repel(data = ind_hosp %>%
                               filter(date == max(date)),
@@ -199,10 +203,12 @@ pos_one_i <- glue("<b style='color: #33a532'>{consec_days_i$num_days[[1]]}</b> d
 neg_one_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> day {consec_days_i$trend[[1]]} 40% availability for ICU beds")
 # 0 days == no change
 zero_days_i <- glue("{consec_days_i$trend[[1]]} in availability of ICU beds from yesterday")
-# between 2 and 13 days below 40%
+# between 2 and 6 days below 40%
 under_ft_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
 # 14 days and over days below 40%
 ft_over_i <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+# between 7 and 13 days below 40%
+ft_over_i_sev <- glue("<b style='color: #cf142b'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf06A;</span>")
 # more than 1 day above 40%
 above_pos_one_i <- glue("<b style='color: #33a532'>{consec_days_i$num_days[[1]]}</b> consecutive days of being {consec_days_i$trend[[1]]} 40% availability for ICU beds")
 
@@ -212,8 +218,10 @@ trigger_dat_i <- consec_days_i %>%
                             pos_one_i,
                           num_days == 1 & trend == "below" ~
                             neg_one_i,
-                          between(num_days, 2, 13) & trend == "below" ~
+                          between(num_days, 2, 6) & trend == "below" ~
                             under_ft_i,
+                          between(num_days, 7, 13) & trend == "below" ~
+                            ft_over_i_sev,
                           num_days >= 14 & trend == "below" ~
                             ft_over_i,
                           num_days > 1 & trend == "above" ~
@@ -230,10 +238,12 @@ pos_one_v <- glue("<b style='color: #33a532'>{consec_days_v$num_days[[1]]}</b> d
 neg_one_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> day {consec_days_v$trend[[1]]} 70% availability for ventilators")
 # 0 days == no change
 zero_days_v <- glue("{consec_days_v$trend[[1]]} in availability of ventilators from yesterday")
-# between 2 and 13 days below 70%
+# between 2 and 6 days below 70%
 under_ft_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators")
 # 14 and over days below 70%
 ft_over_v <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf071;</span>")
+# betweeen 7 and 13 days below 70%
+ft_over_v_sev <- glue("<b style='color: #cf142b'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf06A;</span>")
 # more than 1 day above 70%
 above_pos_one_v <- glue("<b style='color: #33a532'>{consec_days_v$num_days[[1]]}</b> consecutive days of being {consec_days_v$trend[[1]]} 70% availability for ventilators")
 
@@ -243,8 +253,10 @@ trigger_dat_v<- consec_days_v %>%
                             pos_one_v,
                           num_days == 1 & trend == "below" ~
                             neg_one_v,
-                          between(num_days, 2, 13) & trend == "below" ~
+                          between(num_days, 2, 6) & trend == "below" ~
                             under_ft_v,
+                          between(num_days, 7, 13) & trend == "below" ~
+                            ft_over_v_sev,
                           num_days >= 14 & trend == "below" ~
                             ft_over_v,
                           num_days > 1 & trend == "above" ~

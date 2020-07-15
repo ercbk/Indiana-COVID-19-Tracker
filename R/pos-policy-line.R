@@ -131,8 +131,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(1.0, 0.9, 0.7, 0.7),
-          vjust = c(3.1, 3.5, -2.5, -2.0))
+   mutate(hjust = c(1.1, 0.8, 0.7, 0.7),
+          vjust = c(2.9, 3.3, -2.5, -2.0))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -175,16 +175,18 @@ pos_policy_line <- ggplot(cases_dat %>%
               color = "white", fill = "black") +
    # segments connecting policy labels to points
    # stage 2
-   geom_segment(
-      data = data.frame(), aes(x = 18000, xend = 19500,
-                               y = 429, yend = 565),
-      color = deep_light[[7]], arrow = arw
+   geom_curve(
+      data = data.frame(), aes(x = 17500, xend = 19000,
+                               y = 449, yend = 585),
+      color = deep_light[[7]], arrow = arw,
+      curvature = -0.20
    ) +
    # stage 3
-   geom_segment(
-      data = data.frame(), aes(x = 29000, xend = 30500,
-                               y = 300, yend = 429),
-      color = deep_light[[7]], arrow = arw
+   geom_curve(
+      data = data.frame(), aes(x = 29000, xend = 30000,
+                               y = 320, yend = 440),
+      color = deep_light[[7]], arrow = arw,
+      curvature = -0.20
    ) +
    # stage 4
    geom_segment(
@@ -193,10 +195,11 @@ pos_policy_line <- ggplot(cases_dat %>%
       color = deep_light[[7]], arrow = arw
    ) +
    # stage 4.5
-   geom_segment(
-      data = data.frame(), aes(x = 46660, xend = 47600,
-                               y = 690, yend = 590),
-      color = deep_light[[7]], arrow = arw
+   geom_curve(
+      data = data.frame(), aes(x = 46660, xend = 47280,
+                               y = 690, yend = 605),
+      color = deep_light[[7]], arrow = arw,
+      curvature = 0.20
    ) +
    labs(x = "Cumulative Cases", y = NULL,
         title = "Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
