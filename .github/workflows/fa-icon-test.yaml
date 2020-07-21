@@ -1,11 +1,10 @@
-name: Evening Update
+name: fa icon test
 
 on:
   schedule:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
-    - cron: '21 22 * * *'
-    #- cron: '55 22 * * *'
+    - cron: '50 1 * * *'
 
 
 jobs:
@@ -68,36 +67,10 @@ jobs:
           renv::restore()
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      #- name: install RSelenium separately
-        #run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
       
-      
-      ## Run scripts
-      - name: build beds and ventilator data set
-        if: success()
-        run: Rscript "R/build-datasets.R"
-      - name: run opentab-rest-line
-        run: Rscript "R/opentab-rest-line.R"
-      - name: run excess-death-col
-        run: Rscript "R/excess-death-col.R"
-      - name: run hosp-icu-vent
-        run: Rscript "R/hosp-icu-vent.R"
-      - name: run daily-pos-rate
-        run: Rscript "R/daily-pos-rate.R"
-      - name: run ind-covid-line
-        run: Rscript "R/ind-covid-line.R"
       - name: run pos-policy-line
         run: Rscript "R/pos-policy-line.R"
-      - name: run county-slope-models
-        run: Rscript "R/county-slope-models.R"
-      - name: run goog-mob-line
-        run: Rscript "R/goog-mob-line.R"
-      - name: run regional-slope-models
-        run: Rscript "R/regional-slope-models.R"
-      - name: run daily-re-estimate
-        run: Rscript "R/daily-est-re.R"
-      - name: render readme
-        run: Rscript "automate/render-readme.R"
+      
         
         
       ## Commit, Push, Trigger other repo workflow
@@ -112,11 +85,3 @@ jobs:
         # GITHUB_TOKEN automatically created
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      # Sends signal to the website repo to start its evening update
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        # requires token with repo scope
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: ercbk/Indiana-COVID-19-Website
-          event-type: evening-update

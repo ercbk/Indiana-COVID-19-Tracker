@@ -35,18 +35,20 @@ bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
 
 # indy data hub changed col names mid-pandemic, so I needed to revert them back to maintain consistency with scripts and past data 
 bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
-   rename(beds_icu_occupied_beds_covid_19 = m2b_hospitalized_icu_occupied_covid,
-          beds_icu_total = m2b_hospitalized_icu_supply,
-          bed_occupied_icu_non_covid = m2b_hospitalized_icu_occupied_non_covid,
-          beds_available_icu_beds_total = m2b_hospitalized_icu_available,
-          vents_all_available_vents_not_in_use = m2b_hospitalized_vent_available,
-          vents_total = m2b_hospitalized_vent_supply,
-          vents_all_in_use_covid_19 = m2b_hospitalized_vent_occupied_covid,
-          vents_non_covid_pts_on_vents = m2b_hospitalized_vent_occupied_non_covid) %>%
-      mutate(date = lubridate::ymd(date)) %>%
-      select(date, beds_icu_total, beds_icu_occupied_beds_covid_19,
-             bed_occupied_icu_non_covid, beds_available_icu_beds_total,
-             vents_total, vents_all_in_use_covid_19,
+   # rename(beds_icu_occupied_beds_covid_19,
+   #        beds_icu_total,
+   #        bed_occupied_icu_non_covid = m2b_hospitalized_icu_occupied_non_covid,
+   #        beds_available_icu_beds_total = m2b_hospitalized_icu_available,
+   #        vents_all_available_vents_not_in_use = m2b_hospitalized_vent_available,
+   #        vents_total = m2b_hospitalized_vent_supply,
+   #        vents_all_in_use_covid_19 = m2b_hospitalized_vent_occupied_covid,
+   #        vents_non_covid_pts_on_vents = m2b_hospitalized_vent_occupied_non_covid) %>%
+   tidyr::pivot_wider(names_from = STATUS_TYPE, values_from = TOTAL) %>% 
+   janitor::clean_names() %>% 
+      mutate(date = lubridate::today()) %>%
+      select(date, beds_icu_total, beds_icu_occupied_covid_19,
+             beds_available_icu_beds_total,
+             vents_total, vents_all_use_covid_19,
              vents_non_covid_pts_on_vents, vents_all_available_vents_not_in_use)
 
 
@@ -58,14 +60,14 @@ new_complete <- old_complete %>%
 readr::write_csv(new_complete, "data/beds-vents-complete.csv")
 
 
-# keep a week's worth of files, delete anything older
-delete_date <- todays_date - 7
-del_date_str <- delete_date %>%
-   stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
-   stringr::str_remove_all(pattern = "-") %>%
-   stringr::str_remove(pattern = "^[0-9]")
-
-fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-{del_date_str}.xlsx"))
+# # keep a week's worth of files, delete anything older
+# delete_date <- todays_date - 7
+# del_date_str <- delete_date %>%
+#    stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
+#    stringr::str_remove_all(pattern = "-") %>%
+#    stringr::str_remove(pattern = "^[0-9]")
+# 
+# fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-{del_date_str}.xlsx"))
 
 
 
@@ -126,8 +128,8 @@ age_dat <- age_raw %>%
    janitor::clean_names() %>%
    mutate(date = lubridate::today()) %>%
    rename_at(vars(-date), ~stringr::str_remove(.,"m1d_")) %>%
-   rename(covid_count = covid_cases, covid_count_pct = covid_cases_pct,
-          covid_test = covid_tests, covid_test_pct = covid_tests_pct) %>% 
+   # rename(covid_count = covid_cases, covid_count_pct = covid_cases_pct,
+   #        covid_test = covid_tests, covid_test_pct = covid_tests_pct) %>% 
    select(date, agegrp, covid_count, covid_deaths,
           covid_test, covid_count_pct, covid_deaths_pct,
           covid_test_pct)
@@ -156,14 +158,14 @@ if (!isTRUE(all.equal(age_comp_test, age_dat_test))) {
 }
 
 
-# keep a week's worth of files, delete anything older
-delete_date <- todays_date - 7
-del_date_str <- delete_date %>%
-   stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
-   stringr::str_remove_all(pattern = "-") %>%
-   stringr::str_remove(pattern = "^[0-9]")
-
-fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/ind-demog-{del_date_str}.xlsx"))
+# # keep a week's worth of files, delete anything older
+# delete_date <- todays_date - 7
+# del_date_str <- delete_date %>%
+#    stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
+#    stringr::str_remove_all(pattern = "-") %>%
+#    stringr::str_remove(pattern = "^[0-9]")
+# 
+# fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/ind-demog-{del_date_str}.xlsx"))
 
 
 
