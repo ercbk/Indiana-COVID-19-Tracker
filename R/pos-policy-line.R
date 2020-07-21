@@ -21,7 +21,7 @@
 ########################
 
 
-pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, ragg)
+pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
 
@@ -229,10 +229,8 @@ pos_policy_line <- ggplot(cases_dat %>%
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
 
-plot_path2 <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line2-{data_date}.png")
-plot_path1 <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line1-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line-{data_date}.png")
 
-ggsave(plot_path1, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm")
-ggsave(plot_path2, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm", device = agg_png())
+ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm")
 
 
