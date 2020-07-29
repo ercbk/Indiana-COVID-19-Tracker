@@ -50,7 +50,7 @@ goog_plot <- ggplot(data = ind_goog %>%
                  filter(weekend == TRUE),
               aes(xintercept = date),
               color = "#755c99", size = 5.1,
-              alpha = 0.2) +
+              alpha = 0.15) +
    # viridis pal is continuous, begin, [0, 1], says where rightside endpt is
    scale_color_viridis_d(option = "magma", direction = 1,
                          begin = 0.5) +
