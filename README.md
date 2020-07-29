@@ -54,7 +54,7 @@ those from Governor Holcomb if any are presented.
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
     <br /> <br /> <br />
 
-<img src="plots/hosp-icu-vent-2020-07-28.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-07-29.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -87,7 +87,7 @@ those from Governor Holcomb if any are presented.
     Project](https://covidtracking.com/data)  
     <br /> <br /> <br />
 
-<img src="plots/ot-rest-line-2020-07-25.png" width="935" />
+<img src="plots/ot-rest-line-2020-07-28.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
@@ -172,7 +172,7 @@ those from Governor Holcomb if any are presented.
     Research in Health.  
     <br /> <br /> <br />
 
-<img src="plots/excess-death-col-2020-07-11.png" width="935" />
+<img src="plots/excess-death-col-2020-07-18.png" width="935" />
 
   - The
     [CDC’s](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm)
