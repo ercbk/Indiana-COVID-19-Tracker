@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 build-opentab-dat.bat
+R-local/
 Rplots.pdf
 ind-covid-line-local.R
 ind-covid-line-rscript.R
@@ -10,7 +11,6 @@ tweet-covid-update.R
 create_token.R
 death-pyr-bar.R
 opentab-rest-line-local.R
-build-opentab-dat.R
 excess-death-col-local.R
 pos-policy-line-old.R
 contact-tracing.csv

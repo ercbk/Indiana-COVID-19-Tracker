@@ -1,9 +1,7 @@
 
 
 # Notes
-# 1. The WHO says that the positive test rate can be a good indicator of whether enough virus testing is happening. It recommends a positive test rate range of 3% - 12%.
-# 2. A Johns Hopkins article calcs this rate for states over a 3 day window and uses the WHO benchmark to rate states' amount of testing as sufficient or not
-
+# 1. Box and Holcomb have stated they're using a seven-day data sample to calc their positive test rate, so that's what I'm using.
 
 
 
