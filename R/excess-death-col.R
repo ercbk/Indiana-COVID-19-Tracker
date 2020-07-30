@@ -269,7 +269,7 @@ coord_dates <- ind_excess %>%
    # estimation of plot length range from original plot
    # numbers need to be same as above
    slice((n()-25):(n()-2)) %>% 
-   summarize(xmin = first(week_ending_date) - coord_constant - 4,
+   summarize(xmin = first(week_ending_date) - coord_constant - 7,
              xmax = last(week_ending_date) + coord_constant)
 
 
