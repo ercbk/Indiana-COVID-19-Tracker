@@ -60,14 +60,14 @@ new_complete <- old_complete %>%
 readr::write_csv(new_complete, "data/beds-vents-complete.csv")
 
 
-# # keep a week's worth of files, delete anything older
-# delete_date <- todays_date - 7
-# del_date_str <- delete_date %>%
-#    stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
-#    stringr::str_remove_all(pattern = "-") %>%
-#    stringr::str_remove(pattern = "^[0-9]")
-# 
-# fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-{del_date_str}.xlsx"))
+# keep a week's worth of files, delete anything older
+delete_date <- todays_date - 7
+del_date_str <- delete_date %>%
+   stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
+   stringr::str_remove_all(pattern = "-") %>%
+   stringr::str_remove(pattern = "^[0-9]")
+
+fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-{del_date_str}.xlsx"))
 
 
 
@@ -158,14 +158,14 @@ if (!isTRUE(all.equal(age_comp_test, age_dat_test))) {
 }
 
 
-# # keep a week's worth of files, delete anything older
-# delete_date <- todays_date - 7
-# del_date_str <- delete_date %>%
-#    stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
-#    stringr::str_remove_all(pattern = "-") %>%
-#    stringr::str_remove(pattern = "^[0-9]")
-# 
-# fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/ind-demog-{del_date_str}.xlsx"))
+# keep a week's worth of files, delete anything older
+delete_date <- todays_date - 7
+del_date_str <- delete_date %>%
+   stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>%
+   stringr::str_remove_all(pattern = "-") %>%
+   stringr::str_remove(pattern = "^[0-9]")
+
+fs::file_delete(glue::glue("{rprojroot::find_rstudio_root_file()}/data/ind-demog-{del_date_str}.xlsx"))
 
 
 
