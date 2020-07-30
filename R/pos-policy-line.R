@@ -62,6 +62,9 @@ policy_dat <- tibble(policy = "Stage 2 Reopening",
    add_row(policy = "Stage 4.5 Reopening",
            date = as.Date("2020-07-03"),
            date_text = "7/3/2020") %>% 
+   add_row(policy = "Conditional Mask Requirement",
+           date = as.Date("2020-07-27"),
+           date_text = "7/27/2020") %>% 
    mutate(labels = glue("{policy}
                            ( {date_text} )     "))
 
@@ -131,8 +134,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(1.1, 0.8, 0.7, 0.7),
-          vjust = c(2.9, 3.3, -2.5, -2.0))
+   mutate(hjust = c(1.1, 0.8, 0.7, 0.7, 0.8),
+          vjust = c(2.9, 3.3, -2.5, -2.0, 3.15))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -200,6 +203,13 @@ pos_policy_line <- ggplot(cases_dat %>%
                                y = 690, yend = 605),
       color = deep_light[[7]], arrow = arw,
       curvature = 0.20
+   ) +
+   # cond. mask requirement
+   geom_curve(
+      data = data.frame(), aes(x = 61500, xend = 63000,
+                               y = 380, yend = 488),
+      color = deep_light[[7]], arrow = arw,
+      curvature = -0.20
    ) +
    labs(x = "Cumulative Cases", y = NULL,
         title = "Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
