@@ -54,14 +54,14 @@ goog_plot <- ggplot(data = ind_goog %>%
    # viridis pal is continuous, begin, [0, 1], says where rightside endpt is
    scale_color_viridis_d(option = "magma", direction = 1,
                          begin = 0.5) +
-   scale_x_date(limits = c(as.Date("2020-03-07"), max(ind_goog$date)+1),
+   scale_x_date(limits = c(as.Date("2020-03-07"), max(ind_goog$date)+7),
                 date_breaks = "14 day", date_labels = "%b %d") +
    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
    ggrepel::geom_text_repel(data = ind_goog %>% 
                                filter(date == max(date)),
                             aes(label = scales::percent(index, accuracy = 1)),
-                            point.padding = 0.5,direction = "y",
-                            segment.size = NA, nudge_x = 0.,
+                            point.padding = 0.5,direction = "both",
+                            segment.size = NA, nudge_x = 0.2,
                             show.legend = FALSE, size = 5) +
    labs(x = NULL, y = NULL,
         title = "Approximating levels of social distancing in Indiana using Google Maps data",
