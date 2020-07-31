@@ -23,7 +23,7 @@ rt_tok <- rtweet::create_token(
 tweet_rows <- 0
 
 # Runner uses UTC timezone so 17:00 should be 1pm ET
-while (lubridate::hour(Sys.time()) <= 18 & tweet_rows == 0) {
+while (lubridate::hour(Sys.time()) <= 17 & tweet_rows == 0) {
    
    # detect pattern in tweet that has updated data
    in_health_tweets <- rtweet::get_timeline("StateHealthIN",
@@ -45,8 +45,5 @@ while (lubridate::hour(Sys.time()) <= 18 & tweet_rows == 0) {
    }
    
 }
-
-# give up after about an hour. Let the evening workflow get the update
-attempt::stop_if(tweet_rows, ~.x == 0, "Time ran out. No data update detected")
 
 
