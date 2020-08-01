@@ -30,6 +30,7 @@ jobs:
       APISECRETF: ${{ secrets.APISECRETF }}
       ACCESSTOKENF: ${{ secrets.ACCESSTOKENF }}
       ACCESSSECRETF: ${{ secrets.ACCESSSECRETF }}
+      CRAN_REPO: https://packagemanager.rstudio.com/all/__linux__/bionic/latest
       RENV_PATHS_ROOT: ~/.local/share/renv
     
     
@@ -64,12 +65,11 @@ jobs:
       - name: Restore packages
         shell: Rscript {0}
         run: |
-          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::restore()
+          cran_repo <- c("CRAN" = Sys.getenv("CRAN_REPO"))
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv", repos = cran_repo)
+          renv::restore(repos = cran_repo)
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
-      #- name: install RSelenium separately
-        #run: Rscript -e "install.packages('RSelenium', repos = 'https://cloud.r-project.org')"
       
       
       ## Run scripts
