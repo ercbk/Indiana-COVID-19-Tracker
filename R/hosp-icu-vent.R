@@ -46,6 +46,7 @@ ind_hosp <- ct_dat_raw %>%
   filter(state == "IN" & hospitalizedCurrently != "NA") %>% 
   select(date, hospitalizedCurrently) %>% 
   mutate(date = lubridate::ymd(date)) %>%
+  slice(-1) %>% 
   as_tsibble(index = date)
 
 # current date of data
