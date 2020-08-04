@@ -32,7 +32,7 @@ light_haz <- prismatic::clr_lighten(purp_haz, shift = 0.25)
 # hospitalizations data
 ct_dat_raw <- readr::read_csv("https://covidtracking.com/api/v1/states/daily.csv")
 # beds, ventilators data
-iv_dat_raw <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-complete.rds"))
+iv_dat_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-complete.csv"))
 
 
 
