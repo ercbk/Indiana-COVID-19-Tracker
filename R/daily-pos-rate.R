@@ -95,7 +95,7 @@ rate_plot <- ggplot(data = chart_dat,
                                 filter(date == max(date)),
                              aes(label = scales::percent(pos_test_rate, accuracy = 0.1), size = 12),
                              nudge_x = -0.45, nudge_y = 0.002) +
-   geom_text(data = data.frame(x = as.Date("2020-04-23"),
+   geom_text(data = data.frame(x = as.Date("2020-04-27"),
                                y = text_coord + 0.03,
                                label = glue("US Average: {us_pos_rate}")),
              mapping = aes(x = x, y = y,
