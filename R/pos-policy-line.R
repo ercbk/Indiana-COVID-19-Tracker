@@ -157,7 +157,7 @@ xmax <- cases_dat %>%
 # Chart
 ###########################
 
-pos_policy_line
+
 
 # daily cases has some zeros and we're taking logs, so adding 1
 pos_policy_line <- ggplot(cases_dat %>% 
