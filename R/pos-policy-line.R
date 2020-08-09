@@ -157,15 +157,16 @@ xmax <- cases_dat %>%
 # Chart
 ###########################
 
+pos_policy_line
 
 # daily cases has some zeros and we're taking logs, so adding 1
 pos_policy_line <- ggplot(cases_dat %>% 
                              as_tibble(), aes(x = cumulative_cases, y = daily_cases)) +
    geom_point(color = "#B28330") +
    geom_line(color = "#B28330") +
-   scale_y_continuous(limits = c(0, 1200), labels = scales::label_comma()) +
+   scale_y_continuous(limits = c(0, 1500), labels = scales::label_comma()) +
    scale_x_continuous(limits = c(10000, xmax), labels = scales::label_comma()) +
-   geom_text(aes(x = 10000, y = 1200, label="Daily Cases"),
+   geom_text(aes(x = 10000, y = 1500, label="Daily Cases"),
              family="Roboto",
              size=4.5, hjust=0.5, color="white") +
    # policy labels, hjust and vjust values depends on label
