@@ -121,7 +121,8 @@ age_dest <- glue::glue("data/ind-demog-{try_date_str}.xlsx")
 download.file(age_url, destfile = age_dest, mode = "wb")
 
 # Has multiple sheets, but this is fine since I only need the first one.
-age_raw <- readxl::read_xlsx(age_dest)
+age_raw <- readxl::read_xlsx(age_dest, col_types = c("text", "numeric", "numeric",
+                                                     "numeric", "numeric", "numeric", "numeric"))
 
 # indyhub changed col names and order mid-pandemic, so need to revert names to keep scripts/data consistent
 age_dat <- age_raw %>% 
