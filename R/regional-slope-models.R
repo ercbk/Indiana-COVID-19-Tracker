@@ -115,10 +115,10 @@ pos_mov_avg <- midwest_dat %>%
    group_by(state) %>%
    mutate(daily_cases = difference(positives),
           daily_sevDy_ma = slider::slide_dbl(daily_cases,
-                              mean, na.rm = TRUE, .size = 7, .align = "right") %>% 
+                                             ~mean(.x), na.rm = TRUE, .before = 6) %>% 
              round(., 2),
           daily_twoWk_ma = slider::slide_dbl(daily_cases,
-                              mean, na.rm = TRUE, .size = 14, .align = "right") %>% 
+                                             ~mean(.x), na.rm = TRUE, .before = 13) %>% 
              round(., 2)) %>% 
    select(-deaths)
 
@@ -127,10 +127,10 @@ dea_mov_avg <- midwest_dat %>%
    group_by(state) %>%
    mutate(daily_cases = difference(deaths),
           daily_sevDy_ma = slider::slide_dbl(daily_cases,
-                              mean, na.rm = TRUE, .size = 7, .align = "right") %>% 
+                                             ~mean(.x), na.rm = TRUE, .before = 6) %>% 
              round(., 2),
           daily_twoWk_ma = slider::slide_dbl(daily_cases,
-                              mean, na.rm = TRUE, .size = 14, .align = "right") %>% 
+                                             ~mean(.x), na.rm = TRUE, .before = 13) %>% 
              round(., 2)) %>% 
    select(-positives)
 
