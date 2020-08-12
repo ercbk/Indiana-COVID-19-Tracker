@@ -155,7 +155,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2020-08-10.png" width="935" />
+<img src="plots/daily-re-line-2020-08-11.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
@@ -172,7 +172,7 @@ those from Governor Holcomb if any are presented.
     Research in Health.  
     <br /> <br /> <br />
 
-<img src="plots/excess-death-col-2020-07-25.png" width="935" />
+<img src="plots/excess-death-col-2020-08-01.png" width="935" />
 
   - The
     [CDC’s](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm)
