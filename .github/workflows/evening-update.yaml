@@ -96,6 +96,8 @@ jobs:
         run: Rscript "R/regional-slope-models.R"
       - name: run daily-re-estimate
         run: Rscript "R/daily-est-re.R"
+       - name: process demographics data
+        run: Rscript "R/process-demog-data.R"
       - name: render readme
         run: Rscript "automate/render-readme.R"
         
