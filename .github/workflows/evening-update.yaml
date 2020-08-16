@@ -54,6 +54,9 @@ jobs:
         run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
+      # fa has linux deps that need installed
+      - name: Install font awesome with deps
+        run: sudo apt-get install -y fonts-font-awesome
       # cache R pachage dev environment; install dev envirnoment onto runner
       - name: Cache packages
         uses: actions/cache@v2

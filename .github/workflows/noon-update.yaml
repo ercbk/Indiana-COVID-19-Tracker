@@ -3,8 +3,8 @@ name: Noon Update
 on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
-    #- cron: '40 15 * * *'
-    - cron: '29 13 * * *'
+    - cron: '40 15 * * *'
+    #- cron: '29 13 * * *'
 
 jobs:
   update:
@@ -53,7 +53,7 @@ jobs:
         run: sudo apt-get install libudunits2-dev
       # installs pandoc for rmarkdown
       - uses: r-lib/actions/setup-pandoc@v1
-      # install font awesome
+      # fa has linux deps that need installed
       - name: Install font awesome with deps
         run: sudo apt-get install -y fonts-font-awesome
       # cache R package dev environment; install dev environment onto runner
@@ -114,10 +114,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       # Send signal to website repo to start its noon update
-      #- name: Repository Dispatch
-        #uses: peter-evans/repository-dispatch@v1
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
         # requires token with repo scope
-        #with:
-          #token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          #repository: ercbk/Indiana-COVID-19-Website
-          #event-type: noon-update
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ercbk/Indiana-COVID-19-Website
+          event-type: noon-update
