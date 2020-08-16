@@ -7,6 +7,7 @@
 # 1. Data for pneumonia is sporadic with some weeks missing.
 # 2. Started data at the beginning of January since the first US recorded case is in that month
 # 3. There are few different combinations in the types of data included in the excess dataset. I chose to use the weighted, excluding covid deaths data with the excess deaths calculation that uses the point estimate, because that combination had the lowest MAE between the model estimate and the observed number of deaths
+# 4. The inset box becomes distorted as more bars are added over time. The coordinates have to be data values. So bar width gets squished as more bars accumulate since the plot size remains the same. Only way I could figure out to remedy me having to continually figure out the correct coordinates was to record and save the constant, then add to it when the data date changes.
 
 
 # Sections
@@ -35,7 +36,9 @@ natstat_excess_raw <- readr::read_csv("https://data.cdc.gov/api/views/xkkf-xrst/
    janitor::clean_names()
 
 state_wk_cause_raw <- readr::read_csv("https://data.cdc.gov/api/views/u6jv-9ijr/rows.csv?accessType=DOWNLOAD&bom=true&format=true%20target=")
- 
+
+# inset box length constant
+xmin_const <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/excess-death-xmin.rds"))
 
 
 ###################
@@ -251,6 +254,30 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
 
+# beginning of my convoluted way to automate the determination the coordinates of the inset plot 
+# get date of old constant
+old_xmin_date <- xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(data_date)
+# get value of old constant
+old_xmin_const <- xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(xmin_const)
+
+# add new constant if data is new, else keep old constant
+if (data_date > old_xmin_date) {
+   new_xmin_const <- xmin_const %>% 
+      add_row(data_date = data_date,
+              xmin_const = old_xmin_const + 4)
+} else {
+   new_xmin_const <- xmin_const
+}
+
+# pull the constant
+box_const <- new_xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(xmin_const)
+
 # need to programmatically figure out the inset plot coordinates
 coord_constant <- ind_excess %>% 
    # estimation of plot length date range from original plot
@@ -269,7 +296,8 @@ coord_dates <- ind_excess %>%
    # estimation of plot length range from original plot
    # numbers need to be same as above
    slice((n()-25):(n()-2)) %>% 
-   summarize(xmin = first(week_ending_date) - coord_constant - 7,
+   # the left coordinate need some extra
+   summarize(xmin = first(week_ending_date) - coord_constant - box_const,
              xmax = last(week_ending_date) + coord_constant)
 
 
@@ -283,4 +311,6 @@ both_charts <- excess_bar +
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
 ggsave(plot_path, plot = both_charts, dpi = "screen", width = 33, height = 20, units = "cm")
 
+# save that damn stupid constant
+readr::write_rds(new_xmin_const, glue("{rprojroot::find_rstudio_root_file()}/data/excess-death-xmin.rds"))
 
