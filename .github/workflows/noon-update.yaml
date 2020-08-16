@@ -4,7 +4,7 @@ on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
     #- cron: '40 15 * * *'
-    - cron: '16 13 * * *'
+    - cron: '29 13 * * *'
 
 jobs:
   update:
@@ -74,8 +74,8 @@ jobs:
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       
       ## Run scripts
-      - name: run detect data update
-        run: Rscript "automate/detect-data-update.R"
+      #- name: run detect data update
+        #run: Rscript "automate/detect-data-update.R"
       - name: run excess-death-col
         run: Rscript "R/excess-death-col.R"
       - name: run opentab-rest-line
