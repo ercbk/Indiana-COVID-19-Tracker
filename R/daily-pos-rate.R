@@ -2,6 +2,7 @@
 
 # Notes
 # 1. Box and Holcomb have stated they're using a seven-day data sample to calc their positive test rate, so that's what I'm using.
+# 2. Data is contiually being collected. This incompleteness makes for some pretty large and misleading positivity rates. Even though there is enough data to calculate the rates for the last couple days, I'm not including them. The rates from 3 or more days prior continue to change but are much more stable than the most recent couple rates.
 
 
 
@@ -19,7 +20,7 @@ us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") 
    arrange(date) %>% 
    # .before = 2 says take the current value and the 2 before it.
    mutate(pos_rate = slider::slide2_dbl(positiveIncrease, totalTestResultsIncrease,
-                                                   ~sum(.x)/sum(.y), .before = 6),
+                                        ~sum(.x)/sum(.y), .before = 6),
           pos_rate_text = scales::percent(pos_rate, accuracy = 0.1)) %>% 
    slice(n()) %>% 
    pull(pos_rate_text)
@@ -39,17 +40,15 @@ test_dat_raw <- readxl::read_xlsx("data/test-case-trend.xlsx")
 
 # rename cols, make tsibble, calc 7-day moving positive rate
 test_dat <- test_dat_raw %>% 
-   # select(date,
-   #        daily_tests = m1e_covid_tests,
-   #        daily_positives = m1e_covid_cases) %>%
    select(date = DATE,
           daily_tests = COVID_TEST,
           daily_positives = COVID_COUNT) %>%
    mutate(date = lubridate::ymd(date), 
           pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
-                                        ~sum(.x)/sum(.y), .before = 6)) %>% 
+                                             ~sum(.x)/sum(.y), .before = 6)) %>% 
    as_tsibble(index = date) %>% 
-      slice(-n())
+   # removing the last couple rows. Not enough data makes them misleading
+   slice(-(n()-1):-n())
 
 
 

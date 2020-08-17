@@ -73,4 +73,12 @@
     close attention to positivity rates and use a seven day window to
     calculate theirs, so I’m switching my calculation window to 7 days.
     A 5% percent target was also emphasized by Dr. Box, so also changing
-    my shaded region to a range from 0% - 5%.
+    my shaded region to a range from 0% - 5%.  
+
+  - 2020-08-17 - Daily positive rate - I calculate the rate for all the
+    data I have, but I don’t display the most recent one I’ve
+    calculated, because there isn’t enough data to give a reasonable
+    rate. I’ve decided remove another daily rate. So the last two rates
+    that I calculate won’t be displayed; for the same reason. The lack
+    of data makes these rates misleading, and some people don’t read the
+    chart descriptions.
