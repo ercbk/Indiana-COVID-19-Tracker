@@ -129,13 +129,14 @@ hosp_plot <- ggplot(data = ind_hosp,
   geom_point(color = "#32a5a3") +
   geom_line(color = "#32a5a3") +
   expand_limits(y = c(min(ind_hosp$hospitalizedCurrently)-60, max(ind_hosp$hospitalizedCurrently) + 60),
-                x = max(ind_hosp$date) + 2) +
+                x = max(ind_hosp$date) + 4) +
   scale_x_date(date_breaks = "14 days",
                date_labels = "%b %d") +
   ggrepel::geom_label_repel(data = ind_hosp %>%
                               filter(date == max(date)),
                             aes(label = hospitalizedCurrently, size = 12),
-                            nudge_x = 0, nudge_y = 18, point.padding = 1) +
+                            nudge_x = 0, nudge_y = 18, point.padding = 1,
+                            direction = "x") +
   geom_label(aes(x = as.Date("2020-04-24"),
                  y = max(hospitalizedCurrently) + 60,
                  label="Current COVID-19 Hospitalizations"),
