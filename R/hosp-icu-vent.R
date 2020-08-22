@@ -136,7 +136,7 @@ hosp_plot <- ggplot(data = ind_hosp,
                               filter(date == max(date)),
                             aes(label = hospitalizedCurrently, size = 12),
                             nudge_x = 0, nudge_y = 18, point.padding = 1,
-                            direction = "x") +
+                            direction = "x", seed = 125) +
   geom_label(aes(x = as.Date("2020-04-24"),
                  y = max(hospitalizedCurrently) + 60,
                  label="Current COVID-19 Hospitalizations"),
