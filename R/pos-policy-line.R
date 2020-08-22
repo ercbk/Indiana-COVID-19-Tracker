@@ -195,13 +195,13 @@ pos_policy_line <- ggplot(cases_dat %>%
    # stage 4
    geom_segment(
       data = data.frame(), aes(x = 40000, xend = 40000,
-                               y = 700, yend = 470),
+                               y = 650, yend = 490),
       color = deep_light[[7]], arrow = arw
    ) +
    # stage 4.5
    geom_segment(
       data = data.frame(), aes(x = 48000, xend = 48000,
-                               y = 800, yend = 605),
+                               y = 820, yend = 625),
       color = deep_light[[7]], arrow = arw
    ) +
    # cond. mask requirement
