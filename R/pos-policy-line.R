@@ -134,8 +134,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(0.8, 0.6, 0.4, 0.5, 0.6),
-          vjust = c(3.3, 3.5, -2.8, -3.0, 2.9))
+   mutate(hjust = c(0.8, 0.6, 0.8, 0.5, 0.6),
+          vjust = c(3.3, 3.5, -2.9, -3.0, 2.9))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -197,10 +197,11 @@ pos_policy_line <- ggplot(cases_dat %>%
       curvature = -0.20
    ) +
    # stage 4
-   geom_segment(
-      data = data.frame(), aes(x = 40000, xend = 40000,
-                               y = 650, yend = 490),
-      color = deep_light[[7]], arrow = arw
+   geom_curve(
+      data = data.frame(), aes(x = 38000, xend = 39950,
+                               y = 700, yend = 490),
+      color = deep_light[[7]], arrow = arw,
+      curvature = -0.10
    ) +
    # stage 4.5
    geom_segment(
@@ -210,7 +211,7 @@ pos_policy_line <- ggplot(cases_dat %>%
    ) +
    # cond. mask requirement
    geom_curve(
-      data = data.frame(), aes(x = 61500, xend = 63000,
+      data = data.frame(), aes(x = 61700, xend = 63000,
                                y = 380, yend = 488),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.20
