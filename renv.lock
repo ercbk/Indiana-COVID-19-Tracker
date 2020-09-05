@@ -991,10 +991,15 @@
     },
     "xts": {
       "Package": "xts",
-      "Version": "0.12-0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "cae1f4b14c523f62b61276fb3962d4fb"
+      "Version": "0.12-0.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "xts",
+      "RemoteUsername": "joshuaulrich",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "209151deb02529a1e2619233565f46db191d937e",
+      "Hash": "6df8542cf90e4d0327519e751c4bd8ca"
     },
     "yaml": {
       "Package": "yaml",
