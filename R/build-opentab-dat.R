@@ -3,7 +3,7 @@
 
 # Notes
 # 1. Currently having a spot of bother getting RSelenium to work on a Github runner, so need to run this locally everyday instead. Hopefully a temp fix.
-# 2. RSelenium requires XML pkg and that pkg isn't maintained for R 3.6.2, so I think the problem might be resolved if I update to R 4.0.3
+# 2. RSelenium requires XML pkg and that pkg isn't maintained for R 3.6.2, so I think the problem might be resolved if I update to R 4.0.2
 
 
 # text me if there's an error
