@@ -6,11 +6,19 @@
 # 2. RSelenium requires XML pkg and that pkg isn't maintained for R 3.6.2, so I think the problem might be resolved if I update to R 4.0.3
 
 
+# text me if there's an error
+options(error = function() { 
+      library(RPushbullet)
+      pbPost("note", "Error", geterrmessage())
+      if(!interactive()) stop(geterrmessage())
+})
+
+
 library(RSelenium); library(glue)
 
 # Use RSelenium to download dataset
 # start selenium server; chrome version is the version of the separate chrome driver I d/l'ed
-driver <- rsDriver(browser = c("chrome"), chromever = "83.0.4103.39")
+driver <- rsDriver(browser = c("chrome"), chromever = "85.0.4183.83")
 Sys.sleep(10)
 
 # browser
