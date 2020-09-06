@@ -4,7 +4,7 @@ on:
   schedule:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
-    - cron: '32 3 * * *'
+    - cron: '9 23 * * *'
     #- cron: '55 22 * * *'
 
 
@@ -43,7 +43,7 @@ jobs:
       # installs r
       - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: '3.6.3'
+          r-version: '4.0.2'
       # need libcurl to install RCurl pkg on Linux
       - name: Install libcurl
         run: sudo apt-get install libcurl4-openssl-dev
@@ -58,14 +58,6 @@ jobs:
       # fa has linux deps that need installed
       - name: Install font awesome with deps
         run: sudo apt-get install -y fonts-font-awesome
-      # cache R pachage dev environment; install dev envirnoment onto runner
-      - name: Cache packages
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.RENV_PATHS_ROOT }}
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
       - name: Restore packages
         shell: Rscript {0}
         run: |
@@ -106,11 +98,3 @@ jobs:
         run: Rscript "automate/render-readme.R"
         
         
-      # Sends signal to the website repo to start its evening update
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
-        # requires token with repo scope
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: ercbk/Indiana-COVID-19-Website
-          event-type: upgrade-dryrun
