@@ -4,7 +4,7 @@ on:
   schedule:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
-    - cron: '45 2 * * *'
+    - cron: '13 3 * * *'
     #- cron: '55 22 * * *'
 
 
@@ -43,7 +43,7 @@ jobs:
       # installs r
       - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: '4.0.2'
+          r-version: '3.6.3'
       # need libcurl to install RCurl pkg on Linux
       - name: Install libcurl
         run: sudo apt-get install libcurl4-openssl-dev
