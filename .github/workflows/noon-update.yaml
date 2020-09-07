@@ -41,7 +41,7 @@ jobs:
       # installs r
       - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: '3.6.3'
+          r-version: '4.0.2'
       # need libcurl to install RCurl pkg on Linux
       - name: Install libcurl
         run: sudo apt-get install libcurl4-openssl-dev
@@ -56,14 +56,6 @@ jobs:
       # fa has linux deps that need installed
       - name: Install font awesome with deps
         run: sudo apt-get install -y fonts-font-awesome
-      # cache R package dev environment; install dev environment onto runner
-      - name: Cache packages
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.RENV_PATHS_ROOT }}
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
       - name: Restore packages
         shell: Rscript {0}
         run: |
