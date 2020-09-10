@@ -22,8 +22,10 @@ rt_tok <- rtweet::create_token(
 # need to set the initial value
 tweet_rows <- 0
 
+lubridate::hour(Sys.time())
+
 # Runner uses UTC timezone so 5:00 should be 1pm ET
-while (lubridate::hour(Sys.time()) <= 5 & tweet_rows == 0) {
+while (lubridate::hour(Sys.time()) <= 16 & tweet_rows == 0) {
    
    # detect pattern in tweet that has updated data
    in_health_tweets <- rtweet::get_timeline("StateHealthIN",
