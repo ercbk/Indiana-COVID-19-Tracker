@@ -30,6 +30,8 @@ deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()
 # wanted something a little lighter for segments and curves
 deep_light <- prismatic::clr_lighten(deep_rooted, shift = 0.25)
 
+light_orange <- prismatic::clr_lighten("#B28330", shift = 0.30)
+
 
 
 ########################
@@ -41,7 +43,8 @@ deep_light <- prismatic::clr_lighten(deep_rooted, shift = 0.25)
 cases_dat <- nyt_dat %>% 
    filter(state == "Indiana") %>% 
    mutate(daily_cases = difference(cases),
-          daily_cases = tidyr::replace_na(daily_cases, 1)) %>%
+          daily_cases = tidyr::replace_na(daily_cases, 1),
+          sev_day_avg = slider::slide_dbl(daily_cases, .f = mean, .before = 6L)) %>%
    filter(date >= "2020-04-20") %>% 
    rename(cumulative_cases = cases)
 
@@ -67,6 +70,11 @@ policy_dat <- tibble(policy = "Stage 2 Reopening",
            date_text = "7/27/2020") %>% 
    mutate(labels = glue("{policy}
                            ( {date_text} )     "))
+
+holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day"),
+                      date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07"))) %>% 
+   inner_join(cases_dat %>% 
+                 select(date, cumulative_cases, daily_cases), by = "date")
 
 
 ########################
@@ -134,8 +142,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(0.8, 0.6, 0.8, 0.5, 0.6),
-          vjust = c(3.3, 3.5, -2.9, -3.0, 2.9))
+   mutate(hjust = c(0.8, 0.6, 0.8, 0.5, 0.4),
+          vjust = c(3.3, 3.5, -2.9, -3.0, 2.8))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -145,6 +153,8 @@ arw <- arrow(length = unit(6, "pt"), type = "closed")
 caption_text <- glue("Last updated: {data_date}
                      Source: The New York Times, based on reports from state and local health agencies")
 
+holiday_text <- "<span style='font-family: \"Font Awesome 5 Free Solid\"; color: #D5AB62FF; font-size:18pt'>&#9830;</span> Holiday"
+
 
 xmax <- cases_dat %>% 
    filter(date == max(date)) %>% 
@@ -152,7 +162,7 @@ xmax <- cases_dat %>%
    pull(xmax)
 ymax <- cases_dat %>% 
    filter(daily_cases == max(daily_cases)) %>% 
-   mutate(ymax = daily_cases * 1.03) %>% 
+   mutate(ymax = daily_cases * 1.06) %>% 
    pull(ymax)
 
 
@@ -167,9 +177,18 @@ ymax <- cases_dat %>%
 pos_policy_line <- ggplot(cases_dat %>% 
                              as_tibble(), aes(x = cumulative_cases, y = daily_cases)) +
    geom_point(color = "#B28330") +
+   # must specify color arg for shapes to show-up
+   geom_point(data = holiday_dat, color = light_orange, shape = 18, size = 4, stroke = 1.5) +
    geom_line(color = "#B28330") +
+   # experiments with adding smoothing lines
+   # geom_line(aes(y = sev_day_avg), color = "#B28330", alpha = 0.45, size = 1) +
+   # stat_smooth(method = "loess", geom = "line", se = FALSE, formula = "y ~ x",
+               # alpha = 0.45, color = "#B28330", size = 0.9) +
    scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma()) +
    scale_x_continuous(limits = c(10000, xmax), labels = scales::label_comma()) +
+   geom_richtext(aes(x = (10000 + xmax)/2, y = ymax, label = holiday_text,
+                     label.color = NA, size = 12, fontface = "bold"),
+                 fill = "black", color = "white") +
    geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
              family="Roboto",
              size=4.5, hjust=0.5, color="white") +
@@ -212,7 +231,7 @@ pos_policy_line <- ggplot(cases_dat %>%
    # cond. mask requirement
    geom_curve(
       data = data.frame(), aes(x = 61700, xend = 63000,
-                               y = 380, yend = 488),
+                               y = 370, yend = 488),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.20
    ) +
