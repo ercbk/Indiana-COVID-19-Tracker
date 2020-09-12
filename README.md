@@ -54,7 +54,7 @@ those from Governor Holcomb if any are presented.
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
     <br /> <br /> <br />
 
-<img src="plots/hosp-icu-vent-2020-09-11.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-09-12.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
