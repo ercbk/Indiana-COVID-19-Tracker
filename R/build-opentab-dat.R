@@ -14,6 +14,8 @@ options(error = function() {
 })
 
 
+setwd("~/R/Projects/Indiana-COVID-19-Tracker")
+
 library(RSelenium); library(glue)
 
 # Use RSelenium to download dataset
