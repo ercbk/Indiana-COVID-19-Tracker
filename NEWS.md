@@ -123,3 +123,5 @@
         using test encounters in the near future.
 
 <img src="C:/Users/tbats/Documents/R/Projects/Indiana-COVID-19-Tracker/plots/tests-adminvsind-percdiff.png" width="935" />
+
+words
