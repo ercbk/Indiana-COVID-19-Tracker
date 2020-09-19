@@ -23,7 +23,7 @@ output: github_document
 
 
 
-```{r perc_diff, echo=FALSE}
+```{r}
 knitr::include_graphics(glue::glue("{rprojroot::find_rstudio_root_file()}/plots/tests-adminvsind-percdiff.png"))
 ```
 

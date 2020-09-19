@@ -122,6 +122,12 @@
         over at The COVID Tracking Project. Hopefully, ISDH will start
         using test encounters in the near future.
 
+<!-- end list -->
+
+``` r
+knitr::include_graphics(glue::glue("{rprojroot::find_rstudio_root_file()}/plots/tests-adminvsind-percdiff.png"))
+```
+
 <img src="C:/Users/tbats/Documents/R/Projects/Indiana-COVID-19-Tracker/plots/tests-adminvsind-percdiff.png" width="935" />
 
 words
