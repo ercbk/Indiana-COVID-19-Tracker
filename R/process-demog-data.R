@@ -22,13 +22,19 @@ download.file(url, destfile = glue("{rprojroot::find_rstudio_root_file()}/data/c
 age_cases_raw <- readxl::read_xlsx(glue("{rprojroot::find_rstudio_root_file()}/data/cases-age.xlsx"))
 
 # state deaths, tests counts
-hub_dat_url <- "https://hub.mph.in.gov/dataset/covid-19-case-trend/resource/182b6742-edac-442d-8eeb-62f96b17773e" %>%
-      xml2::read_html() %>%
-      rvest::html_nodes(xpath = "//*[@id='content']/div[3]/div/section[1]/div[1]/p/a") %>% 
-      rvest::html_text()
 
-download.file(hub_dat_url, destfile = glue("{rprojroot::find_rstudio_root_file()}/data/test-case-trend.xlsx"), mode = "wb")
-test_dat_raw <- readxl::read_xlsx(glue("{rprojroot::find_rstudio_root_file()}/data/test-case-trend.xlsx"))
+# hub_dat_url <- "https://hub.mph.in.gov/dataset/covid-19-case-trend/resource/182b6742-edac-442d-8eeb-62f96b17773e" %>%
+#       xml2::read_html() %>%
+#       rvest::html_nodes(xpath = "//*[@id='content']/div[3]/div/section[1]/div[1]/p/a") %>% 
+#       rvest::html_text()
+# 
+# download.file(hub_dat_url, destfile = glue("{rprojroot::find_rstudio_root_file()}/data/test-case-trend.xlsx"), mode = "wb")
+# test_dat_raw <- readxl::read_xlsx(glue("{rprojroot::find_rstudio_root_file()}/data/test-case-trend.xlsx"))
+
+hub_dat_url <- "https://hub.mph.in.gov/dataset/bd08cdd3-9ab1-4d70-b933-41f9ef7b809d/resource/afaa225d-ac4e-4e80-9190-f6800c366b58/download/covid_report_county_date.xlsx"
+
+download.file(hub_dat_url, destfile = "data/county-test-case-trend.xlsx", mode = "wb")
+test_dat_raw <- readxl::read_xlsx("data/county-test-case-trend.xlsx")
 
 
 # tidycensus pkg, 2018 age populations for Indiana
@@ -72,17 +78,36 @@ age_cases_clean <- age_cases_raw %>%
 
 
 # Calc weekly tests and deaths
+
+# test_dea <- test_dat_raw %>% 
+#       select(date = DATE,
+#              daily_tests = COVID_TEST,
+#              daily_deaths = COVID_DEATHS) %>%
+#       mutate(date = lubridate::ymd(date), 
+#              week = lubridate::week(date)) %>% 
+#       group_by(week) %>% 
+#       mutate(end_date = last(date)) %>% 
+#       group_by(end_date) %>% 
+#       summarize(weekly_tests = sum(daily_tests),
+#                 weekly_deaths = sum(daily_deaths))
+
 test_dea <- test_dat_raw %>% 
-      select(date = DATE,
-             daily_tests = COVID_TEST,
-             daily_deaths = COVID_DEATHS) %>%
-      mutate(date = lubridate::ymd(date), 
-             week = lubridate::week(date)) %>% 
-      group_by(week) %>% 
-      mutate(end_date = last(date)) %>% 
-      group_by(end_date) %>% 
-      summarize(weekly_tests = sum(daily_tests),
-                weekly_deaths = sum(daily_deaths))
+   select(date = DATE,
+          county_daily_tests = COVID_TESTS_ADMINISTRATED,
+          county_daily_deaths = COVID_DEATHS) %>%
+   mutate(date = lubridate::ymd(date)) %>% 
+   group_by(date) %>% 
+   summarize(daily_tests = sum(county_daily_tests),
+             daily_deaths = sum(county_daily_deaths),
+             .groups = "drop") %>%
+   mutate(week = lubridate::week(date)) %>% 
+   group_by(week) %>% 
+   mutate(end_date = last(date)) %>% 
+   group_by(end_date) %>% 
+   summarize(weekly_tests = sum(daily_tests),
+             weekly_deaths = sum(daily_deaths))
+
+
 
 # calc cumulative cases for each week
 cumul_cases <- age_cases_clean %>% 

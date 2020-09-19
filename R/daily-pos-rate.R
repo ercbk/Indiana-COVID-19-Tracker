@@ -29,26 +29,28 @@ us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") 
 
 # Indiana Data Hub
 # state positives, deaths, tests counts
-hub_dat_url <- "https://hub.mph.in.gov/dataset/covid-19-case-trend/resource/182b6742-edac-442d-8eeb-62f96b17773e" %>%
-   xml2::read_html() %>%
-   rvest::html_nodes(xpath = "//*[@id='content']/div[3]/div/section[1]/div[1]/p/a") %>% 
-   rvest::html_text()
+hub_dat_url <- "https://hub.mph.in.gov/dataset/bd08cdd3-9ab1-4d70-b933-41f9ef7b809d/resource/afaa225d-ac4e-4e80-9190-f6800c366b58/download/covid_report_county_date.xlsx"
 
-download.file(hub_dat_url, destfile = "data/test-case-trend.xlsx", mode = "wb")
-test_dat_raw <- readxl::read_xlsx("data/test-case-trend.xlsx")
+download.file(hub_dat_url, destfile = "data/county-test-case-trend.xlsx", mode = "wb")
+test_dat_raw <- readxl::read_xlsx("data/county-test-case-trend.xlsx")
 
 
 # rename cols, make tsibble, calc 7-day moving positive rate
 test_dat <- test_dat_raw %>% 
    select(date = DATE,
-          daily_tests = COVID_TEST,
-          daily_positives = COVID_COUNT) %>%
-   mutate(date = lubridate::ymd(date), 
-          pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
+          county_daily_tests = COVID_TESTS_ADMINISTRATED,
+          county_daily_positives = COVID_COUNT) %>%
+   mutate(date = lubridate::ymd(date)) %>% 
+   group_by(date) %>% 
+   summarize(daily_tests = sum(county_daily_tests),
+             daily_positives = sum(county_daily_positives),
+             .groups = "drop") %>%
+   mutate(pos_test_rate = slider::slide2_dbl(daily_positives, daily_tests,
                                              ~sum(.x)/sum(.y), .before = 6)) %>% 
    as_tsibble(index = date) %>% 
    # removing the last couple rows. Not enough data makes them misleading
    slice(-(n()-1):-n())
+
 
 
 

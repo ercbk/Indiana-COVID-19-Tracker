@@ -76,9 +76,45 @@
     my shaded region to a range from 0% - 5%.  
 
   - 2020-08-17 - Daily positive rate - I calculate the rate for all the
-    data I have, but I don’t display the most recent one I’ve
+    data I have, but I don’t display the most recent two I’ve
     calculated, because there isn’t enough data to give a reasonable
     rate. I’ve decided remove another daily rate. So the last two rates
     that I calculate won’t be displayed; for the same reason. The lack
     of data makes these rates misleading, and some people don’t read the
-    chart descriptions.
+    chart descriptions.  
+
+  - 2020-09-18 - Daily positive rate - For about a month, ISDH’s
+    dashboard has shown and Dr. Box has been referencing a much lower
+    positivity rate, but haven’t included the testing data used to
+    calculate that rate at Indiana Data Hub. Not sure when
+    COVID\_TESTS\_ADMINISTRATED \[sic\] was added to the county-level
+    dataset, but it’s there now and I’ll be using that field to
+    calculate my positivity rate.  
+    The previous field I used for test counts only counted tests for
+    unique individuals (i.e. no repeat tests of individuals were
+    included). If a person was tested in March and then again in July,
+    each test should be recorded for that month in order for the
+    positivity rate to more accurately reflect the state of testing and
+    viral spread. This new field includes these repeat tests and
+    substantially increases the test counts which therefore lowers the
+    positivity rate as a result. This chart shows the percent difference
+    between the test field I used before and the field I’m using now.  
+    <img src="C:/Users/tbats/Documents/R/Projects/Indiana-COVID-19-Tracker/plots/tests-adminvsind-percdiff.png" width="935" />
+    COVID\_TESTS\_ADMINISTRATED is an improvement, but it’s not ideal
+    and will give a **deflated** positivity rate. This new field
+    unfortunately includes *daily* repeated tests when the count of
+    individuals tested per day is what is actually needed. These
+    COVID-19 diagnostic tests are not perfectly accurate, so false
+    positive and false negative testing results occur. To increase the
+    probability of getting a “true” test result, multiple tests for the
+    same person on the same day may occur. But given that these PCR
+    diagnostic tests are pretty expensive and information I’ve received
+    from people who have been tested, I’m not inclined to think multiple
+    *daily* tests of the same individual occur that often. With cheaper
+    tests now developed, maybe this becomes a larger issue in the future
+    though. Some states are currently providing a count of individuals
+    tested per day which is named, “test encounters.” A more detailed
+    discussion of this test count is discussed in a
+    [post](https://covidtracking.com/blog/counting-covid-19-tests) over
+    at The COVID Tracking Project. Hopefully, ISDH will start using test
+    encounters in the near future.
