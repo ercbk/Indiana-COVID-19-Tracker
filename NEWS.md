@@ -83,13 +83,13 @@
     of data makes these rates misleading, and some people don’t read the
     chart descriptions.  
 
-  - 2020-09-18 - Daily positive rate - For about a month, ISDH’s
-    dashboard has shown and Dr. Box has been referencing a much lower
-    positivity rate, but haven’t included the testing data used to
-    calculate that rate at Indiana Data Hub. Not sure when
-    COVID\_TESTS\_ADMINISTRATED \[sic\] was added to the county-level
-    dataset, but it’s there now and I’ll be using that field to
-    calculate my positivity rate.  
+  - 2020-09-18 - Daily positive rate, Median Age Weekly Cases and Tests,
+    COVIDcast MSA Positivity - For about a month, ISDH’s dashboard has
+    shown and Dr. Box has been referencing a much lower positivity rate,
+    but haven’t included the testing data used to calculate that rate at
+    Indiana Data Hub. Not sure when COVID\_TESTS\_ADMINISTRATED \[sic\]
+    was added to the county-level dataset, but it’s there now and I’ll
+    be using that field to calculate my positivity rate.  
     The previous field I used for test counts only counted tests for
     unique individuals (i.e. no repeat tests of individuals were
     included). If a person was tested in March and then again in July,
