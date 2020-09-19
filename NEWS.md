@@ -120,5 +120,6 @@
         discussion of this test count is discussed in a
         [post](https://covidtracking.com/blog/counting-covid-19-tests)
         over at The COVID Tracking Project. Hopefully, ISDH will start
-        using test encounters in the near future.  
-        <img src="C:/Users/tbats/Documents/R/Projects/Indiana-COVID-19-Tracker/plots/tests-adminvsind-percdiff.png" width="935" />
+        using test encounters in the near future.
+
+<img src="C:/Users/tbats/Documents/R/Projects/Indiana-COVID-19-Tracker/plots/tests-adminvsind-percdiff.png" width="935" />
