@@ -124,7 +124,6 @@ region_pos_path <- glue::glue("plots/region-pos-line-{params$region_pos_date}.pn
 knitr::include_graphics(region_pos_path)
 ```
 
-   * The y-axis has been transformed to the logarithmic base-10 scale. Slopes and trends of straight(-ish) lines are easier to compare than exponential curves.  
    * 7-day averages *greater* than 14 day averages indicate an *increasing* trend of positive cases or deaths.  
    * 7-day averages *less* than 14 day averages indicate a *decreasing* trend in positive cases or deaths.  
    * State policy [data](https://docs.google.com/spreadsheets/d/1zu9qEWI8PsOI_i8nI_S29HDGHlIp2lfVMsGxpQ5tvAQ/edit#gid=0) comes from Julia Raifman, Kristen Nocka, et al at Boston University.  
