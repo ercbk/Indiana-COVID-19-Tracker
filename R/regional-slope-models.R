@@ -263,11 +263,12 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
       override.aes = list(color = "white",
                           stroke = 1.5)
    )) +
-   scale_y_log10(labels = scales::label_comma()) +
+   # scale_y_log10(labels = scales::label_comma()) +
+   scale_y_continuous(labels = scales::label_comma()) +
    # needed to provide space to ggforce labels
    # just multiplying the max by a constant wasn't keeping me from having to continually adjust the constant, so I had to come-up with something else
-   expand_limits(y = max(pos_chart_dat$positives)*nrow(pos_chart_dat)*0.05,
-                 x = max(pos_chart_dat$days)+(nrow(pos_chart_dat)*0.03)) +
+   # expand_limits(y = max(pos_chart_dat$positives)*nrow(pos_chart_dat)*0.05,
+   #               x = max(pos_chart_dat$days)+(nrow(pos_chart_dat)*0.03)) +
    labs(x = "Number of days since a total of 100 <b style='color:#B28330'>positive cases</b> first recorded", y = NULL,
         title = "Regional COVID-19 <b style='color:#B28330'> Cumulative Positive Test Results</b>",
         subtitle = glue("Last updated: {data_date}"),
@@ -324,10 +325,11 @@ ggsave(plot_path, plot = mw_pos_line, dpi = "screen", width = 33, height = 20, u
 mw_dea_line <- ggplot(dea_chart_dat, aes(x = days, y = deaths, color = state)) + 
    geom_line() + 
    geom_point() +
-   scale_y_log10(labels = scales::label_comma()) +
+   # scale_y_log10(labels = scales::label_comma()) +
+   scale_y_continuous(labels = scales::label_comma()) +
    # needed to provide space to ggforce labels
-   expand_limits(y = max(pos_chart_dat$deaths)*nrow(pos_chart_dat)*0.05,
-                 x = max(pos_chart_dat$days)+(nrow(pos_chart_dat)*0.02)) +
+   # expand_limits(y = max(pos_chart_dat$deaths)*nrow(pos_chart_dat)*0.05,
+   #               x = max(pos_chart_dat$days)+(nrow(pos_chart_dat)*0.02)) +
    labs(x = "Number of days since a total of 5 <b style='color:#BE454F'>deaths</b> first recorded", y = NULL,
         title = "Regional COVID-19 <b style='color:#BE454F'> Cumulative  Deaths</b>",
         subtitle = glue("Last updated: {data_date}"),

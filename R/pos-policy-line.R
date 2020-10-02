@@ -68,6 +68,9 @@ policy_dat <- tibble(policy = "Stage 2 Reopening",
    add_row(policy = "Conditional Mask Requirement",
            date = as.Date("2020-07-27"),
            date_text = "7/27/2020") %>% 
+   add_row(policy = "Stage 5 Reopening",
+           date = as.Date("2020-09-26"),
+           date_text = "9/26/2020") %>% 
    mutate(labels = glue("{policy}
                            ( {date_text} )     "))
 
@@ -142,8 +145,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(0.8, 0.6, 0.8, 0.5, 0.4),
-          vjust = c(3.3, 3.5, -2.9, -3.0, 2.8))
+   mutate(hjust = c(0.8, 0.4, 0.8, 0.5, 0.4, 1.3),
+          vjust = c(3.3, 3.6, -2.9, -3.0, 2.8, -2.0))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -210,15 +213,15 @@ pos_policy_line <- ggplot(cases_dat %>%
    ) +
    # stage 3
    geom_curve(
-      data = data.frame(), aes(x = 29000, xend = 30000,
-                               y = 260, yend = 440),
+      data = data.frame(), aes(x = 29000, xend = 29300,
+                               y = 220, yend = 410),
       color = deep_light[[7]], arrow = arw,
-      curvature = -0.20
+      curvature = -0.40
    ) +
    # stage 4
    geom_curve(
       data = data.frame(), aes(x = 38000, xend = 39950,
-                               y = 700, yend = 490),
+                               y = 700, yend = 515),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.10
    ) +
@@ -234,6 +237,13 @@ pos_policy_line <- ggplot(cases_dat %>%
                                y = 370, yend = 488),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.20
+   ) +
+   # stage 5
+   geom_curve(
+      data = data.frame(), aes(x = 114800, xend = 119200,
+                               y = 1430, yend = 1250),
+      color = deep_light[[7]], arrow = arw,
+      curvature = -0.50
    ) +
    labs(x = "Cumulative Cases", y = NULL,
         title = "Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
