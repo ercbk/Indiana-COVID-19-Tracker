@@ -163,6 +163,7 @@ inset_plot$grobs[[1]] <- round_bg
 
 
 
+
 #####################
 # Excess deaths
 #####################
@@ -204,6 +205,63 @@ Totals<br>
                      <b>Non-COVID Classified Deaths</b>: {excess_summary$nccd_text[[1]]}")
 
 
+# beginning of my convoluted way to automate the determination the coordinates of the inset plot
+# get date of old inset constant
+old_xmin_date <- xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(data_date)
+# get value of old inset constant
+old_xmin_const <- xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(xmin_const)
+# get value of old summary position
+old_summary_pos <- xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(summary_pos)
+
+# add new constant if data is new, else keep old constant
+if (data_date > old_xmin_date) {
+   new_xmin_const <- xmin_const %>% 
+      add_row(data_date = data_date,
+              xmin_const = old_xmin_const + 4,
+              summary_pos = old_summary_pos + 1)
+} else {
+   new_xmin_const <- xmin_const
+}
+
+# pull the position constants for the summary box and inset plot
+box_const <- new_xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(xmin_const)
+summary_pos <- new_xmin_const %>% 
+   slice_max(data_date) %>% 
+   pull(summary_pos)
+
+
+# need to programmatically figure out the inset plot coordinates
+coord_constant <- ind_excess %>% 
+   # estimation of plot length date range from original plot
+   # increasing left number moves box left and vice versa
+   slice((n()-25):(n()-2)) %>% 
+   # 61 days was original plot length
+   # %/% is integer arithmetic so I don't get a decimal
+   summarize(date_len = as.numeric(last(week_ending_date) - first(week_ending_date)),
+             # value gets added to both sides, so divide by 2
+             # increasing this number increases length of box
+             constant = (82 - date_len) %/% 2) %>% 
+   pull(constant)
+
+# coordinate dates of inset plot
+coord_dates <- ind_excess %>% 
+   # estimation of plot length range from original plot
+   # numbers need to be same as above
+   slice((n()-25):(n()-2)) %>% 
+   # the left coordinate need some extra
+   summarize(xmin = first(week_ending_date) - coord_constant - box_const,
+             xmax = last(week_ending_date) + coord_constant)
+
+
+
 excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                        fill = type, label = label)) +
    expand_limits(y = 2600) +
@@ -218,7 +276,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
                             outside = TRUE,
                             min.size = 8) +
    # summary annotation
-   geom_textbox(aes(as.Date("2020-02-07"), 2075),
+   geom_textbox(aes(summary_pos, 2075),
                  label = summary_text, halign = 0,
                  col = "white", fill = "black",
                 width = 0.30, size = 5, hjust = 0.45) +
@@ -253,52 +311,6 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
 
-
-# beginning of my convoluted way to automate the determination the coordinates of the inset plot 
-# get date of old constant
-old_xmin_date <- xmin_const %>% 
-   slice_max(data_date) %>% 
-   pull(data_date)
-# get value of old constant
-old_xmin_const <- xmin_const %>% 
-   slice_max(data_date) %>% 
-   pull(xmin_const)
-
-# add new constant if data is new, else keep old constant
-if (data_date > old_xmin_date) {
-   new_xmin_const <- xmin_const %>% 
-      add_row(data_date = data_date,
-              xmin_const = old_xmin_const + 4)
-} else {
-   new_xmin_const <- xmin_const
-}
-
-# pull the constant
-box_const <- new_xmin_const %>% 
-   slice_max(data_date) %>% 
-   pull(xmin_const)
-
-# need to programmatically figure out the inset plot coordinates
-coord_constant <- ind_excess %>% 
-   # estimation of plot length date range from original plot
-   # increasing left number moves box left and vice versa
-   slice((n()-25):(n()-2)) %>% 
-   # 61 days was original plot length
-   # %/% is integer arithmetic so I don't get a decimal
-   summarize(date_len = as.numeric(last(week_ending_date) - first(week_ending_date)),
-             # value gets added to both sides, so divide by 2
-             # increasing this number increases length of box
-             constant = (82 - date_len) %/% 2) %>% 
-   pull(constant)
-
-# coordinate dates of inset plot
-coord_dates <- ind_excess %>% 
-   # estimation of plot length range from original plot
-   # numbers need to be same as above
-   slice((n()-25):(n()-2)) %>% 
-   # the left coordinate need some extra
-   summarize(xmin = first(week_ending_date) - coord_constant - box_const,
-             xmax = last(week_ending_date) + coord_constant)
 
 
 # insert lollipop plot into the bar chart
