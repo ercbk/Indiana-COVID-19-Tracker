@@ -130,7 +130,7 @@ hosp_plot <- ggplot(data = ind_hosp,
   geom_line(color = "#32a5a3") +
   expand_limits(y = c(min(ind_hosp$hospitalizedCurrently)-60, max(ind_hosp$hospitalizedCurrently) + 60),
                 x = max(ind_hosp$date) + 4) +
-  scale_x_date(date_breaks = "14 days",
+  scale_x_date(date_breaks = "21 days",
                date_labels = "%b %d") +
   ggrepel::geom_label_repel(data = ind_hosp %>%
                               filter(date == max(date)),
