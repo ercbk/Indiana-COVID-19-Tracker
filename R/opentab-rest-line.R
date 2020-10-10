@@ -26,13 +26,15 @@ region_rest <- rest_dat_raw %>%
       tidyr::pivot_longer(cols = -Name,
                           names_to = "date",
                           values_to = "pct_diff") %>% 
-      mutate(date = stringr::str_replace_all(date,
+      mutate(date = ifelse(date == "10/5_1", "10/4", date),
+             date = stringr::str_replace_all(date,
                                              pattern = "/",
                                              replacement = "-"),
              date = paste0(year(today()), "-", date),
              date = lubridate::ymd(date),
              weekend = timeDate::isWeekend(date),
-             pct_diff = pct_diff/100)
+             pct_diff = pct_diff/100) %>% 
+   arrange(Name, date)
 
 # current date of data
 data_date <- region_rest %>%
