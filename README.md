@@ -87,7 +87,7 @@ those from Governor Holcomb if any are presented.
     Project](https://covidtracking.com/data)  
     <br /> <br /> <br />
 
-<img src="plots/ot-rest-line-NA.png" width="935" />
+<img src="plots/ot-rest-line-2020-10-09.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
