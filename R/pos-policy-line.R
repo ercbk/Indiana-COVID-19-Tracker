@@ -145,8 +145,8 @@ label_dat <- cases_dat %>%
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
    select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(0.8, 0.4, 0.8, 0.5, 0.4, 1.3),
-          vjust = c(3.3, 3.6, -2.9, -3.0, 2.8, -2.0))
+   mutate(hjust = c(0.8, -0.3, 0.8, -0.1, -0.2, 1.3),
+          vjust = c(3.3, 2.8, -3.2, -4, 2.3, -3.3))
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -206,42 +206,43 @@ pos_policy_line <- ggplot(cases_dat %>%
    # segments connecting policy labels to points
    # stage 2
    geom_curve(
-      data = data.frame(), aes(x = 17500, xend = 19000,
-                               y = 400, yend = 585),
+      data = data.frame(), aes(x = 17100, xend = 18500,
+                               y = 200, yend = 530),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.20
    ) +
    # stage 3
    geom_curve(
-      data = data.frame(), aes(x = 29000, xend = 29300,
-                               y = 220, yend = 410),
+      data = data.frame(), aes(x = 35000, xend = 29300,
+                               y = 50, yend = 330),
       color = deep_light[[7]], arrow = arw,
-      curvature = -0.40
+      curvature = -0.70
    ) +
    # stage 4
    geom_curve(
       data = data.frame(), aes(x = 38000, xend = 39950,
-                               y = 700, yend = 515),
+                               y = 900, yend = 600),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.10
    ) +
    # stage 4.5
-   geom_segment(
-      data = data.frame(), aes(x = 48000, xend = 48000,
-                               y = 820, yend = 625),
-      color = deep_light[[7]], arrow = arw
+   geom_curve(
+      data = data.frame(), aes(x = 53000, xend = 48000,
+                               y = 1200, yend = 685),
+      color = deep_light[[7]], arrow = arw,
+      curvature = 0.13
    ) +
    # cond. mask requirement
    geom_curve(
-      data = data.frame(), aes(x = 61700, xend = 63000,
-                               y = 370, yend = 488),
+      data = data.frame(), aes(x = 68000, xend = 63000,
+                               y = 215, yend = 400),
       color = deep_light[[7]], arrow = arw,
-      curvature = -0.20
+      curvature = -0.80
    ) +
    # stage 5
    geom_curve(
-      data = data.frame(), aes(x = 114800, xend = 119200,
-                               y = 1430, yend = 1250),
+      data = data.frame(), aes(x = 114800, xend = 119500,
+                               y = 1800, yend = 1250),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.50
    ) +
