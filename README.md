@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2020-10-16.png" width="935" />
+<img src="plots/goog-mob-line-2020-10-18.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
