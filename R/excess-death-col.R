@@ -274,7 +274,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
    ggfittext::geom_bar_text(col = "white",
                             position = "stack",
                             outside = TRUE,
-                            min.size = 8) +
+                            min.size = 6) +
    # summary annotation
    geom_textbox(aes(summary_pos, 2075),
                  label = summary_text, halign = 0,
