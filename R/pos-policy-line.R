@@ -53,26 +53,26 @@ data_date <- cases_dat %>%
    summarize(date = max(date)) %>% 
    pull(date)
 
-policy_dat <- tibble(policy = "Stage 2 Reopening",
+policy_dat <- tibble(policy = "Stage 2",
                      date = as.Date("2020-05-04"),
                      date_text = "5/04/2020") %>% 
-   add_row(policy = "Stage 3 Reopening",
+   add_row(policy = "Stage 3",
            date = as.Date("2020-05-22"),
            date_text = "5/22/2020") %>% 
-   add_row(policy = "Stage 4 Reopening",
+   add_row(policy = "Stage 4",
            date = as.Date("2020-06-12"),
            date_text = "6/12/2020") %>% 
-   add_row(policy = "Stage 4.5 Reopening",
+   add_row(policy = "Stage 4.5",
            date = as.Date("2020-07-03"),
            date_text = "7/3/2020") %>% 
    add_row(policy = "Conditional Mask Requirement",
            date = as.Date("2020-07-27"),
            date_text = "7/27/2020") %>% 
-   add_row(policy = "Stage 5 Reopening",
+   add_row(policy = "Stage 5",
            date = as.Date("2020-09-26"),
            date_text = "9/26/2020") %>% 
    mutate(labels = glue("{policy}
-                           ( {date_text} )     "))
+                       {date_text}"))
 
 holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day"),
                       date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07"))) %>% 
@@ -144,9 +144,7 @@ label_dat <- cases_dat %>%
    as_tibble() %>% 
    # inner_join only keeps dates with a policy associated with it
    inner_join(policy_dat, by = "date") %>% 
-   select(-deaths, -fips, -state) %>%
-   mutate(hjust = c(0.8, -0.3, 0.8, -0.1, -0.2, 1.3),
-          vjust = c(3.3, 2.8, -3.2, -4, 2.3, -3.3))
+   select(-deaths, -fips, -state)
 
 
 # arrow specification used below; trying to keep the ggplot mess to a minimum
@@ -199,10 +197,12 @@ pos_policy_line <- ggplot(cases_dat %>%
    geom_label(data=label_dat, aes(x = cumulative_cases,
                                   y = daily_cases,
                                   label= labels,
-                                  hjust = hjust, vjust = vjust),
+                                  hjust = "middle", vjust = "center"),
               family="Roboto", lineheight=0.95,
               size=4.5, label.size=0,
-              color = "white", fill = "black") +
+              color = "white", fill = "black",
+              nudge_x = c(-800, 13500, -9500, 11100, 25000, -20000),
+              nudge_y = c(-550, -490, 800, 880, -380, 800)) +
    # segments connecting policy labels to points
    # stage 2
    geom_curve(
@@ -221,7 +221,7 @@ pos_policy_line <- ggplot(cases_dat %>%
    # stage 4
    geom_curve(
       data = data.frame(), aes(x = 38000, xend = 39950,
-                               y = 900, yend = 600),
+                               y = 980, yend = 600),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.10
    ) +
@@ -234,15 +234,15 @@ pos_policy_line <- ggplot(cases_dat %>%
    ) +
    # cond. mask requirement
    geom_curve(
-      data = data.frame(), aes(x = 68000, xend = 63000,
+      data = data.frame(), aes(x = 68000, xend = 64000,
                                y = 215, yend = 400),
       color = deep_light[[7]], arrow = arw,
-      curvature = -0.80
+      curvature = -0.60
    ) +
    # stage 5
    geom_curve(
-      data = data.frame(), aes(x = 114800, xend = 119500,
-                               y = 1800, yend = 1250),
+      data = data.frame(), aes(x = 110000, xend = 119500,
+                               y = 1920, yend = 1250),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.50
    ) +

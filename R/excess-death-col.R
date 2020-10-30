@@ -274,7 +274,10 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
    ggfittext::geom_bar_text(col = "white",
                             position = "stack",
                             outside = TRUE,
-                            min.size = 6) +
+                            # font size in pt
+                            min.size = 6.4,
+                            padding.x = unit(0.75, "mm"),
+                            padding.y = unit(0.75, "mm")) +
    # summary annotation
    geom_textbox(aes(summary_pos, 2075),
                  label = summary_text, halign = 0,
