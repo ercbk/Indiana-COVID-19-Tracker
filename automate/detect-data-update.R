@@ -25,7 +25,7 @@ tweet_rows <- 0
 lubridate::hour(Sys.time())
 
 # Runner uses UTC timezone so 4:00 should be 12pm ET
-while (lubridate::hour(Sys.time()) <= 16 & tweet_rows == 0) {
+while (lubridate::hour(Sys.time()) <= 17 & tweet_rows == 0) {
    
    # detect pattern in tweet that has updated data
    in_health_tweets <- rtweet::get_timeline("StateHealthIN",
