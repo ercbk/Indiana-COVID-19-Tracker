@@ -76,8 +76,8 @@ hosp_admiss_grps <- list(admissions_f = "Pyramid admissions female",
 # subset the metadata from the female/male hospitalization tableau worksheets
 wrksht_dat <- map(hosp_admiss_grps, function (x) {
    dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap[[x]]$presModelHolder$genVizDataPresModel$paneColumnsData}) %>%
-   # going to get the age group labels from the json even though I could just type them out. Indices for them located in either worksheet
-   append(list(ages = wrksht_dat[[1]]))
+   # going to get the age group labels from the json even though I could just type them out. Indices for them located in either worksheet. So just copying the 1st one
+   append(list(ages = .[[1]]))
 
 alias_indices <- list(admissions_f = 6, admissions_m = 6, ages = 2) 
 
@@ -102,8 +102,8 @@ hosp_age_df <- map2_dfc(value_indices, vec_classes, function (x, y) {
       return(hosp_col)
    }
 }) %>% 
-   # hardcoding timestamp index for now. Not sure how to otherwise get it.
-   mutate(timestamp = pluck(dataFull$dataValues, 3)[[1026]],
+   # timestamp doesn't have an index, so need to regex it
+   mutate(timestamp = str_subset(pluck(dataFull$dataValues, 3), "\\d+/\\d+/\\d+ \\d+:\\d+:\\d+"),
           date = str_extract(timestamp, pattern = "\\d+/\\d+/\\d+") %>% 
              lubridate::mdy(.),
           # total admissions per age group
