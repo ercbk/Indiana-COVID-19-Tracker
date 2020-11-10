@@ -71,8 +71,9 @@ policy_dat <- tibble(policy = "Stage 2",
    add_row(policy = "Stage 5",
            date = as.Date("2020-09-26"),
            date_text = "9/26/2020") %>% 
-   mutate(labels = glue("{policy}
-                       {date_text}"))
+   # mutate(labels = glue("{policy}
+   #                     {date_text}"))
+   mutate(labels = c("2", "3", "4", "4.5", "CMR", "5"))
 
 holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day"),
                       date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07"))) %>% 
@@ -140,10 +141,10 @@ subtitle_dat <- consec_days %>%
 ############################
 
 
-label_dat <- cases_dat %>% 
-   as_tibble() %>% 
+label_dat <- cases_dat %>%
+   as_tibble() %>%
    # inner_join only keeps dates with a policy associated with it
-   inner_join(policy_dat, by = "date") %>% 
+   inner_join(policy_dat, by = "date") %>%
    select(-deaths, -fips, -state)
 
 
@@ -165,6 +166,16 @@ ymax <- cases_dat %>%
    filter(daily_cases == max(daily_cases)) %>% 
    mutate(ymax = daily_cases * 1.06) %>% 
    pull(ymax)
+
+policy_text <- glue("
+                    <b style= 'font-size: 16px'>Reopening Stages</b><br><br>
+                    <b><i style= 'font-size:18px'>2</i></b> : Stage 2 (5/04/2020)<br>
+                    <b><i style= 'font-size:18px'>3</i></b> : Stage 3 (5/22/2020)<br>
+                    <b><i style= 'font-size:18px'>4</i></b> : Stage 4 (6/12/2020)<br>
+                    <b><i style= 'font-size:18px'>4.5</i></b> : Stage 4.5 (7/3/2020)<br>
+                    <b><i style= 'font-size:18px'>CMR</i></b> : Conditional Mask Requirement (7/3/2020)<br>
+                    <b><i style= 'font-size:18px'>5</i></b> : Stage 5 (9/26/2020)
+                    ")
 
 
 
@@ -192,57 +203,63 @@ pos_policy_line <- ggplot(cases_dat %>%
                  fill = "black", color = "white") +
    geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
              family="Roboto",
-             size=4.5, hjust=0.5, color="white") +
+             size=4.5, hjust=0.35, color="white") +
+   geom_textbox(aes(10000, ymax-1000),
+                label = policy_text, halign = 0,
+                col = "white", fill = "black",
+                # both are for box, hjust = 0 says align left edge of box with x coord
+                width = 0.30, hjust = 0.09) +
    # policy labels, hjust and vjust values depends on label
-   geom_label(data=label_dat, aes(x = cumulative_cases,
+   geom_richtext(data=label_dat, aes(x = cumulative_cases,
                                   y = daily_cases,
-                                  label= labels,
+                                  label= labels, fontface = "bold.italic",
+                                  label.colour = "black",
                                   hjust = "middle", vjust = "center"),
               family="Roboto", lineheight=0.95,
               size=4.5, label.size=0,
               color = "white", fill = "black",
-              nudge_x = c(-800, 13500, -9500, 11100, 25000, -20000),
-              nudge_y = c(-550, -490, 800, 880, -380, 800)) +
+              nudge_x = c(-800, 13000, -11000, 11100, 20000, -15000),
+              nudge_y = c(-550, -490, 900, 880, -380, 800)) +
    # segments connecting policy labels to points
    # stage 2
    geom_curve(
-      data = data.frame(), aes(x = 17100, xend = 18500,
-                               y = 200, yend = 530),
+      data = data.frame(), aes(x = 19100, xend = 18500,
+                               y = 200, yend = 430),
       color = deep_light[[7]], arrow = arw,
-      curvature = -0.20
+      curvature = -0.40
    ) +
    # stage 3
    geom_curve(
-      data = data.frame(), aes(x = 35000, xend = 29300,
-                               y = 50, yend = 330),
+      data = data.frame(), aes(x = 39000, xend = 29300,
+                               y = 0, yend = 300),
       color = deep_light[[7]], arrow = arw,
-      curvature = -0.70
+      curvature = -0.60
    ) +
    # stage 4
    geom_curve(
-      data = data.frame(), aes(x = 38000, xend = 39950,
-                               y = 980, yend = 600),
+      data = data.frame(), aes(x = 32000, xend = 39950,
+                               y = 1110, yend = 700),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.10
    ) +
    # stage 4.5
    geom_curve(
-      data = data.frame(), aes(x = 53000, xend = 48000,
-                               y = 1200, yend = 685),
+      data = data.frame(), aes(x = 54000, xend = 48000,
+                               y = 1280, yend = 805),
       color = deep_light[[7]], arrow = arw,
       curvature = 0.13
    ) +
    # cond. mask requirement
    geom_curve(
-      data = data.frame(), aes(x = 68000, xend = 64000,
-                               y = 215, yend = 400),
+      data = data.frame(), aes(x = 75000, xend = 64000,
+                               y = 50, yend = 300),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.60
    ) +
    # stage 5
    geom_curve(
-      data = data.frame(), aes(x = 110000, xend = 119500,
-                               y = 1920, yend = 1250),
+      data = data.frame(), aes(x = 110000, xend = 119000,
+                               y = 1970, yend = 1450),
       color = deep_light[[7]], arrow = arw,
       curvature = -0.50
    ) +
