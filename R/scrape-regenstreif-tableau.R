@@ -24,7 +24,7 @@ dashsite_json <- GET(url = get_url) %>%
    html_text() %>% 
    fromJSON()
 
-Sys.sleep(3)
+#Sys.sleep(3)
 
 # base_url from get_url above
 base_url <- "https://tableau.bi.iu.edu/"
@@ -35,10 +35,8 @@ post_url <- glue("{base_url}{vizql}/bootstrapSession/sessions/{session_id}")
 
 
 dash_api_output <- POST(post_url, body = list(sheet_id = sheet_id), encode = "form")
-# sheet id seems to remain constant, but the session id at end of url does change
-# dash_api_output <- POST(url = "https://tableau.bi.iu.edu/vizql/t/prd/w/RegenstriefInstituteCOVID-19PublicDashboard/v/RICOVID-19HospitalizationsandTests/bootstrapSession/sessions/3A7033FEEBD34A959FD950982495A84E-3:0",body = list(sheet_id = "RI%20COVID-19%20Hospitalizations%20and%20Tests"), encode = "form")
 
-Sys.sleep(3)
+#Sys.sleep(3)
 
 dash_text <- content(dash_api_output, "text")
 
@@ -57,7 +55,7 @@ dash_text <- content(dash_api_output, "text")
 # outputs a matrix
 dash_data <- str_match(dash_text, "\\d+;(\\{.*\\})\\d+;(\\{.*\\})")
 
-# session info and css html stuff (not needed in this instance)
+# session info and css html stuff (may use to try and find timestamp)
 # info <- fromJSON(extract[1,1])
 
 # just fyi, the data which is the third elt does have a number string in "data" which is how it gets matched, but if you save "extract_data" to a text file (see above) it doesn't show the number string for some reason.
@@ -70,22 +68,48 @@ dash_data_json <- fromJSON(dash_data[1,3])
 # all the numeric and text values for most (if not all) the dashboard charts/worksheets
 dataFull = dash_data_json$secondaryInfo$presModelMap$dataDictionary$presModelHolder$genDataDictionaryPresModel$dataSegments[["0"]]$dataColumns
 
-# hospital admissions by age group and sex
-hosp_age <- pluck(dataFull$dataValues, 3) %>% 
-      .[10:37]
 
-# cleaning
-hosp_age_df <- tibble(
-      ages = hosp_age[1:9],
-      admissions_m = as.numeric(hosp_age[10:18]),
-      admissions_f = as.numeric(hosp_age[19:27])
-) %>% 
-      mutate(admissions_total = admissions_m + admissions_f,
-             date = hosp_age[[28]],
-             # get month/day/year
-             date = str_extract(date, pattern = "\\d+/\\d+/\\d+") %>% 
-                   lubridate::mdy(.))
+# tableau worksheets I'm interested in.
+hosp_admiss_grps <- list(admissions_f = "Pyramid admissions female",
+                      admissions_m = "Pyramid admissions male")
 
+# subset the metadata from the female/male hospitalization tableau worksheets
+wrksht_dat <- map(hosp_admiss_grps, function (x) {
+   dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap[[x]]$presModelHolder$genVizDataPresModel$paneColumnsData}) %>%
+   # going to get the age group labels from the json even though I could just type them out. Indices for them located in either worksheet
+   append(list(ages = wrksht_dat[[1]]))
+
+alias_indices <- list(admissions_f = 6, admissions_m = 6, ages = 2) 
+
+# data is located in giant json sea of data values, so we need the indices of the values we want
+value_indices <- map2(wrksht_dat, alias_indices, function (x, y) {
+   # zero indexed so need to add 1 to indices
+   x$paneColumnsList$vizPaneColumns[[1]]$aliasIndices[[y]] + 1
+})
+
+vec_classes = list(admissions_f = "numeric", admissions_m = "numeric", ages = "character" )
+hosp_age_df <- map2_dfc(value_indices, vec_classes, function (x, y) {
+   if (y == "numeric") {
+      hosp_col <- map_dbl(x, function(a) {
+         # pulls values from dataValues$integer
+         pluck(dataFull$dataValues, 1)[[a]]
+      })
+   } else {
+      hosp_col <- map_chr(x, function(b) {
+         # pulls values from dataValues$cstring
+         pluck(dataFull$dataValues, 3)[[b]]
+      })
+      return(hosp_col)
+   }
+}) %>% 
+   # hardcoding timestamp index for now. Not sure how to otherwise get it.
+   mutate(timestamp = pluck(dataFull$dataValues, 3)[[1026]],
+          date = str_extract(timestamp, pattern = "\\d+/\\d+/\\d+") %>% 
+             lubridate::mdy(.),
+          # total admissions per age group
+          admissions_total = admissions_f + admissions_m) %>% 
+   relocate(date, where(is.character), .before = where(is.numeric)) %>% 
+   select(-timestamp)
 
 # If the data is new, add it to the old dataset
 old_hosp_age_df <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/age-hosp-line.rds"))
@@ -106,57 +130,4 @@ if (data_date != old_data_date) {
 }
 
 readr::write_rds(new_hosp_age_df, glue("{rprojroot::find_rstudio_root_file()}/data/age-hosp-line.rds"))
-
-
-# columnsData <- dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap[["Pyramid admissions age value"]]$presModelHolder$genVizDataPresModel$paneColumnsData
-# 
-# valueIndices <- columnsData$paneColumnsList$vizPaneColumns[[1]]$valueIndices[[2]]
-# aliasIndices <- columnsData$paneColumnsList$vizPaneColumns[[1]]$aliasIndices[[2]]
-# 
-# 
-# cstring <- list();
-# for(t in dataFull) {
-#    if(t$dataType == "cstring"){
-#       cstring <- t
-#       break
-#    }
-# }
-# data_index <- 1
-# name_index <- 1
-# frameData <-  list()
-# frameNames <- c()
-# for(t in dataFull) {
-#    for(index in result) {
-#       if (t$dataType == index["dataType"]){
-#          if (length(index$valueIndices) > 0) {
-#             j <- 1
-#             vector <- character(length(index$valueIndices))
-#             for (it in index$valueIndices){
-#                vector[j] <- t$dataValues[it+1]
-#                j <- j + 1
-#             }
-#             frameData[[data_index]] <- vector
-#             frameNames[[name_index]] <- paste(index$fieldCaption, "value", sep="-")
-#             data_index <- data_index + 1
-#             name_index <- name_index + 1
-#          }
-#          if (length(index$aliasIndices) > 0) {
-#             j <- 1
-#             vector <- character(length(index$aliasIndices))
-#             for (it in index$aliasIndices){
-#                if (it >= 0){
-#                   vector[j] <- t$dataValues[it+1]
-#                } else {
-#                   vector[j] <- cstring$dataValues[abs(it)]
-#                }
-#                j <- j + 1
-#             }
-#             frameData[[data_index]] <- vector
-#             frameNames[[name_index]] <- paste(index$fieldCaption, "alias", sep="-")
-#             data_index <- data_index + 1
-#             name_index <- name_index + 1
-#          }
-#       }
-#    }
-# }
 
