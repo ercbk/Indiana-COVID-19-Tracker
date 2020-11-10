@@ -173,7 +173,7 @@ policy_text <- glue("
                     <b><i style= 'font-size:18px'>3</i></b> : Stage 3 (5/22/2020)<br>
                     <b><i style= 'font-size:18px'>4</i></b> : Stage 4 (6/12/2020)<br>
                     <b><i style= 'font-size:18px'>4.5</i></b> : Stage 4.5 (7/3/2020)<br>
-                    <b><i style= 'font-size:18px'>CMR</i></b> : Conditional Mask Requirement (7/3/2020)<br>
+                    <b><i style= 'font-size:18px'>CMR</i></b> : Conditional Mask Requirement (7/27/2020)<br>
                     <b><i style= 'font-size:18px'>5</i></b> : Stage 5 (9/26/2020)
                     ")
 
