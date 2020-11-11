@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2020-11-06.png" width="935" />
+<img src="plots/goog-mob-line-2020-11-08.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
@@ -152,7 +152,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2020-11-09.png" width="935" />
+<img src="plots/daily-re-line-2020-11-10.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
