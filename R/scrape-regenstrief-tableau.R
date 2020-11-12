@@ -1,6 +1,6 @@
 # Get hospitilizations by age from Regenstrief tableau dashboard
 
-
+# https://www.regenstrief.org/covid-dashboard/
 
 
 
@@ -10,7 +10,7 @@ pacman::p_load(dplyr, glue, rvest, httr, jsonlite, purrr, stringr)
 
 
 
-# This isn't the website url. Its the dashboard api's GET (request) url. Couldn't pull this url using rvest, may be able to using RSelenium but didn't try. Find dashboard's iframe and the url will be value of "src" attribute
+# Dashboard api's GET (request) url. Couldn't pull this url using rvest, may be able to using RSelenium or Splash but didn't try. Find dashboard's iframe and the url will be value of "src" attribute
 # goto site, inspect then classes: area-wrap clearfix > area-section main (the third one) > area-sec-padd >  full_width_text > vizContainer > iframe
 get_url <- "https://tableau.bi.iu.edu/t/prd/views/RegenstriefInstituteCOVID-19PublicDashboard/RICOVID-19HospitalizationsandTests?:origin=card_share_link&:embed=y&:isGuestRedirectFromVizportal=y&:showShareOptions=false&:toolbar=false&:tabs=n&:size=1320,3320&&:showVizHome=n&:bootstrapWhenNotified=y&:device=desktop&:apiID=host0#navType=0&navSrc=Parse"
 
@@ -24,7 +24,8 @@ dashsite_json <- GET(url = get_url) %>%
    html_text() %>% 
    fromJSON()
 
-#Sys.sleep(3)
+# robots.txt asks for a 5 sec delay between hits
+Sys.sleep(5)
 
 # base_url from get_url above
 base_url <- "https://tableau.bi.iu.edu/"
