@@ -204,7 +204,7 @@ pos_policy_line <- ggplot(cases_dat %>%
    geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
              family="Roboto",
              size=4.5, hjust=0.35, color="white") +
-   geom_textbox(aes(10000, ymax-1000),
+   geom_textbox(aes(10000, ymax-1500),
                 label = policy_text, halign = 0,
                 col = "white", fill = "black",
                 # both are for box, hjust = 0 says align left edge of box with x coord
