@@ -3,8 +3,8 @@ name: Noon Update
 on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
-    - cron: '40 16 * * *'
-    #- cron: '56 17 * * *'
+    #- cron: '40 16 * * *'
+    - cron: '31 17 * * *'
 
 jobs:
   update:
@@ -98,8 +98,8 @@ jobs:
         run: Rscript "R/daily-est-re.R"
       - name: process demographics data
         run: Rscript "R/process-demog-data.R"
-      - name: scrape regenstrief hospitalization data
-        run: Rscript "R/scrape-regenstrief-tableau.R"
+      #- name: scrape regenstrief hospitalization data
+        #run: Rscript "R/scrape-regenstrief-tableau.R"
       - name: render readme
         run: Rscript "automate/render-readme.R"
         
