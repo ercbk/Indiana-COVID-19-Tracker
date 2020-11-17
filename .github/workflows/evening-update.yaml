@@ -4,8 +4,8 @@ on:
   schedule:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
-    - cron: '15 23 * * *'
-    #- cron: '51 23 * * *'
+    #- cron: '15 23 * * *'
+    - cron: '44 23 * * *'
 
 
 jobs:
@@ -93,8 +93,8 @@ jobs:
         run: Rscript "R/pos-policy-line.R"
       - name: run county-slope-models
         run: Rscript "R/county-slope-models.R"
-      - name: run goog-mob-line
-        run: Rscript "R/goog-mob-line.R"
+      #- name: run goog-mob-line
+        #run: Rscript "R/goog-mob-line.R"
       - name: run regional-slope-models
         run: Rscript "R/regional-slope-models.R"
       - name: run daily-re-estimate
