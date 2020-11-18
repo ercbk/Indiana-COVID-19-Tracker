@@ -35,9 +35,8 @@ sheet_id <- dashsite_json$sheetId
 post_url <- glue("{base_url}{vizql}/bootstrapSession/sessions/{session_id}")
 
 
-dash_api_output <- POST(post_url, body = list(sheet_id = sheet_id), encode = "form")
+dash_api_output <- POST(post_url, body = list(sheet_id = sheet_id), encode = "form", timeout(300))
 
-#Sys.sleep(3)
 
 dash_text <- content(dash_api_output, "text")
 
