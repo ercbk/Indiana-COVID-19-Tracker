@@ -74,6 +74,8 @@ jobs:
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       
       ## Run scripts
+      - name: scrape regenstrief hospitalization data
+        run: Rscript "R/scrape-regenstrief-tableau.R"
       - name: run detect data update
         run: Rscript "automate/detect-data-update.R"
       - name: run excess-death-col
@@ -98,9 +100,8 @@ jobs:
         run: Rscript "R/daily-est-re.R"
       - name: process demographics data
         run: Rscript "R/process-demog-data.R"
-      #- name: scrape regenstrief hospitalization data
-        #run: Rscript "R/scrape-regenstrief-tableau.R"
       - name: render readme
+        if: ${{ success() || failure() }}
         run: Rscript "automate/render-readme.R"
         
       ## Commit, Push, and Trigger the website repo  
