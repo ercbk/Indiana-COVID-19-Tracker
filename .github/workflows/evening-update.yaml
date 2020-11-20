@@ -5,7 +5,7 @@ on:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
     #- cron: '15 23 * * *'
-    - cron: '57 23 * * *'
+    - cron: '59 23 * * *'
 
 
 jobs:
