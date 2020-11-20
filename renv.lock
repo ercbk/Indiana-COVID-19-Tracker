@@ -158,10 +158,15 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "2.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "3ef298932294b775fa0a3eeaa3a645b0"
+      "Version": "2.1.0.9001",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "cli",
+      "RemoteUsername": "r-lib",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "97c20e32d67c8da0c5af2855a01cbf0a26a15df2",
+      "Hash": "4dc2cf61b714cc0cf9523896343561c8"
     },
     "clipr": {
       "Package": "clipr",
@@ -625,10 +630,15 @@
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.4.7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "3b3dd89b2ee115a8b54e93a34cd546b4"
+      "Version": "1.4.99.9002",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "pillar",
+      "RemoteUsername": "r-lib",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "ef9b9d89ffeec95615f18361809db78d49b8adcc",
+      "Hash": "005fc3bebba2dbcf4f7677ab97617234"
     },
     "pkgbuild": {
       "Package": "pkgbuild",
