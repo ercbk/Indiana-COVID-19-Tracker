@@ -1,0 +1,66 @@
+name: Noon Update
+
+
+
+on:
+  schedule:
+    # says run at the 20th min, 17th hr UTC (11:49am ET) of every day
+    - cron: '20 17 * * *'
+    - cron: '15 22 * * *'
+
+jobs:
+  scrape:
+    name: Scrape Regenstrief Dashboard
+    #runs-on: [ubuntu-latest]
+    runs-on: ubuntu-18.04
+    
+    
+    env:
+      CRAN_REPO: https://packagemanager.rstudio.com/all/__linux__/bionic/latest
+      RENV_PATHS_ROOT: ~/.local/share/renv
+    
+    steps:
+      
+      ## Set-up
+      # must checkout out of own repo to use "action" in someone elses  
+      - uses: actions/checkout@v2
+      # installs r
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: '4.0.3'
+      - name: Install rvest and httr deps
+        run: sudo apt-get install libcurl4-openssl-dev libssl-dev libicu-dev libxml2-dev
+      # cache dev environment, restore environment from cache
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          cran_repo <- c("CRAN" = Sys.getenv("CRAN_REPO"))
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv", repos = cran_repo)
+          renv::restore(repos = cran_repo)
+      
+      ## Run scripts
+      - name: scrape regenstrief hospitalization data
+        run: Rscript "R/scrape-regenstrief-tableau.R"
+      
+      ## Commit, Push, and Trigger the website repo  
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Noon charts update" || echo "No changes to commit"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        # GITHUB_TOKEN automatically created
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+
+

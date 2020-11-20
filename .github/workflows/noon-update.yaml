@@ -3,8 +3,8 @@ name: Noon Update
 on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
-    #- cron: '40 16 * * *'
-    - cron: '18 17 * * *'
+    - cron: '40 16 * * *'
+    #- cron: '18 17 * * *'
 
 jobs:
   update:
@@ -73,11 +73,8 @@ jobs:
       - name: install fonts
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       
-      ## Run scripts
-      #- name: scrape regenstrief hospitalization data
-        #run: Rscript "R/scrape-regenstrief-tableau.R"
+      ## Run Scripts
       - name: run detect data update
-        #if: ${{ success() || failure() }}
         run: Rscript "automate/detect-data-update.R"
       - name: run excess-death-col
         run: Rscript "R/excess-death-col.R"
