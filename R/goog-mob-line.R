@@ -8,6 +8,8 @@
 
 
 
+
+
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, ggtext)
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
