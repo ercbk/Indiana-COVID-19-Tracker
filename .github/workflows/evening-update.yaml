@@ -4,8 +4,8 @@ on:
   schedule:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
-    #- cron: '15 23 * * *'
-    - cron: '59 23 * * *'
+    - cron: '15 23 * * *'
+    #- cron: '59 23 * * *'
 
 
 jobs:
@@ -58,13 +58,13 @@ jobs:
       - name: Install font awesome with deps
         run: sudo apt-get install -y fonts-font-awesome
       # cache dev environment, restore environment from cache
-      #- name: Cache packages
-        #uses: actions/cache@v2
-        #with:
-          #path: ${{ env.RENV_PATHS_ROOT }}
-          #key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          #restore-keys: |
-            #${{ runner.os }}-renv-
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
       - name: Restore packages
         shell: Rscript {0}
         run: |
@@ -76,9 +76,9 @@ jobs:
       
       
       ## Run scripts
-      #- name: build beds and ventilator data set
-        #if: success()
-        #run: Rscript "R/build-datasets.R"
+      - name: build beds and ventilator data set
+        if: success()
+        run: Rscript "R/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/opentab-rest-line.R"
       - name: run excess-death-col
