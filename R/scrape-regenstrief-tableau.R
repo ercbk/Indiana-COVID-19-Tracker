@@ -1,4 +1,4 @@
-# Get hospitilizations by age from Regenstrief tableau dashboard
+# Get hospitilizations by age and mortality rate from Regenstrief tableau dashboard
 
 # https://www.regenstrief.org/covid-dashboard/
 
@@ -8,6 +8,11 @@
 pacman::p_load(dplyr, glue, rvest, httr, jsonlite, purrr, stringr)
 
 
+
+
+##################################
+# Pull data from Tableau API ----
+##################################
 
 
 # Dashboard api's GET (request) url. Couldn't pull this url using rvest, may be able to using RSelenium or Splash but didn't try. Find dashboard's iframe and the url will be value of "src" attribute
@@ -56,9 +61,9 @@ dash_text <- content(dash_api_output, "text")
 dash_data <- str_match(dash_text, "\\d+;(\\{.*\\})\\d+;(\\{.*\\})")
 
 # session info and css html stuff (may use to try and find timestamp)
-# info <- fromJSON(extract[1,1])
+# info <- fromJSON(dash_data[1,1])
 
-# just fyi, the data which is the third elt does have a number string in "data" which is how it gets matched, but if you save "extract_data" to a text file (see above) it doesn't show the number string for some reason.
+# just fyi, the data which is the third elt does have a number string in "data" which is how it gets matched, but if you save "dash_data" to a text file (see above) it doesn't show the number string for some reason.
 # converts data elt to json obj
 dash_data_json <- fromJSON(dash_data[1,3])
 
@@ -67,6 +72,12 @@ dash_data_json <- fromJSON(dash_data[1,3])
 
 # all the numeric and text values for most (if not all) the dashboard charts/worksheets
 dataFull = dash_data_json$secondaryInfo$presModelMap$dataDictionary$presModelHolder$genDataDictionaryPresModel$dataSegments[["0"]]$dataColumns
+
+
+
+############################
+# Admissions by gender ----
+############################
 
 
 # tableau worksheets I'm interested in.
@@ -79,6 +90,7 @@ wrksht_dat <- map(hosp_admiss_grps, function (x) {
    # going to get the age group labels from the json even though I could just type them out. Indices for them located in either worksheet. So just copying the 1st one
    append(list(ages = .[[1]]))
 
+# vizDataColumns > columnIndices > fieldCaption to look at the data fields available and their indices
 alias_indices <- list(admissions_f = 6, admissions_m = 6, ages = 2) 
 
 # data is located in giant json sea of data values, so we need the indices of the values we want
@@ -87,7 +99,10 @@ value_indices <- map2(wrksht_dat, alias_indices, function (x, y) {
    x$paneColumnsList$vizPaneColumns[[1]]$aliasIndices[[y]] + 1
 })
 
+# wrksht_dat[[1]][["vizDataColumns"]][["dataType"]] tells the classes of available fields
 vec_classes = list(admissions_f = "numeric", admissions_m = "numeric", ages = "character" )
+
+# use indices to pull values from the json
 hosp_age_df <- map2_dfc(value_indices, vec_classes, function (x, y) {
    if (y == "numeric") {
       hosp_col <- map_dbl(x, function(a) {
@@ -111,23 +126,79 @@ hosp_age_df <- map2_dfc(value_indices, vec_classes, function (x, y) {
    relocate(date, where(is.character), .before = where(is.numeric)) %>% 
    select(-timestamp)
 
+
+
+
+
+######################
+# Mortality Rate ----
+######################
+
+
+# Get tableau worksheet with hospital mortality rate
+mort_wrksht_dat <- dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap[["Mort Rate"]]$presModelHolder$genVizDataPresModel$paneColumnsData
+
+# vizDataColumns > columnIndices > fieldCaption to look at the data fields available and their indices
+mort_alias_indices <- list(deaths_total = 4, hosp_total = 5, death_rate = 6) 
+
+# data is located in giant json sea of data values, so we need the indices of the values we want
+mort_val_indices <- map(mort_alias_indices, function (y) {
+      # zero indexed so need to add 1 to indices
+      mort_wrksht_dat$paneColumnsList$vizPaneColumns[[1]]$aliasIndices[[y]] + 1
+})
+
+# wrksht_dat[[1]][["vizDataColumns"]][["dataType"]] tells the classes
+mort_vec_classes = list(deaths_total = "integer", hosp_full = "integer",  death_rate = "double")
+
+# use indices to pull the values from the json
+hosp_mort_vals <- map2_dfc(mort_val_indices, mort_vec_classes, function(x, y){
+      if (y == "integer") {
+            mort_col <- map_dbl(x, function(s) {
+                  # pulls values from dataValues$integer
+                  pluck(dataFull$dataValues, 1)[[s]]
+            })
+      } else {
+            mort_col <- map_dbl(x, function(t) {
+                  # pulls values from dataValues$real
+                  pluck(dataFull$dataValues, 2)[[t]]
+            })
+      }
+      return(mort_col)
+}) %>% 
+      mutate(timestamp = str_subset(pluck(dataFull$dataValues, 3), "\\d+/\\d+/\\d+ \\d+:\\d+:\\d+"),
+             date = str_extract(timestamp, pattern = "\\d+/\\d+/\\d+") %>% 
+                   lubridate::mdy(.)) %>% 
+      relocate(date, everything()) %>% 
+      select(-timestamp)
+
+
+
+############
+# Save ----
+############
+
+
 # If the data is new, add it to the old dataset
 old_hosp_age_df <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/age-hosp-line.rds"))
+old_hosp_mort_vals <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/mort-hosp-line.rds"))
 
 data_date <- hosp_age_df %>% 
-   slice_tail() %>% 
-   pull(date)
+      slice_tail() %>% 
+      pull(date)
 
 old_data_date <- old_hosp_age_df %>% 
-   slice_tail() %>% 
-   pull(date)
+      slice_tail() %>% 
+      pull(date)
 
-if (data_date != old_data_date) {
-   new_hosp_age_df <- old_hosp_age_df %>% 
-      bind_rows(hosp_age_df)
+if (data_date > old_data_date) {
+      new_hosp_age_df <- old_hosp_age_df %>% 
+            bind_rows(hosp_age_df)
+      new_hosp_mort_vals <- old_hosp_mort_vals %>% 
+            bind_rows(hosp_mort_vals)
 } else {
-   new_hosp_age_df <- old_hosp_age_df
+      new_hosp_age_df <- old_hosp_age_df
+      new_hosp_mort_vals <- old_hosp_mort_vals
 }
 
 readr::write_rds(new_hosp_age_df, glue("{rprojroot::find_rstudio_root_file()}/data/age-hosp-line.rds"))
-
+readr::write_rds(new_hosp_mort_vals, glue("{rprojroot::find_rstudio_root_file()}/data/mort-hosp-line.rds"))
