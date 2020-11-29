@@ -80,8 +80,8 @@ policy_dat <- tibble(policy = "Stage 2",
               date_text = "11/14/2020") %>%
       mutate(labels = c("2", "3", "4", "4.5", "CMR", "5", "CGR"))
 
-holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day"),
-                      date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07"))) %>% 
+holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day", "Thanksgiving"),
+                      date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26"))) %>% 
       inner_join(cases_dat %>% 
                        select(date, cumulative_cases, daily_cases), by = "date")
 
@@ -197,11 +197,15 @@ pos_policy_line <- ggplot(cases_dat %>%
       # must specify color arg for shapes to show-up
       geom_point(data = holiday_dat %>% 
                        mutate(zoom = TRUE), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+   # for holidays outside of zoom_facet range   
+   geom_point(data = holiday_dat %>% 
+                       filter(date > "2020-09-07"), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
       geom_line(color = "#B28330") +
       # experiments with adding smoothing lines
       # geom_line(aes(y = sev_day_avg), color = "#B28330", alpha = 0.45, size = 1) +
       # stat_smooth(method = "loess", geom = "line", se = FALSE, formula = "y ~ x",
       # alpha = 0.45, color = "#B28330", size = 0.9) +
+   # facet_zoom doesn't play nice with scale_y or x_continuous
       # scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma()) +
       # scale_x_continuous(limits = c(10000, xmax), labels = scales::label_comma()) +
       # hates tsibbles, data needs to be a tibble or df
@@ -346,6 +350,7 @@ pos_policy_line <- ggplot(cases_dat %>%
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line-{data_date}.png")
 
 # ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm")
+# with facet_zoom, need to make it taller
 ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 30, units = "cm")
 
 
