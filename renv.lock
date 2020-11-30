@@ -60,10 +60,10 @@
     },
     "RcppArmadillo": {
       "Package": "RcppArmadillo",
-      "Version": "0.10.1.0.0",
+      "Version": "0.10.1.2.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "742b8fb360381a242b6512df1faa53fb"
+      "Hash": "1a885965adade4b8629c478a3b3c2cf7"
     },
     "RcppEigen": {
       "Package": "RcppEigen",
@@ -158,15 +158,15 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "2.1.0.9001",
+      "Version": "2.2.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "cli",
       "RemoteUsername": "r-lib",
+      "RemoteRepo": "cli",
       "RemoteRef": "HEAD",
-      "RemoteSha": "97c20e32d67c8da0c5af2855a01cbf0a26a15df2",
-      "Hash": "4dc2cf61b714cc0cf9523896343561c8"
+      "RemoteSha": "dd6c90b83552039a384f8c1cf06b5fba9b80f3e5",
+      "RemoteHost": "api.github.com",
+      "Hash": "982087c63c539b2731e34d230709bbd3"
     },
     "clipr": {
       "Package": "clipr",
@@ -185,14 +185,14 @@
     "cpp11": {
       "Package": "cpp11",
       "Version": "0.2.4.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "cpp11",
+      "Source": "Local",
+      "RemoteType": "local",
       "RemoteUsername": "r-lib",
+      "RemoteRepo": "cpp11",
       "RemoteRef": "HEAD",
-      "RemoteSha": "505e1c55934b861d93345c8ac2199dc20541533a",
-      "Hash": "0f649dbeaaf89b0ac05def84a8795a46"
+      "RemoteSha": "56e81c261f0161149894ef6ed00b2c515d80f852",
+      "RemoteHost": "api.github.com",
+      "Hash": "a6d4dfd8494b98301b467d59310c5be3"
     },
     "crayon": {
       "Package": "crayon",
@@ -518,10 +518,10 @@
     },
     "lubridate": {
       "Package": "lubridate",
-      "Version": "1.7.9",
+      "Version": "1.7.9.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "fc1c91e2e8d9e1fc932e75aa1ed989b7"
+      "Hash": "5b5b02f621d39a499def7923a5aee746"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -604,7 +604,7 @@
       "Package": "pack",
       "Version": "0.1-1",
       "Source": "Repository",
-      "Repository": null,
+      "Repository": "CRAN",
       "Hash": "c4f814b30334e8bc6124647794781a09"
     },
     "pacman": {
@@ -630,15 +630,15 @@
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.4.99.9002",
+      "Version": "1.4.99.9004",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "pillar",
       "RemoteUsername": "r-lib",
+      "RemoteRepo": "pillar",
       "RemoteRef": "HEAD",
-      "RemoteSha": "ef9b9d89ffeec95615f18361809db78d49b8adcc",
-      "Hash": "005fc3bebba2dbcf4f7677ab97617234"
+      "RemoteSha": "5c6ccb38fa0e502ff21708adc86c6021681e57ac",
+      "RemoteHost": "api.github.com",
+      "Hash": "9de5d37e9ea51b992393ba6e85a588dc"
     },
     "pkgbuild": {
       "Package": "pkgbuild",
@@ -698,10 +698,10 @@
     },
     "processx": {
       "Package": "processx",
-      "Version": "3.4.4",
+      "Version": "3.4.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "03446ed0b8129916f73676726cb3c48f"
+      "Hash": "22aab6098cb14edd0a5973a8438b569b"
     },
     "progress": {
       "Package": "progress",
@@ -794,17 +794,17 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.12.2",
+      "Version": "0.12.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "398cc1ea892e1aade66d1ecbb2874d24"
+      "Hash": "b5510c50c7f31d453c385c7b460af2b9"
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.8",
+      "Version": "0.4.9",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "843a6af51414bce7f8a8e372f11d6cd0"
+      "Hash": "9d7aba7bed9a79e2403b4777428a2b12"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
@@ -815,10 +815,10 @@
     },
     "rprojroot": {
       "Package": "rprojroot",
-      "Version": "1.3-2",
+      "Version": "2.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f6a407ae5dd21f6f80a6708bbb6eb3ae"
+      "Hash": "249d8cd1e74a8f6a26194a91b47f21d1"
     },
     "rstudioapi": {
       "Package": "rstudioapi",
