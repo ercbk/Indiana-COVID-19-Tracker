@@ -158,15 +158,10 @@
     },
     "cli": {
       "Package": "cli",
-      "Version": "2.2.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteUsername": "r-lib",
-      "RemoteRepo": "cli",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "dd6c90b83552039a384f8c1cf06b5fba9b80f3e5",
-      "RemoteHost": "api.github.com",
-      "Hash": "982087c63c539b2731e34d230709bbd3"
+      "Version": "2.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3ef298932294b775fa0a3eeaa3a645b0"
     },
     "clipr": {
       "Package": "clipr",
@@ -184,15 +179,10 @@
     },
     "cpp11": {
       "Package": "cpp11",
-      "Version": "0.2.4.9000",
-      "Source": "Local",
-      "RemoteType": "local",
-      "RemoteUsername": "r-lib",
-      "RemoteRepo": "cpp11",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "56e81c261f0161149894ef6ed00b2c515d80f852",
-      "RemoteHost": "api.github.com",
-      "Hash": "a6d4dfd8494b98301b467d59310c5be3"
+      "Version": "0.2.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ba66e5a750d39067d888aa7af797fed2"
     },
     "crayon": {
       "Package": "crayon",
@@ -630,15 +620,10 @@
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.4.99.9004",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteUsername": "r-lib",
-      "RemoteRepo": "pillar",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "5c6ccb38fa0e502ff21708adc86c6021681e57ac",
-      "RemoteHost": "api.github.com",
-      "Hash": "9de5d37e9ea51b992393ba6e85a588dc"
+      "Version": "1.4.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3b3dd89b2ee115a8b54e93a34cd546b4"
     },
     "pkgbuild": {
       "Package": "pkgbuild",
@@ -754,15 +739,10 @@
     },
     "readr": {
       "Package": "readr",
-      "Version": "1.4.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "readr",
-      "RemoteUsername": "tidyverse",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "97186a8ac29d2058762d85b13b169e8b4ca5da71",
-      "Hash": "7290d8d11df03422ae60e0039f653e3e"
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "2639976851f71f330264a9c9c3d43a61"
     },
     "readxl": {
       "Package": "readxl",
