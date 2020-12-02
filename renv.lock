@@ -737,6 +737,13 @@
       "Repository": "CRAN",
       "Hash": "4de4156e52cd66215066d28c0577a56e"
     },
+    "ragg": {
+      "Package": "ragg",
+      "Version": "0.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "34630c700bb331339a80ddc9c6821e25"
+    },
     "readr": {
       "Package": "readr",
       "Version": "1.4.0",
@@ -891,12 +898,26 @@
       "Repository": "CRAN",
       "Hash": "b227d13e29222b4574486cfcbde077fa"
     },
+    "systemfonts": {
+      "Package": "systemfonts",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "046e821d454edb3722192f588f4d7884"
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "13298cedd051cb7b8a8972d380b559a6"
+    },
+    "textshaping": {
+      "Package": "textshaping",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a34d4aa94ca91a52710b1c0c36bcded6"
     },
     "tibble": {
       "Package": "tibble",

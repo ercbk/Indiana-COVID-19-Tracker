@@ -351,6 +351,9 @@ plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line-{
 
 # ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm")
 # with facet_zoom, need to make it taller
-ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 30, units = "cm")
+
+ggsave(plot_path, plot = pos_policy_line,
+       dpi = "screen", width = 33, height = 30,
+       device = ragg::agg_png(), units = "cm")
 
 
