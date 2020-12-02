@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2020-11-27.png" width="935" />
+<img src="plots/goog-mob-line-2020-11-29.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
@@ -169,7 +169,7 @@ those from Governor Holcomb if any are presented.
     Research in Health.  
     <br /> <br /> <br />
 
-<img src="plots/excess-death-col-2020-11-14.png" width="935" />
+<img src="plots/excess-death-col-2020-11-21.png" width="935" />
 
   - The
     [CDC’s](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm)
