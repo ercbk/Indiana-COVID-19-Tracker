@@ -152,7 +152,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2020-12-06.png" width="935" />
+<img src="plots/daily-re-line-2020-12-07.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
