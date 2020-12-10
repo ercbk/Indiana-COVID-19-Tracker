@@ -31,13 +31,13 @@ jobs:
       - name: Install rvest and httr deps
         run: sudo apt-get install libcurl4-openssl-dev libssl-dev libicu-dev libxml2-dev
       # cache dev environment, restore environment from cache
-      #- name: Cache packages
-        #uses: actions/cache@v2
-        #with:
-          #path: ${{ env.RENV_PATHS_ROOT }}
-          #key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          #restore-keys: |
-            #${{ runner.os }}-renv-
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
       - name: Restore packages
         shell: Rscript {0}
         run: |
