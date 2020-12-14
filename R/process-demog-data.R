@@ -207,7 +207,7 @@ ind_age_missing <- ind_age_raw %>%
 # using Stineman interpolation; fewer negatives, patterns look reasonable; subsetting date var out
 ind_age_imputed_st <- purrr::map_dfc(ind_age_missing[2:9], ~na_interpolation(.x, "stine") %>% round(., 0)) %>% 
    # calc daily deaths for each age group
-   mutate_all(tsibble::difference) %>% 
+   mutate_all(tsibble::difference) %>%
    # 1st row is NA after daily calc, so running it through imputation alg again
    purrr::map_dfc(., ~na_interpolation(.x, "stine") %>% round(., 0)) %>% 
    # add date var back
@@ -224,7 +224,8 @@ ind_age_clean <- ind_age_imputed_st %>%
    group_by(end_date, agegrp) %>% 
    summarize(weekly_total = sum(covid_deaths), .groups = "drop") %>% 
    # <age to age>, "80 and older" format
-   mutate(agegrp = stringr::str_replace(agegrp, "-", " to "),
+   mutate(weekly_total = ifelse(weekly_total < 0, 0, weekly_total),
+          agegrp = stringr::str_replace(agegrp, "-", " to "),
           agegrp = stringr::str_replace(agegrp, "\\+", " and older"),
           date_text = format(end_date, "%B %d"),
           tooltip = glue("{date_text}
