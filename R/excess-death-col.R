@@ -18,9 +18,9 @@
 
 
 
-#################
-# Set-up
-#################
+#@@@@@@@@@@@@@@@
+# Set-up ----
+#@@@@@@@@@@@@@@@
 
 
 pacman::p_load(extrafont, swatches, dplyr, lubridate, ggplot2, glue, patchwork, ggtext)
@@ -41,9 +41,9 @@ state_wk_cause_raw <- readr::read_csv("https://data.cdc.gov/api/views/u6jv-9ijr/
 xmin_const <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/excess-death-xmin.rds"))
 
 
-###################
-# Causes of deaths
-###################
+#@@@@@@@@@@@@@@@@@@@@@@@@
+# Causes of deaths ----
+#@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 ind_cause_raw <- state_wk_cause_raw %>%
@@ -55,11 +55,11 @@ ind_cause_raw <- state_wk_cause_raw %>%
 data_week <- ind_cause_raw %>%
    # get only this year's weekly counts
    filter(year == year(today())) %>% 
-   group_by(cause_group) %>%
+   group_by(cause_subgroup) %>%
    # last week for each cause (value repeated for each row)
    mutate(final_week = max(week)) %>% 
    # gets rid of those redundant rows
-   distinct(final_week, cause_group) %>%
+   distinct(final_week, cause_subgroup) %>%
    ungroup() %>% 
    # get whichever final week is the earliest
    filter(final_week == min(final_week)) %>% 
@@ -80,7 +80,7 @@ ind_cause <- ind_cause_raw %>%
    select(-jurisdiction, -state_abbreviation, -suppress, -note, -type) %>%
    # creates 2 groups: current year and years prior to this year
    mutate(period = ifelse(year < year(today()), "prev_years", "this_year")) %>%
-   group_by(period, cause_group) %>%
+   group_by(period, cause_subgroup) %>%
    # calc up-to-date totals for each group and each disease
    summarize(yr_to_date_totals = sum(number_of_deaths)) %>%
    # calcs average for the yearly, up-to-date, prev_years group and leaves this_year's counts alone
@@ -88,29 +88,29 @@ ind_cause <- ind_cause_raw %>%
                                       yr_to_date_totals/data_prev_years,
                                       yr_to_date_totals),
           # clean and shorten some names
-          cause_group = recode(cause_group, "Alzheimer disease and dementia" = "Alzheimer's disease and dementia",
+          cause_subgroup = recode(cause_subgroup, "Alzheimer disease and dementia" = "Alzheimer's disease and dementia",
                                "Hypertensive dieases" = "Hypertensive diseases",
                                "Other diseases of the circulatory system" = "Other circulatory diseases",
                                "Other diseases of the respiratory system" = "Other respiratory diseases")) %>%
    select(-yr_to_date_totals,) %>%
    # splitting the two groups' avgs into two cols
-   tidyr::pivot_wider(id_cols = "cause_group",
+   tidyr::pivot_wider(id_cols = "cause_subgroup",
                       names_from = "period",
                       values_from = "yr_to_date_avgs") %>%
    # calc percent difference between this years deaths and avg deaths from years prior
    mutate(pct_diff = round(((this_year - prev_years) / prev_years)*100, 1),
           labels = scales::percent(pct_diff/100, accuracy = 0.1),
-          cause_group = factor(cause_group) %>%
+          cause_subgroup = factor(cause_subgroup) %>%
              forcats::fct_reorder(pct_diff)) %>% 
    top_n(pct_diff, n = 6)
 
 
 # lollipop plot
 # individual diseases
-excess_lol <- ggplot(ind_cause, aes(x = pct_diff, y = cause_group,
+excess_lol <- ggplot(ind_cause, aes(x = pct_diff, y = cause_subgroup,
                       label = labels)) +
    expand_limits(x = max(ind_cause$pct_diff * 1.6)) +
-   geom_segment(aes(x = 0, xend = pct_diff, y = cause_group, yend = cause_group),
+   geom_segment(aes(x = 0, xend = pct_diff, y = cause_subgroup, yend = cause_subgroup),
                 color = "white") +
    geom_point(color = "#61c8b7", size=4) +
    # percent difference text
@@ -164,9 +164,9 @@ inset_plot$grobs[[1]] <- round_bg
 
 
 
-#####################
-# Excess deaths
-#####################
+#@@@@@@@@@@@@@@@@@@@@@
+# Excess deaths ----
+#@@@@@@@@@@@@@@@@@@@@@
 
 
 # filtering, selecting, and getting data into long format for ggplot
