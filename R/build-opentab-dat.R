@@ -20,7 +20,7 @@ library(RSelenium); library(glue)
 
 # Use RSelenium to download dataset
 # start selenium server; chrome version is the version of the separate chrome driver I d/l'ed
-driver <- rsDriver(browser = c("chrome"), chromever = "85.0.4183.83")
+driver <- rsDriver(browser = c("chrome"), chromever = "87.0.4280.88")
 Sys.sleep(10)
 
 # browser
@@ -56,5 +56,5 @@ chrome$close()
 
 # kill the server manually
 installr::kill_process(process = "java.exe")
-
+installr::kill_process(process = "chromedriver.exe")
 
