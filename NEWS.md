@@ -118,3 +118,19 @@
     [post](https://covidtracking.com/blog/counting-covid-19-tests) over
     at The COVID Tracking Project. Hopefully, ISDH will start using test
     encounters in the near future.
+
+  - 2020-12-20 - Hospitals page, Local Hospital Capacity - The number of
+    available beds used in the calculations is fluid, because only the
+    number of fully staffed beds is reported. Therefore, if a hospital
+    suffers from personnel shortages, the number of available beds
+    reported by that hospital will decrease.
+    
+    When any of the counts for any of the data fields is below four, the
+    true count is obscured by the CDC. This is due to the concern that
+    this data combined with other publicly available data might be used
+    violate patient privacy. Anytime that 80% of a hospital’s data used
+    in a calculation was missing and/or obscured, I decided not to
+    perform the calculation for that hospital (empty table cell). If
+    some of the data (but less than 80%) were obsured, then I
+    substituted a “2” for the obscured value and proceded with the
+    calculation.

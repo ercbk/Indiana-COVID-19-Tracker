@@ -22,3 +22,10 @@ output: github_document
 
     COVID_TESTS_ADMINISTRATED is an improvement, but it's not ideal and will give a **deflated** positivity rate. This new field unfortunately includes *daily* repeated tests when the count of individuals tested per day is what is actually needed. These COVID-19 diagnostic tests are not perfectly accurate, so false positive and false negative testing results occur. To increase the probability of getting a "true" test result, multiple tests for the same person on the same day may occur. But given that these PCR diagnostic tests are pretty expensive and information I've received from people who have been tested, I'm not inclined to think multiple *daily* tests of the same individual occur that often. With cheaper tests now developed, maybe this becomes a larger issue in the future though. Some states are currently providing a count of individuals tested per day which is named, "test encounters." A more detailed discussion of this test count is discussed in a [post](https://covidtracking.com/blog/counting-covid-19-tests) over at The COVID Tracking Project. Hopefully, ISDH will start using test encounters in the near future.  
 
+  * 2020-12-20 - Hospitals page, Local Hospital Capacity - The number of available beds used in the calculations is fluid, because only the number of fully staffed beds is reported. Therefore, if a hospital suffers from personnel shortages, the number of available beds reported by that hospital will decrease.  
+
+    When any of the counts for any of the data fields is below four, the true count is obscured by the CDC. This is due to the concern that this data combined with other publicly available data might be used violate patient privacy. Anytime that 80% of a hospital's data used in a calculation was missing and/or obscured, I decided not to perform the calculation for that hospital (empty table cell). If some of the data (but less than 80%) were obsured, then I substituted a "2" for the obscured value and proceded with the calculation.  
+
+
+
+
