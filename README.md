@@ -29,7 +29,7 @@ also be trying to track some of the triggers in the AEI proposal and
 those from Governor Holcomb if any are presented.  
 <br /> <br /> <br />
 
-<img src="plots/ind-combo-line-2020-12-18.png" width="935" />
+<img src="plots/ind-combo-line-2020-12-19.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -43,7 +43,7 @@ those from Governor Holcomb if any are presented.
     situation, but it’s interesting as a hypothetical.  
     <br /> <br /> <br />
 
-<img src="plots/pos-policy-line-2020-12-18.png" width="935" />
+<img src="plots/pos-policy-line-2020-12-19.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis.  
