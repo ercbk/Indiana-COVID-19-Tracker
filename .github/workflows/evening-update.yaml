@@ -101,6 +101,8 @@ jobs:
         run: Rscript "R/daily-est-re.R"
       - name: process demographics data
         run: Rscript "R/process-demog-data.R"
+      - name: process cdc hospital data
+        run: Rscript "R/process-hospitals-react.R"
       - name: render readme
         run: Rscript "automate/render-readme.R"
         

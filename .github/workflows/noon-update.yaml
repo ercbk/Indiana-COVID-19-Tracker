@@ -98,6 +98,8 @@ jobs:
         run: Rscript "R/daily-est-re.R"
       - name: process demographics data
         run: Rscript "R/process-demog-data.R"
+      - name: process demographics data
+        run: Rscript "R/process-demog-data.R"
       - name: render readme
         if: ${{ success() || failure() }}
         run: Rscript "automate/render-readme.R"
