@@ -54,7 +54,7 @@ those from Governor Holcomb if any are presented.
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
     <br /> <br /> <br />
 
-<img src="plots/hosp-icu-vent-2020-12-18.png" width="935" />
+<img src="plots/hosp-icu-vent-2020-12-19.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -70,7 +70,7 @@ those from Governor Holcomb if any are presented.
         being below 70% for 14 consecutive days.  
         <br /> <br /> <br />
 
-<img src="plots/pos-rate-line-2020-12-16.png" width="935" />
+<img src="plots/pos-rate-line-2020-12-17.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
@@ -128,9 +128,9 @@ those from Governor Holcomb if any are presented.
   - Weekends are shown as vertical bars.  
     <br /> <br /> <br />
 
-<img src="plots/region-dea-line-2020-12-18.png" width="935" />
+<img src="plots/region-dea-line-2020-12-19.png" width="935" />
 
-<img src="plots/region-pos-line-2020-12-18.png" width="935" />
+<img src="plots/region-pos-line-2020-12-19.png" width="935" />
 
   - 7-day averages *greater* than 14 day averages indicate an
     *increasing* trend of positive cases or deaths.  
@@ -142,7 +142,7 @@ those from Governor Holcomb if any are presented.
     University.  
     <br /> <br /> <br />
 
-<img src="plots/county-pos-bar-2020-12-18.png" width="935" />
+<img src="plots/county-pos-bar-2020-12-19.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
@@ -152,7 +152,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2020-12-18.png" width="935" />
+<img src="plots/daily-re-line-2020-12-19.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
