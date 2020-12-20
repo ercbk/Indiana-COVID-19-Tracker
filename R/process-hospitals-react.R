@@ -156,7 +156,8 @@ avg_covid_hosp_hist <- ind_hosp_clean %>%
       
       # calc 7-day avg covid hospitalized per 10K
       # If proportion of 2.0001s or 0s > 80%, then coded NA and hospital doesn't get a sparkline
-      mutate(avg_covid_hosp_10k = ifelse(unk_miss_prop > 0.80,
+      mutate(avg_covid_hosp_10k = ifelse((total_adult_patients_hospitalized_confirmed_and_suspected_covid_7_day_avg_adj == 2.0001 & unk_miss_prop > 0.80) |
+                                            (total_adult_patients_hospitalized_confirmed_and_suspected_covid_7_day_avg_adj == 0 & unk_miss_prop > 0.80),
                                         NA,
                                         total_adult_patients_hospitalized_confirmed_and_suspected_covid_7_day_avg_adj)) %>% 
       # mutate(avg_covid_hosp_10k = ifelse(unk_miss_prop > 0.80,
@@ -198,7 +199,8 @@ avg_covid_icu_hist <- ind_hosp_clean %>%
       
       # Calc 7-day avg covid hospitalized per 10K
       # If proportion of 2.0001s or 0s > 80%, then coded NA and hospital doesn't get a sparkline
-      mutate(avg_covid_icu_10k = ifelse(unk_miss_prop > 0.80,
+      mutate(avg_covid_icu_10k = ifelse((staffed_icu_adult_patients_confirmed_and_suspected_covid_7_day_avg_adj == 2.0001 & unk_miss_prop > 0.80) |
+                                           (staffed_icu_adult_patients_confirmed_and_suspected_covid_7_day_avg_adj == 0 & unk_miss_prop > 0.80),
                                         NA,
                                         staffed_icu_adult_patients_confirmed_and_suspected_covid_7_day_avg_adj)) %>% 
       # mutate(avg_covid_icu_10k = ifelse(unk_miss_prop > 0.80,
@@ -238,7 +240,8 @@ avg_total_inpat_beds_hist <- ind_hosp_clean %>%
       mutate(unk_miss_prop = n_unk_miss / n_obs) %>%
       
       # If proportion of 2.0001s or 0s > 80%, then coded NA and hospital doesn't get a sparkline
-      mutate(avg_total_inpat_beds = ifelse(unk_miss_prop > 0.80,
+      mutate(avg_total_inpat_beds = ifelse((avg_total_inpat_beds == 2.0001 & unk_miss_prop > 0.80) |
+                                              (avg_total_inpat_beds == 0 & unk_miss_prop > 0.80),
                                            NA,
                                            avg_total_inpat_beds)) %>% 
       select(end_date, hospital_name, avg_total_inpat_beds) %>%
