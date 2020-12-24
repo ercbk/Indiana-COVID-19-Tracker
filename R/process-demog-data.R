@@ -72,25 +72,12 @@ age_cases_clean <- age_cases_raw %>%
 
 
 
-##############################
-# Median Age Bubble
-##############################
+#@@@@@@@@@@@@@@@@@@@@@@@@@
+# Median Age Bubble ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # Calc weekly tests and deaths
-
-# test_dea <- test_dat_raw %>% 
-#       select(date = DATE,
-#              daily_tests = COVID_TEST,
-#              daily_deaths = COVID_DEATHS) %>%
-#       mutate(date = lubridate::ymd(date), 
-#              week = lubridate::week(date)) %>% 
-#       group_by(week) %>% 
-#       mutate(end_date = last(date)) %>% 
-#       group_by(end_date) %>% 
-#       summarize(weekly_tests = sum(daily_tests),
-#                 weekly_deaths = sum(daily_deaths))
-
 test_dea <- test_dat_raw %>% 
    select(date = DATE,
           county_daily_tests = COVID_TESTS_ADMINISTRATED,
@@ -106,7 +93,6 @@ test_dea <- test_dat_raw %>%
    group_by(end_date) %>% 
    summarize(weekly_tests = sum(daily_tests),
              weekly_deaths = sum(daily_deaths))
-
 
 
 # calc cumulative cases for each week
@@ -151,9 +137,9 @@ readr::write_rds(med_age_tbl, glue("{rprojroot::find_rstudio_root_file()}/data/m
 
 
 
-##################################
-# Age Cases Heatmap
-##################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@
+# Age Cases Heatmap ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # calc cases per 1000, format end_date
@@ -177,9 +163,9 @@ readr::write_rds(heat_bubble_data_date, glue("{rprojroot::find_rstudio_root_file
 
 
 
-##################################
-# Age Deaths Line
-##################################
+#@@@@@@@@@@@@@@@@@@@@@@@
+# Age Deaths Line ----
+#@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # cumulative deaths for each age group

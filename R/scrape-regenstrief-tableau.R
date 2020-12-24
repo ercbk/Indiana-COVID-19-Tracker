@@ -3,20 +3,20 @@
 # https://www.regenstrief.org/covid-dashboard/
 
 
-
+# Set-up ----
 
 pacman::p_load(dplyr, glue, rvest, httr, jsonlite, purrr, stringr)
 
 
 
 
-##################################
-# Pull data from Tableau API ----
-##################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 1 Pull data from Tableau API ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # Dashboard api's GET (request) url. Couldn't pull this url using rvest, may be able to using RSelenium or Splash but didn't try. Find dashboard's iframe and the url will be value of "src" attribute
-# goto site, inspect then classes: area-wrap clearfix > area-section main (the third one) > area-sec-padd >  full_width_text > vizContainer > iframe
+# goto site, inspect then classes: body > area-wrap clearfix > area-section main (the third one) > area-sec-padd >  full_width_text > vizContainerTests > iframe
 get_url <- "https://tableau.bi.iu.edu/t/prd/views/RegenstriefInstituteCOVID-19PublicDashboard/RICOVID-19HospitalizationsandTests?:origin=card_share_link&:embed=y&:isGuestRedirectFromVizportal=y&:showShareOptions=false&:toolbar=false&:tabs=n&:size=1320,3320&&:showVizHome=n&:bootstrapWhenNotified=y&:device=desktop&:apiID=host0#navType=0&navSrc=Parse"
 
 # fyi this json is located at (cont. from iframe above): document >  dj_khtml dj_safari dj_contentbox >  tundra tableau ff-IFrameSizedToWindow > div style="display: none; > textarea id="tsConfigContainer"
@@ -68,16 +68,16 @@ dash_data <- str_match(dash_text, "\\d+;(\\{.*\\})\\d+;(\\{.*\\})")
 dash_data_json <- fromJSON(dash_data[1,3])
 
 # names of all the tableau worksheets used on the dashboard
-# worksheets = names(dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap)
+# worksheets <- names(dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap)
 
 # all the numeric and text values for most (if not all) the dashboard charts/worksheets
 dataFull = dash_data_json$secondaryInfo$presModelMap$dataDictionary$presModelHolder$genDataDictionaryPresModel$dataSegments[["0"]]$dataColumns
 
 
 
-############################
-# Admissions by gender ----
-############################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 2 Admissions by gender ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # tableau worksheets I'm interested in.
@@ -130,15 +130,15 @@ hosp_age_df <- map2_dfc(value_indices, vec_classes, function (x, y) {
 
 
 
-######################
-# Mortality Rate ----
-######################
+#@@@@@@@@@@@@@@@@@@@@@@@@@
+# 3 Mortality Rate ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # Get tableau worksheet with hospital mortality rate
 mort_wrksht_dat <- dash_data_json$secondaryInfo$presModelMap$vizData$presModelHolder$genPresModelMapPresModel$presModelMap[["Mort Rate"]]$presModelHolder$genVizDataPresModel$paneColumnsData
 
-# vizDataColumns > columnIndices > fieldCaption to look at the data fields available and their indices
+# vizDataColumns > columnIndices and vizDataColumns > fieldCaption to look at the data fields available and their indices
 mort_alias_indices <- list(deaths_total = 4, hosp_total = 5, death_rate = 6) 
 
 # data is located in giant json sea of data values, so we need the indices of the values we want
@@ -173,9 +173,8 @@ hosp_mort_vals <- map2_dfc(mort_val_indices, mort_vec_classes, function(x, y){
 
 
 
-############
+
 # Save ----
-############
 
 
 # If the data is new, add it to the old dataset
