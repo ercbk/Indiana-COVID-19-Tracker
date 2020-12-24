@@ -17,7 +17,7 @@ pacman::p_load(dplyr, glue, rvest, httr, jsonlite, purrr, stringr)
 
 # Dashboard api's GET (request) url. Couldn't pull this url using rvest, may be able to using RSelenium or Splash but didn't try. Find dashboard's iframe and the url will be value of "src" attribute
 # goto site, inspect then classes: body > area-wrap clearfix > area-section main (the third one) > area-sec-padd >  full_width_text > vizContainerTests > iframe
-get_url <- "https://tableau.bi.iu.edu/t/prd/views/RegenstriefInstituteCOVID-19PublicDashboard/RICOVID-19HospitalizationsandTests?:origin=card_share_link&:embed=y&:isGuestRedirectFromVizportal=y&:showShareOptions=false&:toolbar=false&:tabs=n&:size=1320,3320&&:showVizHome=n&:bootstrapWhenNotified=y&:device=desktop&:apiID=host0#navType=0&navSrc=Parse"
+get_url <- "https://tableau.bi.iu.edu/t/prd/views/RegenstriefInstituteCOVID-19HospitalizationsandTestsPublicDashboard/RICOVID-19HospitalizationsandTests?:origin=card_share_link&:embed=y&:isGuestRedirectFromVizportal=y&:showShareOptions=false&:toolbar=false&:tabs=n&:size=1320,3110&&:showVizHome=n&:bootstrapWhenNotified=y&:device=desktop&:apiID=host0#navType=0&navSrc=Parse"
 
 # fyi this json is located at (cont. from iframe above): document >  dj_khtml dj_safari dj_contentbox >  tundra tableau ff-IFrameSizedToWindow > div style="display: none; > textarea id="tsConfigContainer"
 dashsite_json <- GET(url = get_url) %>% 
