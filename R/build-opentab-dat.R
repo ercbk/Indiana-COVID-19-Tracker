@@ -58,3 +58,9 @@ server$stop()
 # installr::kill_process(process = "java.exe")
 # installr::kill_process(process = "chromedriver.exe")
 
+windows_tasks <- installr::get_tasklist()
+java_pid <- windows_tasks %>% 
+      filter(stringr::str_detect(`Image Name`, "java.exe")) %>% 
+      pull(PID)
+
+tools::pskill(pid = java_pid)
