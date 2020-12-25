@@ -47,7 +47,7 @@ jobs:
       
       ## Run scripts
       - name: scrape regenstrief hospitalization data
-        run: Rscript "R/scrape-regenstrief-tableau.R"
+        run: Rscript "R/collection/scrape-regenstrief-tableau.R"
       
       ## Commit, Push, and Trigger the website repo  
       - name: Commit files

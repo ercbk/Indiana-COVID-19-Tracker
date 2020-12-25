@@ -2,7 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-build-opentab-dat.bat
+R/collection/build-opentab-dat.bat
 R-local/
 Rplots.pdf
 ind-covid-line-local.R

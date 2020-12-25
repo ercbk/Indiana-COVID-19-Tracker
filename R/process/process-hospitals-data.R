@@ -7,19 +7,35 @@
 options(scipen = 999)
 
 
-pacman::p_load(dplyr, glue, rvest)
+pacman::p_load(dplyr, glue, rvest, imputeTS)
 
 cdc_hosp_url <- read_html("https://healthdata.gov/dataset/covid-19-reported-patient-impact-and-hospital-capacity-facility") %>% 
    html_node(css = "#data-and-resources > div > div > ul > li > div > span > a") %>% 
    html_attr("href")
-   
+
+cdc_staff_url <- read_html("https://healthdata.gov/dataset/covid-19-reported-patient-impact-and-hospital-capacity-state-timeseries") %>% 
+   html_node(css = "#data-and-resources > div > div > ul > li > div > span > a.btn.btn-primary.data-link") %>% 
+   html_attr("href")
+
+# historic staffing shortages
+cdc_staff_raw <- readr::read_csv(cdc_staff_url)
 # historic occupancy
 cdc_hosp_raw <- readr::read_csv(cdc_hosp_url)
 
+# regenstrief hospital mortality data
+ind_mort_raw <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/mort-hosp-line.rds"))
+# US county-city info
 ind_county_city <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/uscities.csv")) %>% 
       filter(state_id == "IN") %>% 
       mutate(city = stringr::str_replace_all(city, "\\.", "")) %>% 
       select(city, county_name)
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 1 Local Hospital Occupancy ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 
 hosp_vars <- c("collection_week", "state", "hospital_name", "address", "city",
                "zip", "fips_code", 
@@ -33,7 +49,7 @@ hosp_vars <- c("collection_week", "state", "hospital_name", "address", "city",
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@
-# 1 General Cleaning ----
+# ** General Cleaning ----
 #@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 ind_hosp_clean <- cdc_hosp_raw %>%
@@ -61,7 +77,7 @@ ind_hosp_clean <- cdc_hosp_raw %>%
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# 2 Process Heatmap Columns ----
+# ** Process Heatmap Columns ----
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # -999999 is code for the value being less than 4.
@@ -117,7 +133,7 @@ react_dd_heat <- ind_hosp_clean %>%
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# 3 Process Sparkline Columns ----
+# ** Process Sparkline Columns ----
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # divided city population by number of hospitals in that city
@@ -133,7 +149,7 @@ react_dd_heat <- ind_hosp_clean %>%
 #       select(city, adj_pop)
 
 
-##* 7-day avg covid hospitalized per 10K ----
+## *** 7-day avg covid hospitalized per 10K ----
 # avgCovHospTenKList list column = list(list(endDate=end_date_1, avgCovHospTenK = avg_covid_hosp_10k_1), list(endDate=end_date_2, avgCovHospTenK=avg_covid_hosp_10k_2), ...) for each MSA
 # required format for arrays in javascript
 avg_covid_hosp_hist <- ind_hosp_clean %>% 
@@ -178,7 +194,7 @@ avg_covid_hosp_hist <- ind_hosp_clean %>%
       rename(avgCovHospTenKList = data)
 
 
-## * 7-day avg covid ICU per 10K ----
+## *** 7-day avg covid ICU per 10K ----
 avg_covid_icu_hist <- ind_hosp_clean %>% 
       select(end_date = collection_week, hospital_name, city,
              staffed_icu_adult_patients_confirmed_and_suspected_covid_7_day_avg) %>% 
@@ -220,7 +236,7 @@ avg_covid_icu_hist <- ind_hosp_clean %>%
       mutate(data = purrr::map(data, ~as.list(.x))) %>%
       rename(avgCovIcuTenKList = data)
 
-## * 7-day avg of staffed total beds available ----
+## *** 7-day avg of staffed total beds available ----
 avg_total_inpat_beds_hist <- ind_hosp_clean %>% 
       select(end_date = collection_week, hospital_name, city,
              all_adult_hospital_inpatient_beds_7_day_avg) %>% 
@@ -260,7 +276,7 @@ avg_total_inpat_beds_hist <- ind_hosp_clean %>%
 
 
 
-# Combine and save ----
+# ** Combine and save ----
 
 react_tbl_list <- list(react_dd_heat, avg_covid_icu_hist, avg_covid_hosp_hist, avg_total_inpat_beds_hist)
 
@@ -269,6 +285,66 @@ react_tab_final <- purrr::reduce(react_tbl_list, left_join, by = "hospital_name"
 
 readr::write_rds(react_tab_final, glue("{rprojroot::find_rstudio_root_file()}/data/hosp-react-tab.rds"))
 
+
+
+
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 2 State Mortality, Staffing, Admissions ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+# ** Hospital Staffing Shortages ----
+
+staff_vars <- c("state", "date",
+                "critical_staffing_shortage_today_yes", "critical_staffing_shortage_today_no",
+                "critical_staffing_shortage_today_not_reported")
+
+# Rolling 7-day avg of daily shortages
+ind_staff_clean <- cdc_staff_raw %>% 
+   select(any_of(staff_vars)) %>% 
+   filter(state == "IN") %>% 
+   arrange(date) %>% 
+   mutate(staff_short_perc = critical_staffing_shortage_today_yes /
+             (critical_staffing_shortage_today_yes + critical_staffing_shortage_today_no),
+          # rolling 7-day avg staff shortage percentage
+          roll_mean_staff_short_perc = slider::slide_dbl(staff_short_perc, .f = mean, .before = 6))
+
+
+
+# ** Hospital Mortality Rate ----
+
+# scraping regenstreif tableau dashboard isn't producing regular intervals of data, so need to fill the days in-between
+ind_mort_filled <- ind_mort_raw %>% 
+   tsibble::as_tsibble() %>% 
+   tsibble::fill_gaps()
+
+
+# calc avg daily hosp mort rate
+# impute missing values deaths
+rolling_mort_admiss <- purrr::map_dfc(ind_mort_filled[1:3], ~na_interpolation(.x, "stine")) %>%
+   mutate(deaths_total = round(deaths_total, 0),
+          admiss_total = round(hosp_total, 0),
+          daily_deaths = tsibble::difference(deaths_total),
+          daily_admiss = tsibble::difference(admiss_total),
+          roll_sum_deaths = slider::slide_dbl(daily_deaths, .f = sum, .before = 13),
+          roll_sum_admiss = slider::slide_dbl(daily_admiss, .f = sum, .before = 13),
+          roll_mean_admiss = slider::slide_dbl(daily_admiss, .f = mean, .before = 6),
+          # calc hosp mort rate
+          mean_mort_rate = roll_sum_deaths / roll_sum_admiss)
+
+
+
+mort_staff_admiss_dat <- ind_staff_clean %>% 
+   select(date, roll_mean_staff_short_perc) %>% 
+   inner_join(rolling_mort_admiss %>% 
+                 select(date, mean_mort_rate, roll_mean_admiss), by = "date") %>% 
+   tidyr::drop_na() %>% 
+   mutate(# highcharter doesn't handle date class but ordered factor works
+      date = factor(date, labels = format(unique(date), "%b %d"), ordered = TRUE))
+
+
+
+readr::write_rds(mort_staff_admiss_dat, glue("{rprojroot::find_rstudio_root_file()}/data/hosp-msa-line.rds"))
 
 
 

@@ -78,33 +78,33 @@ jobs:
       ## Run scripts
       - name: build beds and ventilator data set
         if: success()
-        run: Rscript "R/build-datasets.R"
+        run: Rscript "R/collection/build-datasets.R"
       - name: run opentab-rest-line
-        run: Rscript "R/opentab-rest-line.R"
+        run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run excess-death-col
-        run: Rscript "R/excess-death-col.R"
+        run: Rscript "R/static-charts/excess-death-col.R"
       - name: run hosp-icu-vent
-        run: Rscript "R/hosp-icu-vent.R"
+        run: Rscript "R/static-charts/hosp-icu-vent.R"
       - name: run daily-pos-rate
-        run: Rscript "R/daily-pos-rate.R"
+        run: Rscript "R/static-charts/daily-pos-rate.R"
       - name: run ind-covid-line
-        run: Rscript "R/ind-covid-line.R"
+        run: Rscript "R/static-charts/ind-covid-line.R"
       - name: run pos-policy-line
-        run: Rscript "R/pos-policy-line.R"
+        run: Rscript "R/static-charts/pos-policy-line.R"
       - name: run county-slope-models
-        run: Rscript "R/county-slope-models.R"
+        run: Rscript "R/static-charts/county-slope-models.R"
       - name: run goog-mob-line
-        run: Rscript "R/goog-mob-line.R"
+        run: Rscript "R/static-charts/goog-mob-line.R"
       - name: run regional-slope-models
-        run: Rscript "R/regional-slope-models.R"
+        run: Rscript "R/static-charts/regional-slope-models.R"
       - name: run daily-re-estimate
-        run: Rscript "R/daily-est-re.R"
+        run: Rscript "R/static-charts/daily-est-re.R"
       - name: process demographics data
-        run: Rscript "R/process-demog-data.R"
-      - name: process cdc hospital data
-        run: Rscript "R/process-hospitals-react.R"
+        run: Rscript "R/process/process-demog-data.R"
+      - name: process hospitals data
+        run: Rscript "R/process/process-hospitals-data.R"
       - name: render readme
-        run: Rscript "automate/render-readme.R"
+        run: Rscript "R/misc/render-readme.R"
         
         
       ## Commit, Push, Trigger other repo workflow
