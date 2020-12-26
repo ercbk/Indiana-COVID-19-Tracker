@@ -134,3 +134,31 @@
     some of the data (but less than 80%) were obsured, then I
     substituted a “2” for the obscured value and proceded with the
     calculation.
+
+  - 2020-12-25 - Hospitals page, State Mortality Rate, Staffing, and
+    Admissions - The hospitals deaths and admissions were scraped from
+    the Regenstrief dashboard, but I did check the robots.txt file and
+    followed the rules therein. It’s my first time scraping a Tableau
+    dashboard, so I’m not a hundred percent about the data. It checks
+    out visually with the dashboard sometimes and in some places, but
+    not others. I only collect it twice a day, so maybe the data is
+    being updated before or after I’m collecting. The tableau worksheets
+    and variable names from where I’m getting the data all look right,
+    so I think I’m getting the right stuff.
+    
+    The HHS staffing data only includes **reporting** hospitals, but for
+    the time period I’m looking at and foreseeable future I don’t
+    anticipate much non-response bias. The last time I looked only
+    around 3 hospitals weren’t reporting their staff shortage numbers.
+    That seemed to be the case at least over the last couple months. And
+    looking at the “Local Hospital Capacity” table there seems to be
+    good response there as well. So this isn’t something I’ll be
+    monitoring too closely.
+    
+    I chose 14 day rolling window for the mortality rate calculation
+    because the average hospital length of stay for all age groups
+    didn’t exceed that length on the Regenstrief dashboard. So,
+    averaging over a 2-week period should be representative. For the
+    other two calculations, a seven day window seems be a good number to
+    smooth out reporting irregularities, and I think that’s the only
+    concern I have with those samples.
