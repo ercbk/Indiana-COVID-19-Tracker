@@ -16,7 +16,7 @@ options(error = function() {
 
 setwd("~/R/Projects/Indiana-COVID-19-Tracker")
 
-library(RSelenium); library(glue)
+library(RSelenium); library(glue); library(dplyr)
 
 # Use RSelenium to download dataset
 # start selenium server; chrome version is the version of the separate chrome driver I d/l'ed

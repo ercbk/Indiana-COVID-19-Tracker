@@ -113,7 +113,7 @@ med_age_tbl <- cumul_cases %>%
       tidyr::separate(col = "age_grp",
                       into = c("first_age", "last_age"),
                       sep = " to ",
-                      remove = F,
+                      remove = F
       ) %>% 
       # same for "80 and older" category
       mutate(first_age = stringr::str_remove(first_age, " and older") %>% 
