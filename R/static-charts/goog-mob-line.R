@@ -57,7 +57,7 @@ goog_plot <- ggplot(data = ind_goog %>%
    scale_color_viridis_d(option = "magma", direction = 1,
                          begin = 0.5) +
    scale_x_date(limits = c(as.Date("2020-03-07"), max(ind_goog$date)+7),
-                date_breaks = "1 month", date_labels = "%b %d") +
+                date_breaks = "1 month", date_labels = "%b") +
    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
    ggrepel::geom_text_repel(data = ind_goog %>% 
                                filter(date == max(date)),

@@ -87,7 +87,7 @@ rate_plot <- ggplot(data = chart_dat,
    geom_ribbon(aes(ymin = 0.00, ymax = 0.05), fill = "#8db230", alpha = 0.2) +
    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
    scale_x_date(date_breaks = "1 month",
-                date_labels = "%b %d") +
+                date_labels = "%b") +
    ggrepel::geom_label_repel(data = chart_dat %>% 
                                 filter(date == max(date)),
                              aes(label = scales::percent(pos_test_rate, accuracy = 0.1), size = 12),
