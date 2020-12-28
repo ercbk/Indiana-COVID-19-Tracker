@@ -18,9 +18,8 @@
 
 
 
-##########
-# Set-up
-##########
+# Set-up ----
+
 
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, patchwork, ggtext)
@@ -36,9 +35,9 @@ iv_dat_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/b
 
 
 
-##############################################
-# hospitalizations: clean, calculate trigger
-##############################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 1 hospitalizations: clean, calculate trigger ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # Get Indiana, cols = date, hospitalizedCurrently
@@ -80,9 +79,9 @@ consec_days <- count_consec_days(hosp_changes)
 
 
 
-##########################
-# Hospitalizations chart
-##########################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 2 Hospitalizations chart ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # Trigger
@@ -130,7 +129,7 @@ hosp_plot <- ggplot(data = ind_hosp,
   geom_line(color = "#32a5a3") +
   expand_limits(y = c(min(ind_hosp$hospitalizedCurrently)-60, max(ind_hosp$hospitalizedCurrently) + 60),
                 x = max(ind_hosp$date) + 8) +
-  scale_x_date(date_breaks = "21 days",
+  scale_x_date(date_breaks = "1 month",
                date_labels = "%b %d") +
   ggrepel::geom_label_repel(data = ind_hosp %>%
                               filter(date == max(date)),
@@ -162,9 +161,9 @@ hosp_plot <- ggplot(data = ind_hosp,
 
 
 
-#########################################
-# ICU, Vents: clean, calculate triggers
-#########################################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 3 ICU, Vents: clean, calculate triggers ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # calcs percentages, assigns 1 for above threshold, -1 for below (needed for sign() fun below)
@@ -267,9 +266,9 @@ trigger_dat_v<- consec_days_v %>%
 
 
 
-################
-# Gauge Plots
-################
+#@@@@@@@@@@@@@@@@@@@
+# 4 Gauge Plots ----
+#@@@@@@@@@@@@@@@@@@@
 
 # used for both gauge plots
 # cols: type (icu or vent), percent, title, label (text of percent col)
@@ -342,9 +341,9 @@ vents_gauge <- ggplot(data = gauge_dat %>%
 
 
 
-################
-# Trigger plot
-################
+#@@@@@@@@@@@@@@@@@@@@
+# 5 Trigger plot ----
+#@@@@@@@@@@@@@@@@@@@@
 
 
 
@@ -388,9 +387,9 @@ xlim(0, 1) + ylim(0, 1) +
 
 
 
-######################
-# Combine all charts
-######################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@
+# 6 Combine all charts ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 # Pay attention to groupings by parentheses
 # 1st plot_layout affects left col; 2nd plot_layout affects entire chart
