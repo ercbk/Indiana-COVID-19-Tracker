@@ -52,7 +52,7 @@ file.rename(file.path(download_location, filename), glue("{rprojroot::find_rstud
 chrome$close()
 
 # currently this doesn't shutdown the server
-server$stop()
+# server$stop()
 
 # kill the server manually
 # installr::kill_process(process = "java.exe")

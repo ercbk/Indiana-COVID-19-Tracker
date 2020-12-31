@@ -4,8 +4,8 @@ on:
   schedule:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
-    - cron: '5 23 * * *'
-    #- cron: '1 1 * * *'
+    #- cron: '5 23 * * *'
+    - cron: '45 0 * * *'
 
 
 jobs:
@@ -76,9 +76,8 @@ jobs:
       
       
       ## Run scripts
-      - name: build beds and ventilator data set
-        if: success()
-        run: Rscript "R/collection/build-datasets.R"
+      #- name: build beds and ventilator data set
+        #run: Rscript "R/collection/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run excess-death-col
@@ -93,8 +92,8 @@ jobs:
         run: Rscript "R/static-charts/pos-policy-line.R"
       - name: run county-slope-models
         run: Rscript "R/static-charts/county-slope-models.R"
-      - name: run goog-mob-line
-        run: Rscript "R/static-charts/goog-mob-line.R"
+      #- name: run goog-mob-line
+        #run: Rscript "R/static-charts/goog-mob-line.R"
       - name: run regional-slope-models
         run: Rscript "R/static-charts/regional-slope-models.R"
       - name: run daily-re-estimate
