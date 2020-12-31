@@ -7,6 +7,7 @@ on:
     # says run at the 20th min, 17th hr UTC (11:49am ET) of every day
     - cron: '20 18 * * *'
     - cron: '15 1 * * *'
+    - cron: '55 2 * * *'
 
 jobs:
   scrape:
@@ -56,6 +57,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Noon charts update" || echo "No changes to commit"
+          git pull
       - name: Push changes
         uses: ad-m/github-push-action@master
         # GITHUB_TOKEN automatically created
