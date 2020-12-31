@@ -7,7 +7,6 @@ on:
     # says run at the 20th min, 17th hr UTC (11:49am ET) of every day
     - cron: '20 18 * * *'
     - cron: '15 1 * * *'
-    - cron: '55 2 * * *'
 
 jobs:
   scrape:
