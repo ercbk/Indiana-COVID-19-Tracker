@@ -52,24 +52,40 @@ ind_cause_raw <- state_wk_cause_raw %>%
 
 
 # get the last week for this year where all diseases have data 
-data_week <- ind_cause_raw %>%
-   # get only this year's weekly counts
-   filter(year == year(today())) %>% 
-   group_by(cause_subgroup) %>%
-   # last week for each cause (value repeated for each row)
-   mutate(final_week = max(week)) %>% 
-   # gets rid of those redundant rows
-   distinct(final_week, cause_subgroup) %>%
-   ungroup() %>% 
-   # get whichever final week is the earliest
-   filter(final_week == min(final_week)) %>% 
-   pull(final_week)
+if (max(ind_cause_raw$year) == 2020) {
+   data_week <- ind_cause_raw %>%
+      # get only this year's weekly counts
+      filter(year == 2020) %>% 
+      group_by(cause_subgroup) %>%
+      # last week for each cause (value repeated for each row)
+      mutate(final_week = max(week)) %>% 
+      # gets rid of those redundant rows
+      distinct(final_week, cause_subgroup) %>%
+      ungroup() %>% 
+      # get whichever final week is the earliest
+      filter(final_week == min(final_week)) %>% 
+      pull(final_week)
+} else {
+   data_week <- ind_cause_raw %>%
+      # get only this year's weekly counts
+      filter(year == year(today())) %>% 
+      group_by(cause_subgroup) %>%
+      # last week for each cause (value repeated for each row)
+      mutate(final_week = max(week)) %>% 
+      # gets rid of those redundant rows
+      distinct(final_week, cause_subgroup) %>%
+      ungroup() %>% 
+      # get whichever final week is the earliest
+      filter(final_week == min(final_week)) %>% 
+      pull(final_week)
+}
 
+# not sure how CDC is going to handle 2021 on excess deaths; Using 5 for this value (below) for now
 # the number of years in this data that are prior to this year
-data_prev_years <- ind_cause_raw %>% 
-   distinct(year) %>% 
-   summarize(prev_years = n()-1) %>% 
-   pull(prev_years)
+# data_prev_years <- ind_cause_raw %>% 
+#    distinct(year) %>% 
+#    summarize(prev_years = n()-1) %>% 
+#    pull(prev_years)
 
 
 # calculate percent difference from the totals this year to the avg of years 2015 to 2019 during the same portion of the year
@@ -79,13 +95,14 @@ ind_cause <- ind_cause_raw %>%
    filter(week <= data_week) %>%
    select(-jurisdiction, -state_abbreviation, -suppress, -note, -type) %>%
    # creates 2 groups: current year and years prior to this year
-   mutate(period = ifelse(year < year(today()), "prev_years", "this_year")) %>%
+   mutate(period = ifelse(year < 2020, "prev_years", "this_year")) %>%
    group_by(period, cause_subgroup) %>%
    # calc up-to-date totals for each group and each disease
    summarize(yr_to_date_totals = sum(number_of_deaths)) %>%
    # calcs average for the yearly, up-to-date, prev_years group and leaves this_year's counts alone
    mutate(yr_to_date_avgs = ifelse(period == "prev_years",
-                                      yr_to_date_totals/data_prev_years,
+                                      #yr_to_date_totals / data_prev_years,
+                                      yr_to_date_totals / 5,
                                       yr_to_date_totals),
           # clean and shorten some names
           cause_subgroup = recode(cause_subgroup, "Alzheimer disease and dementia" = "Alzheimer's disease and dementia",

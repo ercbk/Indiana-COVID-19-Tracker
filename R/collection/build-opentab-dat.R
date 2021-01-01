@@ -63,4 +63,9 @@ java_pid <- windows_tasks %>%
       filter(stringr::str_detect(`Image Name`, "java.exe")) %>% 
       pull(PID)
 
+chrome_pid <- windows_tasks %>% 
+      filter(stringr::str_detect(`Image Name`, "chromedriver.exe")) %>% 
+      pull(PID)
+
 tools::pskill(pid = java_pid)
+tools::pskill(pid = chrome_pid)
