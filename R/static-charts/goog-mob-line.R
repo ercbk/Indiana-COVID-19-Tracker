@@ -18,7 +18,6 @@ light_deep <- prismatic::clr_lighten(deep_rooted, shift = 0.2)
 tmpdir <- file.path(tempdir(), "Region_Mobility_Report_CSVs.zip")
 download.file(url = "https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip", destfile = tmpdir)
 
-zipdir <- stringr::str_remove(tmpdir, "/Region_Mobility_Report_CSVs.zip")
 unzip(zipfile = tmpdir,
       files = "2020_US_Region_Mobility_Report.csv",
       exdir = glue("{rprojroot::find_rstudio_root_file()}/data"))
