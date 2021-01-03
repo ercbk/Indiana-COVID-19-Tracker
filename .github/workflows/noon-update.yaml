@@ -4,7 +4,7 @@ on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
     - cron: '35 16 * * *'
-    #- cron: '59 17 * * *'
+    - cron: '29 18 * * *'
 
 jobs:
   update:
@@ -111,7 +111,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Noon charts update" || echo "No changes to commit"
-          git pull
       - name: Push changes
         uses: ad-m/github-push-action@master
         # GITHUB_TOKEN automatically created
