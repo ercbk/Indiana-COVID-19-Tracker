@@ -113,11 +113,13 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "6:30pm charts update" || echo "No changes to commit"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+          git push
+     
+      #- name: Push changes
+        #uses: ad-m/github-push-action@master
         # GITHUB_TOKEN automatically created
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        #with:
+          #github_token: ${{ secrets.GITHUB_TOKEN }}
       # Sends signal to the website repo to start its evening update
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1

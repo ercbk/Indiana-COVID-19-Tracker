@@ -57,11 +57,12 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Noon charts update" || echo "No changes to commit"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+          git push
+      #- name: Push changes
+        #uses: ad-m/github-push-action@master
         # GITHUB_TOKEN automatically created
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        #with:
+          #github_token: ${{ secrets.GITHUB_TOKEN }}
       
 
 
