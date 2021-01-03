@@ -15,7 +15,16 @@ pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, ggtext)
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 light_deep <- prismatic::clr_lighten(deep_rooted, shift = 0.2)
 
-goog_raw <- readr::read_csv("https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv")
+tmpdir <- file.path(tempdir(), "Region_Mobility_Report_CSVs.zip")
+download.file(url = "https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip", destfile = tmpdir)
+
+zipdir <- stringr::str_remove(tmpdir, "/Region_Mobility_Report_CSVs.zip")
+unzip(zipfile = tmpdir,
+      files = "2020_US_Region_Mobility_Report.csv",
+      exdir = glue("{rprojroot::find_rstudio_root_file()}/data"))
+
+goog_raw <- read.csv(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"))
+
 
 # Filter Indiana; cols: date, activity, index; calc median index of all counties
 ind_goog <- goog_raw %>% 
@@ -25,6 +34,7 @@ ind_goog <- goog_raw %>%
           Workplace = workplaces_percent_change_from_baseline,
           Residential = residential_percent_change_from_baseline) %>% 
    tidyr::drop_na() %>% 
+   mutate(date = as.Date(date)) %>% 
    group_by(date) %>% 
    summarize(`Retail and Recreation` = median(`Retail and Recreation`)/100,
              Workplace = median(Workplace)/100,
