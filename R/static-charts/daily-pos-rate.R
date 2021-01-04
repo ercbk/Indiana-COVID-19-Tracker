@@ -100,7 +100,7 @@ rate_plot <- ggplot(data = chart_dat,
              mapping = aes(x = x, y = y,
                            label = label),
              size = 4.8, angle = 0L,
-             lineheight = 1L, hjust = 0.5,
+             lineheight = 1L, hjust = 0.25,
              vjust = 0.5, colour = "white",
              family = "Roboto", fontface = "plain",
              inherit.aes = FALSE, show.legend = FALSE) +
