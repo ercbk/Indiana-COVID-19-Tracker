@@ -76,8 +76,8 @@ jobs:
       
       
       ## Run scripts
-      - name: build beds and ventilator data set
-        run: Rscript "R/collection/build-datasets.R"
+      #- name: build beds and ventilator data set
+        #run: Rscript "R/collection/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run excess-death-col
