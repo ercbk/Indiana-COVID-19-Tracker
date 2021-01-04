@@ -20,21 +20,25 @@ rest_dat_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data
 
 # pivot date cols to a single col and clean; add weekend col
 region_rest <- rest_dat_raw %>% 
-      filter(Name %in% c("Indiana", "Illinois", "Michigan",
-                         "Ohio", "Kentucky", "Missouri")) %>%
-      select(-Type) %>% 
-      tidyr::pivot_longer(cols = -Name,
-                          names_to = "date",
-                          values_to = "pct_diff") %>% 
-      mutate(date = ifelse(date == "10/5_1", "10/4", date),
-             date = stringr::str_replace_all(date,
-                                             pattern = "/",
-                                             replacement = "-"),
-             date = paste0(year(today()), "-", date),
-             date = lubridate::ymd(date),
-             weekend = timeDate::isWeekend(date),
-             pct_diff = pct_diff/100) %>% 
-   arrange(Name, date)
+   filter(Name %in% c("Indiana", "Illinois", "Michigan",
+                      "Ohio", "Kentucky", "Missouri")) %>%
+   select(-Type) %>% 
+   tidyr::pivot_longer(cols = -Name,
+                       names_to = "date",
+                       values_to = "pct_diff") %>% 
+   mutate(date = ifelse(date == "10/5_1", "10/4", date),
+          date = stringr::str_replace_all(date,
+                                          pattern = "/",
+                                          replacement = "-")) %>% 
+   group_by(Name) %>% 
+   mutate(id = row_number(),
+          date = ifelse(id > 318, paste0(2021, "-", date), paste0(2020, "-", date)),
+          date = lubridate::ymd(date),
+          weekend = timeDate::isWeekend(date),
+          pct_diff = pct_diff/100) %>% 
+   arrange(Name, date) %>% 
+   select(-id)
+
 
 # current date of data
 data_date <- region_rest %>%
