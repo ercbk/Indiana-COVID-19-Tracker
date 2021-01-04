@@ -22,7 +22,7 @@ unzip(zipfile = tmpdir,
       files = "2020_US_Region_Mobility_Report.csv",
       exdir = glue("{rprojroot::find_rstudio_root_file()}/data"))
 
-goog_raw <- readr::read.csv(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"))
+goog_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"))
 
 
 # Filter Indiana; cols: date, activity, index; calc median index of all counties
