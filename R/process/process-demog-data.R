@@ -36,39 +36,75 @@ hub_dat_url <- "https://hub.mph.in.gov/dataset/bd08cdd3-9ab1-4d70-b933-41f9ef7b8
 download.file(hub_dat_url, destfile = "data/county-test-case-trend.xlsx", mode = "wb")
 test_dat_raw <- readxl::read_xlsx("data/county-test-case-trend.xlsx")
 
+# cumulative deaths for each age group
+ind_age_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-complete.csv"))
 
 # tidycensus pkg, 2018 age populations for Indiana
 ind_age_pop <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-pop.rds"))
 
 
-
-# clean and calc weekly cases per age group
 age_cases_clean <- age_cases_raw %>% 
-      janitor::clean_names() %>% 
-      filter(agegrp != "Unknown") %>% 
-      # calculate daily cases for each agegrp
-      group_by(date, agegrp) %>% 
-      summarize(daily_cases = sum(covid_count)) %>% 
-      # some agegrps not present for some dates
-      # wider then longer fills in the missing agegrps
-      tidyr::pivot_wider(names_from = "agegrp",
-                         values_from = "daily_cases",
-                         values_fill = list(daily_cases = 0)) %>% 
-      select(1,3,7,8,2,4,5,9,6) %>% 
-      tidyr::pivot_longer(cols = -date,
-                          names_to = "age_grp",
-                          values_to = "daily_cases") %>% 
-      arrange(date) %>% 
-      # calculate weekly cases for each agegrp
-      mutate(week = lubridate::week(date)) %>% 
-      group_by(week) %>% 
-      mutate(end_date = last(date)) %>%
-      group_by(end_date, age_grp) %>% 
-      summarize(weekly_cases = sum(daily_cases)) %>% 
-      ungroup() %>% 
-      # <age to age>, "80 and older" format
-      mutate(age_grp = stringr::str_replace(age_grp, "-", " to "),
-             age_grp = stringr::str_replace(age_grp, "\\+", " and older"))
+   janitor::clean_names() %>% 
+   filter(agegrp != "Unknown") %>% 
+   # calculate daily cases for each agegrp
+   group_by(date, agegrp) %>% 
+   summarize(daily_cases = sum(covid_count)) %>% 
+   # some agegrps not present for some dates
+   # wider then longer fills in the missing agegrps
+   tidyr::pivot_wider(names_from = "agegrp",
+                      values_from = "daily_cases",
+                      values_fill = list(daily_cases = 0)) %>% 
+   select(1,3,7,8,2,4,5,9,6) %>% 
+   tidyr::pivot_longer(cols = -date,
+                       names_to = "age_grp",
+                       values_to = "daily_cases") %>% 
+   arrange(date) %>% 
+   # data has some missing days before Mar 15
+   filter(date >= as.Date("2020-03-15")) %>%
+   # calculate weekly cases for each agegrp
+   group_by(age_grp) %>% 
+   mutate(weekly_cases = slider::slide_int(daily_cases,
+                                           .f = sum,
+                                           .before = 6,
+                                           .step = 7,
+                                           .complete = T)) %>% 
+   tidyr::drop_na() %>% 
+   rename(end_date = date) %>% 
+   ungroup() %>% 
+   # <age to age>, "80 and older" format
+   mutate(age_grp = stringr::str_replace(age_grp, "-", " to "),
+          age_grp = stringr::str_replace(age_grp, "\\+", " and older"))
+
+# # doesn't do full week calc when going from 2020 to 2021
+# # clean and calc weekly cases per age group
+# age_cases_clean <- age_cases_raw %>% 
+#    janitor::clean_names() %>% 
+#    filter(agegrp != "Unknown") %>% 
+#    # calculate daily cases for each agegrp
+#    group_by(date, agegrp) %>% 
+#    summarize(daily_cases = sum(covid_count)) %>% 
+#    # some agegrps not present for some dates
+#    # wider then longer fills in the missing agegrps
+#    tidyr::pivot_wider(names_from = "agegrp",
+#                       values_from = "daily_cases",
+#                       values_fill = list(daily_cases = 0)) %>% 
+#    select(1,3,7,8,2,4,5,9,6) %>% 
+#    tidyr::pivot_longer(cols = -date,
+#                        names_to = "age_grp",
+#                        values_to = "daily_cases") %>% 
+#    arrange(date) %>% 
+#    # data has some missing days before Mar 15
+#    filter(date >= as.Date("2020-03-15")) %>% 
+#    # calculate weekly cases for each agegrp
+#    mutate(week = lubridate::week(date)) %>% 
+#    group_by(week) %>% 
+#    mutate(end_date = last(date)) %>%
+#    group_by(end_date, age_grp) %>% 
+#    summarize(weekly_cases = sum(daily_cases)) %>% 
+#    ungroup() %>% 
+#    # <age to age>, "80 and older" format
+#    mutate(age_grp = stringr::str_replace(age_grp, "-", " to "),
+#           age_grp = stringr::str_replace(age_grp, "\\+", " and older"))
 
 
 
@@ -87,12 +123,38 @@ test_dea <- test_dat_raw %>%
    summarize(daily_tests = sum(county_daily_tests),
              daily_deaths = sum(county_daily_deaths),
              .groups = "drop") %>%
-   mutate(week = lubridate::week(date)) %>% 
-   group_by(week) %>% 
-   mutate(end_date = last(date)) %>% 
-   group_by(end_date) %>% 
-   summarize(weekly_tests = sum(daily_tests),
-             weekly_deaths = sum(daily_deaths))
+   filter(date >= as.Date("2020-03-15")) %>%
+   mutate(weekly_tests = slider::slide_int(daily_tests,
+                                           .f = sum,
+                                           .before = 6,
+                                           .step = 7,
+                                           .complete = T), 
+          weekly_deaths = slider::slide_int(daily_deaths,
+                                            .f = sum,
+                                            .before = 6,
+                                            .step = 7,
+                                            .complete = T)) %>% 
+   tidyr::drop_na() %>% 
+   rename(end_date = date) %>% 
+   select(-daily_tests, -daily_deaths)
+
+# # doesn't do full week calc when going from 2020 to 2021
+# # Calc weekly tests and deaths
+# test_dea <- test_dat_raw %>% 
+#    select(date = DATE,
+#           county_daily_tests = COVID_TESTS_ADMINISTRATED,
+#           county_daily_deaths = COVID_DEATHS) %>%
+#    mutate(date = lubridate::ymd(date)) %>% 
+#    group_by(date) %>% 
+#    summarize(daily_tests = sum(county_daily_tests),
+#              daily_deaths = sum(county_daily_deaths),
+#              .groups = "drop") %>%
+#    mutate(week = lubridate::week(date)) %>% 
+#    group_by(week) %>% 
+#    mutate(end_date = last(date)) %>% 
+#    group_by(end_date) %>% 
+#    summarize(weekly_tests = sum(daily_tests),
+#              weekly_deaths = sum(daily_deaths))
 
 
 # calc cumulative cases for each week
@@ -168,10 +230,6 @@ readr::write_rds(heat_bubble_data_date, glue("{rprojroot::find_rstudio_root_file
 #@@@@@@@@@@@@@@@@@@@@@@@
 
 
-# cumulative deaths for each age group
-ind_age_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-complete.csv"))
-
-
 # df with the missing dates
 missing_dates <- expand.grid(
    date = as.Date("2020-07-09") + c(1:10),
@@ -202,20 +260,44 @@ ind_age_imputed_st <- purrr::map_dfc(ind_age_missing[2:9], ~na_interpolation(.x,
                        names_to = "agegrp",
                        values_to = "covid_deaths")
 
+
 # calc weekly totals for each age group
 ind_age_clean <- ind_age_imputed_st %>% 
-   mutate(week = lubridate::week(date)) %>% 
-   group_by(week) %>% 
-   mutate(end_date = last(date)) %>% 
-   group_by(end_date, agegrp) %>% 
-   summarize(weekly_total = sum(covid_deaths), .groups = "drop") %>% 
+   # calculate weekly cases for each agegrp
+   group_by(agegrp) %>% 
+   mutate(weekly_total = slider::slide_int(covid_deaths,
+                                           .f = sum,
+                                           .before = 6,
+                                           .step = 7,
+                                           .complete = T)) %>% 
+   tidyr::drop_na() %>% 
+   rename(end_date = date) %>% 
+   ungroup() %>% 
    # <age to age>, "80 and older" format
    mutate(weekly_total = ifelse(weekly_total < 0, 0, weekly_total),
           agegrp = stringr::str_replace(agegrp, "-", " to "),
           agegrp = stringr::str_replace(agegrp, "\\+", " and older"),
           date_text = format(end_date, "%B %d"),
           tooltip = glue("{date_text}
-                         Deaths: {weekly_total}"))
+                         Deaths: {weekly_total}")) %>% 
+   select(-covid_deaths)
+
+
+# # doesn't do full week calc when going from 2020 to 2021
+# # calc weekly totals for each age group
+# ind_age_clean <- ind_age_imputed_st %>% 
+#    mutate(week = lubridate::week(date)) %>% 
+#    group_by(week) %>% 
+#    mutate(end_date = last(date)) %>% 
+#    group_by(end_date, agegrp) %>% 
+#    summarize(weekly_total = sum(covid_deaths), .groups = "drop") %>% 
+#    # <age to age>, "80 and older" format
+#    mutate(weekly_total = ifelse(weekly_total < 0, 0, weekly_total),
+#           agegrp = stringr::str_replace(agegrp, "-", " to "),
+#           agegrp = stringr::str_replace(agegrp, "\\+", " and older"),
+#           date_text = format(end_date, "%B %d"),
+#           tooltip = glue("{date_text}
+#                          Deaths: {weekly_total}"))
 
 line_data_date <- ind_age_clean %>% 
    filter(end_date == max(end_date)) %>% 
