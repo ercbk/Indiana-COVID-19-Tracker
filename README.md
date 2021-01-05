@@ -70,7 +70,7 @@ those from Governor Holcomb if any are presented.
         being below 70% for 14 consecutive days.  
         <br /> <br /> <br />
 
-<img src="plots/pos-rate-line-2021-01-01.png" width="935" />
+<img src="plots/pos-rate-line-2021-01-02.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2020-12-29.png" width="935" />
+<img src="plots/goog-mob-line-2021-01-01.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
