@@ -16,9 +16,9 @@
 
 
 
-########################
-# Set-up
-########################
+
+# Set-up ----
+
 
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
@@ -36,9 +36,9 @@ options(scipen = 999)
 
 
 
-########################
-# Cleaning
-########################
+#@@@@@@@@@@@@@@@@
+# Cleaning ----
+#@@@@@@@@@@@@@@@@
 
 
 # calculated daily positive cases
@@ -80,15 +80,17 @@ policy_dat <- tibble(policy = "Stage 2",
               date_text = "11/14/2020") %>%
       mutate(labels = c("2", "3", "4", "4.5", "CMR", "5", "CGR"))
 
-holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day", "Thanksgiving"),
-                      date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26"))) %>% 
+holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day", "Thanksgiving",
+                                  "Christmas", "New Years Eve"),
+                      date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26",
+                                       "2020-12-25", "2020-12-31"))) %>% 
       inner_join(cases_dat %>% 
                        select(date, cumulative_cases, daily_cases), by = "date")
 
 
-########################
-# AEI Snapback Trigger
-########################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# AEI Snapback Trigger ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # calc difference between one day and the previous day
@@ -141,9 +143,9 @@ subtitle_dat <- consec_days %>%
 
 
 
-############################
-# policy label data
-############################
+#@@@@@@@@@@@@@@@@@@@@@@@@@
+# policy label data ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 label_dat <- cases_dat %>%
@@ -185,9 +187,9 @@ policy_text <- glue("
 
 
 
-###########################
-# Chart
-###########################
+#@@@@@@@@@@@@@@
+# Chart ----
+#@@@@@@@@@@@@@@
 
 
 # daily cases has some zeros and we're taking logs, so adding 1
@@ -197,10 +199,11 @@ pos_policy_line <- ggplot(cases_dat %>%
       # must specify color arg for shapes to show-up
       geom_point(data = holiday_dat %>% 
                        mutate(zoom = TRUE), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
-   # for holidays outside of zoom_facet range   
-   geom_point(data = holiday_dat %>% 
+      # for holidays outside of zoom_facet range   
+      geom_point(data = holiday_dat %>% 
                        filter(date > "2020-09-07"), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
       geom_line(color = "#B28330") +
+      # expand_limits(y = max(cases_dat$daily_cases) + 1000) +
       # experiments with adding smoothing lines
       # geom_line(aes(y = sev_day_avg), color = "#B28330", alpha = 0.45, size = 1) +
       # stat_smooth(method = "loess", geom = "line", se = FALSE, formula = "y ~ x",
@@ -217,9 +220,14 @@ pos_policy_line <- ggplot(cases_dat %>%
             zoom.data = zoom,
             show.area = FALSE, zoom.size = 0.5,
             horizontal = FALSE) +
-      geom_richtext(aes(x = (10000 + xmax)/2, y = ymax, label = holiday_text,
+      geom_richtext(data = tibble(x = 65000, y = 1800, zoom = TRUE),
+                    aes(x = x, y = y, label = holiday_text,
                         label.color = NA, size = 12, fontface = "bold"),
                     fill = "black", color = "white") +
+      # geom_richtext(data = tibble(x = xmax, y = ymax, zoom = TRUE),
+      #               aes(x = (10000 + xmax)/2, y = ymax, label = holiday_text,
+      #                   label.color = NA, size = 12, fontface = "bold"),
+      #               fill = "black", color = "white") +
       geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
                 family="Roboto",
                 size=4.5, hjust=0.35, color="white") +
@@ -349,9 +357,8 @@ pos_policy_line <- ggplot(cases_dat %>%
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-line-{data_date}.png")
 
-# ggsave(plot_path, plot = pos_policy_line, dpi = "screen", width = 33, height = 20, units = "cm")
-# with facet_zoom, need to make it taller
 
+# with facet_zoom, need to make it taller
 ggsave(plot_path, plot = pos_policy_line,
        dpi = "screen", width = 33, height = 30,
        device = ragg::agg_png(), units = "cm")
