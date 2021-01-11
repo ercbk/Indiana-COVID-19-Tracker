@@ -54,7 +54,7 @@ those from Governor Holcomb if any are presented.
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
     <br /> <br /> <br />
 
-<img src="plots/hosp-icu-vent-2021-01-09.png" width="935" />
+<img src="plots/hosp-icu-vent-2021-01-10.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -70,7 +70,7 @@ those from Governor Holcomb if any are presented.
         being below 70% for 14 consecutive days.  
         <br /> <br /> <br />
 
-<img src="plots/pos-rate-line-2021-01-07.png" width="935" />
+<img src="plots/pos-rate-line-2021-01-08.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
@@ -152,7 +152,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2021-01-09.png" width="935" />
+<img src="plots/daily-re-line-2021-01-10.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
