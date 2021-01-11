@@ -29,7 +29,7 @@ also be trying to track some of the triggers in the AEI proposal and
 those from Governor Holcomb if any are presented.  
 <br /> <br /> <br />
 
-<img src="plots/ind-combo-line-2021-01-09.png" width="935" />
+<img src="plots/ind-combo-line-2021-01-10.png" width="935" />
 
   - Each point is the total cases that have accumulated until that date.
     The lines show the exponential nature of the spread of the virus at
@@ -43,7 +43,7 @@ those from Governor Holcomb if any are presented.
     situation, but it’s interesting as a hypothetical.  
     <br /> <br /> <br />
 
-<img src="plots/pos-policy-line-2021-01-09.png" width="935" />
+<img src="plots/pos-policy-line-2021-01-10.png" width="935" />
 
   - This chart shows the number of daily positive cases on the y-axis
     versus the cumulative total of positive cases on the x-axis.  
@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2021-01-05.png" width="935" />
+<img src="plots/goog-mob-line-2021-01-08.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
@@ -128,9 +128,9 @@ those from Governor Holcomb if any are presented.
   - Weekends are shown as vertical bars.  
     <br /> <br /> <br />
 
-<img src="plots/region-dea-line-2021-01-09.png" width="935" />
+<img src="plots/region-dea-line-2021-01-10.png" width="935" />
 
-<img src="plots/region-pos-line-2021-01-09.png" width="935" />
+<img src="plots/region-pos-line-2021-01-10.png" width="935" />
 
   - 7-day averages *greater* than 14 day averages indicate an
     *increasing* trend of positive cases or deaths.  
@@ -142,7 +142,7 @@ those from Governor Holcomb if any are presented.
     University.  
     <br /> <br /> <br />
 
-<img src="plots/county-pos-bar-2021-01-09.png" width="935" />
+<img src="plots/county-pos-bar-2021-01-10.png" width="935" />
 
   - The top 20 counties according to estimated average percent change
     are shown. Counties at the top are experiencing the highest average
