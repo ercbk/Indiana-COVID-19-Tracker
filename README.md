@@ -54,7 +54,7 @@ those from Governor Holcomb if any are presented.
     [Back-on-Track Indiana](https://backontrack.in.gov/2348.htm).  
     <br /> <br /> <br />
 
-<img src="plots/hosp-icu-vent-2021-01-19.png" width="935" />
+<img src="plots/hosp-icu-vent-2021-01-20.png" width="935" />
 
   - Even though Governor Holcomb hasn’t explicitly stated the conditions
     that would necessitate a reversal of course to a previous stage, he
@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2021-01-15.png" width="935" />
+<img src="plots/goog-mob-line-2021-01-17.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
@@ -152,7 +152,7 @@ those from Governor Holcomb if any are presented.
     outbreak occurs.  
     <br /> <br /> <br />
 
-<img src="plots/daily-re-line-2021-01-18.png" width="935" />
+<img src="plots/daily-re-line-2021-01-19.png" width="935" />
 
   - The instantaneous effective reproduction number, R<sub>e</sub> is an
     estimate of the average number of people that an infected person is
