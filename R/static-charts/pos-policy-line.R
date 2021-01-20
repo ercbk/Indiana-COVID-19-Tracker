@@ -224,10 +224,6 @@ pos_policy_line <- ggplot(cases_dat %>%
                     aes(x = x, y = y, label = holiday_text,
                         label.color = NA, size = 12, fontface = "bold"),
                     fill = "black", color = "white") +
-      # geom_richtext(data = tibble(x = xmax, y = ymax, zoom = TRUE),
-      #               aes(x = (10000 + xmax)/2, y = ymax, label = holiday_text,
-      #                   label.color = NA, size = 12, fontface = "bold"),
-      #               fill = "black", color = "white") +
       geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
                 family="Roboto",
                 size=4.5, hjust=0.35, color="white") +
@@ -249,7 +245,7 @@ pos_policy_line <- ggplot(cases_dat %>%
                     family="Roboto", lineheight=0.95,
                     size=4.5, label.size=0,
                     color = "white", fill = "black",
-                    nudge_x = c(-800, 2800, -11000, 10100, 6500, -49000),
+                    nudge_x = c(-800, 2800, -11000, 10100, 6500, 49000),
                     nudge_y = c(-550, -475, 900, 880, -320, 0)) +
       # I want Stage 5 to be in both panels, so had give it's own geom. Using zoom = F for this stage didn't work when I tried to do it in one geom.
       geom_richtext(data = label_dat %>%
@@ -321,7 +317,7 @@ pos_policy_line <- ggplot(cases_dat %>%
       ) +
       # County-score Gathering Restrictions
       geom_segment(
-            data = data.frame(x = 210000, xend = 235000,
+            data = data.frame(x = 280000, xend = 255000,
                               y = 8327, yend = 8327, zoom = FALSE),
             aes(x = x, xend = xend,
                 y = y, yend = yend),
