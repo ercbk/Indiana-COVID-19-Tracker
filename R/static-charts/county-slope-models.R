@@ -77,7 +77,7 @@ county_pos_bar <- ggplot(pos_bar_dat, aes(y = reorder(county, pos_estimate), x =
    # counts
    geom_text(aes(label = positives), hjust = 1.3,  size = 4, color = "black", fontface = "bold") +
    # na.value is color of data values above 20%
-   scale_fill_gradientn(colors = palette, limits = c(1,20),
+   scale_fill_gradientn(colors = palette, limits = c(0.01,20),
                         guide = 'none', na.value = "#7F2704") +
    labs(x = NULL, y = NULL,
         title = "Estimated change in <b style='color:#B28330'>cumulative positive tests</b> per day",
