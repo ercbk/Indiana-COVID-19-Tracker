@@ -58,7 +58,7 @@ age_cases_clean <- age_cases_raw %>%
    tidyr::pivot_longer(cols = -date,
                        names_to = "age_grp",
                        values_to = "daily_cases") %>% 
-   arrange(date) %>% 
+   arrange(date, age_grp) %>% 
    # data has some missing days before Mar 15
    filter(date >= as.Date("2020-03-15")) %>%
    # calculate weekly cases for each agegrp
