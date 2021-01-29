@@ -113,6 +113,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "6:30pm charts update" || echo "No changes to commit"
+          git pull --rebase
           git push
 
       # Sends signal to the website repo to start its evening update
