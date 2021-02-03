@@ -87,7 +87,7 @@ those from Governor Holcomb if any are presented.
     Project](https://covidtracking.com/data)  
     <br /> <br /> <br />
 
-<img src="plots/ot-rest-line-2021-02-01.png" width="935" />
+<img src="plots/ot-rest-line-2021-02-02.png" width="935" />
 
   - OpenTable is a service for reviewing and making reservations at
     restaurants. On its “The state of the restaurant industry”
@@ -114,7 +114,7 @@ those from Governor Holcomb if any are presented.
     difference.  
     <br /> <br /> <br />
 
-<img src="plots/goog-mob-line-2021-01-29.png" width="935" />
+<img src="plots/goog-mob-line-2021-01-31.png" width="935" />
 
   - Google like Apple has released some of the
     [data](https://www.google.com/covid19/mobility/) it collects from
@@ -169,7 +169,7 @@ those from Governor Holcomb if any are presented.
     Research in Health.  
     <br /> <br /> <br />
 
-<img src="plots/excess-death-col-2021-01-16.png" width="935" />
+<img src="plots/excess-death-col-2021-01-23.png" width="935" />
 
   - The
     [CDC’s](https://www.cdc.gov/nchs/nvss/vsrr/covid19/excess_deaths.htm)
