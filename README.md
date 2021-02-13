@@ -70,7 +70,7 @@ those from Governor Holcomb if any are presented.
         being below 70% for 14 consecutive days.  
         <br /> <br /> <br />
 
-<img src="plots/pos-rate-line-2021-02-09.png" width="935" />
+<img src="plots/pos-rate-line-2021-02-10.png" width="935" />
 
   - The Positive Test Rate is the number of positive test results
     divided by the number of tests administered over a period of time.
