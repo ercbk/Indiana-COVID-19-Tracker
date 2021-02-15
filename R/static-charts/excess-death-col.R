@@ -90,12 +90,14 @@ if (max(ind_cause_raw$year) == 2020) {
 
 # calculate percent difference from the totals this year to the avg of years 2015 to 2019 during the same portion of the year
 # Individual diseases
-# ind_cause <- ind_cause_raw %>%
+
+
+# ind_cause_20 <- ind_cause_raw %>%
 #    # only use weeks that have data
-#    filter(week <= data_week) %>%
+#    filter(year != 2021) %>%
 #    select(-jurisdiction, -state_abbreviation, -suppress, -note, -type) %>%
 #    # creates 2 groups: current year and years prior to this year
-#    mutate(period = ifelse(year < 2020, "prev_years", "this_year")) %>%
+#    mutate(period = ifelse(year <= 2019, "prev_years", "this_year")) %>%
 #    group_by(period, cause_subgroup) %>%
 #    # calc up-to-date totals for each group and each disease
 #    summarize(yr_to_date_totals = sum(number_of_deaths)) %>%
@@ -120,37 +122,6 @@ if (max(ind_cause_raw$year) == 2020) {
 #           cause_subgroup = factor(cause_subgroup) %>%
 #              forcats::fct_reorder(pct_diff)) %>% 
 #    top_n(pct_diff, n = 6)
-
-ind_cause_20 <- ind_cause_raw %>%
-   # only use weeks that have data
-   filter(year != 2021) %>%
-   select(-jurisdiction, -state_abbreviation, -suppress, -note, -type) %>%
-   # creates 2 groups: current year and years prior to this year
-   mutate(period = ifelse(year <= 2019, "prev_years", "this_year")) %>%
-   group_by(period, cause_subgroup) %>%
-   # calc up-to-date totals for each group and each disease
-   summarize(yr_to_date_totals = sum(number_of_deaths)) %>%
-   # calcs average for the yearly, up-to-date, prev_years group and leaves this_year's counts alone
-   mutate(yr_to_date_avgs = ifelse(period == "prev_years",
-                                      #yr_to_date_totals / data_prev_years,
-                                      yr_to_date_totals / 5,
-                                      yr_to_date_totals),
-          # clean and shorten some names
-          cause_subgroup = recode(cause_subgroup, "Alzheimer disease and dementia" = "Alzheimer's disease and dementia",
-                               "Hypertensive dieases" = "Hypertensive diseases",
-                               "Other diseases of the circulatory system" = "Other circulatory diseases",
-                               "Other diseases of the respiratory system" = "Other respiratory diseases")) %>%
-   select(-yr_to_date_totals,) %>%
-   # splitting the two groups' avgs into two cols
-   tidyr::pivot_wider(id_cols = "cause_subgroup",
-                      names_from = "period",
-                      values_from = "yr_to_date_avgs") %>%
-   # calc percent difference between this years deaths and avg deaths from years prior
-   mutate(pct_diff = round(((this_year - prev_years) / prev_years)*100, 1),
-          labels = scales::percent(pct_diff/100, accuracy = 0.1),
-          cause_subgroup = factor(cause_subgroup) %>%
-             forcats::fct_reorder(pct_diff)) %>% 
-   top_n(pct_diff, n = 6)
 
 
 ind_cause_21 <- ind_cause_raw %>%
@@ -183,19 +154,21 @@ ind_cause_21 <- ind_cause_raw %>%
           labels = scales::percent(pct_diff/100, accuracy = 0.1),
           cause_subgroup = factor(cause_subgroup) %>%
              forcats::fct_reorder(pct_diff)) %>% 
-   top_n(pct_diff, n = 6)
+   top_n(pct_diff, n = 6) %>% 
+   mutate(nudge_x = ifelse(pct_diff < 0, -11.5, 11.5))
+
 
 
 # lollipop plot
 # individual diseases
 excess_lol <- ggplot(ind_cause_21, aes(x = pct_diff, y = cause_subgroup,
                       label = labels)) +
-   expand_limits(x = max(ind_cause_21$pct_diff * 1.6)) +
+   expand_limits(x = c(min(ind_cause_21$pct_diff * 1.6), max(ind_cause_21$pct_diff * 1.6))) +
    geom_segment(aes(x = 0, xend = pct_diff, y = cause_subgroup, yend = cause_subgroup),
                 color = "white") +
    geom_point(color = "#61c8b7", size=4) +
    # percent difference text
-   geom_text(nudge_x = 11.5, col = "white", fontface = "bold") +
+   geom_text(nudge_x = ind_cause_21$nudge_x, col = "white", fontface = "bold") +
    labs(x = NULL, y = NULL,
         title = "2021 Causes of Death: percent difference from historic averages",
         subtitle = "*Percent above average*") +
