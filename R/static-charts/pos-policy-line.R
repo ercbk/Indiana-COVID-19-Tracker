@@ -193,7 +193,7 @@ policy_text <- glue("
 
 
 # daily cases has some zeros and we're taking logs, so adding 1
-pos_policy_20 <- ggplot(cases_dat %>% 
+pos_policy_zero <- ggplot(cases_dat %>% 
                              as_tibble() %>% 
                              filter(date <= as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
    geom_point(color = "#B28330") +
@@ -353,11 +353,11 @@ pos_policy_20 <- ggplot(cases_dat %>%
 
 
 
-plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-20-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-zero-{data_date}.png")
 
 
 # with facet_zoom, need to make it taller
-ggsave(plot_path, plot = pos_policy_20,
+ggsave(plot_path, plot = pos_policy_zero,
        dpi = "screen", width = 33, height = 30,
        device = ragg::agg_png(), units = "cm")
 
@@ -366,7 +366,7 @@ ggsave(plot_path, plot = pos_policy_20,
 
 
 
-pos_policy_21 <- ggplot(cases_dat %>% 
+pos_policy_one <- ggplot(cases_dat %>% 
                            as_tibble() %>% 
                            filter(date > as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
    geom_point(color = "#B28330") +
@@ -411,9 +411,9 @@ pos_policy_21 <- ggplot(cases_dat %>%
 
 
 
-plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-21-{data_date}.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-one-{data_date}.png")
 
-ggsave(plot_path, plot = pos_policy_21,
+ggsave(plot_path, plot = pos_policy_one,
        dpi = "screen", width = 33, height = 20,
        device = ragg::agg_png(), units = "cm")
 
