@@ -3,8 +3,8 @@ name: Noon Update
 on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
-    - cron: '45 15 * * *'
-    #- cron: '55 16 * * *'
+    #- cron: '45 15 * * *'
+    - cron: '55 16 * * *'
 
 jobs:
   update:
@@ -100,9 +100,9 @@ jobs:
         run: Rscript "R/process/process-demog-data.R"
       - name: process hospitals data
         run: Rscript "R/process/process-hospitals-data.R"
-      - name: render readme
-        if: ${{ success() || failure() }}
-        run: Rscript "R/misc/render-readme.R"
+      #- name: render readme
+        #if: ${{ success() || failure() }}
+        #run: Rscript "R/misc/render-readme.R"
         
       ## Commit, Push, and Trigger the website repo  
       - name: Commit files
