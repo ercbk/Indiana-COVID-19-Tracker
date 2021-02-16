@@ -168,7 +168,9 @@ excess_lol <- ggplot(ind_cause_21, aes(x = pct_diff, y = cause_subgroup,
                 color = "white") +
    geom_point(color = "#61c8b7", size=4) +
    # percent difference text
-   geom_text(nudge_x = ind_cause_21$nudge_x, col = "white", fontface = "bold") +
+   geom_text(nudge_x = ind_cause_21$nudge_x,
+             col = "white", fontface = "bold",
+             size = 3) +
    labs(x = NULL, y = NULL,
         title = "2021 Causes of Death: percent difference from historic averages",
         subtitle = "*Percent above average*") +
@@ -176,11 +178,11 @@ excess_lol <- ggplot(ind_cause_21, aes(x = pct_diff, y = cause_subgroup,
          plot.title = element_text(color = "white",
                               family = "Roboto",
                               face = "bold",
-                              size = 11),
+                              size = 9),
          plot.subtitle = element_textbox_simple(color = "white",
                               family = "Roboto",
                               face = "bold",
-                              size = 10),
+                              size = 8),
          legend.position = "none",
          axis.text.x = element_text(color = "white",
                                     size = 9),
@@ -378,6 +380,7 @@ both_charts <- excess_bar +
                      ymin = 1780, ymax = 2700)
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
+
 ggsave(plot_path, plot = both_charts,
        dpi = "screen", width = 33, height = 20,
        units = "cm", device = ragg::agg_png())
