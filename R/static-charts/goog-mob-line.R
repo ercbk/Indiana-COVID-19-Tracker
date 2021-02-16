@@ -111,4 +111,6 @@ goog_plot <- ggplot(data = ind_goog %>%
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/goog-mob-line-{data_date}.png")
 
-ggsave(plot_path, plot = goog_plot, dpi = "screen", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = goog_plot,
+       dpi = "screen", width = 33, height = 20,
+       units = "cm", device = ragg::agg_png())

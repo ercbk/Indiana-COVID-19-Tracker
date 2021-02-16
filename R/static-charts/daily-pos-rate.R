@@ -133,7 +133,9 @@ rate_plot <- ggplot(data = chart_dat,
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-rate-line-{data_date}.png")
-ggsave(plot_path, plot = rate_plot, dpi = "screen", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = rate_plot, dpi = "screen",
+       width = 33, height = 20, units = "cm",
+       device = ragg::agg_png())
 
 
 

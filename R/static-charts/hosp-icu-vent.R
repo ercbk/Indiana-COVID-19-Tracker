@@ -419,5 +419,7 @@ all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/hosp-icu-vent-{data_date}.png")
 
-ggsave(plot_path, plot = all_charts, dpi = "screen", width = 33, height = 20, units = "cm")
+ggsave(plot_path, plot = all_charts,
+       dpi = "screen", width = 33, height = 20,
+       units = "cm", device = ragg::agg_png())
 
