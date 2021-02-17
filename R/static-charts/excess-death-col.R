@@ -170,7 +170,7 @@ excess_lol <- ggplot(ind_cause_21, aes(x = pct_diff, y = cause_subgroup,
    # percent difference text
    geom_text(nudge_x = ind_cause_21$nudge_x,
              col = "white", fontface = "bold",
-             size = 3) +
+             size = 4) +
    labs(x = NULL, y = NULL,
         title = "2021 Causes of Death: percent difference from historic averages",
         subtitle = "*Percent above average*") +
@@ -178,11 +178,11 @@ excess_lol <- ggplot(ind_cause_21, aes(x = pct_diff, y = cause_subgroup,
          plot.title = element_text(color = "white",
                               family = "Roboto",
                               face = "bold",
-                              size = 9),
+                              size = 10),
          plot.subtitle = element_textbox_simple(color = "white",
                               family = "Roboto",
                               face = "bold",
-                              size = 8),
+                              size = 9),
          legend.position = "none",
          axis.text.x = element_text(color = "white",
                                     size = 9),
