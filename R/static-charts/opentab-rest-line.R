@@ -26,9 +26,7 @@ region_rest <- rest_dat_raw %>%
    tidyr::pivot_longer(cols = -Name,
                        names_to = "date",
                        values_to = "pct_diff") %>% 
-   mutate(date = case_when(date == "10/5_1" ~ "10/4",
-                           date == "2/18_1" ~ "2/18",
-                           TRUE ~ date),
+   mutate(date = stringr::str_remove_all(date, "_1"),
           date = stringr::str_replace_all(date,
                                           pattern = "/",
                                           replacement = "-")) %>% 
