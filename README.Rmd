@@ -28,7 +28,7 @@ The changelog for the entire Indiana COVID-19 Tracker project is located in [NEW
 
 ## Daily Hospital Admissions
 
-```{r}
+```{r hosp-adm, asis=TRUE}
 
 ach <- read_rds("data/age-hosp-line.rds")
 
