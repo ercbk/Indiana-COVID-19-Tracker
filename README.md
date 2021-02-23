@@ -90,7 +90,6 @@ in
           <sup style="font-style: italic; font-size: 65%;">
             <em>1</em>
           </sup>
-           
           n (%); Median (IQR)
           <br />
         </p>
