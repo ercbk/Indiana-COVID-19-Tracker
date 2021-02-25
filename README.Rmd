@@ -68,7 +68,7 @@ tbl_summary(ach,
   modify_header(defs = "Definition") %>% 
   as_gt() %>%
   cols_align("left") %>%
-  cols_width(vars(defs) ~ px(475)) %>% 
+  cols_width(vars(defs) ~ px(600)) %>% 
   as_raw_html()
   
 ```
