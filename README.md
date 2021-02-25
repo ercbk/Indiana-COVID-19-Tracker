@@ -117,7 +117,7 @@ shouldn’t have been included
         <p style="margin: 0px; font-size: 90%; padding: 4px;">
           <sup style="font-style: italic; font-size: 65%;">
             <em>1</em>
-          </sup>
+          </sup> 
           n (%); Median (IQR)
           <br />
         </p>
