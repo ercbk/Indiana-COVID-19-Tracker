@@ -56,7 +56,7 @@ var_defs <- c("Age group",
               "",
               "",
               "Weekly count of COVID-19 confirmed cases",
-              "Number of cases scaled to per 1000 residents per age group")
+              "Number of cases scaled to per 1000 residents per age group words words words words words words words")
 
 
 tbl_summary(ach,
