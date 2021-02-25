@@ -68,11 +68,11 @@ tbl_summary(ach,
   modify_table_body(dplyr::mutate, defs = var_defs) %>% 
   modify_header(defs = "Definition") %>% 
   as_gt() %>%
-  tab_options(container.width = pct(100),
-              table.width = pct(100)#,
+  # tab_options(container.width = pct(100),
+  #             table.width = pct(100)#,
               # table.align = "left",
               # table.layout = "auto"
-              ) %>% 
+              # ) %>% 
   cols_align("left") %>%
   # cols_width(vars(defs) ~ pct(60)) %>% 
   as_raw_html()
