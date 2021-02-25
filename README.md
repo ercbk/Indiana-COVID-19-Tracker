@@ -29,7 +29,7 @@ that show a breakdown of weekly COVID-19 cases by age group.
 #### Raw Sources
 
 Indiana Data Hub: [COVID-19 CASE
-DEMOGRAPHICS](%22https://hub.mph.in.gov/dataset/62ddcb15-bbe8-477b-bb2e-175ee5af8629/resource/2538d7f1-391b-4733-90b3-9e95cd5f3ea6/download/covid_report_demographics.xlsx%22)  
+DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)  
 tidycensus R package: [website](https://walker-data.com/tidycensus/),
 2018 age populations for Indiana
 
