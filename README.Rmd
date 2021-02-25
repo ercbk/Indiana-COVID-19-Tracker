@@ -72,7 +72,7 @@ tbl_summary(ach,
               table.align = "left",
               table.layout = "auto") %>% 
   cols_align("left") %>%
-  cols_width(vars(defs) ~ px(550)) %>% 
+  cols_width(vars(defs) ~ pct(60)) %>% 
   as_raw_html()
   
 ```
