@@ -48,7 +48,7 @@ shouldn’t have been included
   <colgroup>
     <col/>
     <col/>
-    <col style="width:600px;"/>
+    <col style="width:550px;"/>
   </colgroup>
   
   <thead style="border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3;">
