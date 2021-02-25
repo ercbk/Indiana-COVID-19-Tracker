@@ -69,7 +69,8 @@ tbl_summary(ach,
   as_gt() %>%
   tab_options(container.width = pct(100),
               table.width = pct(100),
-              table.align = "left") %>% 
+              table.align = "left",
+              table.layout = "auto") %>% 
   cols_align("left") %>%
   cols_width(vars(defs) ~ px(550)) %>% 
   as_raw_html()
