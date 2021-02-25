@@ -7,13 +7,13 @@ output:
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,
                       warning = FALSE,
-                      message = FALSE)
+                      message = FALSE,
+                      out.width = "100%")
 
 library(readr)
 library(dplyr)
 library(gt)
 library(gtsummary)
-
 ```
 
 # Indiana COVID-19 Tracker  
@@ -26,19 +26,51 @@ The changelog for the entire Indiana COVID-19 Tracker project is located in [NEW
 \
 \
 
-## Daily Hospital Admissions
+## Weekly COVID-19 Cases by Age  
+#### Description  
+Processed data for [heatmaps](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age) that show a breakdown of weekly COVID-19 cases by age group.  
 
-```{r hosp-adm, asis=TRUE}
+#### Raw Sources
+Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS]( "https://hub.mph.in.gov/dataset/62ddcb15-bbe8-477b-bb2e-175ee5af8629/resource/2538d7f1-391b-4733-90b3-9e95cd5f3ea6/download/covid_report_demographics.xlsx")  
+tidycensus R package: [website](https://walker-data.com/tidycensus/), 2018 age populations for Indiana  
 
-ach <- read_rds("data/age-hosp-line.rds")
+#### Notes  
+Other variables:  
+  - `end_date`: ordered factor; date of the last day of the weekly interval  
+  - `daily_cases`: Vestigial column that was used during processing, shouldn't have been included  
+  - `pop`: Vestigial column used to calculate `prop_cases`  
+\
+\
 
+```{r, fig.align='left'}
+ach <- read_rds("data/age-cases-heat.rds")
+var_defs <- c("Age group",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "Weekly count of COVID-19 confirmed cases",
+              "Number of cases scaled to per 1000 residents per age group")
 
+# variable definition
+# change column name to Fields
+# 
 tbl_summary(ach,
             missing = "ifany",
-            missing_text = "Missing") %>% 
-      as_gt() %>% 
-      as_raw_html()
-
+            missing_text = "Missing",
+            include = c(age_grp, weekly_cases, prop_cases)) %>% 
+      modify_header(update = list(
+            label ~ 'Variable')) %>% 
+      modify_table_body(dplyr::mutate, defs = var_defs) %>% 
+      modify_header(defs = "Definition") %>% 
+      as_gt() %>%
+      cols_align("left") %>%
+      cols_width(vars(defs) ~ px(475))
+  
 ```
 
 \
