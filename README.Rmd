@@ -56,9 +56,10 @@ var_defs <- c("Age group",
               "",
               "",
               "Weekly count of COVID-19 confirmed cases",
-              "Number of cases scaled to per 1000 residents per age group words words words words words words words")
+              "Number of cases scaled to per 1000 residents per age group")
 
-
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
 tbl_summary(ach,
             missing = "ifany",
             missing_text = "Missing",
@@ -67,14 +68,10 @@ tbl_summary(ach,
     label ~ 'Variable')) %>% 
   modify_table_body(dplyr::mutate, defs = var_defs) %>% 
   modify_header(defs = "Definition") %>% 
+  # show_header_names()
   as_gt() %>%
-  # tab_options(container.width = pct(100),
-  #             table.width = pct(100)#,
-              # table.align = "left",
-              # table.layout = "auto"
-              # ) %>% 
-  cols_align("left") %>%
-  # cols_width(vars(defs) ~ pct(60)) %>% 
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
   as_raw_html()
   
 ```
