@@ -8,7 +8,7 @@ Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Up
 
 This repository collects and processes datasets for
 [Indiana-COVID-19-Website](https://github.com/ercbk/Indiana-COVID-19-Website).
-It also has creates charts for the [“Static
+It also creates charts for the [“Static
 Charts”](https://ercbk.github.io/Indiana-COVID-19-Website/static.html)
 tab of the Indiana COVID-19 Tracker website.  
 The changelog for the entire Indiana COVID-19 Tracker project is located
