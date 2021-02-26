@@ -18,6 +18,12 @@ in
   
   
 
+# Data Dictionary
+
+Data files described in the dictionary are in the [data
+directory](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data)
+of this repository.
+
 ## Weekly COVID-19 Cases by Age
 
 #### Description
@@ -25,6 +31,17 @@ in
 Processed data for
 [heatmaps](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age)
 that show a breakdown of weekly COVID-19 cases by age group.
+
+#### File name
+
+age-cases-heat.rds
+
+#### Scripts
+
+Processing:
+[process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
+Chart:
+[demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)
 
 #### Raw Sources
 
@@ -117,7 +134,7 @@ shouldn’t have been included
         <p style="margin: 0px; font-size: 90%; padding: 4px;">
           <sup style="font-style: italic; font-size: 65%;">
             <em>1</em>
-          </sup> 
+          </sup>
           n (%); Median (IQR)
           <br />
         </p>
