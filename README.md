@@ -55,8 +55,7 @@ tidycensus R package: [website](https://walker-data.com/tidycensus/),
 Other variables:  
 - `end_date`: ordered factor; date of the last day of the weekly
 interval  
-- `daily_cases`: Vestigial column that was used during processing,
-shouldn’t have been included  
+- `daily_cases`: Vestigial column that was used during processing  
 - `pop`: Vestigial column used to calculate `prop_cases`  
   
   
