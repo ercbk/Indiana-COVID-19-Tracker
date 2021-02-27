@@ -18,6 +18,18 @@ setwd("~/R/Projects/Indiana-COVID-19-Tracker")
 
 library(RSelenium); library(glue); library(dplyr)
 
+windows_tasks <- installr::get_tasklist()
+java_pid <- windows_tasks %>% 
+      filter(stringr::str_detect(`Image Name`, "java.exe")) %>% 
+      pull(PID)
+
+chrome_pid <- windows_tasks %>% 
+      filter(stringr::str_detect(`Image Name`, "chromedriver.exe")) %>% 
+      pull(PID)
+
+tools::pskill(pid = java_pid)
+tools::pskill(pid = chrome_pid)
+
 # Use RSelenium to download dataset
 # start selenium server; chrome version is the version of the separate chrome driver I d/l'ed
 driver <- rsDriver(browser = c("chrome"), chromever = "87.0.4280.88")
