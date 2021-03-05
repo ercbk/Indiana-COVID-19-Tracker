@@ -60,13 +60,13 @@ jobs:
       - name: Install font awesome with deps
         run: sudo apt-get install -y fonts-font-awesome
       # cache dev environment, restore environment from cache
-      #- name: Cache packages
-       # uses: actions/cache@v2
-        #with:
-          #path: ${{ env.RENV_PATHS_ROOT }}
-          #key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          #restore-keys: |
-            #${{ runner.os }}-renv-
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
       - name: Restore packages
         shell: Rscript {0}
         run: |
