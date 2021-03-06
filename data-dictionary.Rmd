@@ -151,7 +151,7 @@ tbl_summary(adl,
 ## Historical Daily COVID-19 Hospital Admissions by Age Group   
 
 #### Description  
-Raw data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age) that shows daily COVID-19 hospital admissions by age group and gender.  
+Raw data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows daily COVID-19 hospital admissions by age group and gender.  
 
 #### File name
 age-hosp-line.rds  
@@ -251,6 +251,60 @@ tbl_summary(bvc,
   modify_header(update = list(
     label ~ 'Variable')) %>% 
   modify_table_body(dplyr::mutate, defs = bvc_var_defs) %>% 
+  modify_header(defs = "Definition") %>% 
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+  
+```
+\
+\
+\
+
+## Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions 
+
+#### Description  
+Processed data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows state hospital staff shortages, hospital mortality rate, hospital admissions, and age skewness of hospital admissions towards older patients.  
+
+#### File name
+hosp-msas-line.rds  
+
+#### Scripts  
+Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
+Process: [process-hospitals-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-hospitals-data.R)  
+Chart: [hospitals.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/hospitals.Rmd)  
+
+#### Raw Sources
+Regenstrief Institute: [dashboard](https://www.regenstrief.org/covid-dashboard/)  
+Department of Health and Human Services: [COVID-19 Reported Patient Impact and Hospital Capacity by State Timeseries](https://beta.healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh)  
+Department of Health and Human Services: [COVID-19 Reported Patient Impact and Hospital Capacity by Facility](https://beta.healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u)  
+
+#### Notes  
+The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
+
+Other variables:  
+  - `date`: Ordered factor, Month Day format  
+\
+\
+
+```{r, asis=TRUE}
+
+msas <- read_rds("data/hosp-msas-line.rds")
+msas_var_defs <- c("Percent of reporting hospitals that have reported staffing shortages for that day. That percentage is averaged over a rolling, seven day window",
+                   "Ratio of deaths of hospitalized COVID-19 patients and unique COVID-19 hospital admissions. Each rate is calculated over a rolling, 14-day window",
+                   "Daily total of unique individuals that have tested positive for COVID-19 and been admitted to a hospital on the that day. Those daily counts are averaged over a rolling, seven day window",
+                   "Measurement of the age makeup of the COVID-19 hospital admissions data. It’s calculated over a rolling, 14 day window")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(msas %>% select(-date),
+            missing = "ifany",
+            missing_text = "Missing") %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  modify_table_body(dplyr::mutate, defs = msas_var_defs) %>% 
   modify_header(defs = "Definition") %>% 
   # show_header_names()
   as_gt() %>%
