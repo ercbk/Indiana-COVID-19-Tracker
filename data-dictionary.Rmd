@@ -1,7 +1,7 @@
 ---
 title: "Indiana COVID-19 Tracker Data Dictionary"
-author: "Eric"
-date: lubridate::today()
+author: "Eric Book"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
 output: 
       html_document:
             toc: TRUE
@@ -23,8 +23,9 @@ library(gt)
 library(gtsummary)
 ```
 
-# Data Dictionary  
-Data files described in the dictionary are in the [data directory](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data) of this repository.  
+Data files described in this dictionary are located in the [data directory](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data) of this repository.  
+\
+\
 
 ## Historical Weekly COVID-19 Cases by Age  
 

@@ -31,239 +31,35 @@ The changelog for the entire Indiana COVID-19 Tracker project is located in [NEW
 # Data Dictionary  
 Data files described in the dictionary are in the [data directory](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data) of this repository.  
 
-## Historical Weekly COVID-19 Cases by Age  
+## Datasets 
 
-#### Description  
-Processed data for [heatmaps](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age) that shows a breakdown of weekly COVID-19 cases by age group.  
-
-#### File name
-age-cases-heat.rds  
-
-#### Scripts  
-Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
-Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
-Chart: [demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)  
-
-#### Raw Sources
-Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)  
-tidycensus R package: [website](https://walker-data.com/tidycensus/), 2018 age populations for Indiana  
-
-#### Notes  
-Other variables:  
-  - `end_date`: ordered factor; date of the last day of the weekly interval  
-  - `daily_cases`: Vestigial column that was used during processing  
-  - `pop`: Vestigial column used to calculate `prop_cases`  
-\
-\
+<!-- file name, file type, chart + link, data dict link -->
 
 ```{r, asis=TRUE}
 
-ach <- read_rds("data/age-cases-heat.rds")
-ach_var_defs <- c("Age group",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "Weekly count of COVID-19 confirmed cases by age group",
-                  "Number of cases scaled to per 1000 residents per age group")
-
-# table width responsive to length of var_defs text, so may not appear full.width
-# use show_header_names to get col names being used by tbl_summary
-tbl_summary(ach,
-            missing = "ifany",
-            missing_text = "Missing",
-            include = c(age_grp, weekly_cases, prop_cases)) %>% 
-  modify_header(update = list(
-    label ~ 'Variable')) %>% 
-  modify_table_body(dplyr::mutate, defs = ach_var_defs) %>% 
-  modify_header(defs = "Definition") %>% 
-  # show_header_names()
-  as_gt() %>%
+data_dict_tbl <- tibble(
+  file_name = c("age-cases-heat.rds",
+                "age-death-line.rds"),
+  chart_name = c("Weekly COVID-19 Cases by Age",
+                 "Weekly COVID-19 Deaths by Age Group"),
+  chart_url = c("https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age",
+                "https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age"),
+  data_url = c("https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Cases_by_Age",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Deaths_by_Age_Group ")
+) %>% 
+  mutate(chart_html = purrr::map2(chart_url, chart_name, ~htmltools::a(href = .x, .y)),
+         chart_link = purrr::map(chart_html, ~gt::html(as.character(.x))),
+         dict_html = purrr::map(data_url, ~htmltools::a(href = .x, "link")),
+         dict_link = purrr::map(dict_html, ~gt::html(as.character(.x)))) %>% 
+  select(file_name, chart_link, dict_link) %>% 
+  gt() %>% 
+  cols_label(file_name = "File Name",
+             chart_link = "Chart",
+             dict_link = "Data Dictionary") %>% 
   tab_options(table.align = "left") %>% 
-  cols_align("left", vars(stat_0, defs)) %>%
   as_raw_html()
-  
+
+data_dict_tbl
+
 ```
-\
-\
-\
-
-## Historical Weekly COVID-19 Deaths by Age Group   
-
-#### Description  
-Processed data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age) that shows counts and trends of weekly COVID-19 deaths by age group.  
-
-#### File name
-age-death-line.rds  
-
-#### Scripts  
-Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
-Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
-Chart: [demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)  
-
-#### Raw Sources
-Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)
-
-#### Notes  
-Other variables:  
-  - `end_date`: date of the last day of the weekly interval  
-  - `date_text`: date label for the chart  
-  - `tooltip`: pop-up text for points in chart with death counts and date  
-\
-\
-
-```{r, asis=TRUE}
-
-adl <- read_rds("data/age-death-line.rds")
-adl_var_defs <- c("Age group",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "Weekly count of COVID-19 confirmed deaths by age group")
-
-# table width responsive to length of var_defs text, so may not appear full.width
-# use show_header_names to get col names being used by tbl_summary
-tbl_summary(adl,
-            missing = "ifany",
-            missing_text = "Missing",
-            include = c(agegrp, weekly_total)) %>% 
-  modify_header(update = list(
-    label ~ 'Variable')) %>% 
-  modify_table_body(dplyr::mutate, defs = adl_var_defs) %>% 
-  modify_header(defs = "Definition") %>% 
-  # show_header_names()
-  as_gt() %>%
-  tab_options(table.align = "left") %>% 
-  cols_align("left", vars(stat_0, defs)) %>%
-  as_raw_html()
-  
-```
-
-\
-\
-\
-
-## Historical Daily COVID-19 Hospital Admissions by Age Group   
-
-#### Description  
-Raw data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age) that shows daily COVID-19 hospital admissions by age group and gender.  
-
-#### File name
-age-hosp-line.rds  
-
-#### Scripts  
-Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
-Processing: [process-hosp-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-hospitals-data.R)  
-Chart: [hospitals.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/hospitals.Rmd)  
-
-#### Raw Sources
-Regenstrief Institute: [dashboard](https://www.regenstrief.org/covid-dashboard/)
-
-#### Notes  
-This dataset is incomplete with random gaps between days.  
-
-Other variables:  
-  - `date`: yyyy-mm-dd format  
-\
-\
-
-```{r, asis=TRUE}
-
-ahl <- read_rds("data/age-hosp-line.rds")
-ahl_var_defs <- c("Age group",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "Daily COVID-19 male hospital admissions by age group",
-              "Daily COVID-19 female hospital admissions by age group",
-              "Daily COVID-19 total hospital admissions by age group")
-
-# table width responsive to length of var_defs text, so may not appear full.width
-# use show_header_names to get col names being used by tbl_summary
-tbl_summary(ahl,
-            missing = "ifany",
-            missing_text = "Missing") %>% 
-  modify_header(update = list(
-    label ~ 'Variable')) %>% 
-  modify_table_body(dplyr::mutate, defs = ahl_var_defs) %>% 
-  modify_header(defs = "Definition") %>% 
-  # show_header_names()
-  as_gt() %>%
-  tab_options(table.align = "left") %>% 
-  cols_align("left", vars(stat_0, defs)) %>%
-  as_raw_html()
-  
-```
-\
-\
-\
-
-## Historical Daily ICU Beds and Ventilators  
-
-#### Description  
-Raw data for [Hospitalizations, ICU Beds and Ventilator Availability](https://ercbk.github.io/Indiana-COVID-19-Website/static.html#Hospitalizations,_ICU_Beds_and_Ventilator_Availability) that shows resource counts of ICU beds and ventilators.  
-
-#### File name
-beds-vents-complete.csv  
-
-#### Scripts  
-Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
-Chart: [hosp-icu-vent.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/static-charts/hosp-icu-vent.R)  
-
-#### Raw Sources
-Indiana Data Hub: [COVID-19 BEDS AND VENTS](https://hub.mph.in.gov/dataset/covid-19-beds-and-vents)
-
-#### Notes  
-The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
-
-Other variables:  
-  - `date`: yyyy-mm-dd format  
-\
-\
-
-```{r, asis=TRUE}
-
-bvc <- read_csv("data/beds-vents-complete.csv")
-bvc_var_defs <- c("Total ICU beds",
-                  "Total ICU beds occupied with COVID-19 patients",
-                  "Total available ICU beds",
-                  "Total ventilators",
-                  "Total ventilators being used by COVID-19 patients",
-                  "Total ventilators being used by non-COVID-19 patients",
-                  "Total available ventilators")
-
-# table width responsive to length of var_defs text, so may not appear full.width
-# use show_header_names to get col names being used by tbl_summary
-tbl_summary(bvc,
-            missing = "ifany",
-            missing_text = "Missing") %>% 
-  modify_header(update = list(
-    label ~ 'Variable')) %>% 
-  modify_table_body(dplyr::mutate, defs = bvc_var_defs) %>% 
-  modify_header(defs = "Definition") %>% 
-  # show_header_names()
-  as_gt() %>%
-  tab_options(table.align = "left") %>% 
-  cols_align("left", vars(stat_0, defs)) %>%
-  as_raw_html()
-  
-```
-\
-\
-\
 
