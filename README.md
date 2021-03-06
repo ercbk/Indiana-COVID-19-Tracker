@@ -18,11 +18,9 @@ in
   
   
 
-# Data Dictionary
-
-Data files described in the dictionary are in the [data
-directory](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data)
-of this repository.
+The data files described in this dictionary are in the
+[data](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data)
+directory of this repository.
 
 ## Datasets
 
