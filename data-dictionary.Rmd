@@ -46,10 +46,9 @@ tidycensus R package: [website](https://walker-data.com/tidycensus/), 2018 age p
 
 #### Notes  
 Other variables:  
-  - `end_date`: ordered factor; date of the last day of the weekly interval  
-  - `daily_cases`: Vestigial column that was used during processing  
-  - `pop`: Vestigial column used to calculate `prop_cases`  
-\
+- `end_date`: ordered factor; date of the last day of the weekly interval  
+- `daily_cases`: Vestigial column that was used during processing  
+- `pop`: Vestigial column used to calculate `prop_cases`  
 \
 
 ```{r, asis=TRUE}
@@ -82,7 +81,7 @@ tbl_summary(ach,
   tab_options(table.align = "left") %>% 
   cols_align("left", vars(stat_0, defs)) %>%
   as_raw_html()
-  
+
 ```
 \
 \
@@ -106,25 +105,24 @@ Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/co
 
 #### Notes  
 Other variables:  
-  - `end_date`: date of the last day of the weekly interval  
-  - `date_text`: date label for the chart  
-  - `tooltip`: pop-up text for points in chart with death counts and date  
-\
+- `end_date`: date of the last day of the weekly interval  
+- `date_text`: date label for the chart  
+- `tooltip`: pop-up text for points in chart with death counts and date  
 \
 
 ```{r, asis=TRUE}
 
 adl <- read_rds("data/age-death-line.rds")
 adl_var_defs <- c("Age group",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "Weekly count of COVID-19 confirmed deaths by age group")
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "Weekly count of COVID-19 confirmed deaths by age group")
 
 # table width responsive to length of var_defs text, so may not appear full.width
 # use show_header_names to get col names being used by tbl_summary
@@ -141,7 +139,7 @@ tbl_summary(adl,
   tab_options(table.align = "left") %>% 
   cols_align("left", vars(stat_0, defs)) %>%
   as_raw_html()
-  
+
 ```
 
 \
@@ -168,26 +166,25 @@ Regenstrief Institute: [dashboard](https://www.regenstrief.org/covid-dashboard/)
 This dataset is incomplete with random gaps between days.  
 
 Other variables:  
-  - `date`: yyyy-mm-dd format  
-\
+- `date`: yyyy-mm-dd format  
 \
 
 ```{r, asis=TRUE}
 
 ahl <- read_rds("data/age-hosp-line.rds")
 ahl_var_defs <- c("Age group",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "Daily COVID-19 male hospital admissions by age group",
-              "Daily COVID-19 female hospital admissions by age group",
-              "Daily COVID-19 total hospital admissions by age group")
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "Daily COVID-19 male hospital admissions by age group",
+                  "Daily COVID-19 female hospital admissions by age group",
+                  "Daily COVID-19 total hospital admissions by age group")
 
 # table width responsive to length of var_defs text, so may not appear full.width
 # use show_header_names to get col names being used by tbl_summary
@@ -203,7 +200,7 @@ tbl_summary(ahl,
   tab_options(table.align = "left") %>% 
   cols_align("left", vars(stat_0, defs)) %>%
   as_raw_html()
-  
+
 ```
 \
 \
@@ -228,8 +225,7 @@ Indiana Data Hub: [COVID-19 BEDS AND VENTS](https://hub.mph.in.gov/dataset/covid
 The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
 
 Other variables:  
-  - `date`: yyyy-mm-dd format  
-\
+- `date`: yyyy-mm-dd format  
 \
 
 ```{r, asis=TRUE}
@@ -257,7 +253,7 @@ tbl_summary(bvc,
   tab_options(table.align = "left") %>% 
   cols_align("left", vars(stat_0, defs)) %>%
   as_raw_html()
-  
+
 ```
 \
 \
@@ -282,11 +278,8 @@ Department of Health and Human Services: [COVID-19 Reported Patient Impact and H
 Department of Health and Human Services: [COVID-19 Reported Patient Impact and Hospital Capacity by Facility](https://beta.healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/anag-cw7u)  
 
 #### Notes  
-The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
-
 Other variables:  
-  - `date`: Ordered factor, Month Day format  
-\
+- `date`: Ordered factor, Month Day format  
 \
 
 ```{r, asis=TRUE}
@@ -295,7 +288,7 @@ msas <- read_rds("data/hosp-msas-line.rds")
 msas_var_defs <- c("Percent of reporting hospitals that have reported staffing shortages for that day. That percentage is averaged over a rolling, seven day window",
                    "Ratio of deaths of hospitalized COVID-19 patients and unique COVID-19 hospital admissions. Each rate is calculated over a rolling, 14-day window",
                    "Daily total of unique individuals that have tested positive for COVID-19 and been admitted to a hospital on the that day. Those daily counts are averaged over a rolling, seven day window",
-                   "Measurement of the age makeup of the COVID-19 hospital admissions data. It’s calculated over a rolling, 14 day window")
+                   "Measurement of the age makeup of the COVID-19 hospital admissions data. It's calculated over a rolling, 14 day window")
 
 # table width responsive to length of var_defs text, so may not appear full.width
 # use show_header_names to get col names being used by tbl_summary
@@ -310,8 +303,65 @@ tbl_summary(msas %>% select(-date),
   as_gt() %>%
   tab_options(table.align = "left") %>% 
   cols_align("left", vars(stat_0, defs)) %>%
+  cols_width(vars(stat_0) ~ px(150)) %>% 
   as_raw_html()
-  
+
+```
+\
+\
+\
+
+## Local Hospital Capacity
+
+#### Description  
+Processed data for the [Local Hospital Capacity table](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#local-hospital-capacity) that shows capacity measures and counts of COVID-19 patients for hospitals at the local level.  
+
+#### File name
+hosp-react-tab.rds  
+
+#### Scripts  
+Process: [process-hospitals-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-hospitals-data.R)  
+Chart: [hospitals.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/hospitals.Rmd)  
+
+#### Raw Sources
+Department of Health and Human Services: [COVID-19 Reported Patient Impact and Hospital Capacity by State Timeseries](https://beta.healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh)  
+
+#### Notes  
+Other variables:  
+- `end_date`: date, yyyy-mm-dd format, end date of week interval  
+- `hospital_name`: char, Name of hospital  
+- `address`: char, Street address of hospital  
+- `city_zip`: char, City and zip code  
+- `county_name`: char, Name of county  
+- `avgCovIceuTenKList`: nested list, `end_date` and average daily number of ICU beds being used by confirmed and suspected COVID-19 patients over the weekly interval  
+- `avgCovHospTenKList`: nested list, `end_date` and average daily number of hospital beds being used by confirmed and suspected COVID-19 patients over the weekly interval  
+- `avgTotImpBedsList`: `end_date` and average daily number of staffed total beds available over the weekly interval  
+\
+
+```{r, asis=TRUE}
+
+hrt <- read_rds("data/hosp-react-tab.rds")
+hrt_var_defs <- c("Proportion of the seven-day average of occupied ICU beds to the seven-day average of available ICU beds.",
+                  "",
+                  "Proportion of the seven-day average of occupied hospital beds to the seven-day average of available hospital beds proportion of the seven-day average of occupied hospital beds to the seven-day average of available hospital beds.",
+                  "")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(hrt %>% select(sev_day_icu_perc_occup, sev_day_hosp_perc_occup),
+            missing = "ifany",
+            missing_text = "Missing") %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  modify_table_body(dplyr::mutate, defs = hrt_var_defs) %>% 
+  modify_header(defs = "Definition") %>% 
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
+  cols_width(vars(stat_0) ~ px(150)) %>% 
+  as_raw_html()
+
 ```
 \
 \

@@ -33,8 +33,6 @@ The data files described in this dictionary are in the [data](https://github.com
 
 ## Datasets 
 
-<!-- file name, file type, chart + link, data dict link -->
-
 ```{r, asis=TRUE}
 
 data_dict_tbl <- tibble(
@@ -42,22 +40,26 @@ data_dict_tbl <- tibble(
                 "age-death-line.rds",
                 "age-hosp-line.rds",
                 "beds-vents-complete.csv",
-                "hosp-msas-line.rds"),
+                "hosp-msas-line.rds",
+                "hosp-react-tab.rds"),
   chart_name = c("Historical Weekly COVID-19 Cases by Age",
                  "Historical Weekly COVID-19 Deaths by Age Group",
                  "Historical Daily COVID-19 Hospital Admissions by Age Group",
                  "Historical Daily ICU Beds and Ventilators",
-                 "Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions"),
+                 "Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions",
+                 "Local Hospital Capacity"),
   chart_url = c("https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age",
                 "https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age",
                 "https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions",
                 "https://ercbk.github.io/Indiana-COVID-19-Website/static.html#Hospitalizations,_ICU_Beds_and_Ventilator_Availability",
-                "https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions"),
+                "https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions",
+                "https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#local-hospital-capacity"),
   data_url = c("https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Cases_by_Age",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Deaths_by_Age_Group",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Hospital_Admissions_by_Age Group",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_ICU_Beds_and_Ventilators",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions")
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_State_Hospital_Staff_Shortages_Hospital_Mortality_Rate_Hospital_Admissions_and_Ages_Skewness_of_Admissions",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Local_Hospital_Capacity")
 ) %>% 
   mutate(chart_html = purrr::map2(chart_url, chart_name, ~htmltools::a(href = .x, .y)),
          chart_link = purrr::map(chart_html, ~gt::html(as.character(.x))),
