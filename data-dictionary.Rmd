@@ -30,7 +30,7 @@ Data files described in this dictionary are located in the [data directory](http
 ## Historical Weekly COVID-19 Cases by Age  
 
 #### Description  
-Processed data for [heatmaps](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age) that shows a breakdown of weekly COVID-19 cases by age group.  
+Processed data for Demographics [heatmaps](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age) that shows a breakdown of weekly COVID-19 cases by age group.  
 
 #### File name
 age-cases-heat.rds  
@@ -90,7 +90,7 @@ tbl_summary(ach,
 ## Historical Weekly COVID-19 Deaths by Age Group   
 
 #### Description  
-Processed data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age) that shows counts and trends of weekly COVID-19 deaths by age group.  
+Processed data for Demographics [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age) that shows counts and trends of weekly COVID-19 deaths by age group.  
 
 #### File name
 age-death-line.rds  
@@ -149,15 +149,13 @@ tbl_summary(adl,
 ## Historical Daily COVID-19 Hospital Admissions by Age Group   
 
 #### Description  
-Raw data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows daily COVID-19 hospital admissions by age group and gender.  
+Raw data for the Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows daily COVID-19 hospital admissions by age group and gender.  
 
 #### File name
 age-hosp-line.rds  
 
 #### Scripts  
 Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
-Processing: [process-hosp-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-hospitals-data.R)  
-Chart: [hospitals.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/hospitals.Rmd)  
 
 #### Raw Sources
 Regenstrief Institute: [dashboard](https://www.regenstrief.org/covid-dashboard/)
@@ -209,7 +207,7 @@ tbl_summary(ahl,
 ## Historical Daily ICU Beds and Ventilators  
 
 #### Description  
-Raw data for [Hospitalizations, ICU Beds and Ventilator Availability](https://ercbk.github.io/Indiana-COVID-19-Website/static.html#Hospitalizations,_ICU_Beds_and_Ventilator_Availability) that shows resource counts of ICU beds and ventilators.  
+Raw data for the Static Charts [Hospitalizations, ICU Beds and Ventilator Availability](https://ercbk.github.io/Indiana-COVID-19-Website/static.html#Hospitalizations,_ICU_Beds_and_Ventilator_Availability) that shows resource counts of ICU beds and ventilators.  
 
 #### File name
 beds-vents-complete.csv  
@@ -252,6 +250,7 @@ tbl_summary(bvc,
   as_gt() %>%
   tab_options(table.align = "left") %>% 
   cols_align("left", vars(stat_0, defs)) %>%
+  cols_width(vars(stat_0) ~ "150px") %>% 
   as_raw_html()
 
 ```
@@ -262,7 +261,7 @@ tbl_summary(bvc,
 ## Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions 
 
 #### Description  
-Processed data for [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows state hospital staff shortages, hospital mortality rate, hospital admissions, and age skewness of hospital admissions towards older patients.  
+Processed data for Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows state hospital staff shortages, hospital mortality rate, hospital admissions, and age skewness of hospital admissions towards older patients.  
 
 #### File name
 hosp-msas-line.rds  
@@ -314,7 +313,7 @@ tbl_summary(msas %>% select(-date),
 ## Local Hospital Capacity
 
 #### Description  
-Processed data for the [Local Hospital Capacity table](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#local-hospital-capacity) that shows capacity measures and counts of COVID-19 patients for hospitals at the local level.  
+Processed data for the Hospitals [Local Hospital Capacity table](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#local-hospital-capacity) that shows capacity measures and counts of COVID-19 patients for hospitals at the local level.  
 
 #### File name
 hosp-react-tab.rds  
@@ -343,7 +342,7 @@ Other variables:
 hrt <- read_rds("data/hosp-react-tab.rds")
 hrt_var_defs <- c("Proportion of the seven-day average of occupied ICU beds to the seven-day average of available ICU beds.",
                   "",
-                  "Proportion of the seven-day average of occupied hospital beds to the seven-day average of available hospital beds proportion of the seven-day average of occupied hospital beds to the seven-day average of available hospital beds.",
+                  "Proportion of the seven-day average of occupied hospital beds to the seven-day average of available hospital beds.",
                   "")
 
 # table width responsive to length of var_defs text, so may not appear full.width
@@ -366,4 +365,213 @@ tbl_summary(hrt %>% select(sev_day_icu_perc_occup, sev_day_hosp_perc_occup),
 \
 \
 \
+
+## Historical Daily Tests, Cases and Deaths by Age
+
+#### Description  
+Raw data for Demographics [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html) that shows daily case and death counts by age group.  
+
+#### File name
+ind-age-complete.csv  
+
+#### Scripts  
+Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
+
+#### Raw Sources
+Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)  
+
+#### Notes  
+The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
+Other variables:  
+- `date`: date, yyyy-mm-dd format  
+\
+
+```{r, asis=TRUE}
+
+iac <- read_csv("data/ind-age-complete.csv")
+iac_var_defs <- c("Age Group",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "Number of cases by age group",
+                  "Number of deaths by age group",
+                  "Number of tests by age group",
+                  "Percent of daily cases",
+                  "Percent of daily deaths",
+                  "Percent of daily tests")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(iac %>% select(-date),
+            missing = "ifany",
+            missing_text = "Missing") %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  modify_table_body(dplyr::mutate, defs = iac_var_defs) %>% 
+  modify_header(defs = "Definition") %>% 
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
+  cols_width(vars(stat_0) ~ px(190)) %>% 
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical Daily Cases and Deaths by Race  
+
+#### Description  
+Raw data that shows daily case and death counts by race.  
+
+#### File name
+ind-race-complete.csv  
+
+#### Scripts  
+Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
+
+#### Raw Sources
+Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)  
+
+#### Notes  
+The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
+Other variables:  
+- `date`: date, yyyy-mm-dd format  
+
+There is a latin_x column for cases and deaths, but it's over 90% missing and only a few distinct values. A few columns have some TRUE/FALSE entries. I didn't investigate the reason behind these odd data entries.  
+
+There are also around 30 columns completely composed of missing values.  
+\
+
+```{r, asis=TRUE}
+
+irc <- read_csv("data/ind-race-complete.csv") %>%
+  select_if(~any(!is.na(.))) %>% 
+  select_if(~is.numeric(.)) %>% 
+  select(!matches("latin_x"))
+  
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(irc,
+            missing = "ifany",
+            missing_text = "Missing") %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical Weekly Median Age of Cases, Weekly Tests and Deaths  
+
+#### Description  
+Processed data for the Demographics [bubble chart](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#median-age-of-cases-tests-deaths) that shows the number of tests, number of deaths, and median age of the cases per week.  
+
+#### File name
+median-age-bubble.rds  
+
+#### Scripts  
+Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
+Chart: [demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)  
+
+#### Raw Sources
+Indiana Data Hub: [COVID-19 CASE DATA](https://hub.mph.in.gov/dataset/covid-19-case-data)  
+
+#### Notes  
+Other variables:  
+- `end_date`: ordered factor, Month Day format; end date of weekly interval  
+\
+
+```{r, asis=TRUE}
+
+mab <- read_rds("data/median-age-bubble.rds")
+mab_var_defs <- c("Median age of cases for that week",
+                  "Number of tests for that week",
+                  "Number of deaths for that week")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(mab %>% select(-end_date),
+            missing = "ifany",
+            missing_text = "Missing") %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  modify_table_body(dplyr::mutate, defs = mab_var_defs) %>% 
+  modify_header(defs = "Definition") %>% 
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
+  cols_width(vars(stat_0) ~ px(200)) %>% 
+  as_raw_html()
+
+```
+\
+\
+\
+
+
+## Historical Daily Hospital Admissions and Deaths
+
+#### Description  
+Raw data for the Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows daily COVID-19 hospital admissions, hospital deaths, and hospital death rate.  
+
+#### File name
+mort-hosp-line.rds  
+
+#### Scripts  
+Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
+
+#### Raw Sources
+Regenstrief Institute: [dashboard](https://www.regenstrief.org/covid-dashboard/)
+
+#### Notes  
+This dataset is incomplete with random gaps between days.  
+
+Other variables:  
+- `date`: yyyy-mm-dd format  
+\
+
+```{r, asis=TRUE}
+
+mhl <- read_rds("data/mort-hosp-line.rds")
+mhl_var_defs <- c("Number of individuals hospitalized for COVID-19 who died while in the hospital",
+                  "Number of unique individuals who have been hospitalized and tested positive for COVID-19",
+                  "Percent of individuals hospitalized for COVID-19 who died while in the hospital")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(mhl %>% select(-date),
+            missing = "ifany",
+            missing_text = "Missing") %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  modify_table_body(dplyr::mutate, defs = mhl_var_defs) %>% 
+  modify_header(defs = "Definition") %>% 
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
+  cols_width(vars(stat_0) ~ "180px") %>% 
+  as_raw_html()
+
+```
+\
+\
+\
+
 
