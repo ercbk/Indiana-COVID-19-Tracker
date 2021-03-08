@@ -86,7 +86,8 @@ data_dict_tbl <- tibble(
   cols_label(file_name = "File Name",
              chart_link = "Chart",
              dict_link = "Data Dictionary") %>% 
-  cols_width(vars(file_name) ~ px(220)) %>%
+  # doesn't work for github_document
+  cols_width(vars(file_name) ~ px(200)) %>%
   cols_align("left") %>% 
   tab_options(table.align = "left") %>% 
   as_raw_html()
