@@ -5,10 +5,10 @@ on:
     # says run at the 21th min, 22th hr UTC (6:24pm ET) of every day
     # also fyi, single numbers are single digits, e.g. midnight is just 0
     - cron: '05 23 * * *'
-  push:
-    branches:
-      - main
-      - master
+  #push:
+    #branches:
+      #- main
+      #- master
 
 
 jobs:
@@ -79,8 +79,8 @@ jobs:
       
       
       ## Run scripts
-      #- name: build beds and ventilator data set
-        #run: Rscript "R/collection/build-datasets.R"
+      - name: build beds and ventilator data set
+        run: Rscript "R/collection/build-datasets.R"
       - name: run opentab-rest-line
         run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run excess-death-col
