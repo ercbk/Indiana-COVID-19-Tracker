@@ -84,6 +84,7 @@ race_date <- race_dat_raw %>%
    janitor::clean_names() %>% 
    filter(state == "IN") %>% 
    mutate(date = lubridate::ymd(date)) %>% 
+   slice_max(date) %>% 
    pull(date)
 
 race_complete <- readr::read_csv("data/ind-race-complete.csv")
@@ -97,7 +98,8 @@ if (race_date != race_comp_date) {
    ind_race <- race_dat_raw %>%
       janitor::clean_names() %>% 
       filter(state == "IN") %>% 
-      mutate(date = lubridate::ymd(date))
+      mutate(date = lubridate::ymd(date),
+             cases_black = as.numeric(cases_black))
    
    race_complete <- race_complete %>% 
       bind_rows(ind_race)
