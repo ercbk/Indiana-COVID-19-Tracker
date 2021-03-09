@@ -46,9 +46,9 @@ tidycensus R package: [website](https://walker-data.com/tidycensus/), 2018 age p
 
 #### Notes  
 Other variables:  
-- `end_date`: ordered factor; date of the last day of the weekly interval  
-- `daily_cases`: Vestigial column that was used during processing  
-- `pop`: Vestigial column used to calculate `prop_cases`  
+- `end_date`: Ordered factor; date of the last day of the weekly interval  
+- `daily_cases`: Cases for the `end_date`; vestigial column that was used to calculate `weekly_cases`  
+- `pop`: 2018 age populations for Indiana that's used to calculate `prop_cases`  
 \
 
 ```{r, asis=TRUE}
@@ -439,10 +439,10 @@ ind-race-complete.csv
 Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
 
 #### Raw Sources
-Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)  
+The Covid Tracking Project: [The COVID Racial Data Tracker](https://covidtracking.com/race)  
 
 #### Notes  
-The source publishs daily excel spreadsheets with total resource counts, and these spreadsheets are collected and joined daily to produce a dataset with historical values.  
+The source publishs data every 3 or 4 days.  
 Other variables:  
 - `date`: date, yyyy-mm-dd format  
 
