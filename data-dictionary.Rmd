@@ -35,10 +35,8 @@ Processed data for Demographics [heatmaps](https://ercbk.github.io/Indiana-COVID
 #### File name
 age-cases-heat.rds  
 
-#### Scripts  
-Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
+#### Script  
 Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
-Chart: [demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)  
 
 #### Raw Sources
 Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)  
@@ -95,10 +93,8 @@ Processed data for Demographics [line charts](https://ercbk.github.io/Indiana-CO
 #### File name
 age-death-line.rds  
 
-#### Scripts  
-Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
+#### Script  
 Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
-Chart: [demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)  
 
 #### Raw Sources
 Indiana Data Hub: [COVID-19 CASE DEMOGRAPHICS](https://hub.mph.in.gov/dataset/covid-19-case-demographics)
@@ -154,7 +150,7 @@ Raw data for the Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-1
 #### File name
 age-hosp-line.rds  
 
-#### Scripts  
+#### Script  
 Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
 
 #### Raw Sources
@@ -212,9 +208,8 @@ Raw data for the Static Charts [Hospitalizations, ICU Beds and Ventilator Availa
 #### File name
 beds-vents-complete.csv  
 
-#### Scripts  
+#### Script  
 Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
-Chart: [hosp-icu-vent.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/static-charts/hosp-icu-vent.R)  
 
 #### Raw Sources
 Indiana Data Hub: [COVID-19 BEDS AND VENTS](https://hub.mph.in.gov/dataset/covid-19-beds-and-vents)
@@ -266,10 +261,8 @@ Processed data for Hospitals [line charts](https://ercbk.github.io/Indiana-COVID
 #### File name
 hosp-msas-line.rds  
 
-#### Scripts  
-Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
+#### Script  
 Process: [process-hospitals-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-hospitals-data.R)  
-Chart: [hospitals.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/hospitals.Rmd)  
 
 #### Raw Sources
 Regenstrief Institute: [dashboard](https://www.regenstrief.org/covid-dashboard/)  
@@ -318,9 +311,8 @@ Processed data for the Hospitals [Local Hospital Capacity table](https://ercbk.g
 #### File name
 hosp-react-tab.rds  
 
-#### Scripts  
+#### Script  
 Process: [process-hospitals-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-hospitals-data.R)  
-Chart: [hospitals.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/hospitals.Rmd)  
 
 #### Raw Sources
 Department of Health and Human Services: [COVID-19 Reported Patient Impact and Hospital Capacity by State Timeseries](https://beta.healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh)  
@@ -374,7 +366,7 @@ Raw data for Demographics [line charts](https://ercbk.github.io/Indiana-COVID-19
 #### File name
 ind-age-complete.csv  
 
-#### Scripts  
+#### Script  
 Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
 
 #### Raw Sources
@@ -435,7 +427,7 @@ Raw data that shows daily case and death counts by race.
 #### File name
 ind-race-complete.csv  
 
-#### Scripts  
+#### Script  
 Collection: [build-datasets.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/build-datasets.R)  
 
 #### Raw Sources
@@ -484,9 +476,8 @@ Processed data for the Demographics [bubble chart](https://ercbk.github.io/India
 #### File name
 median-age-bubble.rds  
 
-#### Scripts  
-Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)  
-Chart: [demographics.Rmd](https://github.com/ercbk/Indiana-COVID-19-Website/blob/gh-pages/demographics.Rmd)  
+#### Script  
+Processing: [process-demog-data.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/process/process-demog-data.R)
 
 #### Raw Sources
 Indiana Data Hub: [COVID-19 CASE DATA](https://hub.mph.in.gov/dataset/covid-19-case-data)  
@@ -533,7 +524,7 @@ Raw data for the Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-1
 #### File name
 mort-hosp-line.rds  
 
-#### Scripts  
+#### Script  
 Collection: [scrape-regenstrief-tableau.R](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/R/collection/scrape-regenstrief-tableau.R)  
 
 #### Raw Sources
