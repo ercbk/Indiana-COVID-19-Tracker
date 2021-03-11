@@ -449,7 +449,7 @@ irc <- read_csv("data/ind-race-complete.csv") %>%
   select_if(~any(!is.na(.))) %>% 
   select_if(~is.numeric(.)) %>% 
   select(!matches("latin_x"))
-  
+
 
 # table width responsive to length of var_defs text, so may not appear full.width
 # use show_header_names to get col names being used by tbl_summary
@@ -565,4 +565,166 @@ tbl_summary(mhl %>% select(-date),
 \
 \
 
+## Historical Weekly Positivity Rates and Daily Cases per 100,000 residents  
 
+#### Description  
+Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows Weekly Positivity Rate and Daily Cases per 100,000 residents per metropolitan statistical area.    
+
+#### File name
+msa-cases100-posrate-historic.csv  
+
+#### Scripts  
+Processing: [process-hist-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/process-hist-regional-dat.R)  
+
+#### Raw Sources
+covidcast R package: [website](https://cmu-delphi.github.io/covidcast/covidcastR/)  
+Michigan Disease Surveillance System: [website](https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html)  
+Wisconsin Department of Health Services: [website](https://data.dhsgis.wi.gov/datasets/covid-19-historical-data-by-county/data?orderBy=DATE&orderByAsc=false)  
+Illinois Department of Public Health: [website](http://www.dph.illinois.gov/countymetrics?county=Adams)  
+Indiana Data Hub: [website](https://hub.mph.in.gov/dataset?q=COVID)
+
+#### Notes  
+The missing values for `pos_rate` are partly because this dataset has a row for every day and the positivity rate is calculated every week. The other missing values are for Cincinnati, Louisville, and Evansville. At the time this dashboard was created, those states with counties included in those areas didn't publicly release the necessary data to calcuate the positivity rates for those areas.
+
+Other variables:  
+- `date`: yyyy-mm-dd format; date for daily `cases_100k`  
+- `geo_value`: FIPS codes for `msa`  
+- `start_date`: Start date of the weekly interval for `pos_rate`  
+- `data_date`: Date when data was last updated
+\
+
+```{r, asis=TRUE}
+
+msa_hist <- read_csv("../Indiana-COVIDcast-Dashboard/data/msa-cases100-posrate-historic.csv")
+msa_hist_var_defs <- purrr::reduce(list("Metropolitan Statistical Area",
+                                        rep("", 15),
+                                        "Daily cases per 100,000 residents per MSA",
+                                        "",
+                                        "Weekly positivity rate per MSA",
+                                        ""), append)
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(msa_hist,
+            missing = "ifany",
+            missing_text = "Missing",
+            include = c(date, msa, cases_100k, pos_rate)) %>% 
+  modify_header(update = list(
+    label ~ 'Variable')) %>% 
+  modify_table_body(dplyr::mutate, defs = msa_hist_var_defs) %>%
+  modify_header(defs = "Definition") %>%
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>% 
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical Daily Values of Delphi Research Group's “Combined” indicator
+
+#### Description  
+Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows historic daily values of Delphi Research Group's Combined Indicator for each methropolitan statistical area.    
+
+#### File name
+dash-ci-line.rds  
+
+#### Scripts  
+Processing: [process-dashboard-data.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/process-dashboard-data.R)  
+
+#### Raw Sources
+covidcast R package: [website](https://cmu-delphi.github.io/covidcast/covidcastR/)  
+
+#### Notes  
+Other variables:  
+- `time_value`: yyyy-mm-dd format; Daily
+\
+
+```{r, asis=TRUE}
+
+dcl <- read_rds("../Indiana-COVIDcast-Dashboard/data/dash-ci-line.rds") %>% 
+  filter(name != "<<<<<<< HEAD" & name != "=======" & name != ">>>>>>> 113d96e638fcac35d736d138e77e8b5d47d9a407")
+
+
+dcl_var_defs <- purrr::reduce(list("Metropolitan Statistical Area",
+                                   rep("", 15),
+                                   "Delphi Research Group's “Combined” indicator"), append)
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(dcl,
+            missing = "ifany",
+            missing_text = "Missing",
+            include = c(name, value)) %>%
+  modify_header(update = list(label ~ 'Variable')) %>%
+  modify_table_body(dplyr::mutate, defs = dcl_var_defs) %>%
+  modify_header(defs = "Definition") %>%
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>%
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical COVID-19 Statistics and Counts for Illinois Counties
+
+#### Description  
+Raw data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows various weekly COVID-19 county statistics for Illinois    
+
+#### File name
+illinois-tests-complete.csv  
+
+#### Scripts  
+Processing: [build-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/build-regional-dat.R)  
+
+#### Raw Sources
+Illinois Department of Public Health: [website](http://www.dph.illinois.gov/countymetrics?county=Adams) 
+
+#### Notes  
+These data are published in weekly intervals into a HTML table then scraped and collected.  
+
+Other variables:  
+- `week`: int; week of the year  
+- `start_date`: yyyy-mm-dd format; First day of the weekly interval  
+- `end_date`: yyyy-mm-dd formate; Last day of the weekly interval  
+- `County`: char; Illinois county name  
+- `New Cases per 100,000`: string; format: "\<int\> cases" or "\<int\> per 100k" or "\<int\> per 100kwarning"  
+- `Test Positivity %`: string; format: "\<float\>%\\r\\n New Tests: \<int\>"  
+- `(%) CLI ED Visits, Adults`: string; format: "\<int\>%"  
+- `ICU (%) Available`: string; format: "\<float\>%"
+\
+
+```{r, asis=TRUE}
+
+ill <- read_csv("../Indiana-COVIDcast-Dashboard/data/states/illinois-tests-complete.csv")
+
+
+ill_var_defs <- c("Number of COVID-19 deaths per week per county",
+                  "")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(ill,
+            missing = "ifany",
+            missing_text = "Missing",
+            include = c(`Number of Deaths`)) %>%
+  modify_header(update = list(label ~ 'Variable')) %>%
+  modify_table_body(dplyr::mutate, defs = ill_var_defs) %>%
+  modify_header(defs = "Definition") %>%
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>%
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
