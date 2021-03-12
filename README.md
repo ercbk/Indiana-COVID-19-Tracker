@@ -11,11 +11,10 @@ This repository collects and processes datasets for
 It also has creates charts for the [“Static
 Charts”](https://ercbk.github.io/Indiana-COVID-19-Website/static.html)
 tab of the Indiana COVID-19 Tracker website.  
-The changelog for the entire Indiana COVID-19 Tracker project is located
+
+The changelog for the entire Indiana COVID-19 project is located
 in
 [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md).  
-  
-  
   
 
 The data files described in this dictionary are in the
