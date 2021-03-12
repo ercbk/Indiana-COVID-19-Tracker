@@ -5,6 +5,7 @@
 Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Noon%20Update/badge.svg)
 ![Evening
 Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Update/badge.svg)
+[![DOI](https://zenodo.org/badge/253142394.svg)](https://zenodo.org/badge/latestdoi/253142394)
 
 This repository collects and processes datasets for
 [Indiana-COVID-19-Website](https://github.com/ercbk/Indiana-COVID-19-Website).
