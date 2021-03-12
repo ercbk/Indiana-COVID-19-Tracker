@@ -624,7 +624,7 @@ tbl_summary(msa_hist,
 \
 \
 
-## Historical Daily Values of Delphi Research Group's “Combined” Indicator for Indiana    
+## Historical Daily Values of Delphi Research Group's Combined Indicator for Indiana    
 
 #### Description  
 Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows historic daily values of Delphi Research Group's Combined Indicator for each methropolitan statistical area.    

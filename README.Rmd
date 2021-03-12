@@ -117,7 +117,7 @@ data_dict_tbl <- tibble(
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Hospital_Admissions_and_Deaths_for_Indiana",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Positivity_Rates_and_Daily_Cases_per_100,000_Indiana_Residents",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Values_of_Delphi_Research_Group's_Combined_Indicator_for_Indiana",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_COVID-19_Statistics_and_Counts_for_Illinois_Counties",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Statistics_and_Counts_for_Illinois_Counties",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Test_Results_for_Indiana_Counties",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Test_Results_for_Michigan_Counties",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Test_Results_for_Wisconsin_Counties")
