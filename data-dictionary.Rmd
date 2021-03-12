@@ -1,5 +1,5 @@
 ---
-title: "Indiana COVID-19 Tracker Data Dictionary"
+title: "Indiana COVID-19 Project Data Dictionary"
 author: "Eric Book"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output: 
@@ -23,7 +23,7 @@ library(gt)
 library(gtsummary)
 ```
 
-Data files described in this dictionary are located in the [data directory](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data) of this repository.  
+Data files described in this dictionary are located in the [data](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data) directory of the Indiana-COVID-19-Tracker repository and the [data](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/tree/master/data) directory of the Indiana-COVIDcast-Dashboard repository.  
 \
 \
 
@@ -568,7 +568,7 @@ tbl_summary(mhl %>% select(-date),
 ## Historical Weekly Positivity Rates and Daily Cases per 100,000 residents  
 
 #### Description  
-Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows Weekly Positivity Rate and Daily Cases per 100,000 residents per metropolitan statistical area.    
+Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows weekly positivity rate and daily cases per 100,000 residents per metropolitan statistical area.    
 
 #### File name
 msa-cases100-posrate-historic.csv  
@@ -624,7 +624,7 @@ tbl_summary(msa_hist,
 \
 \
 
-## Historical Daily Values of Delphi Research Group's “Combined” indicator
+## Historical Daily Values of Delphi Research Group's “Combined” Indicator
 
 #### Description  
 Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows historic daily values of Delphi Research Group's Combined Indicator for each methropolitan statistical area.    
@@ -682,7 +682,7 @@ Raw data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-C
 illinois-tests-complete.csv  
 
 #### Scripts  
-Processing: [build-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/build-regional-dat.R)  
+Collection: [build-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/build-regional-dat.R)  
 
 #### Raw Sources
 Illinois Department of Public Health: [website](http://www.dph.illinois.gov/countymetrics?county=Adams) 

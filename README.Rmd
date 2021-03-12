@@ -61,7 +61,7 @@ data_dict_tbl <- tibble(
                  "Historical Weekly Median Age of Cases, Weekly Tests and Deaths",
                  "Historical Daily Hospital Admissions and Deaths",
                  "Historical Weekly Positivity Rates and Daily Cases per 100,000 residents",
-                 "Historical Daily Values of Delphi Research Group's 'Combined' indicator",
+                 "Historical Daily Values of Delphi Research Group's 'Combined' Indicator",
                  "Historical COVID-19 Statistics and Counts for Illinois Counties"),
   
   chart_name = c("Weekly COVID-19 Cases by Age",
@@ -102,8 +102,8 @@ data_dict_tbl <- tibble(
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Cases_and_Deaths_by_Race",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Median_Age_of_Cases,_Weekly_Tests_and_Deaths",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Hospital_Admissions_and_Deaths",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Positivity_Rates_and_Daily Cases_per_100,000_residents",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical Daily Values of Delphi Research Group's 'Combined' indicator",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Positivity_Rates_and_Daily_Cases_per_100,000_residents",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Values_of_Delphi_Research_Group's_'Combined'_Indicator",
                "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_COVID-19_Statistics_and_Counts_for_Illinois_Counties")
 ) %>% 
   mutate(chart_html = purrr::map2(chart_url, chart_name, ~htmltools::a(href = .x, .y)),
