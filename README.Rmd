@@ -23,10 +23,9 @@ library(gtsummary)
 ![Evening Update](https://github.com/ercbk/Indiana-COVID-19-Tracker/workflows/Evening%20Update/badge.svg)
 
 This repository collects and processes datasets for [Indiana-COVID-19-Website](https://github.com/ercbk/Indiana-COVID-19-Website). It also has creates charts for the ["Static Charts"](https://ercbk.github.io/Indiana-COVID-19-Website/static.html) tab of the Indiana COVID-19 Tracker website.  
+
+
 The changelog for the entire Indiana COVID-19 Tracker project is located in [NEWS.md](https://github.com/ercbk/Indiana-COVID-19-Tracker/blob/master/NEWS.md).  
-\
-\
-\
 
 
 The data files described in this dictionary are in the [data](https://github.com/ercbk/Indiana-COVID-19-Tracker/tree/master/data) directory of this repository and the [data](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/tree/master/data) directory of the Indiana-COVIDcast-Dashboard repository.  
@@ -48,21 +47,27 @@ data_dict_tbl <- tibble(
                 "mort-hosp-line.rds",
                 "msa-cases100-posrate-historic.csv",
                 "dash-ci-line.rds",
-                "illinois-tests-complete.csv"),
+                "illinois-tests-complete.csv",
+                "ind-tests-complete.csv",
+                "mich-tests-complete.csv",
+                "wis-tests-complete.csv"),
   
-  table_name = c("Historical Weekly COVID-19 Cases by Age",
-                 "Historical Weekly COVID-19 Deaths by Age Group",
-                 "Historical Daily COVID-19 Hospital Admissions by Age Group",
-                 "Historical Daily ICU Beds and Ventilators",
-                 "Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions",
-                 "Local Hospital Capacity",
-                 "Historical Daily Tests, Cases and Deaths by Age",
-                 "Historical Daily Cases and Deaths by Race",
-                 "Historical Weekly Median Age of Cases, Weekly Tests and Deaths",
-                 "Historical Daily Hospital Admissions and Deaths",
-                 "Historical Weekly Positivity Rates and Daily Cases per 100,000 residents",
-                 "Historical Daily Values of Delphi Research Group's Combined Indicator",
-                 "Historical COVID-19 Statistics and Counts for Illinois Counties"),
+  table_name = c("Historical Weekly COVID-19 Cases by Age for Indianan",
+                 "Historical Weekly COVID-19 Deaths by Age Group for Indiana",
+                 "Historical Daily COVID-19 Hospital Admissions by Age Group for Indiana",
+                 "Historical Daily ICU Beds and Ventilators for Indiana",
+                 "Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions for Indiana",
+                 "Local Hospital Capacity for Indiana",
+                 "Historical Daily Tests, Cases and Deaths by Age for Indiana",
+                 "Historical Daily Cases and Deaths by Race for Indiana",
+                 "Historical Weekly Median Age of Cases, Weekly Tests and Deaths for Indiana",
+                 "Historical Daily Hospital Admissions and Deaths for Indiana",
+                 "Historical Weekly Positivity Rates and Daily Cases per 100,000 Indiana Residents",
+                 "Historical Daily Values of Delphi Research Group's Combined Indicator for Indiana",
+                 "Historical Weekly COVID-19 Statistics and Counts for Illinois Counties",
+                 "Historical Daily COVID-19 Test Results for Indiana Counties",
+                 "Historical Daily COVID-19 Test Results for Michigan Counties",
+                 "Historical Daily COVID-19 Test Results for Wisconsin Counties"),
   
   chart_name = c("Weekly COVID-19 Cases by Age",
                  "Weekly COVID-19 Deaths by Age Group",
@@ -74,6 +79,9 @@ data_dict_tbl <- tibble(
                  "",
                  "Median Age of Weekly COVID-19 Cases, Weekly Tests and Deaths",
                  "State Hospital Mortality, Staffing Shortages, Admissions",
+                 "Carnegie Mellon’s COVIDcast for Indiana",
+                 "Carnegie Mellon’s COVIDcast for Indiana",
+                 "Carnegie Mellon’s COVIDcast for Indiana",
                  "Carnegie Mellon’s COVIDcast for Indiana",
                  "Carnegie Mellon’s COVIDcast for Indiana",
                  "Carnegie Mellon’s COVIDcast for Indiana"),
@@ -90,21 +98,27 @@ data_dict_tbl <- tibble(
                 "https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions",
                 "https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard",
                 "https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard",
+                "https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard",
+                "https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard",
+                "https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard",
                 "https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard"),
   
-  data_url = c("https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Cases_by_Age",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Deaths_by_Age_Group",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Hospital_Admissions_by_Age Group",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_ICU_Beds_and_Ventilators",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_State_Hospital_Staff_Shortages,_Hospital_Mortality_Rate,_Hospital_Admissions_and_Ages_Skewness_of_Admissions",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Local_Hospital_Capacity",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Tests,_Cases_and_Deaths_by_Age",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Cases_and_Deaths_by_Race",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Median_Age_of_Cases,_Weekly_Tests_and_Deaths",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Hospital_Admissions_and_Deaths",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Positivity_Rates_and_Daily_Cases_per_100,000_residents",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Values_of_Delphi_Research_Group's_Combined_Indicator",
-               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_COVID-19_Statistics_and_Counts_for_Illinois_Counties")
+  data_url = c("https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Cases_by_Age_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_COVID-19_Deaths_by_Age_Group_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Hospital_Admissions_by_Age Group_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_ICU_Beds_and_Ventilators_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_State_Hospital_Staff_Shortages,_Hospital_Mortality_Rate,_Hospital_Admissions_and_Ages_Skewness_of_Admissions_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Local_Hospital_Capacity_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Tests,_Cases_and_Deaths_by_Age_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Cases_and_Deaths_by_Race_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Median_Age_of_Cases,_Weekly_Tests_and_Deaths_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Hospital_Admissions_and_Deaths_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Weekly_Positivity_Rates_and_Daily_Cases_per_100,000_Indiana_Residents",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_Values_of_Delphi_Research_Group's_Combined_Indicator_for_Indiana",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_COVID-19_Statistics_and_Counts_for_Illinois_Counties",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Test_Results_for_Indiana_Counties",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Test_Results_for_Michigan_Counties",
+               "https://raw.githack.com/ercbk/Indiana-COVID-19-Tracker/master/data-dictionary.html#Historical_Daily_COVID-19_Test_Results_for_Wisconsin_Counties")
 ) %>% 
   mutate(chart_html = purrr::map2(chart_url, chart_name, ~htmltools::a(href = .x, .y)),
          chart_link = purrr::map(chart_html, ~gt::html(as.character(.x))),

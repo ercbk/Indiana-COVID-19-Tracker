@@ -27,7 +27,7 @@ Data files described in this dictionary are located in the [data](https://github
 \
 \
 
-## Historical Weekly COVID-19 Cases by Age  
+## Historical Weekly COVID-19 Cases by Age for Indiana
 
 #### Description  
 Processed data for Demographics [heatmaps](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#cases-by-age) that shows a breakdown of weekly COVID-19 cases by age group.  
@@ -85,7 +85,7 @@ tbl_summary(ach,
 \
 \
 
-## Historical Weekly COVID-19 Deaths by Age Group   
+## Historical Weekly COVID-19 Deaths by Age Group for Indiana
 
 #### Description  
 Processed data for Demographics [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#deaths-by-age) that shows counts and trends of weekly COVID-19 deaths by age group.  
@@ -142,7 +142,7 @@ tbl_summary(adl,
 \
 \
 
-## Historical Daily COVID-19 Hospital Admissions by Age Group   
+## Historical Daily COVID-19 Hospital Admissions by Age Group for Indiana  
 
 #### Description  
 Raw data for the Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows daily COVID-19 hospital admissions by age group and gender.  
@@ -200,7 +200,7 @@ tbl_summary(ahl,
 \
 \
 
-## Historical Daily ICU Beds and Ventilators  
+## Historical Daily ICU Beds and Ventilators for Indiana  
 
 #### Description  
 Raw data for the Static Charts [Hospitalizations, ICU Beds and Ventilator Availability](https://ercbk.github.io/Indiana-COVID-19-Website/static.html#Hospitalizations,_ICU_Beds_and_Ventilator_Availability) that shows resource counts of ICU beds and ventilators.  
@@ -253,7 +253,7 @@ tbl_summary(bvc,
 \
 \
 
-## Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions 
+## Historical State Hospital Staff Shortages, Hospital Mortality Rate, Hospital Admissions and Ages Skewness of Admissions for Indiana  
 
 #### Description  
 Processed data for Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows state hospital staff shortages, hospital mortality rate, hospital admissions, and age skewness of hospital admissions towards older patients.  
@@ -303,7 +303,7 @@ tbl_summary(msas %>% select(-date),
 \
 \
 
-## Local Hospital Capacity
+## Local Hospital Capacity for Indiana  
 
 #### Description  
 Processed data for the Hospitals [Local Hospital Capacity table](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#local-hospital-capacity) that shows capacity measures and counts of COVID-19 patients for hospitals at the local level.  
@@ -358,7 +358,7 @@ tbl_summary(hrt %>% select(sev_day_icu_perc_occup, sev_day_hosp_perc_occup),
 \
 \
 
-## Historical Daily Tests, Cases and Deaths by Age
+## Historical Daily Tests, Cases and Deaths by Age for Indiana  
 
 #### Description  
 Raw data for Demographics [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html) that shows daily case and death counts by age group.  
@@ -419,7 +419,7 @@ tbl_summary(iac %>% select(-date),
 \
 \
 
-## Historical Daily Cases and Deaths by Race  
+## Historical Daily Cases and Deaths by Race for Indiana  
 
 #### Description  
 Raw data that shows daily case and death counts by race.  
@@ -468,7 +468,7 @@ tbl_summary(irc,
 \
 \
 
-## Historical Weekly Median Age of Cases, Weekly Tests and Deaths  
+## Historical Weekly Median Age of Cases, Weekly Tests and Deaths for Indiana  
 
 #### Description  
 Processed data for the Demographics [bubble chart](https://ercbk.github.io/Indiana-COVID-19-Website/demographics.html#median-age-of-cases-tests-deaths) that shows the number of tests, number of deaths, and median age of the cases per week.  
@@ -516,7 +516,7 @@ tbl_summary(mab %>% select(-end_date),
 \
 
 
-## Historical Daily Hospital Admissions and Deaths
+## Historical Daily Hospital Admissions and Deaths for Indiana  
 
 #### Description  
 Raw data for the Hospitals [line charts](https://ercbk.github.io/Indiana-COVID-19-Website/hospitals.html#state-hospital-mortality-staffing-shortages-admissions) that shows daily COVID-19 hospital admissions, hospital deaths, and hospital death rate.  
@@ -565,7 +565,7 @@ tbl_summary(mhl %>% select(-date),
 \
 \
 
-## Historical Weekly Positivity Rates and Daily Cases per 100,000 residents  
+## Historical Weekly Positivity Rates and Daily Cases per 100,000 Indiana Residents     
 
 #### Description  
 Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows weekly positivity rate and daily cases per 100,000 residents per metropolitan statistical area.    
@@ -624,7 +624,7 @@ tbl_summary(msa_hist,
 \
 \
 
-## Historical Daily Values of Delphi Research Group's “Combined” Indicator
+## Historical Daily Values of Delphi Research Group's “Combined” Indicator for Indiana    
 
 #### Description  
 Processed data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows historic daily values of Delphi Research Group's Combined Indicator for each methropolitan statistical area.    
@@ -673,7 +673,7 @@ tbl_summary(dcl,
 \
 \
 
-## Historical COVID-19 Statistics and Counts for Illinois Counties
+## Historical Weekly COVID-19 Statistics and Counts for Illinois Counties    
 
 #### Description  
 Raw data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows various weekly COVID-19 county statistics for Illinois    
@@ -717,6 +717,152 @@ tbl_summary(ill,
             include = c(`Number of Deaths`)) %>%
   modify_header(update = list(label ~ 'Variable')) %>%
   modify_table_body(dplyr::mutate, defs = ill_var_defs) %>%
+  modify_header(defs = "Definition") %>%
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>%
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical Daily COVID-19 Test Results for Indiana Counties    
+
+#### Description  
+Raw data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows daily COVID-19 county test results for Indiana    
+
+#### File name
+ind-tests-complete.csv  
+
+#### Scripts  
+Collection: [build-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/build-regional-dat.R)  
+
+#### Raw Sources
+Indiana Data Hub: [COVID-19 COUNTY-WIDE TEST, CASE, AND DEATH TRENDS](https://hub.mph.in.gov/dataset/covid-19-county-wide-test-case-and-death-trends) 
+
+#### Notes  
+Other variables:  
+- `date`: yyyy-mm-dd format; Daily  
+- `county`: County name
+\
+
+```{r, asis=TRUE}
+
+ind <- read_csv("../Indiana-COVIDcast-Dashboard/data/states/ind-tests-complete.csv")
+
+
+ind_var_defs <- c("Number of COVID-19 cases per day per county",
+                  "Number of COVID-19 tests per day per county")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(ind,
+            missing = "ifany",
+            missing_text = "Missing",
+            include = c(positives, num_tests)) %>%
+  modify_header(update = list(label ~ 'Variable')) %>%
+  modify_table_body(dplyr::mutate, defs = ind_var_defs) %>%
+  modify_header(defs = "Definition") %>%
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>%
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical Daily COVID-19 Test Results for Michigan Counties    
+
+#### Description  
+Raw data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows daily COVID-19 county test results for Michigan    
+
+#### File name
+mich-tests-complete.csv  
+
+#### Scripts  
+Collection: [build-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/build-regional-dat.R)  
+
+#### Raw Sources
+Michigan Department of Health and Human Services: [COVID-19 Tests by County](https://www.michigan.gov/coronavirus/0,9753,7-406-98163_98173---,00.html) 
+
+#### Notes  
+Other variables:  
+- `date`: yyyy-mm-dd format; Daily  
+- `county`: County name
+\
+
+```{r, asis=TRUE}
+
+mich <- read_csv("../Indiana-COVIDcast-Dashboard/data/states/mich-tests-complete.csv")
+
+
+mich_var_defs <- c("Number of COVID-19 positive tests per day per county",
+                  "Number of COVID-19 negative tests per day per county",
+                  "Total number of COVID-19 tests per day per county")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(mich,
+            missing = "ifany",
+            missing_text = "Missing",
+            include = c(positive, negative, total)) %>%
+  modify_header(update = list(label ~ 'Variable')) %>%
+  modify_table_body(dplyr::mutate, defs = mich_var_defs) %>%
+  modify_header(defs = "Definition") %>%
+  # show_header_names()
+  as_gt() %>%
+  tab_options(table.align = "left") %>%
+  cols_align("left", vars(stat_0, defs)) %>%
+  as_raw_html()
+
+```
+\
+\
+\
+
+## Historical Daily COVID-19 Test Results for Wisconsin Counties    
+
+#### Description  
+Raw data for the [Indiana COVIDcast Dashboard](https://ercbk.github.io/Indiana-COVIDcast-Dashboard/#dashboard) that shows daily COVID-19 county test results for Wisconsin    
+
+#### File name
+wisc-tests-complete.csv  
+
+#### Scripts  
+Collection: [build-regional-dat.R](https://github.com/ercbk/Indiana-COVIDcast-Dashboard/blob/master/R/build-regional-dat.R)  
+
+#### Raw Sources
+Wisconsin Department of Health Services: [COVID-19 Historical Data by County](https://data.dhsgis.wi.gov/datasets/covid-19-historical-data-by-county/data?orderBy=DATE&orderByAsc=false) 
+
+#### Notes  
+Other variables:  
+- `date`: yyyy-mm-dd format; Daily  
+- `county`: County name
+\
+
+```{r, asis=TRUE}
+
+wisc <- read_csv("../Indiana-COVIDcast-Dashboard/data/states/wisc-tests-complete.csv")
+
+
+wisc_var_defs <- c("Number of COVID-19 positive tests per day per county",
+                  "Number of COVID-19 negative tests per day per county",
+                   "")
+
+# table width responsive to length of var_defs text, so may not appear full.width
+# use show_header_names to get col names being used by tbl_summary
+tbl_summary(wisc,
+            missing = "ifany",
+            missing_text = "Missing",
+            include = c(positive, negative)) %>%
+  modify_header(update = list(label ~ 'Variable')) %>%
+  modify_table_body(dplyr::mutate, defs = wisc_var_defs) %>%
   modify_header(defs = "Definition") %>%
   # show_header_names()
   as_gt() %>%
