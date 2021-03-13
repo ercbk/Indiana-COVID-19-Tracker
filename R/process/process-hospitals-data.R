@@ -9,16 +9,16 @@ options(scipen = 999)
 
 pacman::p_load(e1071, dplyr, glue, rvest, imputeTS)
 
-cdc_hosp_url <- read_html("https://healthdata.gov/dataset/covid-19-reported-patient-impact-and-hospital-capacity-facility") %>%
-      html_node(css = "#data-and-resources > div > div > ul > li > div > span > a") %>%
-      html_attr("href")
+# cdc_hosp_url <- read_html("https://healthdata.gov/dataset/covid-19-reported-patient-impact-and-hospital-capacity-facility") %>%
+#       html_node(css = "#data-and-resources > div > div > ul > li > div > span > a") %>%
+#       html_attr("href")
+# 
+# cdc_staff_url <- read_html("https://healthdata.gov/dataset/covid-19-reported-patient-impact-and-hospital-capacity-state-timeseries") %>%
+#       html_node(css = "#data-and-resources > div > div > ul > li > div > span > a.btn.btn-primary.data-link") %>%
+#       html_attr("href")
 
-cdc_staff_url <- read_html("https://healthdata.gov/dataset/covid-19-reported-patient-impact-and-hospital-capacity-state-timeseries") %>%
-      html_node(css = "#data-and-resources > div > div > ul > li > div > span > a.btn.btn-primary.data-link") %>%
-      html_attr("href")
-
-# cdc_staff_url <- "https://beta.healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD"
-# cdc_hosp_url <- "https://beta.healthdata.gov/api/views/anag-cw7u/rows.csv?accessType=DOWNLOAD"
+cdc_staff_url <- "https://beta.healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD"
+cdc_hosp_url <- "https://beta.healthdata.gov/api/views/anag-cw7u/rows.csv?accessType=DOWNLOAD"
 
 # historic staffing shortages
 cdc_staff_raw <- readr::read_csv(cdc_staff_url)
@@ -72,8 +72,6 @@ ind_hosp_clean <- cdc_hosp_raw %>%
           ),
           hospital_name = stringr::str_replace_all(hospital_name, "Iu ", "IU "), 
           hospital_name = stringr::str_replace_all(hospital_name, " Llc", " LLC"),
-          # collection_week = lubridate::mdy_hms(collection_week),
-          # collection_week = lubridate::as_date(collection_week),
           # collection_week is the start day and I prefer the end day
           collection_week = collection_week + 6) %>% 
    select(-temp_city) %>% 
@@ -310,9 +308,7 @@ staff_vars <- c("state", "date",
 # Rolling 7-day avg of daily shortages
 ind_staff_clean <- cdc_staff_raw %>% 
    select(any_of(staff_vars)) %>% 
-   filter(state == "IN") %>% 
-   # mutate(date = lubridate::mdy_hms(date),
-   #        date = lubridate::as_date(date)) %>% 
+   filter(state == "IN") %>%
    arrange(date) %>% 
    mutate(staff_short_perc = critical_staffing_shortage_today_yes /
              (critical_staffing_shortage_today_yes + critical_staffing_shortage_today_no),
