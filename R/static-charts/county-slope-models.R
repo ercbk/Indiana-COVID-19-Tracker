@@ -64,7 +64,9 @@ pos_bar_dat <- counties_dat %>%
    left_join(pos_lbl_dat, by = "county") %>% 
    ungroup() %>% 
    mutate(county = as.factor(county)) %>% 
-   top_n(20, wt = pos_estimate)
+   top_n(20, wt = pos_estimate) %>% 
+   arrange(desc(pos_estimate)) %>% 
+   slice(1:20)
 
 
 # bar chart

@@ -155,7 +155,7 @@ ind_cause_21 <- ind_cause_raw %>%
           cause_subgroup = factor(cause_subgroup) %>%
              forcats::fct_reorder(pct_diff)) %>% 
    top_n(pct_diff, n = 6) %>% 
-   mutate(nudge_x = ifelse(pct_diff < 0, -11.5, 11.5))
+   mutate(nudge_x = ifelse(pct_diff < 0, -5.5, 5.5))
 
 
 
