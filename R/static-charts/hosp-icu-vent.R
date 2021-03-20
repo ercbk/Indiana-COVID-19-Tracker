@@ -1,21 +1,21 @@
-# Monitors number of hospitalizations, availabilty of icu beds and ventilators
+# Monitors number of hospital admissions, availabilty of icu beds and ventilators
 
 
 # Notes
-# 1. The "triggers" are benchmarks for hospitalizations, icu beds, and ventilators that I'm monitoring. Discussed further in the readme.
+# 1. The "triggers" are benchmarks for hospital admissions, icu beds, and ventilators that I'm monitoring. Discussed further in the readme.
 
 
 # Sections
 # 1. Set-up
-# 2. hospitalizations: clean, calculate trigger
-# 3. Hospitalizations chart
+# 2. hospital admissions: clean, calculate trigger
+# 3. hospital admissions chart
 # 4. ICU, Vents: clean, calculate triggers
 # 5. Gauge Plots
 # 6. Trigger Plot
 # 7. Combine all charts
 
 
-
+# Number of patients who were admitted on the previous calendar day who had confirmed or suspected COVID-19 at the time of admission
 
 
 # Set-up ----
@@ -28,24 +28,43 @@ deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()
 purp_haz <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Purple Haze.ase"))
 light_haz <- prismatic::clr_lighten(purp_haz, shift = 0.25)
 
-# hospitalizations data
-ct_dat_raw <- readr::read_csv("https://covidtracking.com/api/v1/states/daily.csv")
+# The COVID Tracking Project; currently discontinued
+# hospital admissions data
+# ct_dat_raw <- readr::read_csv("https://covidtracking.com/api/v1/states/daily.csv")
+
+hhs_dat_raw <- readr::read_csv("https://beta.healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD")
 # beds, ventilators data
 iv_dat_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-complete.csv"))
 
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# 1 hospitalizations: clean, calculate trigger ----
+# 1 hospital admissions: clean, calculate trigger ----
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+# The COVID Tracking Project Data; discontinued
+# Get Indiana, cols = date, hospital_admissions
+# ind_hosp <- ct_dat_raw %>% 
+#   filter(state == "IN" & hospital_admissions != "NA") %>% 
+#   select(date, hospital_admissions) %>% 
+#   mutate(date = lubridate::ymd(date)) %>%
+#   as_tsibble(index = date)
 
-# Get Indiana, cols = date, hospitalizedCurrently
-ind_hosp <- ct_dat_raw %>% 
-  filter(state == "IN" & hospitalizedCurrently != "NA") %>% 
-  select(date, hospitalizedCurrently) %>% 
-  mutate(date = lubridate::ymd(date)) %>%
-  as_tsibble(index = date)
+ind_hosp <- hhs_dat_raw %>% 
+  filter(state == "IN") %>% 
+  select(date,
+         previous_day_admission_adult_covid_confirmed,
+         previous_day_admission_adult_covid_suspected,
+         previous_day_admission_pediatric_covid_confirmed,
+         previous_day_admission_pediatric_covid_suspected) %>% 
+  tidyr::pivot_longer(cols = -date,
+                      names_to = "metric",
+                      values_to = "value") %>%
+  # prior dates are NA
+  filter(date > as.Date("2020-07-14")) %>% 
+  group_by(date) %>% 
+  # daily admissions for confirmed and suspected COVID
+  summarize(hospital_admissions = sum(value))
 
 # current date of data
 data_date <- ind_hosp %>% 
@@ -56,9 +75,16 @@ data_date <- ind_hosp %>%
 # calc difference between one day and the previous day
 hosp_changes <- ind_hosp %>% 
   as_tibble() %>% 
-  mutate(hosp_diff = difference(hospitalizedCurrently)) %>% 
+  mutate(hosp_diff = difference(hospital_admissions)) %>% 
   arrange(desc(date)) %>% 
   pull(hosp_diff)
+
+# The COVID Tracking Project; currently discontinued
+# hosp_changes <- ind_hosp %>% 
+#   as_tibble() %>% 
+#   mutate(hosp_diff = difference(hospital_admissions)) %>% 
+#   arrange(desc(date)) %>% 
+#   pull(hosp_diff)
 
 # calculate how many consecutive days of increasing/decreasing daily cases
 count_consec_days <- function(x) {
@@ -80,27 +106,27 @@ consec_days <- count_consec_days(hosp_changes)
 
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-# 2 Hospitalizations chart ----
+# 2 hospital admissions chart ----
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 # Trigger
 # text styled depending on number of consecutive days and increasing or decreasing trend
 
-# 1 day of decreased hospitalizations
-neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospitializations")
-# 1 day of increased hospitalizations
-pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospitializations")
+# 1 day of decreased hospital admissions
+neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospital admissions")
+# 1 day of increased hospital admissions
+pos_one <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> day of {consec_days$trend[[1]]} COVID-19 hospital admissions")
 # no change from yesterday
-zero_days <- glue("{consec_days$trend[[1]]} COVID-19 hospitializations")
-# between 2 and 6 days of increased hospitalizations
-under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations")
-# more than threshold of 14 days of increased hospitalizations
-ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf06A;</span>")
-# between 7 and 13 days of increased hospitalizations
-ft_over_sev <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitializations <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf071;</span>")
-# more than 1 day of decreased hospitalizations
-under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospitalizations")
+zero_days <- glue("{consec_days$trend[[1]]} COVID-19 hospital admissions")
+# between 2 and 6 days of increased hospital admissions
+under_ft <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospital admissions")
+# more than threshold of 14 days of increased hospital admissions
+ft_over <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospital admissions <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #cf142b'>&#xf06A;</span>")
+# between 7 and 13 days of increased hospital admissions
+ft_over_sev <- glue("<b style='color: #cf142b'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospital admissions <span style='font-family: \"Font Awesome 5 Free Solid\"; color: #ffae42'>&#xf071;</span>")
+# more than 1 day of decreased hospital admissions
+under_neg_one <- glue("<b style='color: #33a532'>{consec_days$num_days[[1]]}</b> consecutive days of {consec_days$trend[[1]]} COVID-19 hospital admissions")
 
 # choose the subtitle text based number of consecutive days and trend light_haz[[2]]
 trigger_dat_h <- consec_days %>% 
@@ -124,21 +150,22 @@ caption_text <- glue("Last updated: {data_date}
                      Source: The COVID Tracking Project")
 
 hosp_plot <- ggplot(data = ind_hosp,
-                    aes(x = date, y = hospitalizedCurrently)) +
+                    aes(x = date, y = hospital_admissions)) +
   geom_point(color = "#32a5a3") +
   geom_line(color = "#32a5a3") +
-  expand_limits(y = c(min(ind_hosp$hospitalizedCurrently)-60, max(ind_hosp$hospitalizedCurrently) + 60),
+  expand_limits(y = c(0,
+                      max(ind_hosp$hospital_admissions) + 60),
                 x = max(ind_hosp$date) + 8) +
   scale_x_date(date_breaks = "1 month",
                date_labels = "%b") +
   ggrepel::geom_label_repel(data = ind_hosp %>%
                               filter(date == max(date)),
-                            aes(label = hospitalizedCurrently, size = 12),
+                            aes(label = hospital_admissions, size = 12),
                             nudge_x = 0, nudge_y = 18, point.padding = 1,
                             direction = "x", seed = 125) +
-  geom_label(aes(x = as.Date("2020-04-24"),
-                 y = max(hospitalizedCurrently) + 60,
-                 label="Current COVID-19 Hospitalizations"),
+  geom_label(aes(x = as.Date("2020-07-14"),
+                 y = max(hospital_admissions) + 60,
+                 label="COVID-19 Hospital Admissions"),
              family="Roboto", fill = "black",
              size = 5, hjust = 0,
              label.size = 0, color = "white") +
@@ -397,10 +424,10 @@ xlim(0, 1) + ylim(0, 1) +
 all_charts <- ((hosp_plot/status_plot + plot_layout(heights = unit(c(13, 1), c('cm', 'null')))) | 
                  (icu_gauge/vents_gauge)) +
   plot_layout(widths = c(2,1)) +
-  plot_annotation(title = "Tracking COVID-19 Hospitalizations, ICU and Ventilator Availability",
+  plot_annotation(title = "Daily COVID-19 Hospital Admisssions, ICU and Ventilator Availability",
                   subtitle = glue("Last updated: {data_date}"),
                   caption = glue("Sources: The Indiana Data Hub
-                                 The COVID Tracking Project")) &
+                                 U.S. Department of Health & Human Services")) &
   theme(plot.title = element_text(color = "white",
                                   size = 16,
                                   family = "Roboto"),
