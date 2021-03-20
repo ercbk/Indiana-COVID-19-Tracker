@@ -105,6 +105,8 @@ jobs:
         run: Rscript "R/process/process-demog-data.R"
       - name: process hospitals data
         run: Rscript "R/process/process-hospitals-data.R"
+      - name: clean-up old plots
+        run: Rscript "R/misc/gc.R"
       #- name: render readme
         #run: Rscript "R/misc/render-readme.R"
         
