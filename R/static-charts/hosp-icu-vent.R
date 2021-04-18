@@ -32,7 +32,8 @@ light_haz <- prismatic::clr_lighten(purp_haz, shift = 0.25)
 # hospital admissions data
 # ct_dat_raw <- readr::read_csv("https://covidtracking.com/api/v1/states/daily.csv")
 
-hhs_dat_raw <- readr::read_csv("https://beta.healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD")
+# website https://healthdata.gov/Hospital/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/g62h-syeh 
+hhs_dat_raw <- readr::read_csv("https://healthdata.gov/api/views/g62h-syeh/rows.csv?accessType=DOWNLOAD")
 # beds, ventilators data
 iv_dat_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/beds-vents-complete.csv"))
 
@@ -64,7 +65,9 @@ ind_hosp <- hhs_dat_raw %>%
   filter(date > as.Date("2020-07-14")) %>% 
   group_by(date) %>% 
   # daily admissions for confirmed and suspected COVID
-  summarize(hospital_admissions = sum(value))
+  summarize(hospital_admissions = sum(value)) %>% 
+  # hhs is consistently reporting the last day's value as a repeat the previous day's value which seems bogus. So I'm removing it.
+  filter(date != max(date))
 
 # current date of data
 data_date <- ind_hosp %>% 

@@ -46,7 +46,7 @@ chrome$navigate(url = url)
 
 # css selector for the data download button
 dl_button <- chrome$findElement(using = "css",
-                                value = "#content > div > div > main > section:nth-child(2) > div:nth-child(4) > div._3ZR5BNaRxlZSImxhkkEzrb > button > div")
+                                value = "#baseApp > div > main > section:nth-child(2) > div:nth-child(4) > div._3ZR5BNaRxlZSImxhkkEzrb > button")
 
 # makes the element flash in the browser so you can confirm you have the right thing
 # dl_button$highlightElement()
@@ -55,10 +55,11 @@ dl_button$clickElement()
 # give it a few secs to d/l
 Sys.sleep(5)
 
-filename <- "YoY_Seated_Diner_Data.csv"
+new_filename <- "YoY_Seated_Diner_Data.csv"
+filename <- "2020-2021vs2019_Seated_Diner_Data.csv"
 download_location <- file.path(Sys.getenv("USERPROFILE"), "Downloads")
 # moves file from download folder to data folder in my project directory
-file.rename(file.path(download_location, filename), glue("{rprojroot::find_rstudio_root_file()}/data/{filename}"))
+file.rename(file.path(download_location, filename), glue("{rprojroot::find_rstudio_root_file()}/data/{new_filename}"))
 
 # close browser
 chrome$close()

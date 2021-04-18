@@ -29,10 +29,11 @@ region_rest <- rest_dat_raw %>%
    mutate(date = stringr::str_remove_all(date, "_1"),
           date = stringr::str_replace_all(date,
                                           pattern = "/",
-                                          replacement = "-")) %>% 
+                                          replacement = "-"),
+          pct_diff = stringr::str_remove_all(pct_diff, "%") %>% 
+             as.numeric()) %>% 
    group_by(Name) %>% 
    mutate(id = row_number(),
-          date = ifelse(id > 318, paste0(2021, "-", date), paste0(2020, "-", date)),
           date = lubridate::ymd(date),
           weekend = timeDate::isWeekend(date),
           pct_diff = pct_diff/100) %>% 
