@@ -8,7 +8,7 @@
 
 
 
-
+# https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip
 
 pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, ggtext)
 
@@ -19,14 +19,16 @@ tmpdir <- file.path(tempdir(), "Region_Mobility_Report_CSVs.zip")
 download.file(url = "https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip", destfile = tmpdir)
 
 unzip(zipfile = tmpdir,
-      files = "2020_US_Region_Mobility_Report.csv",
+      files = c("2020_US_Region_Mobility_Report.csv",
+                "2021_US_Region_Mobility_Report.csv"),
       exdir = glue("{rprojroot::find_rstudio_root_file()}/data"))
 
-goog_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"))
+goog_raw_20 <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"))
+goog_raw_21 <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/2021_US_Region_Mobility_Report.csv"))
 
 
 # Filter Indiana; cols: date, activity, index; calc median index of all counties
-ind_goog <- goog_raw %>% 
+ind_goog_20 <- goog_raw_20 %>% 
    filter(sub_region_1 == "Indiana") %>% 
    select(date,
           `Retail and Recreation` = retail_and_recreation_percent_change_from_baseline,
@@ -34,6 +36,20 @@ ind_goog <- goog_raw %>%
           Residential = residential_percent_change_from_baseline) %>% 
    tidyr::drop_na() %>% 
    mutate(date = as.Date(date)) %>% 
+   arrange(date)
+
+ind_goog_21 <- goog_raw_21 %>% 
+   filter(sub_region_1 == "Indiana") %>% 
+   select(date,
+          `Retail and Recreation` = retail_and_recreation_percent_change_from_baseline,
+          Workplace = workplaces_percent_change_from_baseline,
+          Residential = residential_percent_change_from_baseline) %>% 
+   tidyr::drop_na() %>% 
+   mutate(date = as.Date(date)) %>% 
+   arrange(date)
+
+ind_goog <- ind_goog_20 %>% 
+   bind_rows(ind_goog_21) %>% 
    group_by(date) %>% 
    summarize(`Retail and Recreation` = median(`Retail and Recreation`)/100,
              Workplace = median(Workplace)/100,
@@ -114,3 +130,9 @@ plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/goog-mob-line-{da
 ggsave(plot_path, plot = goog_plot,
        dpi = "screen", width = 33, height = 20,
        units = "cm", device = ragg::agg_png())
+
+
+readr::write_rds(ind_goog, glue("{rprojroot::find_rstudio_root_file()}/data/goog-mob-report.rds"))
+gc_files <- append(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"),
+                   glue("{rprojroot::find_rstudio_root_file()}/data/2021_US_Region_Mobility_Report.csv"))
+fs::file_delete(gc_files)
