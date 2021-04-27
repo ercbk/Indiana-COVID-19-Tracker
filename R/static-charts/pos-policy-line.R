@@ -21,7 +21,7 @@
 
 
 
-pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue)
+pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, ggstar)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
 
@@ -87,6 +87,17 @@ holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day
                                   "Christmas", "New Years Eve", "Super Bowl", "Easter"),
                       date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26",
                                        "2020-12-25", "2020-12-31", "2021-02-07", "2021-04-04"))) %>% 
+   inner_join(cases_dat %>% 
+                 select(date, cumulative_cases, daily_cases), by = "date")
+
+vax_dat <- tibble(age = c("80+", "70+", "65-69", "60-64",
+                          "55-59", "50-54", "45-49",
+                          "40-44", "30-39", "16+"),
+                  date = as.Date(c("2021-01-08", "2021-01-13", "2021-02-01",
+                                   "2021-02-23", "2021-03-02", "2021-03-03",
+                                   "2021-03-16", "2021-03-22", "2021-03-29", "2021-03-31")),
+                  labels = c("80", "70", "65", "60", "55",
+                             "50", "45", "40", "30", "16")) %>% 
    inner_join(cases_dat %>% 
                  select(date, cumulative_cases, daily_cases), by = "date")
 
@@ -166,6 +177,8 @@ caption_text_20 <- glue("Source: The New York Times, based on reports from state
 caption_text_21 <- glue("Last updated: {data_date}")
 
 holiday_text <- "<span style='font-family: \"Font Awesome 5 Free Solid\"; color: #D5AB62FF; font-size:18pt'>&#9830;</span> Holiday"
+vax_text <- "<span style='font-family: \"Font Awesome 5 Free Solid\"; color: #30b278; font-size:18pt'>+</span> Age group becomes eligible for vaccine"
+
 
 
 xmax <- cases_dat %>% 
@@ -369,21 +382,30 @@ policy_text <- glue("
 # 
 
 
-# apr 2, 3 are the nuts
-# y = 500, x = 695000
+
+
 ## 2021 chart ----
 
 pos_policy_one <- ggplot(cases_dat %>% 
-                           as_tibble() %>% 
-                           filter(date > as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
+                            as_tibble() %>% 
+                            filter(date > as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
    geom_point(color = "#B28330") +
    geom_point(data = holiday_dat %>% 
                  filter(date > "2020-12-31"), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+   geom_star(data = vax_dat, color = "#30b278", starshape = 29,
+             size = 3, starstroke = 1, fill = "#30b278") +
    geom_line(color = "#B28330") +
    scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma()) +
    scale_x_continuous(limits = c(515000, xmax), labels = scales::label_comma()) +
+   geom_text_repel(data = vax_dat, aes(label = labels),
+                   color = "#30b278", fontface = "bold.italic", point.padding = 14,
+                   size = 5, direction = "y", seed = 10) +
    geom_richtext(data = tibble(x = 600000, y = ymax, zoom = TRUE),
-                 aes(x = x, y = y, label = holiday_text,
+                 aes(x = x, y = y, label = holiday_text, hjust = "left",
+                     label.color = NA, size = 12, fontface = "bold"),
+                 fill = "black", color = "white") +
+   geom_richtext(data = tibble(x = 600000, y = ymax-500),
+                 aes(x = x, y = y, label = vax_text, hjust = "left",
                      label.color = NA, size = 12, fontface = "bold"),
                  fill = "black", color = "white") +
    geom_text(aes(x = 515000, y = ymax, label="Daily Cases"),
@@ -436,6 +458,7 @@ pos_policy_one <- ggplot(cases_dat %>%
          panel.border = element_blank(),
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
+
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-one-{data_date}.png")
