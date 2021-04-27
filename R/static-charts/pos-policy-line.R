@@ -21,7 +21,7 @@
 
 
 
-pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, ggstar)
+pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, ggtext, glue, ggstar, ggrepel)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
 
