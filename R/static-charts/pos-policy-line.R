@@ -78,12 +78,15 @@ policy_dat <- tibble(policy = "Stage 2",
    add_row(policy = "County-score Gathering Restrictions",
            date = as.Date("2020-11-14"),
            date_text = "11/14/2020") %>%
-   mutate(labels = c("2", "3", "4", "4.5", "CMR", "5", "CGR"))
+   add_row(policy = "Mask Requirement Ends",
+           date = as.Date("2021-04-06"),
+           date_text = "04/06/2021") %>% 
+   mutate(labels = c("2", "3", "4", "4.5", "CMR", "5", "CGR", "Mask Requirement Ends"))
 
 holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day", "Thanksgiving",
-                                  "Christmas", "New Years Eve", "Super Bowl"),
+                                  "Christmas", "New Years Eve", "Super Bowl", "Easter"),
                       date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26",
-                                       "2020-12-25", "2020-12-31", "2021-02-07"))) %>% 
+                                       "2020-12-25", "2020-12-31", "2021-02-07", "2021-04-04"))) %>% 
    inner_join(cases_dat %>% 
                  select(date, cumulative_cases, daily_cases), by = "date")
 
@@ -192,179 +195,183 @@ policy_text <- glue("
 #@@@@@@@@@@@@@@
 
 
-# daily cases has some zeros and we're taking logs, so adding 1
-pos_policy_zero <- ggplot(cases_dat %>% 
-                             as_tibble() %>% 
-                             filter(date <= as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
-   geom_point(color = "#B28330") +
-   # must specify color arg for shapes to show-up
-   geom_point(data = holiday_dat %>% 
-                 filter(date <= as.Date("2020-12-31")) %>% 
-                 mutate(zoom = TRUE), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
-   # for holidays outside of zoom_facet range   
-   geom_point(data = holiday_dat %>% 
-                 filter(between(date, as.Date("2020-09-07"), as.Date("2020-12-31"))), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
-   geom_line(color = "#B28330") +
-   # expand_limits(y = max(cases_dat$daily_cases) + 1000) +
-   # experiments with adding smoothing lines
-   # geom_line(aes(y = sev_day_avg), color = "#B28330", alpha = 0.45, size = 1) +
-   # stat_smooth(method = "loess", geom = "line", se = FALSE, formula = "y ~ x",
-   # alpha = 0.45, color = "#B28330", size = 0.9) +
-   # facet_zoom doesn't play nice with scale_y or x_continuous
-   # scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma()) +
-   # scale_x_continuous(limits = c(10000, xmax), labels = scales::label_comma()) +
-   # hates tsibbles, data needs to be a tibble or df
-   # zoom.data = zoom needed to only add label to zoomed area
-   ggforce::facet_zoom(
-      # x = cumulative_cases > 120000,
-      x = fall_wave == "fwave",
-      xlim = c(10000, 118000), ylim = c(0, 2000),
-      zoom.data = zoom,
-      show.area = FALSE, zoom.size = 0.5,
-      horizontal = FALSE) +
-   geom_richtext(data = tibble(x = 65000, y = 1800, zoom = TRUE),
-                 aes(x = x, y = y, label = holiday_text,
-                     label.color = NA, size = 12, fontface = "bold"),
-                 fill = "black", color = "white") +
-   geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
-             family="Roboto",
-             size=4.5, hjust=0.35, color="white") +
-   geom_textbox(aes(10000, ymax-2200),
-                label = policy_text, halign = 0,
-                col = "white", fill = "black",
-                # both are for box, hjust = 0 says align left edge of box with x coord
-                width = 0.30, hjust = 0.09) +
-   # policy labels, hjust and vjust values depends on label
-   geom_richtext(data = label_dat %>%
-                    filter(policy != "Stage 5") %>%
-                    # zoom = F is so CGR is only in the top panel
-                    mutate(zoom = c(rep(TRUE,5), FALSE)),
-                 aes(x = cumulative_cases,
-                     y = daily_cases,
-                     label= labels, fontface = "bold.italic",
-                     label.colour = "black",
-                     hjust = "middle", vjust = "center"),
-                 family="Roboto", lineheight=0.95,
-                 size=4.5, label.size=0,
-                 color = "white", fill = "black",
-                 nudge_x = c(-800, 2800, -11000, 10100, 6500, 49000),
-                 nudge_y = c(-550, -475, 900, 880, -320, 0)) +
-   # I want Stage 5 to be in both panels, so had give it's own geom. Using zoom = F for this stage didn't work when I tried to do it in one geom.
-   geom_richtext(data = label_dat %>%
-                    filter(policy == "Stage 5"),
-                 aes(x = cumulative_cases,
-                     y = daily_cases,
-                     label= labels, fontface = "bold.italic",
-                     label.colour = "black",
-                     hjust = "middle", vjust = "center"),
-                 family="Roboto", lineheight=0.95,
-                 size=4.5, label.size=0,
-                 color = "white", fill = "black",
-                 nudge_x = -15000,
-                 nudge_y = 800) +
-   # # segments connecting policy labels to points
-   # stage 2
-   geom_curve(
-      data = data.frame(x = 18500, xend = 18000,
-                        y = 150, yend = 450, zoom = TRUE),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw,
-      curvature = -0.70
-   ) +
-   # stage 3
-   geom_curve(
-      data = data.frame(x = 31000, xend = 29300,
-                        y = 0, yend = 300, zoom = TRUE),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw,
-      curvature = -0.80
-   ) +
-   # stage 4
-   geom_curve(
-      data = data.frame(x = 32000, xend = 39950,
-                        y = 1250, yend = 700, zoom = TRUE),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw,
-      curvature = -0.40
-   ) +
-   # stage 4.5
-   geom_curve(
-      data = data.frame(x = 54000, xend = 48000,
-                        y = 1380, yend = 805, zoom = TRUE),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw,
-      curvature = 0.40
-   ) +
-   # cond. mask requirement
-   geom_curve(
-      data = data.frame(x = 69000, xend = 64000,
-                        y = 35, yend = 300, zoom = TRUE),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw,
-      curvature = -0.80
-   ) +
-   # stage 5
-   geom_curve(
-      data = data.frame(x = 110000, xend = 119000,
-                        y = 1970, yend = 1450),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw,
-      curvature = -0.50
-   ) +
-   # County-score Gathering Restrictions
-   geom_segment(
-      data = data.frame(x = 280000, xend = 255000,
-                        y = 8327, yend = 8327, zoom = FALSE),
-      aes(x = x, xend = xend,
-          y = y, yend = yend),
-      color = deep_light[[7]], arrow = arw
-   ) +
-   labs(x = "Cumulative Cases", y = NULL,
-        title = "2020: Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
-        caption = caption_text_20) +
-   theme(plot.title = element_textbox_simple(size = 16,
-                                             color = "white",
-                                             family = "Roboto"),
-         plot.subtitle = element_textbox_simple(size = 14,
-                                                color = "white"),
-         plot.caption = element_text(color = "white",
-                                     size = 12),
-         text = element_text(family = "Roboto"),
-         legend.position = "none",
-         axis.text.x = element_text(color = "white",
-                                    size = 12),
-         axis.text.y = element_text(color = "white",
-                                    size = 12),
-         axis.title.x = element_textbox_simple(color = "white",
-                                               size = 13),
-         panel.background = element_rect(fill = "black",
-                                         color = NA),
-         plot.background = element_rect(fill = "black",
-                                        color = NA),
-         panel.border = element_blank(),
-         panel.grid.minor = element_blank(),
-         panel.grid.major = element_line(color = deep_rooted[[7]]))
+## 2020 Chart (no longer needs updated) ----
+
+# # daily cases has some zeros and we're taking logs, so adding 1
+# pos_policy_zero <- ggplot(cases_dat %>%
+#                              as_tibble() %>%
+#                              filter(date <= as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
+#    geom_point(color = "#B28330") +
+#    # must specify color arg for shapes to show-up
+#    geom_point(data = holiday_dat %>%
+#                  filter(date <= as.Date("2020-12-31")) %>%
+#                  mutate(zoom = TRUE), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+#    # for holidays outside of zoom_facet range
+#    geom_point(data = holiday_dat %>%
+#                  filter(between(date, as.Date("2020-09-07"), as.Date("2020-12-31"))), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+#    geom_line(color = "#B28330") +
+#    # expand_limits(y = max(cases_dat$daily_cases) + 1000) +
+#    # experiments with adding smoothing lines
+#    # geom_line(aes(y = sev_day_avg), color = "#B28330", alpha = 0.45, size = 1) +
+#    # stat_smooth(method = "loess", geom = "line", se = FALSE, formula = "y ~ x",
+#    # alpha = 0.45, color = "#B28330", size = 0.9) +
+#    # facet_zoom doesn't play nice with scale_y or x_continuous
+#    # scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma()) +
+#    # scale_x_continuous(limits = c(10000, xmax), labels = scales::label_comma()) +
+#    # hates tsibbles, data needs to be a tibble or df
+#    # zoom.data = zoom needed to only add label to zoomed area
+#    ggforce::facet_zoom(
+#       # x = cumulative_cases > 120000,
+#       x = fall_wave == "fwave",
+#       xlim = c(10000, 118000), ylim = c(0, 2000),
+#       zoom.data = zoom,
+#       show.area = FALSE, zoom.size = 0.5,
+#       horizontal = FALSE) +
+#    geom_richtext(data = tibble(x = 65000, y = 1800, zoom = TRUE),
+#                  aes(x = x, y = y, label = holiday_text,
+#                      label.color = NA, size = 12, fontface = "bold"),
+#                  fill = "black", color = "white") +
+#    geom_text(aes(x = 10000, y = ymax, label="Daily Cases"),
+#              family="Roboto",
+#              size=4.5, hjust=0.35, color="white") +
+#    geom_textbox(aes(10000, ymax-2200),
+#                 label = policy_text, halign = 0,
+#                 col = "white", fill = "black",
+#                 # both are for box, hjust = 0 says align left edge of box with x coord
+#                 width = 0.30, hjust = 0.09) +
+#    # policy labels, hjust and vjust values depends on label
+#    geom_richtext(data = label_dat %>%
+#                     filter(policy != "Stage 5") %>%
+#                     # zoom = F is so CGR is only in the top panel
+#                     mutate(zoom = c(rep(TRUE,5), FALSE)),
+#                  aes(x = cumulative_cases,
+#                      y = daily_cases,
+#                      label= labels, fontface = "bold.italic",
+#                      label.colour = "black",
+#                      hjust = "middle", vjust = "center"),
+#                  family="Roboto", lineheight=0.95,
+#                  size=4.5, label.size=0,
+#                  color = "white", fill = "black",
+#                  nudge_x = c(-800, 2800, -11000, 10100, 6500, 49000),
+#                  nudge_y = c(-550, -475, 900, 880, -320, 0)) +
+#    # I want Stage 5 to be in both panels, so had give it's own geom. Using zoom = F for this stage didn't work when I tried to do it in one geom.
+#    geom_richtext(data = label_dat %>%
+#                     filter(policy == "Stage 5"),
+#                  aes(x = cumulative_cases,
+#                      y = daily_cases,
+#                      label= labels, fontface = "bold.italic",
+#                      label.colour = "black",
+#                      hjust = "middle", vjust = "center"),
+#                  family="Roboto", lineheight=0.95,
+#                  size=4.5, label.size=0,
+#                  color = "white", fill = "black",
+#                  nudge_x = -15000,
+#                  nudge_y = 800) +
+#    # # segments connecting policy labels to points
+#    # stage 2
+#    geom_curve(
+#       data = data.frame(x = 18500, xend = 18000,
+#                         y = 150, yend = 450, zoom = TRUE),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw,
+#       curvature = -0.70
+#    ) +
+#    # stage 3
+#    geom_curve(
+#       data = data.frame(x = 31000, xend = 29300,
+#                         y = 0, yend = 300, zoom = TRUE),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw,
+#       curvature = -0.80
+#    ) +
+#    # stage 4
+#    geom_curve(
+#       data = data.frame(x = 32000, xend = 39950,
+#                         y = 1250, yend = 700, zoom = TRUE),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw,
+#       curvature = -0.40
+#    ) +
+#    # stage 4.5
+#    geom_curve(
+#       data = data.frame(x = 54000, xend = 48000,
+#                         y = 1380, yend = 805, zoom = TRUE),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw,
+#       curvature = 0.40
+#    ) +
+#    # cond. mask requirement
+#    geom_curve(
+#       data = data.frame(x = 69000, xend = 64000,
+#                         y = 35, yend = 300, zoom = TRUE),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw,
+#       curvature = -0.80
+#    ) +
+#    # stage 5
+#    geom_curve(
+#       data = data.frame(x = 110000, xend = 119000,
+#                         y = 1970, yend = 1450),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw,
+#       curvature = -0.50
+#    ) +
+#    # County-score Gathering Restrictions
+#    geom_segment(
+#       data = data.frame(x = 280000, xend = 255000,
+#                         y = 8327, yend = 8327, zoom = FALSE),
+#       aes(x = x, xend = xend,
+#           y = y, yend = yend),
+#       color = deep_light[[7]], arrow = arw
+#    ) +
+#    labs(x = "Cumulative Cases", y = NULL,
+#         title = "2020: Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
+#         caption = caption_text_20) +
+#    theme(plot.title = element_textbox_simple(size = 16,
+#                                              color = "white",
+#                                              family = "Roboto"),
+#          plot.subtitle = element_textbox_simple(size = 14,
+#                                                 color = "white"),
+#          plot.caption = element_text(color = "white",
+#                                      size = 12),
+#          text = element_text(family = "Roboto"),
+#          legend.position = "none",
+#          axis.text.x = element_text(color = "white",
+#                                     size = 12),
+#          axis.text.y = element_text(color = "white",
+#                                     size = 12),
+#          axis.title.x = element_textbox_simple(color = "white",
+#                                                size = 13),
+#          panel.background = element_rect(fill = "black",
+#                                          color = NA),
+#          plot.background = element_rect(fill = "black",
+#                                         color = NA),
+#          panel.border = element_blank(),
+#          panel.grid.minor = element_blank(),
+#          panel.grid.major = element_line(color = deep_rooted[[7]]))
+# 
+# 
+# 
+# plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-zero-{data_date}.png")
+# 
+# 
+# # with facet_zoom, need to make it taller
+# ggsave(plot_path, plot = pos_policy_zero,
+#        dpi = "screen", width = 33, height = 30,
+#        device = ragg::agg_png(), units = "cm")
+# 
+# 
 
 
-
-plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-zero-{data_date}.png")
-
-
-# with facet_zoom, need to make it taller
-ggsave(plot_path, plot = pos_policy_zero,
-       dpi = "screen", width = 33, height = 30,
-       device = ragg::agg_png(), units = "cm")
-
-
-
-
-
+# apr 2, 3 are the nuts
+# y = 500, x = 695000
+## 2021 chart ----
 
 pos_policy_one <- ggplot(cases_dat %>% 
                            as_tibble() %>% 
@@ -382,6 +389,27 @@ pos_policy_one <- ggplot(cases_dat %>%
    geom_text(aes(x = 515000, y = ymax, label="Daily Cases"),
              family="Roboto",
              size=4.5, hjust=0.35, color="white") +
+   geom_richtext(data = label_dat %>%
+                    filter(date > "2021-01-01"),
+                 aes(x = cumulative_cases,
+                     y = daily_cases,
+                     label= labels, fontface = "bold.italic",
+                     label.colour = "black",
+                     hjust = "middle", vjust = "center"),
+                 family="Roboto", lineheight=0.95,
+                 size=4.5, label.size=0,
+                 color = "white", fill = "black",
+                 nudge_x = 24000,
+                 nudge_y = -300) +
+   # Mask Requirement Ends
+   geom_curve(
+      data = data.frame(x = 710000, xend = 696000,
+                        y = 100, yend = 300),
+      aes(x = x, xend = xend,
+          y = y, yend = yend),
+      color = deep_light[[7]], arrow = arw,
+      curvature = -0.80
+   ) +
    labs(x = "Cumulative Cases", y = NULL,
         title = "2021: Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
         subtitle = subtitle_dat$text[[1]],
@@ -408,7 +436,6 @@ pos_policy_one <- ggplot(cases_dat %>%
          panel.border = element_blank(),
          panel.grid.minor = element_blank(),
          panel.grid.major = element_line(color = deep_rooted[[7]]))
-
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-one-{data_date}.png")
