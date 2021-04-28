@@ -444,7 +444,6 @@ labs(x = "Cumulative Cases", y = NULL,
             panel.grid.minor = element_blank(),
             panel.grid.major = element_line(color = deep_rooted[[7]]))
 
-pos_policy_one
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-one-{data_date}.png")
 
