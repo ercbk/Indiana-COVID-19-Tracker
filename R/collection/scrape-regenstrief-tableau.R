@@ -91,7 +91,7 @@ wrksht_dat <- map(hosp_admiss_grps, function (x) {
    append(list(ages = .[[1]]))
 
 # vizDataColumns > columnIndices > fieldCaption to look at the data fields available and their indices
-alias_indices <- list(admissions_f = 6, admissions_m = 6, ages = 2) 
+alias_indices <- list(admissions_f = 5, admissions_m = 5, ages = 2) 
 
 # data is located in giant json sea of data values, so we need the indices of the values we want
 value_indices <- map2(wrksht_dat, alias_indices, function (x, y) {
