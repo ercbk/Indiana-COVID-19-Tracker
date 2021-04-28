@@ -1,0 +1,79 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+
+jobs:
+  test:
+    name: Update IN COVID Tracker
+    runs-on: ubuntu-18.04
+    
+    # env vars for rtweet; 1 old one just to pull tweets; 2 others to tweet from accts
+    env:
+      APPNAME: ${{ secrets.APPNAME }}
+      APIKEY: ${{ secrets.APIKEY }}
+      APISECRET: ${{ secrets.APISECRET }}
+      ACCESSTOKEN: ${{ secrets.ACCESSTOKEN }}
+      ACCESSSECRET: ${{ secrets.ACCESSSECRET }}
+      APPNAMEE: ${{ secrets.APPNAMEE }}
+      APIKEYE: ${{ secrets.APIKEYE }}
+      APISECRETE: ${{ secrets.APISECRETE }}
+      ACCESSTOKENE: ${{ secrets.ACCESSTOKENE }}
+      ACCESSSECRETE: ${{ secrets.ACCESSSECRETE }}
+      APPNAMEF: ${{ secrets.APPNAMEF }}
+      APIKEYF: ${{ secrets.APIKEYF }}
+      APISECRETF: ${{ secrets.APISECRETF }}
+      ACCESSTOKENF: ${{ secrets.ACCESSTOKENF }}
+      ACCESSSECRETF: ${{ secrets.ACCESSSECRETF }}
+      CRAN_REPO: https://packagemanager.rstudio.com/all/__linux__/bionic/latest
+      RENV_PATHS_ROOT: ~/.local/share/renv
+    
+    
+    steps:
+      
+      ## Set-up
+      # copy repo  
+      - uses: actions/checkout@v2
+      # installs r
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: '4.0.3'
+      # need libcurl to install RCurl pkg on Linux
+      - name: Install libcurl
+        run: sudo apt-get install libcurl4-openssl-dev
+      # need these for rgdal package
+      - name: Install gdal, proj, and geos
+        run: sudo apt-get install libgdal-dev gdal-bin libproj-dev proj-data proj-bin libgeos-dev
+      # needed for units package
+      - name: Install udunits2
+        run: sudo apt-get install libudunits2-dev
+      # installs pandoc for rmarkdown
+      - uses: r-lib/actions/setup-pandoc@v1
+      # fa has linux deps that need installed
+      - name: Install font awesome with deps
+        run: sudo apt-get install -y fonts-font-awesome
+      # cache dev environment, restore environment from cache
+      #- name: Cache packages
+        #uses: actions/cache@v2
+        #with:
+          #path: ${{ env.RENV_PATHS_ROOT }}
+          #key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          #restore-keys: |
+            #${{ runner.os }}-renv-
+      - name: Restore packages
+        shell: Rscript {0}
+        run: |
+          cran_repo <- c("CRAN" = Sys.getenv("CRAN_REPO"))
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv", repos = cran_repo)
+          renv::restore(repos = cran_repo)
+      - name: install fonts
+        run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
+      
+      # Run Scripts
+      - name: run pos-policy-line
+        run: Rscript "R/static-charts/pos-policy-line.R"
+        
