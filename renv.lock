@@ -422,13 +422,6 @@
       "Repository": "CRAN",
       "Hash": "08ab869f37e6a7741a64ab9069bcb67d"
     },
-    "ggstar": {
-      "Package": "ggstar",
-      "Version": "1.0.2",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "3bce57b46cc6ab28cff480063baf2ea3"
-    },
     "ggtext": {
       "Package": "ggtext",
       "Version": "0.1.1",
