@@ -163,7 +163,7 @@ ind_cause_21 <- ind_cause_raw %>%
 # individual diseases
 excess_lol <- ggplot(ind_cause_21, aes(x = pct_diff, y = cause_subgroup,
                       label = labels)) +
-   expand_limits(x = c(min(ind_cause_21$pct_diff * 1.6), max(ind_cause_21$pct_diff * 1.6))) +
+   expand_limits(x = c(min(ind_cause_21$pct_diff -11), max(ind_cause_21$pct_diff + 11))) +
    geom_segment(aes(x = 0, xend = pct_diff, y = cause_subgroup, yend = cause_subgroup),
                 color = "white") +
    geom_point(color = "#61c8b7", size=4) +
