@@ -13,15 +13,24 @@ pacman::p_load(extrafont, swatches, dplyr, tsibble, ggplot2, glue, ggtext)
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 
-us_pos_rate <- readr::read_csv("https://covidtracking.com/api/v1/us/daily.csv") %>% 
-   select(date, positiveIncrease, totalTestResultsIncrease) %>% 
+
+# hhs data page: https://healthdata.gov/dataset/COVID-19-Diagnostic-Laboratory-Testing-PCR-Testing/j8mb-icvb
+us_pos_rate <- readr::read_csv("https://healthdata.gov/api/views/j8mb-icvb/rows.csv?accessType=DOWNLOAD") %>%
+   select(date, overall_outcome, new_results_reported) %>% 
+   group_by(date) %>% 
+   mutate(total_tests = sum(new_results_reported)) %>% 
+   filter(overall_outcome == "Positive") %>% 
+   mutate(total_pos = sum(new_results_reported)) %>% 
+   slice(n()) %>% 
+   ungroup() %>% 
    arrange(date) %>% 
-   # .before = 2 says take the current value and the 2 before it.
-   mutate(pos_rate = slider::slide2_dbl(positiveIncrease, totalTestResultsIncrease,
+   # .before = 6 says take the current value and the 6 before it.
+   mutate(pos_rate = slider::slide2_dbl(total_pos, total_tests,
                                         ~sum(.x)/sum(.y), .before = 6),
           pos_rate_text = scales::percent(pos_rate, accuracy = 0.1)) %>% 
-   slice(n()) %>% 
+   slice_max(date) %>% 
    pull(pos_rate_text)
+
 
 
 
