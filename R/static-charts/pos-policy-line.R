@@ -397,7 +397,8 @@ pos_policy_one <- ggplot(cases_dat %>%
       geom_point(data = tibble(x = 695532, y = 614), aes(x, y),
                  color = "#306bb2", size = 3) +
       geom_line(color = "#B28330") +
-      scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma()) +
+      scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma(),
+                         breaks = c(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000)) +
       scale_x_continuous(limits = c(515000, xmax), labels = scales::label_comma()) +
       geom_text_repel(data = vax_dat, aes(label = labels),
                       color = "#30b278", fontface = "bold.italic", point.padding = 14,

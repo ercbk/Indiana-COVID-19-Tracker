@@ -32,7 +32,7 @@ tools::pskill(pid = chrome_pid)
 
 # Use RSelenium to download dataset
 # start selenium server; chrome version is the version of the separate chrome driver I d/l'ed
-driver <- rsDriver(browser = c("chrome"), chromever = "89.0.4389.23")
+driver <- rsDriver(browser = c("chrome"), chromever = "90.0.4430.24")
 Sys.sleep(10)
 
 # browser
