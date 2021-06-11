@@ -43,18 +43,26 @@ ind_age_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/
 ind_age_pop <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-pop.rds"))
 
 
+under_19 <- age_cases_raw %>% 
+   janitor::clean_names() %>% 
+   filter(agegrp != "Unknown" & agegrp %in% c("0 to <1", "1-4", "5-11", "12-17", "18-19")) %>%
+   # calculate daily cases for each agegrp
+   group_by(date) %>% 
+   summarize(daily_cases = sum(covid_count)) %>% 
+   mutate(agegrp = "0-19")
+
 age_cases_clean <- age_cases_raw %>% 
    janitor::clean_names() %>% 
-   filter(agegrp != "Unknown") %>% 
+   filter(agegrp != "Unknown" & !agegrp %in% c("0 to <1", "1-4", "5-11", "12-17", "18-19")) %>% 
    # calculate daily cases for each agegrp
    group_by(date, agegrp) %>% 
    summarize(daily_cases = sum(covid_count)) %>% 
+   bind_rows(under_19) %>% 
    # some agegrps not present for some dates
    # wider then longer fills in the missing agegrps
    tidyr::pivot_wider(names_from = "agegrp",
                       values_from = "daily_cases",
                       values_fill = list(daily_cases = 0)) %>% 
-   select(1,3,7,8,2,4,5,9,6) %>% 
    tidyr::pivot_longer(cols = -date,
                        names_to = "age_grp",
                        values_to = "daily_cases") %>% 
