@@ -120,7 +120,7 @@ jobs:
       # Send signal to website repo to start its noon update
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
-         requires token with repo scope
+        # requires token with repo scope
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ercbk/Indiana-COVID-19-Website
