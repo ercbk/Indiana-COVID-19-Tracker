@@ -179,14 +179,14 @@ all_charts <- indy_chart + region_plots$plots[[1]] + region_plots$plots[[2]] + r
                                         color = NA))
 
 
-plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/ot-rest-line-{data_date}-test.png")
+plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/ot-rest-line-{data_date}.png")
 
-# ggsave(plot_path, plot = all_charts,
-#        dpi = "screen", width = 33, height = 20,
-#        units = "cm", device = ragg::agg_png())
+ggsave(plot_path, plot = all_charts,
+       dpi = "screen", width = 33, height = 20,
+       units = "cm", device = ragg::agg_png())
 
-# ragg::agg_png(plot_path, width = 33, height = 20, res = 72, units = "cm")
-png(plot_path, width = 33, height = 20, res = 72, units = "cm", type = "cairo-png")
-all_charts
-dev.off()
+# # ragg::agg_png(plot_path, width = 33, height = 20, res = 72, units = "cm")
+# png(plot_path, width = 33, height = 20, res = 72, units = "cm", type = "cairo-png")
+# all_charts
+# dev.off()
 

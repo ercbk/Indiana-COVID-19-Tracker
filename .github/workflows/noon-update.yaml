@@ -1,9 +1,9 @@
 name: Noon Update
 
 on:
-  #schedule:
+  schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
-    #- cron: '45 15 * * *'
+    - cron: '45 15 * * *'
   push:
     branches:
       - main
@@ -77,9 +77,9 @@ jobs:
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       
       ## Run Scripts
-      #- name: run detect data update
+      - name: run detect data update
         #run: Rscript "R/misc/detect-data-update.R"
-      #- name: run excess-death-col
+      - name: run excess-death-col
         #run: Rscript "R/static-charts/excess-death-col.R"
       - name: run opentab-rest-line
         run: Rscript "R/static-charts/opentab-rest-line.R"
