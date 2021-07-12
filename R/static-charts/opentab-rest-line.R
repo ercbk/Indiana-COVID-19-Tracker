@@ -185,6 +185,8 @@ plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/ot-rest-line-{dat
 #        dpi = "screen", width = 33, height = 20,
 #        units = "cm", device = ragg::agg_png())
 
-ragg::agg_png(plot_path, width = 33, height = 20, res = 72, units = "cm")
+# ragg::agg_png(plot_path, width = 33, height = 20, res = 72, units = "cm")
+png(plot_path, width = 33, height = 20, res = 72, units = "cm", type = "cairo-png")
 all_charts
 dev.off()
+
