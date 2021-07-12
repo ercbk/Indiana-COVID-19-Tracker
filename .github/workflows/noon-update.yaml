@@ -4,10 +4,10 @@ on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
     - cron: '45 15 * * *'
-  #push:
-    #branches:
-      #- main
-      #- master
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   update:
@@ -79,8 +79,8 @@ jobs:
       ## Run Scripts
       - name: run detect data update
         run: Rscript "R/misc/detect-data-update.R"
-      #- name: run excess-death-col
-        #run: Rscript "R/static-charts/excess-death-col.R"
+      - name: run excess-death-col
+        run: Rscript "R/static-charts/excess-death-col.R"
       - name: run opentab-rest-line
         run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run hosp-icu-vent
@@ -118,10 +118,10 @@ jobs:
           git push
 
       # Send signal to website repo to start its noon update
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v1
+      #- name: Repository Dispatch
+        #uses: peter-evans/repository-dispatch@v1
         # requires token with repo scope
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: ercbk/Indiana-COVID-19-Website
-          event-type: noon-update
+        #with:
+          #token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          #repository: ercbk/Indiana-COVID-19-Website
+          #event-type: noon-update

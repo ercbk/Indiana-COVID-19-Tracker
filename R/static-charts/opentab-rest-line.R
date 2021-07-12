@@ -180,6 +180,6 @@ all_charts <- indy_chart + region_plots$plots[[1]] + region_plots$plots[[2]] + r
 
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/ot-rest-line-{data_date}.png")
-ggsave(plot_path, plot = all_charts,
-       dpi = "screen", width = 33, height = 20,
-       units = "cm", device = ragg::agg_png())
+# ggsave(plot_path, plot = all_charts,
+#        dpi = "screen", width = 33, height = 20,
+#        units = "cm", device = ragg::agg_png())

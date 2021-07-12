@@ -381,9 +381,9 @@ both_charts <- excess_bar +
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/excess-death-col-{data_date}.png")
 
-ggsave(plot_path, plot = both_charts,
-       dpi = "screen", width = 33, height = 20,
-       units = "cm", device = ragg::agg_png())
+# ggsave(plot_path, plot = both_charts,
+#        dpi = "screen", width = 33, height = 20,
+#        units = "cm", device = ragg::agg_png())
 
 # save that damn stupid constant
 readr::write_rds(new_xmin_const, glue("{rprojroot::find_rstudio_root_file()}/data/excess-death-xmin.rds"))
