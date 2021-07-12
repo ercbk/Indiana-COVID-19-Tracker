@@ -78,9 +78,9 @@ jobs:
       
       ## Run Scripts
       - name: run detect data update
-        #run: Rscript "R/misc/detect-data-update.R"
+        run: Rscript "R/misc/detect-data-update.R"
       - name: run excess-death-col
-        #run: Rscript "R/static-charts/excess-death-col.R"
+        run: Rscript "R/static-charts/excess-death-col.R"
       - name: run opentab-rest-line
         run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run hosp-icu-vent
