@@ -256,7 +256,7 @@ policy_text <- glue("
 #                 width = 0.30, hjust = 0.09) +
 #    # policy labels, hjust and vjust values depends on label
 #    geom_richtext(data = label_dat %>%
-#                     filter(policy != "Stage 5") %>%
+#                     filter(policy != "Stage 5" & policy != "Mask Requirement Ends") %>%
 #                     # zoom = F is so CGR is only in the top panel
 #                     mutate(zoom = c(rep(TRUE,5), FALSE)),
 #                  aes(x = cumulative_cases,
