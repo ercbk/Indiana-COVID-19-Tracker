@@ -159,7 +159,7 @@ hosp_plot <- ggplot(data = ind_hosp,
   expand_limits(y = c(0,
                       max(ind_hosp$hospital_admissions) + 60),
                 x = max(ind_hosp$date) + 8) +
-  scale_x_date(date_breaks = "1 month",
+  scale_x_date(date_breaks = "2 month",
                date_labels = "%b") +
   ggrepel::geom_label_repel(data = ind_hosp %>%
                               filter(date == max(date)),

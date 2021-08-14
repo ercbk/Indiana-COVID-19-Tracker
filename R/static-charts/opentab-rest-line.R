@@ -66,10 +66,16 @@ y_upper <- region_rest %>%
 gen_plots <- function(data, Name) {
    p <- ggplot(data = data, aes(x = date, y = pct_diff, group = Name)) + 
       geom_line(color = "#5a9dc4") +
-      geom_vline(data = data %>% 
-                    filter(weekend == TRUE),
-                 aes(xintercept = date),
-                 color = "#755c99",size = 1.5, alpha = 0.1) +
+      # geom_vline(data = data %>% 
+      #               filter(weekend == TRUE),
+      #            aes(xintercept = date),
+      #            color = "#755c99",size = 1.5, alpha = 0.1) +
+      ggrepel::geom_label_repel(data = data %>% 
+                                   filter(date == max(date)),
+                                aes(label = scales::percent(pct_diff, accuracy = 1)),
+                                    color = "#5a9dc4", fill = "black",
+                                nudge_x = .02, nudge_y = .40,
+                                segment.color = NA, label.size = NA) +
       geom_hline(data = ind_index, 
                  aes(yintercept = pct_diff),
                  color = "#c47e5a", linetype = 8) +
@@ -124,10 +130,10 @@ region_plots <- region_rest %>%
 # Indiana chart
 indy_chart <- ggplot(data = ind_chart_dat, aes(x = date, y = pct_diff)) + 
    geom_line(color = canyon[[7]]) +
-   geom_vline(data = ind_chart_dat %>% 
-                 filter(weekend == TRUE),
-              aes(xintercept = date),
-              color = "#755c99",size = 1.5, alpha = 0.1) +
+   # geom_vline(data = ind_chart_dat %>% 
+   #               filter(weekend == TRUE),
+   #            aes(xintercept = date),
+   #            color = "#755c99",size = 1.5, alpha = 0.1) +
    expand_limits(x = max(ind_chart_dat$date)+2,
                  y = y_upper * 1.05) +
    ggrepel::geom_label_repel(data = ind_chart_dat %>% 
