@@ -79,6 +79,8 @@ jobs:
       ## Run Scripts
       - name: run detect data update
         run: Rscript "R/misc/detect-data-update.R"
+      - name: build beds and ventilator data set
+        run: Rscript "R/collection/build-datasets.R"
       - name: run excess-death-col
         run: Rscript "R/static-charts/excess-death-col.R"
       - name: run opentab-rest-line
