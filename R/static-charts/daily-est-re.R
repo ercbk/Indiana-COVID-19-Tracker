@@ -64,7 +64,7 @@ r_chart <- ggplot(r_chart_dat, aes(x = date, y = median)) +
   labs(x = NULL, y = NULL,
        title = "Estimated daily effective reproduction number",
        subtitle = glue("Last updated: {data_date}"),
-       caption = "Source: rt.live"
+       caption = "Source: epiforecasts.io"
   ) +
   theme(
     legend.position = 'none',
