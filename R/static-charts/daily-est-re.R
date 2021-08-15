@@ -1,10 +1,10 @@
 # Instantaneous Effective Reproduction Number Estimation
 
 # Notes:
-# 1. Values for the serial interval, mean and standard deviation, taken from an example used in Tim Church's blog post. He got it from a Chinese paper.
+# 1. Values for the serial interval, median and standard deviation, taken from an example used in Tim Church's blog post. He got it from a Chinese paper.
 # 2. facet_zoom doesn't like tsibbles and gives a funky error, so make sure you convert to df or tibble.
 # 3. see comment in plot for details on labels drawing only in zoomed area
-# 4. Updated si parameters: nature apr 15 paper, https://www.nature.com/articles/s41591-020-0869-5, gives si mean = 5.8 w/ 95% CI (4.8, 6.8), n = 77. Don't know how to get the sd for Gamma distr using mean and CIs though.
+# 4. Updated si parameters: nature apr 15 paper, https://www.nature.com/articles/s41591-020-0869-5, gives si median = 5.8 w/ 95% CI (4.8, 6.8), n = 77. Don't know how to get the sd for Gamma distr using median and CIs though.
 
 
 
@@ -13,16 +13,18 @@ pacman::p_load(extrafont, swatches, dplyr, ggplot2, ggtext, glue)
 
 # nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv")
 
-rtlive_dat <- readr::read_csv("https://d14wlfuexuxgcm.cloudfront.net/covid/rt.csv")
+# rtlive_dat <- readr::read_csv("https://d14wlfuexuxgcm.cloudfront.net/covid/rt.csv")
+epi_for_dat <- readr::read_csv("https://raw.githubusercontent.com/epiforecasts/covid-rt-estimates/master/subnational/united-states/cases/summary/rt.csv")
 
 deep_rooted <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Deep Rooted.ase"))
 trippy <- swatches::read_palette(glue("{rprojroot::find_rstudio_root_file()}/palettes/Trippy.ase"))
 
 
-r_chart_dat <- rtlive_dat %>% 
-  filter(region == "IN") %>% 
-  mutate(mean = round(mean, 2),
-         label = as.character(mean) %>% 
+r_chart_dat <- epi_for_dat %>% 
+  filter(state == "Indiana",
+         type == "estimate") %>% 
+  mutate(median = round(median, 2),
+         label = as.character(median) %>% 
                       paste("R[e] ==", .))
 
 # current data date
@@ -33,15 +35,15 @@ data_date <- r_chart_dat %>%
 
 zoom_yupper <- r_chart_dat %>%
   filter(date == (max(date)-7)) %>%
-  summarize(upper_y = max(mean)*1.5) %>%
+  summarize(upper_y = max(median)*1.5) %>%
   pull(upper_y)
 
 
 
-r_chart <- ggplot(r_chart_dat, aes(x = date, y = mean)) +
+r_chart <- ggplot(r_chart_dat, aes(x = date, y = median)) +
   geom_point(color = trippy[[7]]) +
   geom_line(color = trippy[[7]]) +
-  geom_ribbon(aes(ymin = lower_80, ymax = upper_80),
+  geom_ribbon(aes(ymin = lower_90, ymax = upper_90),
               fill = trippy[[7]], alpha = 0.40) +
   # hates tsibbles, data needs to be a tibble or df
   # zoom.data = zoom needed to only add label to zoomed area
