@@ -31,8 +31,8 @@ tools::pskill(pid = java_pid)
 tools::pskill(pid = chrome_pid)
 
 # Use RSelenium to download dataset
-# start selenium server; chrome version is the version of the separate chrome driver I d/l'ed
-driver <- rsDriver(browser = c("chrome"), chromever = "90.0.4430.24")
+# start selenium server; chrome version is the version of the latest stable ChromeDriver 
+driver <- rsDriver(browser = c("chrome"), chromever = "92.0.4515.107")
 Sys.sleep(10)
 
 # browser
@@ -43,10 +43,12 @@ chrome <- driver$client
 url <- "https://www.opentable.com/state-of-industry"
 # go to website
 chrome$navigate(url = url)
+Sys.sleep(10)
 
 # css selector for the data download button
+# "Seated diners from online, phone, and walk-in reservations" (top section of the webpage)
 dl_button <- chrome$findElement(using = "css",
-                                value = "#baseApp > div > main > section:nth-child(2) > div:nth-child(4) > div._3ZR5BNaRxlZSImxhkkEzrb > button")
+                                value = "#mainContent > main > section:nth-child(2) > div:nth-child(4) > div._3ZR5BNaRxlZSImxhkkEzrb > button")
 
 # makes the element flash in the browser so you can confirm you have the right thing
 # dl_button$highlightElement()
