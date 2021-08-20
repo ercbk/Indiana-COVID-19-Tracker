@@ -350,7 +350,7 @@ ind_age_hist_clean <- ind_age_hist %>%
 
 
 
-line_data_date <- ind_age_hist_clean %>% 
+line_data_hist_date <- ind_age_hist_clean %>% 
    filter(end_date == max(end_date)) %>% 
    slice_tail() %>% 
    pull(end_date)
