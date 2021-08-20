@@ -122,7 +122,7 @@ if (race_date != race_comp_date) {
 
 
 age_hist_url <- "https://hub.mph.in.gov/dataset/6bcfb11c-6b9e-44b2-be7f-a2910d28949a/resource/7661f008-81b5-4ff2-8e46-f59ad5aad456/download/covid_report_death_date_agegrp.xlsx"
-download.file(url, destfile = glue::glue("{rprojroot::find_rstudio_root_file()}/data/age-deaths-historic.xlsx"), mode = "wb")
+download.file(age_hist_url, destfile = glue::glue("{rprojroot::find_rstudio_root_file()}/data/age-deaths-historic.xlsx"), mode = "wb")
 age_death_hist <- readxl::read_xlsx(glue::glue("{rprojroot::find_rstudio_root_file()}/data/age-deaths-historic.xlsx"))
 
 age_hist_dat <- age_death_hist %>% 
