@@ -10,9 +10,9 @@ library(dplyr, warn.conflicts = F, quietly = T)
 
 
 
-###########################
-# Beds and ventilators
-###########################
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Beds and ventilators ----
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
 todays_date <- lubridate::today()
@@ -77,9 +77,9 @@ if (nrow(bv_data_files) > 7) {
 
 
 
-#################
-# Race
-#################
+#@@@@@@@@@@@@
+# Race ----
+#@@@@@@@@@@@@
 
 
 # The Covid Tracking Project
@@ -115,55 +115,71 @@ if (race_date != race_comp_date) {
 
 
 
-###############
-# Age
-###############
+
+#@@@@@@@@@@@
+# Age ----
+#@@@@@@@@@@@
 
 
-# Indiana Data Hub
-age_url <- "https://hub.mph.in.gov/dataset/62ddcb15-bbe8-477b-bb2e-175ee5af8629/resource/2538d7f1-391b-4733-90b3-9e95cd5f3ea6/download/covid_report_demographics.xlsx"
+age_hist_url <- "https://hub.mph.in.gov/dataset/6bcfb11c-6b9e-44b2-be7f-a2910d28949a/resource/7661f008-81b5-4ff2-8e46-f59ad5aad456/download/covid_report_death_date_agegrp.xlsx"
+download.file(url, destfile = glue::glue("{rprojroot::find_rstudio_root_file()}/data/age-deaths-historic.xlsx"), mode = "wb")
+age_death_hist <- readxl::read_xlsx(glue::glue("{rprojroot::find_rstudio_root_file()}/data/age-deaths-historic.xlsx"))
 
-age_dest <- glue::glue("data/ind-demog-{try_date_str}.xlsx")
+age_hist_dat <- age_death_hist %>% 
+   tidyr::pivot_wider(names_from = agegrp,
+                      values_from = covid_deaths,
+                      values_fill = 0) %>% 
+   tidyr::pivot_longer(cols = !matches("date"),names_to = "agegrp", values_to = "covid_deaths") %>% 
+   mutate(date = lubridate::as_date(date))
 
-download.file(age_url, destfile = age_dest, mode = "wb")
-
-# Has multiple sheets, but this is fine since I only need the first one.
-age_raw <- readxl::read_xlsx(age_dest, col_types = c("text", "numeric", "numeric",
-                                                     "numeric", "numeric", "numeric", "numeric"))
-
-# indyhub changed col names and order mid-pandemic, so need to revert names to keep scripts/data consistent
-age_dat <- age_raw %>% 
-   janitor::clean_names() %>%
-   mutate(date = lubridate::today()) %>%
-   rename_at(vars(-date), ~stringr::str_remove(.,"m1d_")) %>%
-   # rename(covid_count = covid_cases, covid_count_pct = covid_cases_pct,
-   #        covid_test = covid_tests, covid_test_pct = covid_tests_pct) %>% 
-   select(date, agegrp, covid_count, covid_deaths,
-          covid_test, covid_count_pct, covid_deaths_pct,
-          covid_test_pct)
+readr::write_csv(age_hist_dat, "data/ind-age-hist-complete.csv")
 
 
-age_comp <- readr::read_csv("data/ind-age-complete.csv")
-
-# Make sure data is new before adding it
-# test the last rows from both datasets
-age_comp_test <- age_comp %>% 
-   filter(agegrp == "30-39") %>% 
-   select(-date) %>% 
-   slice(n())
-age_dat_test <- age_dat %>% 
-   filter(agegrp == "30-39") %>% 
-   select(-date) %>% 
-   slice(n())
-
-if (!isTRUE(all.equal(age_comp_test, age_dat_test))) {
-   
-   age_comp <- age_comp %>%
-      bind_rows(age_dat)
-   
-   readr::write_csv(age_comp, "data/ind-age-complete.csv")
-   
-}
+# # Indiana Data Hub
+# age_url <- "https://hub.mph.in.gov/dataset/62ddcb15-bbe8-477b-bb2e-175ee5af8629/resource/2538d7f1-391b-4733-90b3-9e95cd5f3ea6/download/covid_report_demographics.xlsx"
+# 
+# age_dest <- glue::glue("data/ind-demog-{try_date_str}.xlsx")
+# age_dest <- glue::glue("data/ind-demog-819.xlsx")
+# 
+# download.file(age_url, destfile = age_dest, mode = "wb")
+# 
+# # Has multiple sheets, but this is fine since I only need the first one.
+# age_raw <- readxl::read_xlsx(age_dest, col_types = c("text", "numeric", "numeric",
+#                                                      "numeric", "numeric", "numeric", "numeric"))
+# 
+# # indyhub changed col names and order mid-pandemic, so need to revert names to keep scripts/data consistent
+# age_dat <- age_raw %>% 
+#    janitor::clean_names() %>%
+#    mutate(date = lubridate::today()) %>%
+#    rename_at(vars(-date), ~stringr::str_remove(.,"m1d_")) %>%
+#    # rename(covid_count = covid_cases, covid_count_pct = covid_cases_pct,
+#    #        covid_test = covid_tests, covid_test_pct = covid_tests_pct) %>% 
+#    select(date, agegrp, covid_count, covid_deaths,
+#           covid_test, covid_count_pct, covid_deaths_pct,
+#           covid_test_pct)
+# 
+# 
+# age_comp <- readr::read_csv("data/ind-age-complete.csv")
+# 
+# # Make sure data is new before adding it
+# # test the last rows from both datasets
+# age_comp_test <- age_comp %>% 
+#    filter(agegrp == "30-39") %>% 
+#    select(-date) %>% 
+#    slice(n())
+# age_dat_test <- age_dat %>% 
+#    filter(agegrp == "30-39") %>% 
+#    select(-date) %>% 
+#    slice(n())
+# 
+# if (!isTRUE(all.equal(age_comp_test, age_dat_test))) {
+#    
+#    age_comp <- age_comp %>%
+#       bind_rows(age_dat)
+#    
+#    readr::write_csv(age_comp, "data/ind-age-complete.csv")
+#    
+# }
 
 
 

@@ -6,9 +6,17 @@
 
 
 # Sections:
-# 1. Median Age Bubble
-# 2. Age Cases Heatmap
-# 3. Age Deaths Line
+# 1. Set-Up
+# 2. Median Age Bubble
+# 3. Age Cases Heatmap
+# 4. Age Deaths Line
+
+
+
+
+#@@@@@@@@@@@@@@
+# Set-Up ----
+#@@@@@@@@@@@@@@
 
 
 pacman::p_load(dplyr, glue, imputeTS)
@@ -36,8 +44,11 @@ hub_dat_url <- "https://hub.mph.in.gov/dataset/bd08cdd3-9ab1-4d70-b933-41f9ef7b8
 download.file(hub_dat_url, destfile = "data/county-test-case-trend.xlsx", mode = "wb")
 test_dat_raw <- readxl::read_xlsx("data/county-test-case-trend.xlsx")
 
-# cumulative deaths for each age group
-ind_age_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-complete.csv"))
+# # cumulative deaths for each age group
+# ind_age_raw <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-complete.csv"))
+
+# daily deaths for each age group
+ind_age_hist <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-hist-complete.csv"))
 
 # tidycensus pkg, 2018 age populations for Indiana
 ind_age_pop <- readr::read_rds(glue("{rprojroot::find_rstudio_root_file()}/data/ind-age-pop.rds"))
@@ -238,39 +249,39 @@ readr::write_rds(heat_bubble_data_date, glue("{rprojroot::find_rstudio_root_file
 #@@@@@@@@@@@@@@@@@@@@@@@
 
 
-# df with the missing dates
-missing_dates <- expand.grid(
-   date = as.Date("2020-07-09") + c(1:10),
-   agegrp = unique(ind_age_raw$agegrp),
-   covid_deaths = NA
-)
-
-# add-in missing dates, wide format to run each age grp through imputation loop
-ind_age_missing <- ind_age_raw %>% 
-   select(date, agegrp, covid_deaths) %>% 
-   bind_rows(missing_dates) %>%
-   filter(agegrp != "Unknown") %>% 
-   arrange(date) %>% 
-   tidyr::pivot_wider(names_from = "agegrp",
-                      values_from = "covid_deaths",
-                      values_fill = NA)
-
-
-# using Stineman interpolation; fewer negatives, patterns look reasonable; subsetting date var out
-ind_age_imputed_st <- purrr::map_dfc(ind_age_missing[2:9], ~na_interpolation(.x, "stine") %>% round(., 0)) %>% 
-   # calc daily deaths for each age group
-   mutate_all(tsibble::difference) %>%
-   # 1st row is NA after daily calc, so running it through imputation alg again
-   purrr::map_dfc(., ~na_interpolation(.x, "stine") %>% round(., 0)) %>% 
-   # add date var back
-   bind_cols(ind_age_missing %>% select(date)) %>% 
-   tidyr::pivot_longer(cols = -date,
-                       names_to = "agegrp",
-                       values_to = "covid_deaths")
+# # df with the missing dates
+# missing_dates <- expand.grid(
+#    date = as.Date("2020-07-09") + c(1:10),
+#    agegrp = unique(ind_age_raw$agegrp),
+#    covid_deaths = NA
+# )
+# 
+# # add-in missing dates, wide format to run each age grp through imputation loop
+# ind_age_missing <- ind_age_raw %>% 
+#    select(date, agegrp, covid_deaths) %>% 
+#    bind_rows(missing_dates) %>%
+#    filter(agegrp != "Unknown") %>% 
+#    arrange(date) %>% 
+#    tidyr::pivot_wider(names_from = "agegrp",
+#                       values_from = "covid_deaths",
+#                       values_fill = NA)
+# 
+# 
+# # using Stineman interpolation; fewer negatives, patterns look reasonable; subsetting date var out
+# ind_age_imputed_st <- purrr::map_dfc(ind_age_missing[2:9], ~na_interpolation(.x, "stine") %>% round(., 0)) %>% 
+#    # calc daily deaths for each age group
+#    mutate_all(tsibble::difference) %>%
+#    # 1st row is NA after daily calc, so running it through imputation alg again
+#    purrr::map_dfc(., ~na_interpolation(.x, "stine") %>% round(., 0)) %>% 
+#    # add date var back
+#    bind_cols(ind_age_missing %>% select(date)) %>% 
+#    tidyr::pivot_longer(cols = -date,
+#                        names_to = "agegrp",
+#                        values_to = "covid_deaths")
 
 
 # calc weekly totals for each age group
-ind_age_clean <- ind_age_imputed_st %>% 
+ind_age_hist_clean <- ind_age_hist %>% 
    # calculate weekly cases for each agegrp
    group_by(agegrp) %>% 
    mutate(weekly_total = slider::slide_int(covid_deaths,
@@ -290,6 +301,27 @@ ind_age_clean <- ind_age_imputed_st %>%
                          Deaths: {weekly_total}")) %>% 
    select(-covid_deaths)
 
+# # calc weekly totals for each age group
+# ind_age_clean <- ind_age_imputed_st %>% 
+#    # calculate weekly cases for each agegrp
+#    group_by(agegrp) %>% 
+#    mutate(weekly_total = slider::slide_int(covid_deaths,
+#                                            .f = sum,
+#                                            .before = 6,
+#                                            .step = 7,
+#                                            .complete = T)) %>% 
+#    tidyr::drop_na() %>% 
+#    rename(end_date = date) %>% 
+#    ungroup() %>% 
+#    # <age to age>, "80 and older" format
+#    mutate(weekly_total = ifelse(weekly_total < 0, 0, weekly_total),
+#           agegrp = stringr::str_replace(agegrp, "-", " to "),
+#           agegrp = stringr::str_replace(agegrp, "\\+", " and older"),
+#           date_text = format(end_date, "%B %d"),
+#           tooltip = glue("{date_text}
+#                          Deaths: {weekly_total}")) %>% 
+#    select(-covid_deaths)
+
 
 # # doesn't do full week calc when going from 2020 to 2021
 # # calc weekly totals for each age group
@@ -307,11 +339,21 @@ ind_age_clean <- ind_age_imputed_st %>%
 #           tooltip = glue("{date_text}
 #                          Deaths: {weekly_total}"))
 
-line_data_date <- ind_age_clean %>% 
+# line_data_date <- ind_age_clean %>% 
+#    filter(end_date == max(end_date)) %>% 
+#    slice_tail() %>% 
+#    pull(end_date)
+
+# readr::write_rds(ind_age_clean, glue("{rprojroot::find_rstudio_root_file()}/data/age-death-line.rds"))
+# readr::write_rds(line_data_date, glue("{rprojroot::find_rstudio_root_file()}/data/age-death-line-data-date.rds"))
+
+
+
+line_data_date <- ind_age_hist_clean %>% 
    filter(end_date == max(end_date)) %>% 
    slice_tail() %>% 
    pull(end_date)
 
-readr::write_rds(ind_age_clean, glue("{rprojroot::find_rstudio_root_file()}/data/age-death-line.rds"))
-readr::write_rds(line_data_date, glue("{rprojroot::find_rstudio_root_file()}/data/age-death-line-data-date.rds"))
+readr::write_rds(ind_age_hist_clean, glue("{rprojroot::find_rstudio_root_file()}/data/age-death-line.rds"))
+readr::write_rds(line_data_hist_date, glue("{rprojroot::find_rstudio_root_file()}/data/age-death-line-data-date.rds"))
 
