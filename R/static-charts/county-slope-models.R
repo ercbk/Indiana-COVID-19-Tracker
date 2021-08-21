@@ -4,7 +4,8 @@
 
 # Notes
 # 1. Modelling cumulative cases because daily cases means I have to add 1 to the zeros in order to do a log transformation. Then the interpretation is increase in log(cases + 1) and I don't want to deal with that.
-# 2. Per NYT data dictionary. Cases = cumulative positive cases
+# 2. Scaling by population produces the same results
+# 3. Per NYT data dictionary. Cases = cumulative positive cases
 
 
 
@@ -13,24 +14,31 @@
 
 pacman::p_load(extrafont, dplyr, tsibble, fable, ggplot2, ggtext, glue)
 
-palette <- pals::brewer.oranges(20)
+palette <- pals::brewer.oranges(10)
 
 
 # remove scientific notations
 options(scipen=999)
-
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
 
 
 # Process data
 
-# get daily cumulative totals
+# basic cleaning
 counties_dat <- nyt_dat %>%
-   filter(state == "Indiana") %>%
+   filter(state == "Indiana",
+             county != "Unknown") %>%
    rename(positives = cases) %>% 
-   select(-state, -fips) %>% 
+   select(-state, -fips, -deaths) %>% 
+   # can't log transform zeros
+   mutate(positives = ifelse(positives == 0,
+                             1e-10,
+                             positives)) %>% 
+   tidyr::drop_na() %>% 
    as_tsibble(index = "date", key = "county")
+   
+   
 
 # current date of the data
 data_date <- counties_dat %>% 
