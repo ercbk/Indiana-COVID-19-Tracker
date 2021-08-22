@@ -32,7 +32,7 @@ options(scipen=999)
 
 nyt_dat <- readr::read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
-state_policy <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/covid-state-policy-database-boston-univ.csv"))
+# state_policy <- readr::read_csv(glue("{rprojroot::find_rstudio_root_file()}/data/covid-state-policy-database-boston-univ.csv"))
 
 # get cumulative counts from midwest states (and Kentucky)
 midwest_dat <- nyt_dat %>%
@@ -227,18 +227,18 @@ dea_mark_circle_dat <- tibble(
 )
 
 # gets a few policies for some states and does some cleaning
-policy_dat <- state_policy %>% 
-   filter(State %in% c("Indiana", "Kentucky", "Ohio", "Michigan", "Illinois")) %>% 
-   select(1, 6, 7) %>% 
-   tidyr::pivot_longer(cols = c(2,3), names_to = "policy", values_to = "date") %>%
-   mutate(date = lubridate::mdy(date)) %>%
-   rename(state = State) %>% 
-   left_join(pos_chart_dat,
-             by = c("state", "date")) %>% 
-   tidyr::drop_na() %>% 
-   # combines policy cells that occur on the same date
-   aggregate(data = ., policy ~ date + days + state + positives + deaths, FUN = paste0, collapse = "\n") %>% 
-   mutate(policy = ifelse(policy == "Stay at home/ shelter in place\nClosed non-essential businesses", "Shelter in place & Closed non-essential businesses", policy))
+# policy_dat <- state_policy %>% 
+#    filter(State %in% c("Indiana", "Kentucky", "Ohio", "Michigan", "Illinois")) %>% 
+#    select(1, 6, 7) %>% 
+#    tidyr::pivot_longer(cols = c(2,3), names_to = "policy", values_to = "date") %>%
+#    mutate(date = lubridate::mdy(date)) %>%
+#    rename(state = State) %>% 
+#    left_join(pos_chart_dat,
+#              by = c("state", "date")) %>% 
+#    tidyr::drop_na() %>% 
+#    # combines policy cells that occur on the same date
+#    aggregate(data = ., policy ~ date + days + state + positives + deaths, FUN = paste0, collapse = "\n") %>% 
+#    mutate(policy = ifelse(policy == "Stay at home/ shelter in place\nClosed non-essential businesses", "Shelter in place & Closed non-essential businesses", policy))
 
 
 
@@ -253,9 +253,9 @@ mw_pos_line <- ggplot(pos_chart_dat, aes(x = days, y = positives, color = state)
    geom_line() + 
    geom_point() +
    scale_color_manual(guide = FALSE, values = c(trippy[[6]], kind[[2]], haze[[7]], for_floor[[3]], queen[[5]])) +
-   geom_point(data = policy_dat, aes(shape = policy), size = 3, stroke = 1.5) +
-   # values arg says which shape types I want for each policy
-   scale_shape_manual(name = NULL, values = c("Shelter in place & Closed non-essential businesses" = 15, "Closed non-essential businesses" = 17)) +
+   # geom_point(data = policy_dat, aes(shape = policy), size = 3, stroke = 1.5) +
+   # # values arg says which shape types I want for each policy
+   # scale_shape_manual(name = NULL, values = c("Shelter in place & Closed non-essential businesses" = 15, "Closed non-essential businesses" = 17)) +
    # stroke gives a thicker shape symbol
    guides(shape = guide_legend(
       title = NULL,
