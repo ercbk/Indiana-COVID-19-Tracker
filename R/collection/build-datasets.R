@@ -23,42 +23,33 @@ try_date_str <- todays_date %>%
       stringr::str_remove(pattern = "^[0-9]")
 
 # Indiana Data Hub
-try_address <- glue::glue("https://hub.mph.in.gov/dataset/5a905d51-eb50-4a83-8f79-005239bd108b/resource/882a7426-886f-48cc-bbe0-a8d14e3012e4/download/covid_report_bedvent_{try_date_str}.xlsx")
+
+try_address <- glue::glue("https://hub.mph.in.gov/dataset/4d31808a-85da-4a48-9a76-a273e0beadb3/resource/0c00f7b6-05b0-4ebe-8722-ccf33e1a314f/download/covid_report_bedvent_date.xlsx")
 
 try_destfile <- glue::glue("data/beds-vents-{try_date_str}.xlsx")
 download.file(try_address, destfile = try_destfile, mode = "wb")
 
 bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
-      tidyr::pivot_wider(names_from = "STATUS_TYPE", values_from = "TOTAL") %>%
-      mutate(date = todays_date) %>%
-      select(date, everything())
+   janitor::clean_names() %>%
+   select(date, beds_icu_total, 
+          beds_icu_occupied_covid_19, beds_icu_no_occupied_covid_19, 
+          beds_available_icu_beds_total,
+          vents_total, vents_all_use_covid_19,
+          vents_non_covid_pts_on_vents, vents_all_available_vents_not_in_use)
 
-# indy data hub changed col names mid-pandemic, so I needed to revert them back to maintain consistency with scripts and past data 
-bv_dat_current <- readxl::read_xlsx(try_destfile) %>%
-   # rename(beds_icu_occupied_beds_covid_19,
-   #        beds_icu_total,
-   #        bed_occupied_icu_non_covid = m2b_hospitalized_icu_occupied_non_covid,
-   #        beds_available_icu_beds_total = m2b_hospitalized_icu_available,
-   #        vents_all_available_vents_not_in_use = m2b_hospitalized_vent_available,
-   #        vents_total = m2b_hospitalized_vent_supply,
-   #        vents_all_in_use_covid_19 = m2b_hospitalized_vent_occupied_covid,
-   #        vents_non_covid_pts_on_vents = m2b_hospitalized_vent_occupied_non_covid) %>%
-   tidyr::pivot_wider(names_from = STATUS_TYPE, values_from = TOTAL) %>% 
-   janitor::clean_names() %>% 
-      mutate(date = lubridate::today()) %>%
-      select(date, beds_icu_total, beds_icu_occupied_covid_19,
-             beds_available_icu_beds_total,
-             vents_total, vents_all_use_covid_19,
-             vents_non_covid_pts_on_vents, vents_all_available_vents_not_in_use)
+bv_old_complete <- readr::read_csv("data/beds-vents-complete.csv")
 
+bv_current_date <- bv_dat_current %>% 
+   slice_max(date) %>% 
+   pull(date)
 
-old_complete <- readr::read_csv("data/beds-vents-complete.csv")
+bv_old_date <- bv_old_complete %>% 
+   slice_max(date) %>% 
+   pull(date)
 
-new_complete <- old_complete %>%
-      bind_rows(bv_dat_current)
-
-readr::write_csv(new_complete, "data/beds-vents-complete.csv")
-
+if (bv_current_date > bv_old_date) {
+   readr::write_csv(bv_dat_current, "data/beds-vents-complete.csv")
+}
 
 bv_data_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstudio_root_file()}/data"), regexp = "beds-vents-[0-9]")) %>% 
    mutate(date = stringr::str_extract(paths,
