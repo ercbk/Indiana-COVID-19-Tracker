@@ -132,7 +132,8 @@ ggsave(plot_path, plot = goog_plot,
        units = "cm", device = ragg::agg_png())
 
 
-readr::write_rds(ind_goog, glue("{rprojroot::find_rstudio_root_file()}/data/goog-mob-ind.rds"))
+readr::write_rds(ind_goog %>% 
+                    select(-Activity), glue("{rprojroot::find_rstudio_root_file()}/data/goog-mob-ind.rds"))
 gc_files <- append(glue("{rprojroot::find_rstudio_root_file()}/data/2020_US_Region_Mobility_Report.csv"),
                    glue("{rprojroot::find_rstudio_root_file()}/data/2021_US_Region_Mobility_Report.csv"))
 fs::file_delete(gc_files)
