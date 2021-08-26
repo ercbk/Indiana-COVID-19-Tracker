@@ -191,8 +191,5 @@ ggsave(plot_path, plot = all_charts,
        dpi = "screen", width = 33, height = 20,
        units = "cm", device = ragg::agg_png())
 
-# # ragg::agg_png(plot_path, width = 33, height = 20, res = 72, units = "cm")
-# png(plot_path, width = 33, height = 20, res = 72, units = "cm", type = "cairo-png")
-# all_charts
-# dev.off()
+readr::write_rds(region_rest, glue("{rprojroot::find_rstudio_root_file()}/data/open-tab-reg.rds"))
 
