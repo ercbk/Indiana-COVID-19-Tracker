@@ -280,7 +280,7 @@ if (data_date > old_xmin_date) {
    new_xmin_const <- xmin_const %>% 
       add_row(data_date = data_date,
               xmin_const = old_xmin_const + 4,
-              summary_pos = old_summary_pos + 1)
+              summary_pos = old_summary_pos + 2)
 } else {
    new_xmin_const <- xmin_const
 }
@@ -323,7 +323,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
    expand_limits(y = 2600) +
    geom_col() +
    scale_y_continuous(labels = scales::label_comma(), n.breaks = 6) +
-   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+   scale_x_date(date_breaks = "2 month", date_labels = "%b") +
    scale_fill_manual(values = list(excess_higher_estimate = purp_light[[1]],
                                    average_expected_count = deep_light[[1]])) +
    # excess death values

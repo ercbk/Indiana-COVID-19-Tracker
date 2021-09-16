@@ -84,9 +84,11 @@ policy_dat <- tibble(policy = "Stage 2",
       mutate(labels = c("2", "3", "4", "4.5", "CMR", "5", "CGR", "Mask Requirement Ends"))
 
 holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day", "Thanksgiving",
-                                  "Christmas", "New Years Eve", "Super Bowl", "Easter"),
+                                  "Christmas", "New Years Eve", "Super Bowl", "Easter", "July 4th",
+                                  "Labor Day"),
                       date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26",
-                                       "2020-12-25", "2020-12-31", "2021-02-07", "2021-04-04"))) %>% 
+                                       "2020-12-25", "2020-12-31", "2021-02-07", "2021-04-04",
+                                       "2021-07-04", "2021-09-06"))) %>% 
       inner_join(cases_dat %>% 
                        select(date, cumulative_cases, daily_cases), by = "date")
 
@@ -399,7 +401,8 @@ pos_policy_one <- ggplot(cases_dat %>%
                  color = "#306bb2", size = 3) +
       geom_line(color = "#B28330") +
       scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma(),
-                         breaks = c(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000)) +
+                         # breaks = c(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000)) +
+                         breaks = c(0, 2000, 4000, 6000, 8000, 10000, 12000)) +
       scale_x_continuous(limits = c(515000, xmax), labels = scales::label_comma()) +
       geom_text_repel(data = vax_dat, aes(label = labels),
                       color = "#30b278", fontface = "bold.italic", point.padding = 14,
