@@ -49,6 +49,7 @@ Sys.sleep(10)
 # "Seated diners from online, phone, and walk-in reservations" (top section of the webpage)
 dl_button <- chrome$findElement(using = "css",
                                 value = "#mainContent > main > section:nth-child(2) > div:nth-child(4) > div._3ZR5BNaRxlZSImxhkkEzrb > button")
+Sys.sleep(5)
 
 # makes the element flash in the browser so you can confirm you have the right thing
 # dl_button$highlightElement()
@@ -84,3 +85,4 @@ chrome_pid <- windows_tasks %>%
 
 tools::pskill(pid = java_pid)
 tools::pskill(pid = chrome_pid)
+
