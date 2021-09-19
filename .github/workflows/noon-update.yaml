@@ -4,10 +4,10 @@ on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
     - cron: '45 15 * * *'
-  #push:
-    #branches:
-      #- main
-      #- master
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   update:
@@ -80,49 +80,49 @@ jobs:
       - name: run detect data update
         run: Rscript "R/misc/detect-data-update.R"
       - name: build beds and ventilator data set
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/collection/build-datasets.R"
       - name: run excess-death-col
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/excess-death-col.R"
       - name: run opentab-rest-line
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/opentab-rest-line.R"
       - name: run hosp-icu-vent
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/hosp-icu-vent.R"
       - name: run daily-pos-rate
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/daily-pos-rate.R"
       - name: run ind-covid-line
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/ind-covid-line.R"
       - name: run pos-policy-line
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/pos-policy-line.R"
       - name: run county-slope-models
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/county-slope-models.R"
       - name: run goog-mob-line
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/goog-mob-line.R"
       - name: run regional-slope-models
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/regional-slope-models.R"
       - name: run daily-re-estimate
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/static-charts/daily-est-re.R"
       - name: process demographics data
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/process/process-demog-data.R"
       - name: process hospitals data
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/process/process-hospitals-data.R"
       - name: clean-up old plots
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: Rscript "R/misc/gc.R"
       #- name: render readme
-        #if: ${{ success() || failure() }}
+        #if: ${{ success() || always() }}
         #run: Rscript "R/misc/render-readme.R"
         
       ## Commit, Push, and Trigger the website repo  
