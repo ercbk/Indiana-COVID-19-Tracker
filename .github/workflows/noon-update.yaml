@@ -4,10 +4,10 @@ on:
   schedule:
     # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
     - cron: '45 15 * * *'
-  push:
-    branches:
-      - main
-      - master
+  #push:
+    #branches:
+      #- main
+      #- master
 
 jobs:
   update:
