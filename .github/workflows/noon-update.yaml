@@ -2,8 +2,8 @@ name: Noon Update
 
 on:
   schedule:
-    # says run at the 40th min, 15th hr UTC (11:49am ET) of every day
-    - cron: '45 15 * * *'
+    # says run at the 16th hr UTC (noon ET) of every day
+    - cron: '* 16 * * *'
   #push:
     #branches:
       #- main
@@ -77,8 +77,8 @@ jobs:
         run: Rscript -e 'library(extrafont); font_import(paths = glue::glue("{rprojroot::find_rstudio_root_file()}/font"), prompt=FALSE); loadfonts()'
       
       ## Run Scripts
-      - name: run detect data update
-        run: Rscript "R/misc/detect-data-update.R"
+      #- name: run detect data update
+        #run: Rscript "R/misc/detect-data-update.R"
       - name: build beds and ventilator data set
         if: ${{ always() }}
         run: Rscript "R/collection/build-datasets.R"
