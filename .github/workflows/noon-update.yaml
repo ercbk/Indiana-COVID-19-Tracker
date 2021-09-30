@@ -3,7 +3,7 @@ name: Noon Update
 on:
   schedule:
     # says run at the 16th hr UTC (noon ET) of every day
-    - cron: '* 16 * * *'
+    - cron: '05 16 * * *'
   #push:
     #branches:
       #- main
