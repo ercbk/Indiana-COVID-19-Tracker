@@ -17,10 +17,19 @@ library(dplyr, warn.conflicts = F, quietly = T)
 
 todays_date <- lubridate::today()
 
-try_date_str <- todays_date %>% 
+# removes leading 0 if month < 10 so I can use the number to gc old files
+if (lubridate::month(todays_date) < 10) {
+   try_date_str <- todays_date %>% 
       stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>% 
       stringr::str_remove_all(pattern = "-") %>% 
-      stringr::str_remove(pattern = "^[0-9]")
+      stringr::str_remove("^[0-9]")
+} else {
+   try_date_str <- todays_date %>% 
+      stringr::str_extract(pattern = "-[0-9]{2}-[0-9]{2}") %>% 
+      stringr::str_remove_all(pattern = "-")
+}
+
+
 
 # Indiana Data Hub
 
@@ -53,7 +62,7 @@ if (bv_current_date > bv_old_date) {
 
 bv_data_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstudio_root_file()}/data"), regexp = "beds-vents-[0-9]")) %>% 
    mutate(date = stringr::str_extract(paths,
-                                  pattern = "[0-9]{3}") %>%
+                                  pattern = "[0-9]{4}|[0-9]{3}") %>%
          as.numeric()
    )
 
@@ -176,7 +185,7 @@ readr::write_csv(age_hist_dat, "data/ind-age-hist-complete.csv")
 
 demog_data_files <- tibble::tibble(paths = fs::dir_ls(glue::glue("{rprojroot::find_rstudio_root_file()}/data"), regexp = "ind-demog-[0-9]")) %>% 
    mutate(date = stringr::str_extract(paths,
-                                      pattern = "[0-9]{3}") %>%
+                                      pattern = "[0-9]{4}|[0-9]{3}") %>%
              as.numeric()
    )
 
