@@ -233,9 +233,9 @@ ind_excess <- natstat_excess_raw %>%
           week_ending_date > "2020-01-01",
           condition == "Predicted (weighted)_All causes, excluding COVID-19"
    ) %>% 
-   select(week_ending_date, observed_number, average_expected_count, excess_higher_estimate) %>% 
-   tidyr::pivot_longer(cols = c("average_expected_count", "excess_higher_estimate"), names_to = "type", values_to = "value") %>% 
-   mutate(type = factor(type, levels = c("excess_higher_estimate", "average_expected_count")),
+   select(week_ending_date, observed_number, average_expected_count, excess_estimate) %>% 
+   tidyr::pivot_longer(cols = c("average_expected_count", "excess_estimate"), names_to = "type", values_to = "value") %>% 
+   mutate(type = factor(type, levels = c("excess_estimate", "average_expected_count")),
           # only want labels for excess deaths, otherwise blank
           label = ifelse(value == 0, "", value),
           label = ifelse(type == "average_expected_count", "", label))
@@ -324,7 +324,7 @@ excess_bar <- ggplot(ind_excess, aes(x = week_ending_date, y = value,
    geom_col() +
    scale_y_continuous(labels = scales::label_comma(), n.breaks = 6) +
    scale_x_date(date_breaks = "2 month", date_labels = "%b") +
-   scale_fill_manual(values = list(excess_higher_estimate = purp_light[[1]],
+   scale_fill_manual(values = list(excess_estimate = purp_light[[1]],
                                    average_expected_count = deep_light[[1]])) +
    # excess death values
    ggfittext::geom_bar_text(col = "white",
