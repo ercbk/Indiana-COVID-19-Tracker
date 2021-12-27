@@ -127,6 +127,7 @@ jobs:
         
       ## Commit, Push, and Trigger the website repo  
       - name: Commit files
+        if: ${{ always() }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -137,6 +138,7 @@ jobs:
 
       # Send signal to website repo to start its noon update
       - name: Repository Dispatch
+        if: ${{ always() }}
         uses: peter-evans/repository-dispatch@v1
         # requires token with repo scope
         with:
