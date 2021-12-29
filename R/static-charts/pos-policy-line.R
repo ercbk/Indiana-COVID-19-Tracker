@@ -48,7 +48,8 @@ cases_dat <- nyt_dat %>%
              daily_cases = tidyr::replace_na(daily_cases, 1),
              sev_day_avg = slider::slide_dbl(daily_cases, .f = mean, .before = 6L),
              # for facet_zoom
-             fall_wave = ifelse(date > as.Date("2020-09-26"), "fwave", "not_fwave")) %>%
+             fall_wave = ifelse(date > as.Date("2020-09-26"), "fwave", "not_fwave"),
+             fall_wave_2021 = ifelse(date > as.Date("2021-05-18"), "fwave", "not_fwave")) %>%
       filter(date >= "2020-04-20") %>% 
       rename(cumulative_cases = cases)
 
@@ -85,22 +86,22 @@ policy_dat <- tibble(policy = "Stage 2",
 
 holiday_dat <- tibble(holiday = c("Memorial Day", "Independence Day", "Labor Day", "Thanksgiving",
                                   "Christmas", "New Years Eve", "Super Bowl", "Easter", "July 4th",
-                                  "Labor Day"),
+                                  "Labor Day", "Thanksgiving", "Christmas"),
                       date = as.Date(c("2020-05-25", "2020-07-04", "2020-09-07", "2020-11-26",
                                        "2020-12-25", "2020-12-31", "2021-02-07", "2021-04-04",
-                                       "2021-07-04", "2021-09-06"))) %>% 
+                                       "2021-07-04", "2021-09-06", "2021-11-26", "2021-12-25"))) %>% 
       inner_join(cases_dat %>% 
                        select(date, cumulative_cases, daily_cases), by = "date")
 
 vax_dat <- tibble(age = c("80+", "70+", "65-69", "60-64",
                           "55-59", "50-54", "45-49",
-                          "40-44", "30-39", "16+", "12"),
+                          "40-44", "30-39", "16+", "12", "5"),
                   date = as.Date(c("2021-01-08", "2021-01-13", "2021-02-01",
                                    "2021-02-23", "2021-03-02", "2021-03-03",
                                    "2021-03-16", "2021-03-22", "2021-03-29",
-                                   "2021-03-31", "2021-05-13")),
+                                   "2021-03-31", "2021-05-13", "2021-11-02")),
                   labels = c("80", "70", "65", "60", "55",
-                             "50", "45", "40", "30", "16", "12")) %>% 
+                             "50", "45", "40", "30", "16", "12", "5")) %>% 
       inner_join(cases_dat %>% 
                        select(date, cumulative_cases, daily_cases), by = "date")
 
@@ -390,38 +391,115 @@ policy_text <- glue("
 
 ## 2021 chart ----
 
+# pos_policy_one <- ggplot(cases_dat %>%
+#                                as_tibble() %>%
+#                                filter(date > as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
+#       geom_point(color = "#B28330") +
+#       geom_point(data = holiday_dat %>%
+#                        filter(date > "2020-12-31"), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+#       geom_point(data = vax_dat, color = "#30b278", size = 3) +
+#       geom_point(data = tibble(x = 695532, y = 614), aes(x, y),
+#                  color = "#306bb2", size = 3) +
+#       geom_line(color = "#B28330") +
+#       scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma(),
+#                          # breaks = c(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000)) +
+#                          breaks = c(0, 4000, 8000, 12000, 16000, 20000, 24000)) +
+#       scale_x_continuous(limits = c(515000, xmax), labels = scales::label_comma()) +
+#       geom_text_repel(data = vax_dat, aes(label = labels),
+#                       color = "#30b278", fontface = "bold.italic", point.padding = 14,
+#                       size = 5, direction = "y", seed = 10) +
+#       geom_richtext(data = tibble(x = 600000, y = ymax, zoom = TRUE),
+#                     aes(x = x, y = y, label = holiday_text, hjust = "left",
+#                         label.color = NA, size = 12, fontface = "bold"),
+#                     fill = "black", color = "white") +
+#       geom_richtext(data = tibble(x = 600000, y = ymax-1000),
+#                     aes(x = x, y = y, label = vax_text, hjust = "left",
+#                         label.color = NA, size = 12, fontface = "bold"),
+#                     fill = "black", color = "white") +
+#       geom_richtext(data = tibble(x = 600000, y = ymax-2000),
+#                     aes(x = x, y = y, label = pol_text, hjust = "left",
+#                         label.color = NA, size = 12, fontface = "bold"),
+#                     fill = "black", color = "white") +
+#       geom_text(aes(x = 515000, y = ymax, label="Daily Cases"),
+#                 family="Roboto",
+#                 size=4.5, hjust=0.35, color="white") +
+# labs(x = "Cumulative Cases", y = NULL,
+#      title = "2021: Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
+#      subtitle = subtitle_dat$text[[1]],
+#      caption = caption_text_21) +
+#       theme(plot.title = element_textbox_simple(size = 16,
+#                                                 color = "white",
+#                                                 family = "Roboto"),
+#             plot.subtitle = element_textbox_simple(size = 14,
+#                                                    color = "white"),
+#             plot.caption = element_text(color = "white",
+#                                         size = 12),
+#             text = element_text(family = "Roboto"),
+#             legend.position = "none",
+#             axis.text.x = element_text(color = "white",
+#                                        size = 12),
+#             axis.text.y = element_text(color = "white",
+#                                        size = 12),
+#             axis.title.x = element_textbox_simple(color = "white",
+#                                                   size = 13),
+#             panel.background = element_rect(fill = "black",
+#                                             color = NA),
+#             plot.background = element_rect(fill = "black",
+#                                            color = NA),
+#             panel.border = element_blank(),
+#             panel.grid.minor = element_blank(),
+#             panel.grid.major = element_line(color = deep_rooted[[7]]))
+
+
 pos_policy_one <- ggplot(cases_dat %>% 
                                as_tibble() %>% 
                                filter(date > as.Date("2020-12-31")), aes(x = cumulative_cases, y = daily_cases)) +
       geom_point(color = "#B28330") +
+      # holiday idons for zoom area
       geom_point(data = holiday_dat %>% 
-                       filter(date > "2020-12-31"), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
-      geom_point(data = vax_dat, color = "#30b278", size = 3) +
-      geom_point(data = tibble(x = 695532, y = 614), aes(x, y),
+                       filter(between(date, as.Date("2021-01-07"), as.Date("2021-05-14"))) %>% 
+                       mutate(zoom = TRUE), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+      geom_point(data = holiday_dat %>% 
+                       filter(date > as.Date("2021-05-14")), color = light_orange, shape = 18, size = 4, stroke = 1.5) +
+      geom_point(data = vax_dat %>%
+                       filter(date == as.Date("2021-11-2") | date ==as.Date("2021-05-13")), color = "#30b278", size = 3) +
+      geom_point(data = vax_dat %>% 
+                       filter(date != as.Date("2021-11-2")) %>% 
+                       mutate(zoom = TRUE), color = "#30b278", size = 3) +
+      geom_point(data = tibble(x = 695532, y = 614, zoom = TRUE), aes(x, y),
                  color = "#306bb2", size = 3) +
       geom_line(color = "#B28330") +
-      scale_y_continuous(limits = c(0, ymax), labels = scales::label_comma(),
-                         # breaks = c(0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000)) +
-                         breaks = c(0, 2000, 4000, 6000, 8000, 10000, 12000)) +
-      scale_x_continuous(limits = c(515000, xmax), labels = scales::label_comma()) +
-      geom_text_repel(data = vax_dat, aes(label = labels),
+      geom_text_repel(data = vax_dat %>%
+                            mutate(zoom = c(rep(TRUE, 11), FALSE)), aes(label = labels),
                       color = "#30b278", fontface = "bold.italic", point.padding = 14,
                       size = 5, direction = "y", seed = 10) +
-      geom_richtext(data = tibble(x = 600000, y = ymax, zoom = TRUE),
+      geom_text_repel(data = vax_dat %>%
+                            filter(date == as.Date("2021-05-13")),
+                      aes(label = labels),
+                      color = "#30b278", fontface = "bold.italic", point.padding = 14,
+                      size = 5, direction = "y", seed = 10) +
+      geom_richtext(data = tibble(x = 600000, y = ymax-2000),
                     aes(x = x, y = y, label = holiday_text, hjust = "left",
                         label.color = NA, size = 12, fontface = "bold"),
                     fill = "black", color = "white") +
-      geom_richtext(data = tibble(x = 600000, y = ymax-500),
+      geom_richtext(data = tibble(x = 600000, y = ymax-4000),
                     aes(x = x, y = y, label = vax_text, hjust = "left",
                         label.color = NA, size = 12, fontface = "bold"),
                     fill = "black", color = "white") +
-      geom_richtext(data = tibble(x = 600000, y = ymax-1000),
+      geom_richtext(data = tibble(x = 600000, y = ymax-6000),
                     aes(x = x, y = y, label = pol_text, hjust = "left",
                         label.color = NA, size = 12, fontface = "bold"),
                     fill = "black", color = "white") +
       geom_text(aes(x = 515000, y = ymax, label="Daily Cases"),
                 family="Roboto",
                 size=4.5, hjust=0.35, color="white") +
+      ggforce::facet_zoom(
+                  # x = cumulative_cases > 120000,
+                  x = fall_wave_2021 == "not_fwave",
+                  xlim = c(550000, 735000), ylim = c(0, 8000),
+                  zoom.data = zoom,
+                  show.area = FALSE, zoom.size = 0.5,
+                  horizontal = FALSE) +
 labs(x = "Cumulative Cases", y = NULL,
      title = "2021: Daily <b style='color:#B28330'>Positive Test Results</b> vs. Cumulative <b style='color:#B28330'>Positive Test Results</b>",
      subtitle = subtitle_dat$text[[1]],
@@ -452,8 +530,12 @@ labs(x = "Cumulative Cases", y = NULL,
 
 plot_path <- glue("{rprojroot::find_rstudio_root_file()}/plots/pos-policy-one-{data_date}.png")
 
+
+# ggsave(plot_path, plot = pos_policy_one,
+#        dpi = "screen", width = 33, height = 20,
+#        device = ragg::agg_png(), units = "cm")
+
+# # with facet_zoom, need to make it taller
 ggsave(plot_path, plot = pos_policy_one,
-       dpi = "screen", width = 33, height = 20,
+       dpi = "screen", width = 33, height = 30,
        device = ragg::agg_png(), units = "cm")
-
-
