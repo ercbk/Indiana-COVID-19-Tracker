@@ -1,5 +1,4 @@
 date,beds_icu_total,beds_icu_occupied_covid_19,beds_icu_no_occupied_covid_19,beds_available_icu_beds_total,vents_total,vents_all_use_covid_19,vents_non_covid_pts_on_vents,vents_all_available_vents_not_in_use
-1996-07-16,0,0,0,0,0,0,0,0
 2020-02-26,0,0,0,0,0,0,0,0
 2020-02-27,0,0,0,0,0,0,0,0
 2020-02-28,0,0,0,0,0,0,0,0
@@ -685,3 +684,5 @@ date,beds_icu_total,beds_icu_occupied_covid_19,beds_icu_no_occupied_covid_19,bed
 2022-01-08,2064,771,1036,257,2779,432,591,1756
 2022-01-09,2072,766,1045,261,2778,450,595,1733
 2022-01-10,2021,776,1040,205,2774,455,583,1736
+2022-01-11,2041,775,1085,181,2780,444,559,1777
+2022-01-12,2018,767,1050,201,2780,456,558,1766
