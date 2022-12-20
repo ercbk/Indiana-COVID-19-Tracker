@@ -137,7 +137,7 @@ jobs:
           git push
 
       # Send signal to website repo to start its noon update
-      - name: Repository Dispatch
+      #- name: Repository Dispatch
         if: ${{ always() }}
         uses: peter-evans/repository-dispatch@v1
         # requires token with repo scope
